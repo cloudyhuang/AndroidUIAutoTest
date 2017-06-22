@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hjs.mybatis.inter.SmsVerifyCodeOperation">
+    <!-- 为了返回list 类型而定义的returnMap -->
+    <resultMap type="com.hjs.db.SmsVerifyCode" id="resultListSmsVerifyCode">
+        <id column="id" property="id" />
+        <result column="phone_num" property="phone_num" />
+        <result column="verify_code" property="verify_code" />
+    </resultMap>
+    <select id="getSmsVerifyCode" parameterType="String" resultMap="resultListSmsVerifyCode">
+        select * from t_goutong_sms_verify_code where phone_num=#{phone_num} ORDER BY id
+    </select>
+</mapper>

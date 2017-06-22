@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="AppTest"
+           tests="2"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="323.064">
+  <properties />
+  
+  
+            <testcase name="testRiskEvaluation" time="167.345" classname="com.hjs.cases.AccountManageTestCase" />
+                <testcase name="testReRiskEvaluation" time="155.719" classname="com.hjs.cases.AccountManageTestCase" />
+      
+</testsuite>

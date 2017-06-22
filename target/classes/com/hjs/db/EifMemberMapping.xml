@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hjs.mybatis.inter.EifMemberOperation">
+      <resultMap id="resultMemberClientCertificationList" type="com.hjs.db.ClientCertification">
+        <id property="id" column="id" />
+        <result property="member_id" column="member_id" />
+        <result property="name" column="name" />
+        <result property="idno" column="idno" />
+        
+        <association property="member" javaType="com.hjs.db.Member">
+            <id property="id" column="id" />
+            <result property="verified_mobile" column="verified_mobile" />          
+        </association>        
+    </resultMap>
+    <select id="getMember" parameterType="String" resultType="com.hjs.db.Member">
+    SELECT * from t_member WHERE verified_mobile=#{verifyMobile}
+    </select>
+	<select id="getClientCertification" parameterType="String" resultMap="resultMemberClientCertificationList">
+    SELECT * from t_client_certification where t_client_certification.idno=#{idno}
+    </select>
+    <update id="updateIdno" parameterType="com.hjs.db.ClientCertification" >
+        UPDATE t_client_certification SET idno=#{fakeIdno} WHERE idno=#{idno}
+    </update>
+</mapper>
+

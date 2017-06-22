@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="1" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="TestNG 项目报告" duration-ms="200981" started-at="2017-06-21T10:05:07Z" finished-at="2017-06-21T10:08:28Z">
+    <groups>
+    </groups>
+    <test name="AppTest" duration-ms="200981" started-at="2017-06-21T10:05:07Z" finished-at="2017-06-21T10:08:28Z">
+      <class name="com.hjs.cases.TradeTestCase">
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.hjs.cases.TradeTestCase@1fa121e2]" name="setUp" is-config="true" duration-ms="33297" started-at="2017-06-21T18:04:34Z" finished-at="2017-06-21T18:05:07Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="testFinancialPageProductInfo()[pri:16, instance:com.hjs.cases.TradeTestCase@1fa121e2]" name="testFinancialPageProductInfo" duration-ms="200961" started-at="2017-06-21T18:05:07Z" finished-at="2017-06-21T18:08:28Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testFinancialPageProductInfo -->
+        <test-method status="PASS" signature="tearDown()[pri:0, instance:com.hjs.cases.TradeTestCase@1fa121e2]" name="tearDown" is-config="true" duration-ms="3136" started-at="2017-06-21T18:08:28Z" finished-at="2017-06-21T18:08:31Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.hjs.cases.TradeTestCase -->
+    </test> <!-- AppTest -->
+  </suite> <!-- TestNG 项目报告 -->
+</testng-results>

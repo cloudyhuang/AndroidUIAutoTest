@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="AppTest"
+           tests="1"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="200.961">
+  <properties />
+  
+  
+            <testcase name="testFinancialPageProductInfo" time="200.961" classname="com.hjs.cases.TradeTestCase" />
+      
+</testsuite>

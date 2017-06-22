@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hjs.mybatis.inter.EifPayCoreOperation">
+    <!-- 为了返回list 类型而定义的returnMap -->
+    <resultMap type="com.hjs.db.BankProvider" id="resultListBankProvider">
+        <id column="id" property="id" />
+        <result column="provider_no" property="provider_no" />
+        <result column="bank_no" property="bank_no" />
+    </resultMap>
+    <select id="getBankProvider" parameterType="String" resultMap="resultListBankProvider">
+        SELECT * FROM t_paycore_dcp_provider_recharge_route_map_v2 where bank_no=#{bank_no}
+    </select>
+    <update id="updateBankProviderStatus" parameterType="com.hjs.db.BankProvider" >
+        UPDATE t_paycore_dcp_provider_recharge_route_map_v2 SET status=#{status} WHERE id=#{id}
+    </update>
+</mapper>
