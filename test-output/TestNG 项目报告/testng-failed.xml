@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite guice-stage="DEVELOPMENT" name="Failed suite [TestNG 项目报告]">
+<suite name="Failed suite [TestNG 项目报告]">
   <listeners>
+    <listener class-name="com.hjs.publics.TestNGListener"/>
     <listener class-name="org.uncommons.reportng.HTMLReporter"/>
     <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
   </listeners>
   <test name="AppTest(failed)">
     <classes>
-      <class name="com.hjs.cases.TradeTestCase">
+      <class name="com.hjs.cases.AccountManageTestCase">
         <methods>
-          <include name="testFinancialPageProductInfo"/>
           <include name="setUp"/>
           <include name="tearDown"/>
+          <include name="testRealNameAndSetBankCard"/>
+          <include name="afterMethod"/>
+          <include name="testUnBundBankCard"/>
         </methods>
-      </class> <!-- com.hjs.cases.TradeTestCase -->
+      </class> <!-- com.hjs.cases.AccountManageTestCase -->
     </classes>
   </test> <!-- AppTest(failed) -->
 </suite> <!-- Failed suite [TestNG 项目报告] -->

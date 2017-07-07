@@ -227,7 +227,7 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	String pageName=page.getClass().getName();
     	Assert.assertTrue(pageName.contains("MinePageObject"), "点击首页-我的入口未进入我的页面");
     	PersonSettingPageObject personSettingPage=((MinePageObject)page).enterPersonSetting();
-    	Assert.assertTrue(personSettingPage.verifyInthisPage(), "进入我的个人头像，未进入设置页");
+    	Assert.assertTrue(personSettingPage.verifyInthisPage(), "进入我的个人头像，未进入设置页"); 
     	page=personSettingPage.gotoRiskEvaluation();
     	if(page.getClass().getName().contains("RiskEvaluationResultPageObject")){
     		RiskEvaluationResultPageObject RiskEvaluationResultPage=new RiskEvaluationResultPageObject(driver);

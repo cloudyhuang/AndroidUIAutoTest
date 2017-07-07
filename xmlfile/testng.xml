@@ -8,7 +8,7 @@
 	</test>-->
 	<test verbose="2" preserve-order="true" name="AppTest">
   	<classes> 
-      	<class name="com.hjs.cases.TradeTestCase">
+      	<class name="com.hjs.cases.AccountManageTestCase">
 	       <!--<methods>
 	        <include name="testlogin" />
 	       </methods>-->
@@ -16,9 +16,8 @@
   	</classes>
   </test>
 <listeners>
-
+<listener class-name="com.hjs.publics.TestNGListener" />
 <listener class-name="org.uncommons.reportng.HTMLReporter" />
-
 <listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
 
 </listeners>
