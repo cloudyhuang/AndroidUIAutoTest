@@ -1,11 +1,15 @@
 package com.hjs.cases;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.testng.Assert;
+import org.testng.ITestResult;
 import org.testng.Reporter;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import com.hjs.config.CommonAppiumPage;
@@ -53,7 +57,7 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	Reporter.log("进入首页-我的入口");
     	Assert.assertTrue(pageName.contains("LoginPageObject"), "点击首页-我的入口未跳转到登录页");
     	Reporter.log("未登录-跳转到登录页");
-    	String phoneNum="13007311222";
+    	String phoneNum="17052411184";
     	String password="hxnearc228";
     	Account.setLoginPwd(password);
     	LoginPageObject loginPageObject=(LoginPageObject)page;
@@ -73,6 +77,7 @@ public class AccountManageTestCase extends CommonAppiumTest {
     }
     @Test(priority = 4,enabled=false)
     public void testLogOut()throws InterruptedException{
+//    	new HomePageObject(driver).backToHomePage(1,4,7,8);//集成请清除
     	HomePageObject homepage=new HomePageObject(driver); 
     	CommonAppiumPage page=homepage.enterPersonEntrace();
     	String pageName=page.getClass().getName();
@@ -85,8 +90,8 @@ public class AccountManageTestCase extends CommonAppiumTest {
     }
     @Test(priority = 5,enabled=false)
     public void testSignAccount()throws Exception{
-    	HomePageObject homepage=new HomePageObject(driver); 
-    	homepage.enterPersonEntrace();
+//    	HomePageObject homepage=new HomePageObject(driver); //集成请注释
+//    	homepage.enterPersonEntrace();//集成请注释
     	LoginPageObject loginPageObject=new LoginPageObject(driver);
     	Assert.assertTrue(loginPageObject.verifyInthisPage(), "未在登录页面");
     	SimpleDateFormat df = new SimpleDateFormat("yyMMddHHmm");//自定义日期格式
@@ -105,8 +110,9 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	Assert.assertTrue(setNextGestureResult, "第二次设置手势失败，未跳转到主页，主页我的入口未显示");
 		
     }
-    @Test(priority = 6,enabled=false)
+    @Test(priority = 6,description="实名并设置银行卡")
     public void testRealNameAndSetBankCard()throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	CommonAppiumPage page=homepage.enterPersonEntrace();
     	String pageName=page.getClass().getName();
@@ -134,11 +140,12 @@ public class AccountManageTestCase extends CommonAppiumTest {
 		Account.setBankCardID(bankCardId);
 		Account.setBankPhoneNum(phoneNum);
 		Account.setTradePwd(tradePwd);
+		Assert.assertTrue(setBankCardPageObject.verifyInthisPage(), "未出现银行卡绑卡界面，银行卡号输入框未出现");
     	setBankCardPageObject.setBankCard(bankCardId, phoneNum);
-    	homepage.backToHomePage(1,4,7,8);
     }
-    @Test(priority = 7,enabled=false)
+    @Test(priority = 7,description="解绑银行卡")
     public void testUnBundBankCard()throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	CommonAppiumPage page=homepage.enterPersonEntrace();
     	String pageName=page.getClass().getName();
@@ -149,12 +156,14 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	Assert.assertTrue(myBankCardPageObject.verifyInthisPage(), "进入银行卡页面未出现银行卡");
     	PersonSettingPageObject personSettingPageObject=myBankCardPageObject.unbundBankCard(Account.getTradePwd(),Account.getBankPhoneNum());
     	Assert.assertTrue(personSettingPageObject.verifyInthisPage(), "解绑银行卡后未跳转到个人设置页面");
+    	Thread.sleep(2000); //返回个人设置时银行卡名称会闪现，因此等待一下
     	String bankCardName=personSettingPageObject.getBankCardName();
     	Assert.assertEquals(bankCardName, "未设置", "解绑失败，当前银行卡为："+bankCardName);
-    	homepage.backToHomePage(1,4,7,8);
+    	
     }
     @Test(priority = 8,enabled=false)
     public void testResetTradePwd()throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	CommonAppiumPage page=homepage.enterPersonEntrace();
     	String pageName=page.getClass().getName();
@@ -168,10 +177,11 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	String newTradePwd="456123";
     	tradePwdResetPage.resetTradePwd(Account.getRealName(), Account.getIdno(), "", newTradePwd);
     	Account.setTradePwd(newTradePwd);
-    	homepage.backToHomePage(1,4,7,8);
+    	
     }
     @Test(priority = 9,enabled=false)
     public void testResetLoginPwd()throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	CommonAppiumPage page=homepage.enterPersonEntrace();
     	String pageName=page.getClass().getName();
@@ -182,11 +192,12 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	Assert.assertTrue(pwdSettingPage.verifyInthisPage(), "点击密码管理未进入密码设置页");
     	LoginPwdResetPageObject loginPwdResetPage=pwdSettingPage.gotoLoginPwdPage();
     	Assert.assertTrue(loginPwdResetPage.verifyInthisPage(), "点击重设登录密码未进入设置登录密码页");
-    	loginPwdResetPage.resetLoginPwd("hxnearc228", "hxnearcj228");
-    	homepage.backToHomePage(1,4,7,8);
+    	loginPwdResetPage.resetLoginPwd(Account.getLoginPwd(), "hxnearcj228");
+    	Account.setLoginPwd("hxnearcj228");
     }
-    @Test(priority = 10)
+    @Test(priority = 10,enabled=false)
     public void testRiskEvaluation()throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	CommonAppiumPage page=homepage.enterPersonEntrace();
     	String pageName=page.getClass().getName();
@@ -207,10 +218,10 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	else{
     		throw new Exception("该账号已评测过！");
     	}
-    	homepage.backToHomePage(1,4,7,8);
     }
-    @Test(priority = 11)
+    @Test(priority = 11,enabled=false)
     public void testReRiskEvaluation()throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	CommonAppiumPage page=homepage.enterPersonEntrace();
     	String pageName=page.getClass().getName();
@@ -232,6 +243,68 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	else{
     		throw new Exception("该账号未评测过，不能重新评测");
     	}
-    	homepage.backToHomePage(1,4,7,8);
     }
+    
+    @AfterMethod(alwaysRun = true)
+    public void afterMethod(ITestResult result) throws Exception {
+        if (!result.isSuccess())
+            catchExceptions(result);
+    }
+
+    public void catchExceptions(ITestResult result) {
+        System.out.println("result" + result);
+        String methodName = result.getName();
+        System.out.println(methodName);
+        if (!result.isSuccess()) {
+            File file = new File("snapshot");
+            Reporter.setCurrentTestResult(result);
+            System.out.println(file.getAbsolutePath());
+            Reporter.log(file.getAbsolutePath());
+            String filePath = file.getAbsolutePath();
+            //filePath  = filePath.replace("/opt/apache-tomcat-7.0.64/webapps","http://172.18.44.114:8080");
+            //Reporter.log("<img src='"+filePath+"/"+result.getName()+".jpg' hight='100' width='100'/>");
+            String dest = result.getMethod().getRealClass().getSimpleName()+"."+result.getMethod().getMethodName();
+            String picName=filePath+File.separator+dest+super.runtime;
+            String escapePicName=escapeString(picName);
+            System.out.println(escapePicName);
+            String html="<img src='"+picName+".png' onclick='window.open(\""+escapePicName+".png\")'' hight='100' width='100'/>";
+            Reporter.log(html);
+
+        }
+    }
+    /**
+     * 替换字符串
+     * @param 待替换string
+     * @return 替换之后的string
+     */
+    public String escapeString(String s)
+    {
+        if (s == null)
+        {
+            return null;
+        }
+        
+        StringBuilder buffer = new StringBuilder();
+        for(int i = 0; i < s.length(); i++)
+        {
+            buffer.append(escapeChar(s.charAt(i)));
+        }
+        return buffer.toString();
+    }
+
+
+    /**
+     * 将\字符替换为\\
+     * @param 待替换char
+     * @return 替换之后的char
+     */
+    private String escapeChar(char character)
+    {
+        switch (character)
+        {
+            case '\\': return "\\\\";
+            default: return String.valueOf(character);
+        }
+    }
+
 }

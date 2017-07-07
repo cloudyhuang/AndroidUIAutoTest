@@ -53,6 +53,7 @@ public class PayPageObject extends CommonAppiumPage{
 		clickEle(chooseCouponBtn,"优惠券选择入口按钮");
 		ChooseCouponPageObject chooseCouponPage=new ChooseCouponPageObject(driver);
 		chooseCouponPage.chooseCoupon("");
+		super.threadsleep(1000);
 		clickEle(bankCardPayOptions,"银行卡付款方式");
 		clickEle(confirmPayBtn,"确认支付按钮");
 		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
@@ -84,6 +85,7 @@ public class PayPageObject extends CommonAppiumPage{
 		clickEle(chooseCouponBtn,"优惠券选择入口按钮");
 		ChooseCouponPageObject chooseCouponPage=new ChooseCouponPageObject(driver);
 		chooseCouponPage.chooseCoupon("");
+		super.threadsleep(1000);
 		clickEle(bankCardPayOptions,"银行卡付款方式");
 		clickEle(confirmPayBtn,"确认支付按钮");
 		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
@@ -99,6 +101,7 @@ public class PayPageObject extends CommonAppiumPage{
 		clickEle(chooseCouponBtn,"优惠券选择入口按钮");
 		ChooseCouponPageObject chooseCouponPage=new ChooseCouponPageObject(driver);
 		chooseCouponPage.chooseCoupon("");
+		super.threadsleep(1000);
 		clickEle(bankCardPayOptions,"银行卡付款方式");
 		clickEle(confirmPayBtn,"确认支付按钮");
 		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
@@ -122,6 +125,7 @@ public class PayPageObject extends CommonAppiumPage{
 			throw new Exception("查询不到券id为"+couponId+"对应的券名称");
 		}
 		chooseCouponPage.chooseCoupon(couponName);
+		super.threadsleep(1000);//跳转等待
 		clickEle(bankCardPayOptions,"银行卡付款方式");
 		clickEle(confirmPayBtn,"确认支付按钮");
 		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
@@ -157,6 +161,7 @@ public class PayPageObject extends CommonAppiumPage{
 			throw new Exception("查询不到券id为"+couponId+"对应的券名称");
 		}
 		chooseCouponPage.chooseCoupon(couponName);
+		super.threadsleep(1000);
 		clickEle(bankCardPayOptions,"银行卡付款方式");
 		clickEle(confirmPayBtn,"确认支付按钮");
 		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
@@ -171,6 +176,7 @@ public class PayPageObject extends CommonAppiumPage{
 		clickEle(chooseCouponBtn,"优惠券选择入口按钮");
 		ChooseCouponPageObject chooseCouponPage=new ChooseCouponPageObject(driver);
 		chooseCouponPage.chooseCoupon("");
+		super.threadsleep(1000);
 		clickEle(balancePayOptions,"余额付款方式");
 		clickEle(confirmPayBtn,"确认支付按钮");
 		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
@@ -189,6 +195,7 @@ public class PayPageObject extends CommonAppiumPage{
 			throw new Exception("查询不到券id为"+couponId+"对应的券名称");
 		}
 		chooseCouponPage.chooseCoupon(couponName);
+		super.threadsleep(1000);
 		clickEle(balancePayOptions,"余额付款方式");
 		clickEle(confirmPayBtn,"确认支付按钮");
 		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
@@ -267,6 +274,10 @@ public class PayPageObject extends CommonAppiumPage{
 		    	for(int i=0;i<bankProviderList.size();i++){
 		    		if(!bankProviderList.get(i).getProvider_no().equals("0002")){
 		    			bankProviderList.get(i).setStatus(1);
+			    		int result=eifPayCoreOperation.updateBankProviderStatus(bankProviderList.get(i));
+		    		}
+		    		else if(bankProviderList.get(i).getProvider_no().equals("0002")){
+		    			bankProviderList.get(i).setStatus(0);
 			    		int result=eifPayCoreOperation.updateBankProviderStatus(bankProviderList.get(i));
 		    		}
 		    	}    	

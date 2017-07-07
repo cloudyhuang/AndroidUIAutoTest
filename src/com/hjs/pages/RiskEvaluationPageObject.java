@@ -27,7 +27,7 @@ public class RiskEvaluationPageObject extends CommonAppiumPage{
 		contextWebview(driver);
 	}
 	public RiskEvaluationResultPageObject startRiskEvaluation(String riskLevle) throws Exception{
-		if(super.isElementExsit(startRiskEvaluationBtnLocator)){
+		if(super.isElementExsit(5,startRiskEvaluationBtnLocator)){
 			WebElement startEvaluationBtn=driver.findElement(startRiskEvaluationBtnLocator);
 			startEvaluationBtn.click();
 		}

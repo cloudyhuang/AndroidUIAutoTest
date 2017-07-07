@@ -9,6 +9,7 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.openqa.selenium.By;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
@@ -29,6 +30,7 @@ public class SetBankCardPageObject extends CommonAppiumPage{
 	@AndroidFindBy(id="dlg_sms_input_singlebtn")
 	private AndroidElement smsVerifyCodeCommitBtn;		//短信验证码确认按钮
 	
+	private By bankCardIdInputLocator=By.xpath("//android.widget.TextView[contains(@text,'填写银行储蓄卡卡号')]");
 	public SetBankCardPageObject(AndroidDriver<AndroidElement> driver) {
 		super(driver);
 	}
@@ -52,6 +54,10 @@ public class SetBankCardPageObject extends CommonAppiumPage{
 		safeKeyBoard.pressFinishBtn();
 		clickEle(smsVerifyCodeCommitBtn,"短信验证码确认按钮");
 	}
+	public boolean verifyInthisPage(){
+		return isElementExsit(bankCardIdInputLocator);
+	}
+	
 	public List<SmsVerifyCode> getMsgVerifyCode(String phoneNum) throws IOException{
         Reader reader = Resources.getResourceAsReader("eifGoutongMybatis.xml");  
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  

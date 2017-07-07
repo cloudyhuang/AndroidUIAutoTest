@@ -16,7 +16,9 @@ import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 
 import com.hjs.config.CommonAppiumPage;
+import com.hjs.db.BankProvider;
 import com.hjs.db.SmsVerifyCode;
+import com.hjs.mybatis.inter.EifPayCoreOperation;
 import com.hjs.mybatis.inter.SmsVerifyCodeOperation;
 import com.hjs.publics.AppiumBaseMethod;
 import com.hjs.publics.Util;
@@ -36,6 +38,7 @@ public class RechargePageObject extends CommonAppiumPage{
 		super(driver);
 	}
 	public RechargeResultPageObject recharge(String amount,String tradePwd,String bankPhoneNum) throws Exception{
+		this.onlyOpenSHENGFUTONGProvider();	//只打开盛付通渠道
 		String rechargeMoneyInputText=rechargeMoneyInput.getText();
 		String minAmount=Util.getNumInString(rechargeMoneyInputText);
 		double doubleMinAmount=Util.stringToDouble(minAmount);
@@ -88,6 +91,33 @@ public class RechargePageObject extends CommonAppiumPage{
         } finally {
             session.close();
         }
+	}
+	public void onlyOpenSHENGFUTONGProvider() throws IOException{
+		String resource = "eifPayCoreConfig.xml";
+	    Reader reader = Resources.getResourceAsReader(resource);  
+	    SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
+	    reader.close();  
+	    SqlSession session = sqlSessionFactory.openSession();
+	    try {
+	    	EifPayCoreOperation eifPayCoreOperation=session.getMapper(EifPayCoreOperation.class);
+	    	List<BankProvider> bankProviderList = eifPayCoreOperation.getBankProvider("03080000");
+	    	if(bankProviderList.size()>0){
+		    	for(int i=0;i<bankProviderList.size();i++){
+		    		if(!bankProviderList.get(i).getProvider_no().equals("0002")){
+		    			bankProviderList.get(i).setStatus(1);
+			    		int result=eifPayCoreOperation.updateBankProviderStatus(bankProviderList.get(i));
+		    		}
+		    		else if(bankProviderList.get(i).getProvider_no().equals("0002")){
+		    			bankProviderList.get(i).setStatus(0);
+			    		int result=eifPayCoreOperation.updateBankProviderStatus(bankProviderList.get(i));
+		    		}
+		    	}    	
+		        session.commit();
+	    	}
+	        
+	    } finally {
+	        session.close();
+	    }
 	}
 	public boolean verifyInthisPage(){
 		return isElementExsit(rechargeMoneyInputLocator);

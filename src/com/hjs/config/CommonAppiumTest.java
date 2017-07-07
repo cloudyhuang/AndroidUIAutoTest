@@ -2,6 +2,9 @@ package com.hjs.config;
 
 import java.io.File;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import io.appium.java_client.AppiumDriver;
@@ -20,7 +23,9 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 
 public class CommonAppiumTest {
-	public AndroidDriver<AndroidElement> driver;
+	public static AndroidDriver<AndroidElement> driver;
+	public static DateFormat dateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
+	public static String runtime=dateFormat.format(new Date());
     private WebDriverWait wait;
     AppiumServer appiumServer;
     @BeforeSuite(alwaysRun = true)
@@ -34,7 +39,7 @@ public class CommonAppiumTest {
 		
         File classpathRoot = new File(System.getProperty("user.dir"));
         File appDir = new File(classpathRoot, "app");
-        File app = new File(appDir, "测试2.1.apk");
+        File app = new File(appDir, "app-default_channel.apk");
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "127.0.0.1:52001"); 
         capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "4.4");
@@ -44,7 +49,7 @@ public class CommonAppiumTest {
         capabilities.setCapability("resetKeyboard", true);	//运行完毕之后，变回系统的输入法
         capabilities.setCapability("noReset", true);
         driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         wait = new WebDriverWait(driver,30);
     }
     @AfterSuite(alwaysRun = true)

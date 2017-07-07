@@ -23,7 +23,7 @@ public class ChooseCouponPageObject extends CommonAppiumPage{
 	}
 	public PayPageObject chooseCoupon(String couponName) throws Exception{
 		if(couponName.equals("")){
-			if(isElementExsit(isChoosedIconLocator)){
+			if(isElementExsit(3,isChoosedIconLocator)){
 				clickEle(isChoosedIcon,"已选择图标");
 				clickEle(backBtn,"返回按钮");
 			}
@@ -32,7 +32,7 @@ public class ChooseCouponPageObject extends CommonAppiumPage{
 			}
 		}
 		else{
-			if(isElementExsit(isChoosedIconLocator)){
+			if(isElementExsit(3,isChoosedIconLocator)){
 				clickEle(isChoosedIcon,"已选择图标");
 			}
 			List<AndroidElement> couponEle=driver.findElements(By.xpath("//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/tv_coupon_name' and @text='"+couponName+"']"));

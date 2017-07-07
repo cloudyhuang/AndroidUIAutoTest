@@ -32,14 +32,19 @@ import com.hjs.publics.Util;
 
 
 public class TradeTestCase extends CommonAppiumTest{
-	private static final String DEPOSITE_PRODUCT_NAME="wj-SPV资管-转让测试1号";
-	private static final String CURRENTDEPOSITE_PRODUCT_NAME="恒存金(10000038)";
+	private static String DEPOSITE_PRODUCT_NAME="黄XAutoTest产品170627161652";
+	private static String CURRENTDEPOSITE_PRODUCT_NAME="恒存金(10000038)";
     @Test(priority = 1,enabled=false)
-    public void testBuyDepositProductByBankCardWithoutCoupon() throws Exception{
-    	try{
-    	new WelcomePageObject(driver).skipBackgroundAD();
-	    GesturePwd gesturePwd=new GesturePwd(driver);
-	    gesturePwd.inputGesturePwd(1,4,7,8);
+	public void test理财页产品信息() throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
+	    HomePageObject homepage=new HomePageObject(driver); 
+    	FinancialPageObject FinancialPage=homepage.enterFinancialPage();
+    	Assert.assertTrue(FinancialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
+    	DEPOSITE_PRODUCT_NAME=FinancialPage.testProductInfo();
+	}
+    @Test(priority = 2,enabled=false)
+    public void test银行卡不带券购买定期产品() throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	FinancialPageObject FinancialPage=homepage.enterFinancialPage();
     	Assert.assertTrue(FinancialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
@@ -54,17 +59,10 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(investResultPage.verifyInthisPage(), "支付后未跳转到支付结果页面");
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
-    	}
-    	finally{
-    	new HomePageObject(driver).backToHomePage(1,4,7,8);
-    	}
     }
-    @Test(priority = 2,enabled=false)
-    public void testBuyDepositProductByBankCardWithCashCoupon() throws Exception{
-//    	new WelcomePageObject(driver).skipBackgroundAD();
-//	    GesturePwd gesturePwd=new GesturePwd(driver);
-//	    gesturePwd.inputGesturePwd(1,4,7,8);
-    	try{
+    @Test(priority = 3,enabled=false)
+    public void test银行卡现金券购买定期产品() throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	FinancialPageObject FinancialPage=homepage.enterFinancialPage();
     	Assert.assertTrue(FinancialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
@@ -82,17 +80,10 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(investResultPage.verifyInthisPage(), "支付后未跳转到支付结果页面");
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
-    	}
-    	finally{
-        	new HomePageObject(driver).backToHomePage(1,4,7,8);
-        }
     }
-    @Test(priority = 3,enabled=false)
-    public void testBuyDepositProductByBankCardWithRateIncreasesCoupon() throws Exception{
-//    	new WelcomePageObject(driver).skipBackgroundAD();
-//	    GesturePwd gesturePwd=new GesturePwd(driver);
-//	    gesturePwd.inputGesturePwd(1,4,7,8);
-    	try{
+    @Test(priority = 4,enabled=false)
+    public void test银行卡加息券购买定期理财产品() throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	FinancialPageObject FinancialPage=homepage.enterFinancialPage();
     	Assert.assertTrue(FinancialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
@@ -110,17 +101,10 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(investResultPage.verifyInthisPage(), "支付后未跳转到支付结果页面");
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
-    	}
-    	finally{
-        	new HomePageObject(driver).backToHomePage(1,4,7,8);
-        }
     }
-    @Test(priority = 4,enabled=false)
-    public void testBuyDepositProductByBankCardWithoutCouponWithoutSmsCode() throws Exception{
-    	try{
-//    	new WelcomePageObject(driver).skipBackgroundAD();
-//	    GesturePwd gesturePwd=new GesturePwd(driver);
-//	    gesturePwd.inputGesturePwd(1,4,7,8);
+    @Test(priority = 5,enabled=false)
+    public void test银行卡不带券无短信验证码购买定期产品() throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	FinancialPageObject FinancialPage=homepage.enterFinancialPage();
     	Assert.assertTrue(FinancialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
@@ -135,17 +119,10 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(investResultPage.verifyInthisPage(), "支付后未跳转到支付结果页面");
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
-    	}
-    	finally{
-    	new HomePageObject(driver).backToHomePage(1,4,7,8);
-    	}
     }
-    @Test(priority = 5,enabled=false)
-    public void testBuyDepositProductByBankCardWithCashCouponWithoutSmsCode() throws Exception{
-//    	new WelcomePageObject(driver).skipBackgroundAD();
-//	    GesturePwd gesturePwd=new GesturePwd(driver);
-//	    gesturePwd.inputGesturePwd(1,4,7,8);
-    	try{
+    @Test(priority = 6,enabled=false)
+    public void test银行卡现金券无验证码购买定期产品() throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	FinancialPageObject FinancialPage=homepage.enterFinancialPage();
     	Assert.assertTrue(FinancialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
@@ -163,17 +140,10 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(investResultPage.verifyInthisPage(), "支付后未跳转到支付结果页面");
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
-    	}
-    	finally{
-        	new HomePageObject(driver).backToHomePage(1,4,7,8);
-        }
     }
-    @Test(priority = 6,enabled=false)
-    public void testBuyDepositProductByBankCardWithRateIncreasesCouponWithoutSmsCode() throws Exception{
-//    	new WelcomePageObject(driver).skipBackgroundAD();
-//	    GesturePwd gesturePwd=new GesturePwd(driver);
-//	    gesturePwd.inputGesturePwd(1,4,7,8);
-    	try{
+    @Test(priority = 7,enabled=false)
+    public void test银行卡加息券无验证码购买定期产品() throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	FinancialPageObject FinancialPage=homepage.enterFinancialPage();
     	Assert.assertTrue(FinancialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
@@ -191,17 +161,10 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(investResultPage.verifyInthisPage(), "支付后未跳转到支付结果页面");
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
-    	}
-    	finally{
-        	new HomePageObject(driver).backToHomePage(1,4,7,8);
-        }
     }
-    @Test(priority = 7,enabled=false)
-    public void testRecharge()throws Exception{
-//    	new WelcomePageObject(driver).skipBackgroundAD();
-//	    GesturePwd gesturePwd=new GesturePwd(driver);
-//	    gesturePwd.inputGesturePwd(1,4,7,8);
-    	try{
+    @Test(priority = 8,enabled=false)
+    public void test充值()throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	CommonAppiumPage page=homepage.enterPersonEntrace();
     	String pageName=page.getClass().getName();
@@ -220,17 +183,11 @@ public class TradeTestCase extends CommonAppiumTest{
     	accountBanlancePage=rechargeResultPage.gotoBalancePage();
     	int actualCash=accountBanlancePage.getAvailableBalance();
     	Assert.assertEquals(actualCash, expectCash,"实际剩余余额为"+actualCash+"预期剩余余额为"+expectCash);
-    	}
-    	finally{
-        	new HomePageObject(driver).backToHomePage(1,4,7,8);
-        }
+
     }
-    @Test(priority = 8,enabled=false)
-    public void testBuyDepositProductByBanlanceWithoutCoupon() throws Exception{
-//    	new WelcomePageObject(driver).skipBackgroundAD();
-//	    GesturePwd gesturePwd=new GesturePwd(driver);
-//	    gesturePwd.inputGesturePwd(1,4,7,8);
-    	try{
+    @Test(priority = 9,enabled=false)
+    public void test余额不带券购买定期产品() throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	FinancialPageObject FinancialPage=homepage.enterFinancialPage();
     	Assert.assertTrue(FinancialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
@@ -246,17 +203,11 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(investResultPage.verifyInthisPage(), "支付后未跳转到支付结果页面");
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
-    	}
-    	finally{
-        	new HomePageObject(driver).backToHomePage(1,4,7,8);
-        }
+ 
     }
-    @Test(priority = 9,enabled=false)
-    public void testBuyDepositProductByBanlanceWithCashCoupon() throws Exception{
-//    	new WelcomePageObject(driver).skipBackgroundAD();
-//	    GesturePwd gesturePwd=new GesturePwd(driver);
-//	    gesturePwd.inputGesturePwd(1,4,7,8);
-    	try{
+    @Test(priority = 10,enabled=false)
+    public void test余额现金券购买定期产品() throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	FinancialPageObject FinancialPage=homepage.enterFinancialPage();
     	Assert.assertTrue(FinancialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
@@ -274,17 +225,11 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(investResultPage.verifyInthisPage(), "支付后未跳转到支付结果页面");
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
-    	}
-    	finally{
-        	new HomePageObject(driver).backToHomePage(1,4,7,8);
-        }
+
     }
-    @Test(priority = 10,enabled=false)
-    public void testBuyDepositProductByBanlanceWithRateIncreasesCoupon() throws Exception{
-//    	new WelcomePageObject(driver).skipBackgroundAD();
-//	    GesturePwd gesturePwd=new GesturePwd(driver);
-//	    gesturePwd.inputGesturePwd(1,4,7,8);
-    	try{
+    @Test(priority = 11,enabled=false)
+    public void test余额加息券购买定期产品() throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	FinancialPageObject FinancialPage=homepage.enterFinancialPage();
     	Assert.assertTrue(FinancialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
@@ -302,17 +247,11 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(investResultPage.verifyInthisPage(), "支付后未跳转到支付结果页面");
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
-    	}
-    	finally{
-        	new HomePageObject(driver).backToHomePage(1,4,7,8);
-        }
+
     }
-    @Test(priority = 11,enabled=false)
-    public void testBuyCurrentDepositProductByBanlanceWithoutCoupon() throws Exception{
-//    	new WelcomePageObject(driver).skipBackgroundAD();
-//	    GesturePwd gesturePwd=new GesturePwd(driver);
-//	    gesturePwd.inputGesturePwd(1,4,7,8);
-    	try{
+    @Test(priority = 12,enabled=false)
+    public void test余额不带券购买活期产品() throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	FinancialPageObject FinancialPage=homepage.enterFinancialPage();
     	Assert.assertTrue(FinancialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
@@ -328,17 +267,10 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(investResultPage.verifyInthisPage(), "支付后未跳转到支付结果页面");
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资已成功")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
-    	}
-    	finally{
-        	new HomePageObject(driver).backToHomePage(1,4,7,8);
-        }
     }
-    @Test(priority = 12,enabled=false)
-    public void testBuyCurrentDepositProductByBankCardWithoutCoupon() throws Exception{
-//    	new WelcomePageObject(driver).skipBackgroundAD();
-//	    GesturePwd gesturePwd=new GesturePwd(driver);
-//	    gesturePwd.inputGesturePwd(1,4,7,8);
-    	try{
+    @Test(priority = 13,enabled=false)
+    public void test银行卡不带券购买活期产品() throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	FinancialPageObject FinancialPage=homepage.enterFinancialPage();
     	Assert.assertTrue(FinancialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
@@ -354,17 +286,10 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(investResultPage.verifyInthisPage(), "支付后未跳转到支付结果页面");
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资已成功")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
-    	}
-    	finally{
-        	new HomePageObject(driver).backToHomePage(1,4,7,8);
-        }
     }
-    @Test(priority = 13,enabled=false)
-    public void testBuyDepositProductFailByBankCardWithoutCoupon() throws Exception{
-    	try{
-    	new WelcomePageObject(driver).skipBackgroundAD();
-	    GesturePwd gesturePwd=new GesturePwd(driver);
-	    gesturePwd.inputGesturePwd(1,4,7,8);
+    @Test(priority = 14,enabled=false)
+    public void test银行卡不带券购买定期产品失败场景() throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	FinancialPageObject FinancialPage=homepage.enterFinancialPage();
     	Assert.assertTrue(FinancialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
@@ -379,17 +304,11 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(investResultPage.verifyInthisPage(), "支付后未跳转到支付结果页面");
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("交易失败"),"未跳转到投资失败页面，页面信息为:"+investResult);
-    	}
-    	finally{
-    	new HomePageObject(driver).backToHomePage(1,4,7,8);
-    	}
+
     }
-    @Test(priority = 14,enabled=false)
-    public void testWithdrawCash()throws Exception{
-//    	new WelcomePageObject(driver).skipBackgroundAD();
-//	    GesturePwd gesturePwd=new GesturePwd(driver);
-//	    gesturePwd.inputGesturePwd(1,4,7,8);
-    	try{
+    @Test(priority = 15)
+    public void test提现()throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	CommonAppiumPage page=homepage.enterPersonEntrace();
     	String pageName=page.getClass().getName();
@@ -408,54 +327,28 @@ public class TradeTestCase extends CommonAppiumTest{
     	accountBanlancePage=withdrawCashResultPage.gotoBalancePage();
     	int actualCash=accountBanlancePage.getAvailableBalance();
     	Assert.assertEquals(actualCash, expectCash,"实际剩余余额为"+actualCash+"预期剩余余额为"+expectCash);
-    	}
-    	finally{
-        	new HomePageObject(driver).backToHomePage(1,4,7,8);
-        }
     }
-    @Test(priority = 15,enabled=false)
-    public void testMyDepositeProductInfo()throws Exception{
-    	new WelcomePageObject(driver).skipBackgroundAD();
-	    GesturePwd gesturePwd=new GesturePwd(driver);
-	    gesturePwd.inputGesturePwd(1,4,7,8);
-    	try{
+    @Test(priority = 16)
+    public void test我的定期产品信息()throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	CommonAppiumPage page=homepage.enterPersonEntrace();
     	String pageName=page.getClass().getName();
     	Assert.assertTrue(pageName.contains("MinePageObject"), "点击首页-我的入口未进入我的页面");
     	MyDepositeProductPageObject myDepositeProductPage=((MinePageObject)page).enterMyDepositeProductPage();
     	Assert.assertTrue(myDepositeProductPage.verifyInthisPage(), "点击定期理财未进入我的理财产品页");
-    	String productName="定期产品1231号";
-    	MyDepositeProductDetailPageObject myDepositeProductDetailPage=myDepositeProductPage.enterDepositeProductDetail(productName);
-    	Assert.assertTrue(myDepositeProductDetailPage.verifyInthisPage(), "点击"+productName+"产品未进入我的理财产品详情页");
+    	MyDepositeProductDetailPageObject myDepositeProductDetailPage=myDepositeProductPage.enterDepositeProductDetail(DEPOSITE_PRODUCT_NAME);
+    	Assert.assertTrue(myDepositeProductDetailPage.verifyInthisPage(), "点击"+DEPOSITE_PRODUCT_NAME+"产品未进入我的理财产品详情页");
     	myDepositeProductDetailPage.assertMtpAndAppDetail("17052411184");
-    	}
-    	finally{
-        	new HomePageObject(driver).backToHomePage(1,4,7,8);
-        }
     }
-    @Test(priority = 16)
-	public void testFinancialPageProductInfo() throws Exception{
-    	new WelcomePageObject(driver).skipBackgroundAD();
-	    GesturePwd gesturePwd=new GesturePwd(driver);
-	    gesturePwd.inputGesturePwd(1,4,7,8);
-	    try{
-	    HomePageObject homepage=new HomePageObject(driver); 
-    	FinancialPageObject FinancialPage=homepage.enterFinancialPage();
-    	Assert.assertTrue(FinancialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
-    	FinancialPage.testProductInfo();
-	    }
-	    finally{
-        	new HomePageObject(driver).backToHomePage(1,4,7,8);
-        }
-	}
+
     /*
      * 请把赎回放最后一个用例*/
     @Test(priority = 40,enabled=false)
-    public void testRedeemCurrentDepositToBanlance() throws Exception{
-    	new WelcomePageObject(driver).skipBackgroundAD();
-	    GesturePwd gesturePwd=new GesturePwd(driver);
-	    gesturePwd.inputGesturePwd(1,4,7,8);
+    public void test赎回活期产品到余额() throws Exception{
+//    	new WelcomePageObject(driver).skipBackgroundAD();
+//	    GesturePwd gesturePwd=new GesturePwd(driver);
+//	    gesturePwd.inputGesturePwd(1,4,7,8);
     	try{
     	HomePageObject homepage=new HomePageObject(driver); 
     	CommonAppiumPage page=homepage.enterPersonEntrace();
@@ -469,7 +362,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	page=loginPageObject.switchAccount(phoneNum);
 		pageName=page.getClass().getName();
 		Assert.assertTrue(pageName.contains("LoginPageObject"), "验证手机号后未进入登录页面");
-		gesturePwd=((LoginPageObject)page).login("a123456");
+		GesturePwd gesturePwd=((LoginPageObject)page).login("a123456");
 		homepage=gesturePwd.skipGesturePwd();	//跳过手势密码，无需再次测试
 		Assert.assertTrue(homepage.verifyIsInHomePage(), "跳过手势密码设置后未进入主页");
     	FinancialPageObject FinancialPage=homepage.enterFinancialPage();

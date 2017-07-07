@@ -23,6 +23,7 @@ public class RiskEvaluationResultPageObject extends CommonAppiumPage{
 		//clickEle(reEvaluationBtn,"重新评测按钮");
 		AndroidElement reEvaluationBtn=driver.findElement(reEvaluationBtnLocator);
 		reEvaluationBtn.click();
+		this.backNativeApp();
 		return new RiskEvaluationPageObject(driver);
 	}
 	public String getRiskResult(){

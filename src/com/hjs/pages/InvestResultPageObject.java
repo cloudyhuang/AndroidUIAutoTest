@@ -21,15 +21,19 @@ public class InvestResultPageObject extends CommonAppiumPage{
 		super(driver);
 	}
 	public String getInvestResult(){
-		if(isElementExsit(orderResultDescLocator)){
-			return orderResultDesc.getText();
+		while(true){
+			if(isElementExsit(1,orderResultDescLocator)){
+				return orderResultDesc.getText();
+			}
+			else if(isElementExsit(1,failResultDescLocator)){
+				return failResultDesc.getText();
+			}
+			else return null;
 		}
-		else if(isElementExsit(failResultDescLocator)){
-			return failResultDesc.getText();
-		}
-		else return null;
+		
 	}
 	public boolean verifyInthisPage(){
-		return (isElementExsit(orderResultDescLocator)||isElementExsit(failResultDescLocator));
+//		return (isElementExsit(orderResultDescLocator)||isElementExsit(failResultDescLocator));
+		return isElementsExsit(orderResultDescLocator,failResultDescLocator);
 	}
 }

@@ -1,5 +1,13 @@
 package com.hjs.pages;
 
+import java.io.IOException;
+import java.io.Reader;
+import java.util.List;
+
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.openqa.selenium.By;
 
 import io.appium.java_client.android.AndroidDriver;
@@ -7,6 +15,8 @@ import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 
 import com.hjs.config.CommonAppiumPage;
+import com.hjs.db.BankProvider;
+import com.hjs.mybatis.inter.EifPayCoreOperation;
 
 public class WithdrawCashPageObject extends CommonAppiumPage{
 
@@ -23,6 +33,7 @@ public class WithdrawCashPageObject extends CommonAppiumPage{
 		super(driver);
 	}
 	public WithdrawCashResultPageObject withdrawCash(String amount,String tradePwd) throws Exception{
+		this.onlyOpenSHENGFUTONGProvider();	//只打开盛付通渠道
 		clickEle(withdrawMoneyInput,"提现输入框");
 		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
 		if(!safeKeyBoard.verifySafeKeyBoardLocated()){
@@ -39,6 +50,33 @@ public class WithdrawCashPageObject extends CommonAppiumPage{
 		}
 		safeKeyBoard.sendNum(tradePwd);
 		return new WithdrawCashResultPageObject(driver);
+	}
+	public void onlyOpenSHENGFUTONGProvider() throws IOException{
+		String resource = "eifPayCoreConfig.xml";
+	    Reader reader = Resources.getResourceAsReader(resource);  
+	    SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
+	    reader.close();  
+	    SqlSession session = sqlSessionFactory.openSession();
+	    try {
+	    	EifPayCoreOperation eifPayCoreOperation=session.getMapper(EifPayCoreOperation.class);
+	    	List<BankProvider> bankProviderList = eifPayCoreOperation.getBankProvider("03080000");
+	    	if(bankProviderList.size()>0){
+		    	for(int i=0;i<bankProviderList.size();i++){
+		    		if(!bankProviderList.get(i).getProvider_no().equals("0002")){
+		    			bankProviderList.get(i).setStatus(1);
+			    		int result=eifPayCoreOperation.updateBankProviderStatus(bankProviderList.get(i));
+		    		}
+		    		else if(bankProviderList.get(i).getProvider_no().equals("0002")){
+		    			bankProviderList.get(i).setStatus(0);
+			    		int result=eifPayCoreOperation.updateBankProviderStatus(bankProviderList.get(i));
+		    		}
+		    	}    	
+		        session.commit();
+	    	}
+	        
+	    } finally {
+	        session.close();
+	    }
 	}
 	public boolean verifyInthisPage(){
 		return isElementExsit(withdrawMoneyInputLocator);

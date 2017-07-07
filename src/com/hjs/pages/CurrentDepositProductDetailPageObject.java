@@ -24,7 +24,7 @@ public class CurrentDepositProductDetailPageObject extends CommonAppiumPage{
 		super(driver);
 	}
 	public InvestPageObject clickPayBtn(){
-		if(isElementExsit(payBtnLocator)){
+		if(isElementExsit(1,payBtnLocator)){
 			clickEle(payBtn,"点击投资按钮");
 		}
 		else{
@@ -37,6 +37,7 @@ public class CurrentDepositProductDetailPageObject extends CommonAppiumPage{
 		return new RedeemPageObject(driver);
 	}
 	public boolean verifyInthisPage(){
-		return (isElementExsit(payBtnLocator)||isElementExsit(payAgainBtnLocator));
+		//return (isElementExsit(payBtnLocator)||isElementExsit(payAgainBtnLocator));
+		return isElementsExsit(payBtnLocator,payAgainBtnLocator);
 	}
 }

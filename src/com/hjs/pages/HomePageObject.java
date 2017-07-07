@@ -42,12 +42,12 @@ public class HomePageObject extends CommonAppiumPage{
 		else return new LoginPageObject(driver);
 	}
 	public void noRemindUpdate(){
-		if (AppiumBaseMethod.isElementExsit(driver, noRemindUpdateLocator)){
+		if (isElementExsit(2,noRemindUpdateLocator)){
 			driver.findElement(noRemindUpdateLocator).click();
 		}
 	}
 	public void closeAD(){
-		if (isElementExsit(adCloseBtnLocator)){
+		if (isElementExsit(2,adCloseBtnLocator)){
 			driver.findElement(adCloseBtnLocator).click();
 		}
 	}
@@ -59,9 +59,10 @@ public class HomePageObject extends CommonAppiumPage{
 	}
 	public boolean verifyIsInHomePage(){
 		this.noRemindUpdate();
-		return isElementExsit(personEnraceLocator);
+		return isElementExsit(5,personEnraceLocator);
 	}
 	 public void backToHomePage(int...gesturePwds){
+		driver.startActivity("com.evergrande.eif.android.hengjiaosuo", "com.evergrande.eif.userInterface.activity.modules.gesturePwd.HDLoginGestureActivity");
 	    try {driver.runAppInBackground(1);}catch(Exception e){}
 	    new WelcomePageObject(driver).skipBackgroundAD();
 	    if(gesturePwds.length>0){

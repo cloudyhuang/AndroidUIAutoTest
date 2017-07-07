@@ -16,6 +16,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Reporter;
 
 import com.hjs.publics.AppiumBaseMethod;
 
@@ -27,11 +28,11 @@ import io.appium.java_client.pagefactory.TimeOutDuration;
 public class CommonAppiumPage {
 	public AndroidDriver<AndroidElement> driver; 
 
-    private static int WAIT_TIME = 3;    //默认的等待控件时间
+    private static final int WAIT_TIME = 30;    //默认的等待控件时间
     
     public CommonAppiumPage(AndroidDriver<AndroidElement> androidDriver) {
         this.driver = androidDriver;
-        PageFactory.initElements(new AppiumFieldDecorator(driver,new TimeOutDuration(2,TimeUnit.SECONDS)), this);
+        PageFactory.initElements(new AppiumFieldDecorator(driver,new TimeOutDuration(15,TimeUnit.SECONDS)), this);
         waitAuto(WAIT_TIME);
     }
     
@@ -43,6 +44,7 @@ public class CommonAppiumPage {
      */
     public void waitAuto(int time) {
         driver.manage().timeouts().implicitlyWait(time, TimeUnit.SECONDS);
+        System.out.println("设置隐式等待时间为"+time+"秒");
     }
     /**
      * Click点击控件
@@ -87,7 +89,36 @@ public class CommonAppiumPage {
             System.out.println("输出了空字符");
         }
     }
-    
+    /**
+     * 滑动到元素
+     *
+     * @param xpath 元素xpath
+     * @throws Exception 
+     */
+    public void scrollTo(String xpath) throws Exception{
+    	while(true){
+    		//滑动前获取pagesource
+    		String beforeScrollStr=driver.getPageSource();  
+    		this.swipeToUp(1000, 1);
+    		String afterScrollStr=driver.getPageSource(); 
+    		waitAuto(0);
+    		try{
+    		AndroidElement scrollToEle=driver.findElement(By.xpath(xpath));
+	    		if(scrollToEle.isDisplayed()){
+	    			waitAuto(WAIT_TIME);
+	    			break;
+	    		}
+    		}
+    		catch(Exception e){
+    			e.getMessage();
+    		}
+    		if(beforeScrollStr.equals(afterScrollStr)){
+    			waitAuto(WAIT_TIME);
+    			throw new Exception("滑动到底找不到该元素");
+    		}
+    	}
+    	waitAuto(WAIT_TIME);
+    }
 	public  Point getWebElementRealPoint(AndroidDriver<AndroidElement> driver,WebElement el){
 		AppiumBaseMethod.contextNativeApp(driver);
 	   	int devWidth= driver.manage().window().getSize().width;//[720]
@@ -175,12 +206,12 @@ public class CommonAppiumPage {
     /**
      * This Method for swipe up
      */
-    public void swipeToUp(AndroidDriver<AndroidElement> driver, int during,int times) {
+    public void swipeToUp(int during,int times) {
         int width = driver.manage().window().getSize().width;
         int height = driver.manage().window().getSize().height;
         for(int i=1;i<=times;i++){
         driver.swipe(width / 2, height * 3 / 4, width / 2, height / 4, during);
-        AppiumBaseMethod.threadsleep(500);
+        threadsleep(1000);
         }
         // wait for page loading
     }
@@ -194,7 +225,7 @@ public class CommonAppiumPage {
     	for(int i=1;i<=times;i++)
     	{
         driver.swipe(width / 2, height / 4, width / 2, height * 3 / 4, during);
-        AppiumBaseMethod.threadsleep(1000);
+        threadsleep(1000);
     	}
         // wait for page loading
     }
@@ -207,7 +238,7 @@ public class CommonAppiumPage {
         int height = driver.manage().window().getSize().height;
         for(int i=1;i<=times;i++){
         driver.swipe(width * 3 / 4, height / 2, width / 4, height / 2, during);
-        AppiumBaseMethod.threadsleep(1000);
+        threadsleep(1000);
         }
         // wait for page loading
     }
@@ -220,7 +251,7 @@ public class CommonAppiumPage {
         int height = driver.manage().window().getSize().height;
         for(int i=1;i<=times;i++){
         driver.swipe(width / 4, height / 2, width * 3 / 4, height / 2, during);
-        AppiumBaseMethod.threadsleep(1000);
+        threadsleep(1000);
         }
         // wait for page loading
     }
@@ -255,6 +286,39 @@ public class CommonAppiumPage {
 			e.printStackTrace();
     	   }
 	}
+	   /**
+     * 智能等待查找元素，每秒查找一次，总时间之后查找不到为空
+     *
+     * @param locator 元素locator
+     */
+	public AndroidElement findBy(By locator){
+		final long endTime=System.currentTimeMillis()+WAIT_TIME*1000;//System.currentTimeMillis()为自1970年1月1日0时起的毫秒数
+		AndroidElement ele=null;
+		waitAuto(0); //清除隐式等待
+		while(true){
+			try{
+				ele=driver.findElement(locator);
+				if(ele.isDisplayed()){
+					waitAuto(WAIT_TIME);
+					break;
+				}
+			}
+			catch(Exception e){
+				if(System.currentTimeMillis()<endTime){
+					Reporter.log("找不到元素，重试，locator:"+locator);
+					threadsleep(1000);//等待1s
+					continue;
+				}
+				else{
+					Reporter.log(WAIT_TIME+"秒找不到元素,locator:"+locator);
+					waitAuto(WAIT_TIME);
+					break;
+				}
+			}
+		}
+		waitAuto(WAIT_TIME);
+		return ele;
+	}
 	public boolean isElementExsit(AndroidDriver<AndroidElement> driver, By locator) {  
         boolean flag = false;  
         try {  
@@ -266,29 +330,87 @@ public class CommonAppiumPage {
         }  
         return flag;  
     } 
+/**
+  * times秒内判断元素是否存在
+  *
+  * @param times 时间s
+  * @param locator 元素locator
+  */
+	public boolean isElementExsit(int times,By locator) {  
+        boolean flag = false;  
+        try {  
+        	waitAuto(times);
+        	AndroidElement element=driver.findElement(locator);  
+            flag=null!=element;  
+        } catch (NoSuchElementException e) {  
+        	waitAuto(WAIT_TIME);
+            System.out.println("Element:" + locator.toString()  
+                    + " is not exsit!"); 
+        }  
+        waitAuto(WAIT_TIME);
+        return flag;  
+    } 
+	 /**
+     * 判断元素是否存在，时间为隐式等待时间
+     *
+     * @param locator 元素locator
+     */
 	public boolean isElementExsit(By locator) {  
         boolean flag = false;  
         try {  
-        	AndroidElement element=driver.findElement(locator);  
+//        	AndroidElement element=driver.findElement(locator); 
+        	AndroidElement element=findBy(locator);
             flag=null!=element;  
         } catch (NoSuchElementException e) {  
             System.out.println("Element:" + locator.toString()  
                     + " is not exsit!");  
         }  
         return flag;  
-    } 
 
+    } 
+	 /**
+     * 判断元素组是否存在，只要有一个存在返回true
+     *
+     * @param locator 元素locator组
+     */
+	public boolean isElementsExsit(By...locator){
+		waitAuto(0);
+		boolean flag = false;
+		for (int attempt = 0; attempt < WAIT_TIME; attempt++) {
+			for (int i = 0; i < locator.length; i++) {
+				try {
+					AndroidElement ele = driver.findElement(locator[i]);
+					if (ele.isDisplayed()) {
+						flag = true;
+						break;
+					}
+				} catch (Exception e) {
+				}
+			}
+			if (flag) {
+				break;
+			}
+			AppiumBaseMethod.threadsleep(1000);
+
+		}
+		waitAuto(WAIT_TIME);
+		return flag;
+        
+
+	}
 	
 	public void waitEleUnVisible(By by,int waittime){ 
+		waitAuto(0);
         for (int attempt = 0; attempt < waittime; attempt++) {  
             try {  
                 driver.findElement(by);  
                 AppiumBaseMethod.threadsleep(1000);
             } catch (Exception e) {  
+            	waitAuto(WAIT_TIME);
                 break; 
             }  
         }  
-		
+        waitAuto(WAIT_TIME);
 	}
 	
     public void waitForVisible(AndroidDriver<AndroidElement> driver,By by, int waitTime){

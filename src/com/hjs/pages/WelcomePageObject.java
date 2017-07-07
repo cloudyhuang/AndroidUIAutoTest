@@ -35,7 +35,7 @@ public class WelcomePageObject extends CommonAppiumPage{
 		return new HomePageObject(driver);
 	}
 	public void skipBackgroundAD(){
-		if(isElementExsit(skipBackgroundADLocator)){
+		if(isElementExsit(5,skipBackgroundADLocator)){
 			clickEle(skipBackgroundAD,"跳过背景广告按钮");
 		}
 		

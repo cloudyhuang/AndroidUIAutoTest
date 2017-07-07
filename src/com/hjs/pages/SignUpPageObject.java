@@ -41,6 +41,7 @@ public class SignUpPageObject extends CommonAppiumPage{
 		return new GesturePwd(driver);
 	}
 	public void sendMsgVerifyCode(String phoneNum) throws Exception{
+		
 		SafeKeyBoard safeKeyBoard=openSafeKeyBoard();
 		if(!safeKeyBoard.verifySafeKeyBoardLocated()){
 			throw new Exception("安全键盘未出现");
@@ -58,7 +59,7 @@ public class SignUpPageObject extends CommonAppiumPage{
 		}
 	}
 	public SafeKeyBoard openSafeKeyBoard(){
-		//clickEle(verifyCodeInput,"验证码输入框");
+		clickEle(verifyCodeInput,"验证码输入框");
 		return new SafeKeyBoard(driver);
 	}
 	public List<SmsVerifyCode> getMsgVerifyCode(String phoneNum) throws IOException{

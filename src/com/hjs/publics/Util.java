@@ -73,12 +73,13 @@ public class Util {
 	   * @return 字符串中的数字
 	   */
 	public static String getNumInString(String string) {
-		Pattern p = Pattern.compile("\\d+(\\.\\d+)?");
+		//Pattern p = Pattern.compile("\\d+(\\.\\d+)?");
+		Pattern p=Pattern.compile("[^0-9]");
 		Matcher m = p.matcher(string);
-		if (m.find()) {
-			return m.group();
-		} else
-			return "";
+//		if (m.find()) {
+//			return m.group();
+//		} else
+			return m.replaceAll("").trim();
 	}
 
 	public static double stringToDouble(String string) {
