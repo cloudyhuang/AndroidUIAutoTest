@@ -107,5 +107,4 @@ public class TradePwdResetPageObject extends CommonAppiumPage{
 	public boolean verifyInthisPage(){
 		return isElementExsit(phoneNumTextLocator);
 	}
-
 }

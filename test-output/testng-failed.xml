@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Failed suite [TestNG 项目报告]">
+<suite name="Failed suite [恒大金服UI自动化测试项目报告]">
   <listeners>
     <listener class-name="com.hjs.publics.TestNGListener"/>
     <listener class-name="org.uncommons.reportng.HTMLReporter"/>
     <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
   </listeners>
-  <test name="AppTest(failed)">
+  <test name="交易相关测试(failed)">
     <classes>
+      <class name="com.hjs.cases.TradeTestCase">
+        <methods>
+          <include name="test银行卡不带券购买活期产品"/>
+          <include name="test银行卡不带券购买定期产品失败场景"/>
+          <include name="setUp"/>
+          <include name="test赎回活期产品到余额"/>
+          <include name="tearDown"/>
+          <include name="test余额不带券购买活期产品"/>
+          <include name="test理财页产品信息"/>
+          <include name="afterMethod"/>
+        </methods>
+      </class> <!-- com.hjs.cases.TradeTestCase -->
       <class name="com.hjs.cases.AccountManageTestCase">
         <methods>
-          <include name="setUp"/>
-          <include name="tearDown"/>
-          <include name="testRealNameAndSetBankCard"/>
           <include name="afterMethod"/>
-          <include name="testUnBundBankCard"/>
         </methods>
       </class> <!-- com.hjs.cases.AccountManageTestCase -->
     </classes>
-  </test> <!-- AppTest(failed) -->
-</suite> <!-- Failed suite [TestNG 项目报告] -->
+  </test> <!-- 交易相关测试(failed) -->
+</suite> <!-- Failed suite [恒大金服UI自动化测试项目报告] -->

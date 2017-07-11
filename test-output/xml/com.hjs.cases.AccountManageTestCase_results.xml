@@ -1,125 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="AppTest"
-           tests="2"
-           failures="2"
+<testsuite name="账户管理测试"
+           tests="3"
+           failures="0"
            errors="0"
            skipped="0"
-           time="46.503">
+           time="129.708">
   <properties />
-            <testcase name="testUnBundBankCard" time="29.717" classname="com.hjs.cases.AccountManageTestCase">
-                <failure type="org.openqa.selenium.NoSuchElementException"
-                  message="Can&apos;t locate an element by this strategy: Locator map: 
-- native content: &quot;By.id: gesture_login&quot; 
-- html content: &quot;by id or name &quot;gestureLogin&quot;&quot;
-For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
-Build info: version: &apos;2.53.1&apos;, revision: &apos;a36b8b1cd5757287168e54b817830adce9b0158d&apos;, time: &apos;2016-06-30 19:26:09&apos;
-System info: host: &apos;SZ-PC095HFZ&apos;, ip: &apos;172.16.40.57&apos;, os.name: &apos;Windows 7&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;6.1&apos;, java.version: &apos;1.8.0_91&apos;
-Driver info: driver.version: unknown"
-              >
-<![CDATA[org.openqa.selenium.NoSuchElementException: Can't locate an element by this strategy: Locator map: 
-- native content: "By.id: gesture_login" 
-- html content: "by id or name "gestureLogin""
-For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
-Build info: version: '2.53.1', revision: 'a36b8b1cd5757287168e54b817830adce9b0158d', time: '2016-06-30 19:26:09'
-System info: host: 'SZ-PC095HFZ', ip: '172.16.40.57', os.name: 'Windows 7', os.arch: 'amd64', os.version: '6.1', java.version: '1.8.0_91'
-Driver info: driver.version: unknown
-  io.appium.java_client.pagefactory.AppiumElementLocator.findElement(AppiumElementLocator.java:152)
-  io.appium.java_client.pagefactory.interceptors.InterceptorOfASingleElement.intercept(InterceptorOfASingleElement.java:51)
-  io.appium.java_client.android.AndroidElement$$EnhancerByCGLIB$$c48d426e.getLocation(<generated>)
-  com.hjs.pages.GesturePwd.getLoginPointList(GesturePwd.java:124)
-  com.hjs.pages.GesturePwd.inputGesturePwd(GesturePwd.java:199)
-  com.hjs.pages.HomePageObject.backToHomePage(HomePageObject.java:70)
-  com.hjs.cases.AccountManageTestCase.testUnBundBankCard(AccountManageTestCase.java:148)
-  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-  java.lang.reflect.Method.invoke(Method.java:498)
-  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:84)
-  org.testng.internal.Invoker.invokeMethod(Invoker.java:714)
-  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
-  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
-  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
-  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
-  org.testng.TestRunner.privateRun(TestRunner.java:767)
-  org.testng.TestRunner.run(TestRunner.java:617)
-  org.testng.SuiteRunner.runTest(SuiteRunner.java:348)
-  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:343)
-  org.testng.SuiteRunner.privateRun(SuiteRunner.java:305)
-  org.testng.SuiteRunner.run(SuiteRunner.java:254)
-  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
-  org.testng.TestNG.runSuitesSequentially(TestNG.java:1224)
-  org.testng.TestNG.runSuitesLocally(TestNG.java:1149)
-  org.testng.TestNG.run(TestNG.java:1057)
-  org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
-  org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)
-  org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
-]]>
-      </failure>
-
-          </testcase>
-            <testcase name="testRealNameAndSetBankCard" time="16.786" classname="com.hjs.cases.AccountManageTestCase">
-                <failure type="org.openqa.selenium.WebDriverException"
-                  message="An unknown server-side error occurred while processing the command. (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 2.04 seconds
-Build info: version: &apos;2.53.1&apos;, revision: &apos;a36b8b1cd5757287168e54b817830adce9b0158d&apos;, time: &apos;2016-06-30 19:26:09&apos;
-System info: host: &apos;SZ-PC095HFZ&apos;, ip: &apos;172.16.40.57&apos;, os.name: &apos;Windows 7&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;6.1&apos;, java.version: &apos;1.8.0_91&apos;
-Driver info: io.appium.java_client.android.AndroidDriver
-Capabilities [{app=C:\Users\huangxiao\git\Test-UI-AndroidAuto\app\app-default_channel.apk, appPackage=com.evergrande.eif.android.hengjiaosuo, networkConnectionEnabled=true, noReset=true, warnings={}, databaseEnabled=false, deviceName=127.0.0.1:52001, platform=LINUX, desired={app=C:\Users\huangxiao\git\Test-UI-AndroidAuto\app\app-default_channel.apk, appPackage=com.evergrande.eif.android.hengjiaosuo, noReset=true, platformVersion=4.4, unicodeKeyboard=true, platformName=Android, deviceName=127.0.0.1:52001, resetKeyboard=true}, platformVersion=4.4.2, webStorageEnabled=false, locationContextEnabled=false, browserName=Android, takesScreenshot=true, javascriptEnabled=true, unicodeKeyboard=true, platformName=Android, resetKeyboard=true}]
-Session ID: 486ae47a-ee3b-4ab8-a542-275260475cd6"
-              >
-<![CDATA[org.openqa.selenium.WebDriverException: An unknown server-side error occurred while processing the command. (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 2.04 seconds
-Build info: version: '2.53.1', revision: 'a36b8b1cd5757287168e54b817830adce9b0158d', time: '2016-06-30 19:26:09'
-System info: host: 'SZ-PC095HFZ', ip: '172.16.40.57', os.name: 'Windows 7', os.arch: 'amd64', os.version: '6.1', java.version: '1.8.0_91'
-Driver info: io.appium.java_client.android.AndroidDriver
-Capabilities [{app=C:\Users\huangxiao\git\Test-UI-AndroidAuto\app\app-default_channel.apk, appPackage=com.evergrande.eif.android.hengjiaosuo, networkConnectionEnabled=true, noReset=true, warnings={}, databaseEnabled=false, deviceName=127.0.0.1:52001, platform=LINUX, desired={app=C:\Users\huangxiao\git\Test-UI-AndroidAuto\app\app-default_channel.apk, appPackage=com.evergrande.eif.android.hengjiaosuo, noReset=true, platformVersion=4.4, unicodeKeyboard=true, platformName=Android, deviceName=127.0.0.1:52001, resetKeyboard=true}, platformVersion=4.4.2, webStorageEnabled=false, locationContextEnabled=false, browserName=Android, takesScreenshot=true, javascriptEnabled=true, unicodeKeyboard=true, platformName=Android, resetKeyboard=true}]
-Session ID: 486ae47a-ee3b-4ab8-a542-275260475cd6
-  sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-  sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
-  sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-  java.lang.reflect.Constructor.newInstance(Constructor.java:423)
-  org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
-  org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
-  org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
-  io.appium.java_client.DefaultGenericMobileDriver.execute(DefaultGenericMobileDriver.java:42)
-  io.appium.java_client.AppiumDriver.execute(AppiumDriver.java:1)
-  io.appium.java_client.android.AndroidDriver.execute(AndroidDriver.java:1)
-  io.appium.java_client.AppiumDriver.performTouchAction(AppiumDriver.java:314)
-  io.appium.java_client.TouchAction.perform(TouchAction.java:301)
-  com.hjs.pages.GesturePwd.gestureTouchAction(GesturePwd.java:211)
-  com.hjs.pages.GesturePwd.inputGesturePwd(GesturePwd.java:200)
-  com.hjs.pages.HomePageObject.backToHomePage(HomePageObject.java:70)
-  com.hjs.cases.AccountManageTestCase.testRealNameAndSetBankCard(AccountManageTestCase.java:115)
-  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-  java.lang.reflect.Method.invoke(Method.java:498)
-  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:84)
-  org.testng.internal.Invoker.invokeMethod(Invoker.java:714)
-  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
-  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
-  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
-  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
-  org.testng.TestRunner.privateRun(TestRunner.java:767)
-  org.testng.TestRunner.run(TestRunner.java:617)
-  org.testng.SuiteRunner.runTest(SuiteRunner.java:348)
-  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:343)
-  org.testng.SuiteRunner.privateRun(SuiteRunner.java:305)
-  org.testng.SuiteRunner.run(SuiteRunner.java:254)
-  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
-  org.testng.TestNG.runSuitesSequentially(TestNG.java:1224)
-  org.testng.TestNG.runSuitesLocally(TestNG.java:1149)
-  org.testng.TestNG.run(TestNG.java:1057)
-  org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
-  org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)
-  org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
-]]>
-      </failure>
-
-          </testcase>
   
   
-  
+            <testcase name="testSignedPhoneLogin" time="71.985" classname="com.hjs.cases.AccountManageTestCase" />
+                <testcase name="testGesturePwd" time="37.733" classname="com.hjs.cases.AccountManageTestCase" />
+                <testcase name="testWelcomePage" time="19.990" classname="com.hjs.cases.AccountManageTestCase" />
+      
 </testsuite>

@@ -114,7 +114,7 @@ public class CommonAppiumPage {
     		}
     		if(beforeScrollStr.equals(afterScrollStr)){
     			waitAuto(WAIT_TIME);
-    			throw new Exception("滑动到底找不到该元素");
+    			throw new Exception("滑动到底找不到该元素"+xpath);
     		}
     	}
     	waitAuto(WAIT_TIME);

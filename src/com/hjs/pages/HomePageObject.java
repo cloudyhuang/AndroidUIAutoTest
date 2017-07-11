@@ -30,6 +30,7 @@ public class HomePageObject extends CommonAppiumPage{
 	private By adCloseBtnLocator=By.id("icv_advertisement_close");		//我的入口广告关闭按钮locator
 	public HomePageObject(AndroidDriver<AndroidElement> driver) {
 		super(driver);
+		this.noRemindUpdate();
 		this.closeAD();
 	}
 	public CommonAppiumPage enterPersonEntrace(){
@@ -59,6 +60,7 @@ public class HomePageObject extends CommonAppiumPage{
 	}
 	public boolean verifyIsInHomePage(){
 		this.noRemindUpdate();
+		this.closeAD();
 		return isElementExsit(5,personEnraceLocator);
 	}
 	 public void backToHomePage(int...gesturePwds){

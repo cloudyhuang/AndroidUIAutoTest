@@ -35,12 +35,12 @@ import com.hjs.publics.AppiumBaseMethod;
 import com.hjs.testDate.Account;
 
 public class AccountManageTestCase extends CommonAppiumTest {
-	@Test(priority = 1,enabled=false)
+	@Test(priority = 1,description="跳过欢迎页到主页")
 	public void testWelcomePage() throws InterruptedException{
 		WelcomePageObject welcomePageObject=new WelcomePageObject(driver); 
 		boolean isSwipeSuc=false;
 		try {
-			isSwipeSuc = welcomePageObject.swipeWelcomeImage().verifyIntoHomepageBtnExist();
+			isSwipeSuc = welcomePageObject.swipeWelcomeImage().verifyIntoHomepageBtnExist(); 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			Reporter.log(e.getMessage());
@@ -49,7 +49,7 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	boolean isIntoHomepage=welcomePageObject.intoHomepage().verifyIsInHomePage();
     	Assert.assertTrue(isIntoHomepage, "按下进入主页按钮后没有进入主页");
 	}
-    @Test(description = "登录",priority = 2,enabled=false)
+    @Test(description = "登录",priority = 2)
 	public void testSignedPhoneLogin() throws InterruptedException{
     	HomePageObject homepage=new HomePageObject(driver); 
     	CommonAppiumPage page=homepage.enterPersonEntrace();
@@ -66,7 +66,7 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	String loginResult=loginPageObject.login(password).verifyGestureTips();
     	Assert.assertEquals("请绘制您的手势密码", loginResult);
 	}
-    @Test(priority = 3,enabled=false)
+    @Test(priority = 3,description="测试手势密码")
     public void testGesturePwd()throws InterruptedException{
     	GesturePwd gesturePwd=new GesturePwd(driver);
     	String result=gesturePwd.setFirstGesturePwd(1,4,7,8);
@@ -75,7 +75,7 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	Assert.assertTrue(setNextGestureResult, "第二次设置手势失败，未跳转到主页，主页我的入口未显示");
     	
     }
-    @Test(priority = 4,enabled=false)
+    @Test(priority = 4,description="登出账户")
     public void testLogOut()throws InterruptedException{
 //    	new HomePageObject(driver).backToHomePage(1,4,7,8);//集成请清除
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -88,7 +88,7 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	boolean isLogout=personSettingPage.logOut().verifyInthisPage();
     	Assert.assertTrue(isLogout, "退出后未跳转到首页");
     }
-    @Test(priority = 5,enabled=false)
+    @Test(priority = 5,description="注册账号")
     public void testSignAccount()throws Exception{
 //    	HomePageObject homepage=new HomePageObject(driver); //集成请注释
 //    	homepage.enterPersonEntrace();//集成请注释
@@ -161,7 +161,7 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	Assert.assertEquals(bankCardName, "未设置", "解绑失败，当前银行卡为："+bankCardName);
     	
     }
-    @Test(priority = 8,enabled=false)
+    @Test(priority = 8,description="重设交易密码")
     public void testResetTradePwd()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -179,7 +179,7 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	Account.setTradePwd(newTradePwd);
     	
     }
-    @Test(priority = 9,enabled=false)
+    @Test(priority = 9,description="重设登录密码")
     public void testResetLoginPwd()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -195,7 +195,7 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	loginPwdResetPage.resetLoginPwd(Account.getLoginPwd(), "hxnearcj228");
     	Account.setLoginPwd("hxnearcj228");
     }
-    @Test(priority = 10,enabled=false)
+    @Test(priority = 10,description="风险评测")
     public void testRiskEvaluation()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -219,7 +219,7 @@ public class AccountManageTestCase extends CommonAppiumTest {
     		throw new Exception("该账号已评测过！");
     	}
     }
-    @Test(priority = 11,enabled=false)
+    @Test(priority = 11,description="重新风险评测")
     public void testReRiskEvaluation()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 

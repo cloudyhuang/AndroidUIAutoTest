@@ -1,7 +1,12 @@
 package com.hjs.cases;
 
 
+import java.io.File;
+
 import org.testng.Assert;
+import org.testng.ITestResult;
+import org.testng.Reporter;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import com.hjs.Interface.InitProduct;
@@ -32,17 +37,33 @@ import com.hjs.publics.Util;
 
 
 public class TradeTestCase extends CommonAppiumTest{
-	private static String DEPOSITE_PRODUCT_NAME="黄XAutoTest产品170627161652";
+	private static String DEPOSITE_PRODUCT_NAME="黄XAutoTest产品170710181113";
 	private static String CURRENTDEPOSITE_PRODUCT_NAME="恒存金(10000038)";
-    @Test(priority = 1,enabled=false)
+    @Test(priority = 1)
 	public void test理财页产品信息() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
-	    HomePageObject homepage=new HomePageObject(driver); 
+    	HomePageObject homepage=new HomePageObject(driver); 
+    	CommonAppiumPage page=homepage.enterPersonEntrace();
+    	String pageName=page.getClass().getName();
+    	Assert.assertTrue(pageName.contains("MinePageObject"), "点击首页-我的入口未进入我的页面");
+    	PersonSettingPageObject personSettingPage=((MinePageObject)page).enterPersonSetting();
+    	Assert.assertTrue(personSettingPage.verifyInthisPage(), "进入我的个人头像，未出现安全退出按钮");
+    	LoginPageObject loginPageObject=personSettingPage.logOut();
+    	Assert.assertTrue(loginPageObject.verifyInthisPage(), "退出后未跳转到登录页面");
+    	String phoneNum="17052411184";
+    	page=loginPageObject.switchAccount(phoneNum);
+		pageName=page.getClass().getName();
+		Assert.assertTrue(pageName.contains("LoginPageObject"), "验证手机号后未进入登录页面");
+		GesturePwd gesturePwd=((LoginPageObject)page).login("hxnearc228");
+		String result=gesturePwd.setFirstGesturePwd(1,4,7,8);
+    	Assert.assertEquals("请再画一次手势密码", result);
+    	boolean setNextGestureResult=gesturePwd.setNextGesturePwd(1,4,7,8).verifyIsInHomePage();
+    	Assert.assertTrue(setNextGestureResult, "第二次设置手势失败，未跳转到主页，主页我的入口未显示");
     	FinancialPageObject FinancialPage=homepage.enterFinancialPage();
     	Assert.assertTrue(FinancialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
     	DEPOSITE_PRODUCT_NAME=FinancialPage.testProductInfo();
 	}
-    @Test(priority = 2,enabled=false)
+    @Test(priority = 2)
     public void test银行卡不带券购买定期产品() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -60,7 +81,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
     }
-    @Test(priority = 3,enabled=false)
+    @Test(priority = 3)
     public void test银行卡现金券购买定期产品() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -81,7 +102,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
     }
-    @Test(priority = 4,enabled=false)
+    @Test(priority = 4)
     public void test银行卡加息券购买定期理财产品() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -102,7 +123,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
     }
-    @Test(priority = 5,enabled=false)
+    @Test(priority = 5)
     public void test银行卡不带券无短信验证码购买定期产品() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -120,7 +141,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
     }
-    @Test(priority = 6,enabled=false)
+    @Test(priority = 6)
     public void test银行卡现金券无验证码购买定期产品() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -141,7 +162,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
     }
-    @Test(priority = 7,enabled=false)
+    @Test(priority = 7)
     public void test银行卡加息券无验证码购买定期产品() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -162,7 +183,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
     }
-    @Test(priority = 8,enabled=false)
+    @Test(priority = 8)
     public void test充值()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -185,7 +206,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertEquals(actualCash, expectCash,"实际剩余余额为"+actualCash+"预期剩余余额为"+expectCash);
 
     }
-    @Test(priority = 9,enabled=false)
+    @Test(priority = 9)
     public void test余额不带券购买定期产品() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -205,7 +226,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
  
     }
-    @Test(priority = 10,enabled=false)
+    @Test(priority = 10)
     public void test余额现金券购买定期产品() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -227,7 +248,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
 
     }
-    @Test(priority = 11,enabled=false)
+    @Test(priority = 11)
     public void test余额加息券购买定期产品() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -249,7 +270,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
 
     }
-    @Test(priority = 12,enabled=false)
+    @Test(priority = 12)
     public void test余额不带券购买活期产品() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -268,7 +289,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资已成功")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
     }
-    @Test(priority = 13,enabled=false)
+    @Test(priority = 13)
     public void test银行卡不带券购买活期产品() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -287,7 +308,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资已成功")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
     }
-    @Test(priority = 14,enabled=false)
+    @Test(priority = 14)
     public void test银行卡不带券购买定期产品失败场景() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -344,12 +365,9 @@ public class TradeTestCase extends CommonAppiumTest{
 
     /*
      * 请把赎回放最后一个用例*/
-    @Test(priority = 40,enabled=false)
+    @Test(priority = 40)
     public void test赎回活期产品到余额() throws Exception{
-//    	new WelcomePageObject(driver).skipBackgroundAD();
-//	    GesturePwd gesturePwd=new GesturePwd(driver);
-//	    gesturePwd.inputGesturePwd(1,4,7,8);
-    	try{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	CommonAppiumPage page=homepage.enterPersonEntrace();
     	String pageName=page.getClass().getName();
@@ -376,10 +394,68 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(redeemResultPage.verifyInthisPage(), "赎回后未跳转到赎回结果页面");
     	String redeemResult=redeemResultPage.getRedeemResult();
     	Assert.assertTrue(redeemResult.equals("提交成功"), "投资失败，投资结果为:"+redeemResult);
-    	}
-    	finally{
-        	new HomePageObject(driver).backToHomePage();
+    }
+    @AfterMethod(alwaysRun = true)
+    public void afterMethod(ITestResult result) throws Exception {
+        if (!result.isSuccess())
+            catchExceptions(result);
+    }
+
+    public void catchExceptions(ITestResult result) {
+        System.out.println("result" + result);
+        String methodName = result.getName();
+        System.out.println(methodName);
+        if (!result.isSuccess()) {
+            File file = new File("snapshot");
+            Reporter.setCurrentTestResult(result);
+            System.out.println(file.getAbsolutePath());
+            Reporter.log(file.getAbsolutePath());
+            String filePath = file.getAbsolutePath();
+            //filePath  = filePath.replace("/opt/apache-tomcat-7.0.64/webapps","http://172.18.44.114:8080");
+            //Reporter.log("<img src='"+filePath+"/"+result.getName()+".jpg' hight='100' width='100'/>");
+            String dest = result.getMethod().getRealClass().getSimpleName()+"."+result.getMethod().getMethodName();
+            String picName=filePath+File.separator+dest+super.runtime;
+            String escapePicName=escapeString(picName);
+            System.out.println(escapePicName);
+            String html="<img src='"+picName+".png' onclick='window.open(\""+escapePicName+".png\")'' hight='100' width='100'/>";
+            Reporter.log(html);
+
         }
     }
+    /**
+     * 替换字符串
+     * @param 待替换string
+     * @return 替换之后的string
+     */
+    public String escapeString(String s)
+    {
+        if (s == null)
+        {
+            return null;
+        }
+        
+        StringBuilder buffer = new StringBuilder();
+        for(int i = 0; i < s.length(); i++)
+        {
+            buffer.append(escapeChar(s.charAt(i)));
+        }
+        return buffer.toString();
+    }
+
+
+    /**
+     * 将\字符替换为\\
+     * @param 待替换char
+     * @return 替换之后的char
+     */
+    private String escapeChar(char character)
+    {
+        switch (character)
+        {
+            case '\\': return "\\\\";
+            default: return String.valueOf(character);
+        }
+    }
+
 
 }

@@ -3,171 +3,88 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="" lang="">
 <head>
-  <title>自动化测试结果报告 - AppTest</title>
+  <title>自动化测试结果报告 - 账户管理测试</title>
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
   <meta name="description" content="TestNG unit test results." />
   <link href="reportng.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="reportng.js"></script>
 </head>
 <body>
-<h1>AppTest</h1>
+<h1>账户管理测试</h1>
 <p>
-  测试耗时: 81.154s
+  测试耗时: 129.711s
 </p>
 
 
 
+
+
   <table class="resultsTable">
-    <tr><th colspan="5" class="header failed">失败的测试</th></tr>
+    <tr><th colspan="3" class="header passed">通过的测试</th></tr>
           <tr>
-        <td colspan="1" class="group">com.hjs.cases.AccountManageTestCase</td>
-        <td colspan="1" class="group">耗时</td>
-        <td colspan="1" class="group">日志信息</td>
-        <td colspan="1" class="group">屏幕截图</td>
+        <td colspan="3" class="group">com.hjs.cases.AccountManageTestCase</td>
       </tr>
             
 <tr>
   <td class="method">
-                  <span class="description" title="实名并设置银行卡">testRealNameAndSetBankCard
-      (实名并设置银行卡)</span>
+                  <span class="description" title="跳过欢迎页到主页">testWelcomePage
+      (跳过欢迎页到主页)</span>
       </td>
   <td class="duration">
-    16.786s
+    19.990s
+  </td>
+  <td class="result">
+        
+    
+        
+
+      </td>
+  <td class="screenshot">
+              </td>
+</tr>
+<tr>
+  <td class="method">
+                  <span class="description" title="登录">testSignedPhoneLogin
+      (登录)</span>
+      </td>
+  <td class="duration">
+    71.985s
   </td>
   <td class="result">
         
     
             <div class="testOutput">
-                        C:\Users\huangxiao\git\Test-UI-AndroidAuto\snapshot<br />
-                                <br />
+                        进入首页-我的入口<br />
+                                未登录-跳转到登录页<br />
                   </div>
     
 
-        <a href="javascript:toggleElement('exception-0', 'block')" title="Click to expand/collapse"><b>org.openqa.selenium.WebDriverException: An unknown server-side error occurred while processing the command. (WARNING: The server did not provide any stacktrace information)<br/>
-Command duration or timeout: 2.04 seconds<br/>
-Build info: version: &apos;2.53.1&apos;, revision: &apos;a36b8b1cd5757287168e54b817830adce9b0158d&apos;, time: &apos;2016-06-30 19:26:09&apos;<br/>
-System info: host: &apos;SZ-PC095HFZ&apos;, ip: &apos;172.16.40.57&apos;, os.name: &apos;Windows 7&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;6.1&apos;, java.version: &apos;1.8.0_91&apos;<br/>
-Driver info: io.appium.java_client.android.AndroidDriver<br/>
-Capabilities [{app=C:\Users\huangxiao\git\Test-UI-AndroidAuto\app\app-default_channel.apk, appPackage=com.evergrande.eif.android.hengjiaosuo, networkConnectionEnabled=true, noReset=true, warnings={}, databaseEnabled=false, deviceName=127.0.0.1:52001, platform=LINUX, desired={app=C:\Users\huangxiao\git\Test-UI-AndroidAuto\app\app-default_channel.apk, appPackage=com.evergrande.eif.android.hengjiaosuo, noReset=true, platformVersion=4.4, unicodeKeyboard=true, platformName=Android, deviceName=127.0.0.1:52001, resetKeyboard=true}, platformVersion=4.4.2, webStorageEnabled=false, locationContextEnabled=false, browserName=Android, takesScreenshot=true, javascriptEnabled=true, unicodeKeyboard=true, platformName=Android, resetKeyboard=true}]<br/>
-Session ID: 486ae47a-ee3b-4ab8-a542-275260475cd6</b></a><br />
-    <div class="stackTrace" id="exception-0">
-              sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)<br />
-              sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)<br />
-              sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)<br />
-              java.lang.reflect.Constructor.newInstance(Constructor.java:423)<br />
-              org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)<br />
-              org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)<br />
-              org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)<br />
-              io.appium.java_client.DefaultGenericMobileDriver.execute(DefaultGenericMobileDriver.java:42)<br />
-              io.appium.java_client.AppiumDriver.execute(AppiumDriver.java:1)<br />
-              io.appium.java_client.android.AndroidDriver.execute(AndroidDriver.java:1)<br />
-              io.appium.java_client.AppiumDriver.performTouchAction(AppiumDriver.java:314)<br />
-              io.appium.java_client.TouchAction.perform(TouchAction.java:301)<br />
-              com.hjs.pages.GesturePwd.gestureTouchAction(GesturePwd.java:211)<br />
-              com.hjs.pages.GesturePwd.inputGesturePwd(GesturePwd.java:200)<br />
-              com.hjs.pages.HomePageObject.backToHomePage(HomePageObject.java:70)<br />
-              com.hjs.cases.AccountManageTestCase.testRealNameAndSetBankCard(AccountManageTestCase.java:115)<br />
-              sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br />
-              sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br />
-              sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br />
-              java.lang.reflect.Method.invoke(Method.java:498)<br />
-              org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:84)<br />
-              org.testng.internal.Invoker.invokeMethod(Invoker.java:714)<br />
-              org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)<br />
-              org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)<br />
-              org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)<br />
-              org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)<br />
-              org.testng.TestRunner.privateRun(TestRunner.java:767)<br />
-              org.testng.TestRunner.run(TestRunner.java:617)<br />
-              org.testng.SuiteRunner.runTest(SuiteRunner.java:348)<br />
-              org.testng.SuiteRunner.runSequentially(SuiteRunner.java:343)<br />
-              org.testng.SuiteRunner.privateRun(SuiteRunner.java:305)<br />
-              org.testng.SuiteRunner.run(SuiteRunner.java:254)<br />
-              org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br />
-              org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br />
-              org.testng.TestNG.runSuitesSequentially(TestNG.java:1224)<br />
-              org.testng.TestNG.runSuitesLocally(TestNG.java:1149)<br />
-              org.testng.TestNG.run(TestNG.java:1057)<br />
-              org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)<br />
-              org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)<br />
-              org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)<br />
-                </div>
       </td>
   <td class="screenshot">
                       <div class="screenshotimage">
                                                       <br />
-                                                                        <img src='C:\Users\huangxiao\git\Test-UI-AndroidAuto\snapshot\AccountManageTestCase.testRealNameAndSetBankCard20170707054239.png' onclick='window.open("C:\\Users\\huangxiao\\git\\Test-UI-AndroidAuto\\snapshot\\AccountManageTestCase.testRealNameAndSetBankCard20170707054239.png")'' hight='100' width='100'/><br />
+                                                                        <br />
                                           </div>
         </td>
 </tr>
 <tr>
   <td class="method">
-                  <span class="description" title="解绑银行卡">testUnBundBankCard
-      (解绑银行卡)</span>
+                  <span class="description" title="测试手势密码">testGesturePwd
+      (测试手势密码)</span>
       </td>
   <td class="duration">
-    29.717s
+    37.733s
   </td>
   <td class="result">
         
     
-            <div class="testOutput">
-                        C:\Users\huangxiao\git\Test-UI-AndroidAuto\snapshot<br />
-                                <br />
-                  </div>
-    
+        
 
-        <a href="javascript:toggleElement('exception-1', 'block')" title="Click to expand/collapse"><b>org.openqa.selenium.NoSuchElementException: Can&apos;t locate an element by this strategy: Locator map: <br/>
-- native content: &quot;By.id: gesture_login&quot; <br/>
-- html content: &quot;by id or name &quot;gestureLogin&quot;&quot;<br/>
-For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html<br/>
-Build info: version: &apos;2.53.1&apos;, revision: &apos;a36b8b1cd5757287168e54b817830adce9b0158d&apos;, time: &apos;2016-06-30 19:26:09&apos;<br/>
-System info: host: &apos;SZ-PC095HFZ&apos;, ip: &apos;172.16.40.57&apos;, os.name: &apos;Windows 7&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;6.1&apos;, java.version: &apos;1.8.0_91&apos;<br/>
-Driver info: driver.version: unknown</b></a><br />
-    <div class="stackTrace" id="exception-1">
-              io.appium.java_client.pagefactory.AppiumElementLocator.findElement(AppiumElementLocator.java:152)<br />
-              io.appium.java_client.pagefactory.interceptors.InterceptorOfASingleElement.intercept(InterceptorOfASingleElement.java:51)<br />
-              io.appium.java_client.android.AndroidElement$$EnhancerByCGLIB$$c48d426e.getLocation(&lt;generated&gt;)<br />
-              com.hjs.pages.GesturePwd.getLoginPointList(GesturePwd.java:124)<br />
-              com.hjs.pages.GesturePwd.inputGesturePwd(GesturePwd.java:199)<br />
-              com.hjs.pages.HomePageObject.backToHomePage(HomePageObject.java:70)<br />
-              com.hjs.cases.AccountManageTestCase.testUnBundBankCard(AccountManageTestCase.java:148)<br />
-              sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br />
-              sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br />
-              sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br />
-              java.lang.reflect.Method.invoke(Method.java:498)<br />
-              org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:84)<br />
-              org.testng.internal.Invoker.invokeMethod(Invoker.java:714)<br />
-              org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)<br />
-              org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)<br />
-              org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)<br />
-              org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)<br />
-              org.testng.TestRunner.privateRun(TestRunner.java:767)<br />
-              org.testng.TestRunner.run(TestRunner.java:617)<br />
-              org.testng.SuiteRunner.runTest(SuiteRunner.java:348)<br />
-              org.testng.SuiteRunner.runSequentially(SuiteRunner.java:343)<br />
-              org.testng.SuiteRunner.privateRun(SuiteRunner.java:305)<br />
-              org.testng.SuiteRunner.run(SuiteRunner.java:254)<br />
-              org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br />
-              org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br />
-              org.testng.TestNG.runSuitesSequentially(TestNG.java:1224)<br />
-              org.testng.TestNG.runSuitesLocally(TestNG.java:1149)<br />
-              org.testng.TestNG.run(TestNG.java:1057)<br />
-              org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)<br />
-              org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)<br />
-              org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)<br />
-                </div>
       </td>
   <td class="screenshot">
-                      <div class="screenshotimage">
-                                                      <br />
-                                                                        <img src='C:\Users\huangxiao\git\Test-UI-AndroidAuto\snapshot\AccountManageTestCase.testUnBundBankCard20170707054239.png' onclick='window.open("C:\\Users\\huangxiao\\git\\Test-UI-AndroidAuto\\snapshot\\AccountManageTestCase.testUnBundBankCard20170707054239.png")'' hight='100' width='100'/><br />
-                                          </div>
-        </td>
+              </td>
 </tr>
       </table>
-
-
   
 </body>
 </html>
