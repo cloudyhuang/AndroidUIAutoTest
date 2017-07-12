@@ -59,7 +59,6 @@ public class HomePageObject extends CommonAppiumPage{
 		return new FinancialPageObject(driver);
 	}
 	public boolean verifyIsInHomePage(){
-		this.noRemindUpdate();
 		this.closeAD();
 		return isElementExsit(5,personEnraceLocator);
 	}

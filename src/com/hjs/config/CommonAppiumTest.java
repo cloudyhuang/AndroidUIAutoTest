@@ -17,7 +17,10 @@ import org.apache.commons.exec.DefaultExecuteResultHandler;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.ITestResult;
+import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
@@ -31,7 +34,8 @@ public class CommonAppiumTest {
     @BeforeSuite(alwaysRun = true)
     public void setUp() throws Exception {
     	appiumServer=new AppiumServer();
-    	//appiumServer.stopServer();
+    	appiumServer.stopServer();	//先结束残留进程
+    	try{Thread.sleep(5000);}catch(Exception e){}
     	System.out.println("---- Starting appium server ----");
     	appiumServer.startServer();
 		System.out.println("---- Appium server started Successfully ! ----");
@@ -51,6 +55,67 @@ public class CommonAppiumTest {
         driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         wait = new WebDriverWait(driver,30);
+    }
+    @AfterMethod(alwaysRun = true)
+    public void afterMethod(ITestResult result) throws Exception {
+        if (!result.isSuccess())
+            catchExceptions(result);
+    }
+
+    public void catchExceptions(ITestResult result) {
+        System.out.println("result" + result);
+        String methodName = result.getName();
+        System.out.println(methodName);
+        if (!result.isSuccess()) {
+            File file = new File("snapshot");
+            Reporter.setCurrentTestResult(result);
+            System.out.println(file.getAbsolutePath());
+            Reporter.log(file.getAbsolutePath());
+            String filePath = file.getAbsolutePath();
+            //filePath  = filePath.replace("/opt/apache-tomcat-7.0.64/webapps","http://172.18.44.114:8080");
+            //Reporter.log("<img src='"+filePath+"/"+result.getName()+".jpg' hight='100' width='100'/>");
+            String dest = result.getMethod().getRealClass().getSimpleName()+"."+result.getMethod().getMethodName();
+            String picName=filePath+File.separator+dest+runtime;
+            String escapePicName=escapeString(picName);
+            System.out.println(escapePicName);
+            String html="<img src='"+picName+".png' onclick='window.open(\""+escapePicName+".png\")'' hight='100' width='100'/>";
+            Reporter.log(html);
+
+        }
+    }
+    /**
+     * 替换字符串
+     * @param 待替换string
+     * @return 替换之后的string
+     */
+    public String escapeString(String s)
+    {
+        if (s == null)
+        {
+            return null;
+        }
+        
+        StringBuilder buffer = new StringBuilder();
+        for(int i = 0; i < s.length(); i++)
+        {
+            buffer.append(escapeChar(s.charAt(i)));
+        }
+        return buffer.toString();
+    }
+
+
+    /**
+     * 将\字符替换为\\
+     * @param 待替换char
+     * @return 替换之后的char
+     */
+    private String escapeChar(char character)
+    {
+        switch (character)
+        {
+            case '\\': return "\\\\";
+            default: return String.valueOf(character);
+        }
     }
     @AfterSuite(alwaysRun = true)
     public void tearDown() throws Exception {

@@ -122,7 +122,12 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	PersonInfoPageObject personInfoPage=personSettingPage.gotoPersonInfo();
     	Assert.assertTrue(personInfoPage.verifyInthisPage(), "进入设置用户头像未跳转到个人信息页面");
     	RealNamePageObject realNamePageObject=personInfoPage.gotoRealNamePage();
-    	Assert.assertTrue(realNamePageObject.verifyInthisPage(), "个人信息点击未实名未跳转到实名界面");
+    	if(realNamePageObject==null){
+    		Assert.assertTrue(false,"该用户已实名，姓名为"+personInfoPage.getUserName());
+    	}
+    	else{
+    		Assert.assertTrue(realNamePageObject.verifyInthisPage(), "个人信息点击未实名未跳转到实名界面");
+    	}
     	String realName="黄霄自动化";
     	String idno="511027194810164955";
     	Account.setRealName(realName);
@@ -231,9 +236,9 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	page=personSettingPage.gotoRiskEvaluation();
     	if(page.getClass().getName().contains("RiskEvaluationResultPageObject")){
     		RiskEvaluationResultPageObject RiskEvaluationResultPage=new RiskEvaluationResultPageObject(driver);
-    		Assert.assertTrue(RiskEvaluationResultPage.verifyInthisPage(), "未进入重新风险评测页，重新评测按钮未出现");
+    		Assert.assertTrue(RiskEvaluationResultPage.verifyInthisPage(), "未进入重新风险评测页，重新评测按钮未出现");//需要再判断按钮的文字是否为重新评测，并且按钮可点击
     		RiskEvaluationPageObject RiskEvaluationPage=RiskEvaluationResultPage.reEvaluation();
-    		String riskLevel="R4";
+    		String riskLevel="R3";
     		RiskEvaluationPage.startRiskEvaluation(riskLevel);
     		String expectRiskResult=RiskEvaluationPage.riskLevelToRiskResult(riskLevel);
     		String riskResult=RiskEvaluationResultPage.getRiskResult();
@@ -245,66 +250,6 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	}
     }
     
-    @AfterMethod(alwaysRun = true)
-    public void afterMethod(ITestResult result) throws Exception {
-        if (!result.isSuccess())
-            catchExceptions(result);
-    }
-
-    public void catchExceptions(ITestResult result) {
-        System.out.println("result" + result);
-        String methodName = result.getName();
-        System.out.println(methodName);
-        if (!result.isSuccess()) {
-            File file = new File("snapshot");
-            Reporter.setCurrentTestResult(result);
-            System.out.println(file.getAbsolutePath());
-            Reporter.log(file.getAbsolutePath());
-            String filePath = file.getAbsolutePath();
-            //filePath  = filePath.replace("/opt/apache-tomcat-7.0.64/webapps","http://172.18.44.114:8080");
-            //Reporter.log("<img src='"+filePath+"/"+result.getName()+".jpg' hight='100' width='100'/>");
-            String dest = result.getMethod().getRealClass().getSimpleName()+"."+result.getMethod().getMethodName();
-            String picName=filePath+File.separator+dest+super.runtime;
-            String escapePicName=escapeString(picName);
-            System.out.println(escapePicName);
-            String html="<img src='"+picName+".png' onclick='window.open(\""+escapePicName+".png\")'' hight='100' width='100'/>";
-            Reporter.log(html);
-
-        }
-    }
-    /**
-     * 替换字符串
-     * @param 待替换string
-     * @return 替换之后的string
-     */
-    public String escapeString(String s)
-    {
-        if (s == null)
-        {
-            return null;
-        }
-        
-        StringBuilder buffer = new StringBuilder();
-        for(int i = 0; i < s.length(); i++)
-        {
-            buffer.append(escapeChar(s.charAt(i)));
-        }
-        return buffer.toString();
-    }
-
-
-    /**
-     * 将\字符替换为\\
-     * @param 待替换char
-     * @return 替换之后的char
-     */
-    private String escapeChar(char character)
-    {
-        switch (character)
-        {
-            case '\\': return "\\\\";
-            default: return String.valueOf(character);
-        }
-    }
+    
 
 }

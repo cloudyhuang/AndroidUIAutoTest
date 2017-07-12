@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuite name="账户管理测试"
-           tests="3"
+           tests="1"
            failures="0"
            errors="0"
            skipped="0"
-           time="129.708">
+           time="18.220">
   <properties />
   
   
-            <testcase name="testSignedPhoneLogin" time="71.985" classname="com.hjs.cases.AccountManageTestCase" />
-                <testcase name="testGesturePwd" time="37.733" classname="com.hjs.cases.AccountManageTestCase" />
-                <testcase name="testWelcomePage" time="19.990" classname="com.hjs.cases.AccountManageTestCase" />
+            <testcase name="testWelcomePage" time="18.220" classname="com.hjs.cases.AccountManageTestCase" />
       
 </testsuite>

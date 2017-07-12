@@ -395,67 +395,6 @@ public class TradeTestCase extends CommonAppiumTest{
     	String redeemResult=redeemResultPage.getRedeemResult();
     	Assert.assertTrue(redeemResult.equals("提交成功"), "投资失败，投资结果为:"+redeemResult);
     }
-    @AfterMethod(alwaysRun = true)
-    public void afterMethod(ITestResult result) throws Exception {
-        if (!result.isSuccess())
-            catchExceptions(result);
-    }
-
-    public void catchExceptions(ITestResult result) {
-        System.out.println("result" + result);
-        String methodName = result.getName();
-        System.out.println(methodName);
-        if (!result.isSuccess()) {
-            File file = new File("snapshot");
-            Reporter.setCurrentTestResult(result);
-            System.out.println(file.getAbsolutePath());
-            Reporter.log(file.getAbsolutePath());
-            String filePath = file.getAbsolutePath();
-            //filePath  = filePath.replace("/opt/apache-tomcat-7.0.64/webapps","http://172.18.44.114:8080");
-            //Reporter.log("<img src='"+filePath+"/"+result.getName()+".jpg' hight='100' width='100'/>");
-            String dest = result.getMethod().getRealClass().getSimpleName()+"."+result.getMethod().getMethodName();
-            String picName=filePath+File.separator+dest+super.runtime;
-            String escapePicName=escapeString(picName);
-            System.out.println(escapePicName);
-            String html="<img src='"+picName+".png' onclick='window.open(\""+escapePicName+".png\")'' hight='100' width='100'/>";
-            Reporter.log(html);
-
-        }
-    }
-    /**
-     * 替换字符串
-     * @param 待替换string
-     * @return 替换之后的string
-     */
-    public String escapeString(String s)
-    {
-        if (s == null)
-        {
-            return null;
-        }
-        
-        StringBuilder buffer = new StringBuilder();
-        for(int i = 0; i < s.length(); i++)
-        {
-            buffer.append(escapeChar(s.charAt(i)));
-        }
-        return buffer.toString();
-    }
-
-
-    /**
-     * 将\字符替换为\\
-     * @param 待替换char
-     * @return 替换之后的char
-     */
-    private String escapeChar(char character)
-    {
-        switch (character)
-        {
-            case '\\': return "\\\\";
-            default: return String.valueOf(character);
-        }
-    }
 
 
 }

@@ -4,11 +4,9 @@
 	<test verbose="2" preserve-order="true" name="账户管理测试">
 		<classes>
 			<class name="com.hjs.cases.AccountManageTestCase">
-			    <methods>
+			    <!-- <methods>
 	             <include name="testWelcomePage" />
-	             <!--  include name="testSignedPhoneLogin" />
-	             <include name="testGesturePwd" />-->
-             </methods>
+             </methods> -->
 			</class>
 		</classes>
 	</test>
