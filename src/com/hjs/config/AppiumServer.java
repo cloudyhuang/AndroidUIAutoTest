@@ -17,6 +17,8 @@ public class AppiumServer {
 		command.addArgument("127.0.0.1");
 		command.addArgument("--port");
 		command.addArgument("4723");
+		command.addArgument("--device-name");
+		command.addArgument("127.0.0.1:52001");//新加
 		command.addArgument("--no-reset");
 		command.addArgument("--command-timeout");
 		command.addArgument("600");

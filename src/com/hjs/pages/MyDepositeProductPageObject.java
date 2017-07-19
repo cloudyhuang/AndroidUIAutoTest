@@ -17,8 +17,10 @@ public class MyDepositeProductPageObject extends CommonAppiumPage{
 	}
 	public MyDepositeProductDetailPageObject enterDepositeProductDetail(String productName){
 		try{
-		AndroidElement productNameEle=driver.findElement(By.xpath("//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_product' and @text='"+productName+"']"));
-		clickEle(productNameEle,"我的理财产品名称");
+			String productXpath="//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_product' and @text='"+productName+"']";
+			super.scrollTo(productXpath);
+			AndroidElement productNameEle=driver.findElement(By.xpath("//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_product' and @text='"+productName+"']"));
+			clickEle(productNameEle,"我的理财产品名称");
 		}
 		catch(Exception e){
 			Assert.assertTrue(false,"未找到\""+productName+"\"理财产品");

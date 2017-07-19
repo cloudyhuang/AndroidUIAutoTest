@@ -273,6 +273,10 @@ public class InitProduct {
 		httpStatusCode = orderpushstatus.getStatusCode(); // 响应码
 		Assert.assertTrue(httpResult.equals(""),"创建产品出错，错误响应返回："+httpResult);
 	}
+    /**
+     * 产品上架
+     * @param productId  产品id
+     */
 	public void productIssued(String productId){
 		String url="http://172.16.57.47:48080//eif-fis-web/rpc/call/com.eif.fis.facade.biz.omc.OmcFacade/productIssued";
 		String params="[{\"ids\":[]}]";		
@@ -286,6 +290,26 @@ public class InitProduct {
 		boolean success=postJsonobj.getBoolean("success");
 		Assert.assertTrue(success,"接口返回错误，错误信息:"+msg);
 	}
+	  /**
+     * 产品下架
+     * @param productName  产品名称
+	 * @throws IOException 
+     */
+	public void productPullOffShelves(String productName) throws IOException{
+		String productId=this.getProductId(productName); 
+		String url="http://172.16.57.47:48080//eif-fis-web/rpc/call/com.eif.fis.facade.biz.omc.OmcFacade/productPullOffShelves";
+		String params="[{\"ids\":[]}]";		
+		JSONArray postJsonArray=new JSONArray(params);
+		postJsonArray.getJSONObject(0).getJSONArray("ids").put(productId);
+		httpResult = orderpushstatus.sendJsonPost(url, postJsonArray.toString());
+		httpStatusCode = orderpushstatus.getStatusCode(); // 响应码
+		System.out.println(httpResult);
+		JSONObject postJsonobj = new JSONObject(httpResult);
+		String msg=String.valueOf(postJsonobj.get("msg"));
+		boolean success=postJsonobj.getBoolean("success");
+		Assert.assertTrue(success,"接口返回错误，错误信息:"+msg);
+	}
+	
 	public String getCollectPlanId(String assetsId) throws IOException{
 		String resource = "eifFisConfig.xml";
         Reader reader = Resources.getResourceAsReader(resource);  
@@ -305,6 +329,12 @@ public class InitProduct {
         }
         
 	}
+    /**
+     * 通过产品名称获取产品ID
+     *
+     * @param productName  产品名称
+     * @return 产品ID
+     */
 	public String getProductId(String productName) throws IOException{
 		String resource = "eifFisConfig.xml";
         Reader reader = Resources.getResourceAsReader(resource);  

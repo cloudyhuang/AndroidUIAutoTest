@@ -25,7 +25,7 @@ public class WelcomePageObject extends CommonAppiumPage{
 	}
 	public WelcomePageObject swipeWelcomeImage() throws Exception{
 		if(isElementExsit(driver, welcomeImageLocator)){
-			swipeToLeft(driver,500,3);
+			swipeToLeft(driver,600,3);
 		}
 		else throw new Exception("未出现欢迎页的滑动页");
 		return new WelcomePageObject(driver);

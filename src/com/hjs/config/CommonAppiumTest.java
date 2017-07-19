@@ -33,6 +33,7 @@ public class CommonAppiumTest {
     AppiumServer appiumServer;
     @BeforeSuite(alwaysRun = true)
     public void setUp() throws Exception {
+    	deletePng("surefire-reports"+File.separator+"html");	//删除历史截图文件
     	appiumServer=new AppiumServer();
     	appiumServer.stopServer();	//先结束残留进程
     	try{Thread.sleep(5000);}catch(Exception e){}
@@ -40,7 +41,6 @@ public class CommonAppiumTest {
     	appiumServer.startServer();
 		System.out.println("---- Appium server started Successfully ! ----");
 		try{Thread.sleep(15000);}catch(Exception e){}
-		
         File classpathRoot = new File(System.getProperty("user.dir"));
         File appDir = new File(classpathRoot, "app");
         File app = new File(appDir, "app-default_channel.apk");
@@ -51,7 +51,7 @@ public class CommonAppiumTest {
         capabilities.setCapability("appPackage", "com.evergrande.eif.android.hengjiaosuo");
         capabilities.setCapability("unicodeKeyboard", true);	//支持中文
         capabilities.setCapability("resetKeyboard", true);	//运行完毕之后，变回系统的输入法
-        capabilities.setCapability("noReset", false);
+        capabilities.setCapability("noReset", false);	//是否不重新安装 true不安装，false重新安装
         driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         wait = new WebDriverWait(driver,30);
@@ -67,20 +67,37 @@ public class CommonAppiumTest {
         String methodName = result.getName();
         System.out.println(methodName);
         if (!result.isSuccess()) {
-            File file = new File("snapshot");
+            File file = new File("surefire-reports"+File.separator+"html");
             Reporter.setCurrentTestResult(result);
-            System.out.println(file.getAbsolutePath());
             Reporter.log(file.getAbsolutePath());
             String filePath = file.getAbsolutePath();
             //filePath  = filePath.replace("/opt/apache-tomcat-7.0.64/webapps","http://172.18.44.114:8080");
             //Reporter.log("<img src='"+filePath+"/"+result.getName()+".jpg' hight='100' width='100'/>");
             String dest = result.getMethod().getRealClass().getSimpleName()+"."+result.getMethod().getMethodName();
-            String picName=filePath+File.separator+dest+runtime;
+            //String picName=filePath+File.separator+dest+runtime;
+            String picName=dest+runtime;
             String escapePicName=escapeString(picName);
             System.out.println(escapePicName);
             String html="<img src='"+picName+".png' onclick='window.open(\""+escapePicName+".png\")'' hight='100' width='100'/>";
             Reporter.log(html);
 
+        }
+    }
+	public void deletePng(String abpath) {
+        String[] ss = abpath.split("/");
+        String name = ss[ss.length - 1];
+        String path = abpath.replace("/" + name, "");
+
+        File file = new File(path);// 里面输入特定目录
+        File temp = null;
+        File[] filelist = file.listFiles();
+        for (int i = 0; i < filelist.length; i++) {
+            temp = filelist[i];
+            if (temp.getName().endsWith("png") && !temp.getName().endsWith(name))// 获得文件名，如果后缀为“png”就删除文件
+            {
+                temp.delete();// 删除文件
+                System.out.println("已删除历史截图文件："+temp.getName());
+            }
         }
     }
     /**

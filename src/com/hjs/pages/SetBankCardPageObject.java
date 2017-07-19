@@ -37,6 +37,9 @@ public class SetBankCardPageObject extends CommonAppiumPage{
 	public void setBankCard(String bankCardId,String phoneNum) throws Exception{
 		clickEle(bankCardIdInput,"银行卡号输入框");
 		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
+		if(!safeKeyBoard.verifySafeKeyBoardLocated()){
+			throw new Exception("安全键盘未出现");
+		}
 		safeKeyBoard.sendNum(bankCardId);
 		safeKeyBoard.pressFinishBtn();
 		clickEle(phoneNumInput,"手机号输入框");
@@ -44,6 +47,9 @@ public class SetBankCardPageObject extends CommonAppiumPage{
 		safeKeyBoard.pressFinishBtn();
 		clickEle(commitBtn,"设置银行卡提交按钮");
 		threadsleep(2000);	//等待发送验证码
+		if(!safeKeyBoard.verifySafeKeyBoardLocated()){
+			throw new Exception("输入验证码安全键盘未出现");
+		}
 		List<SmsVerifyCode> smsVerifyCodeList=new ArrayList<SmsVerifyCode>();
 		smsVerifyCodeList=getMsgVerifyCode(phoneNum);
 		if(smsVerifyCodeList.isEmpty()){

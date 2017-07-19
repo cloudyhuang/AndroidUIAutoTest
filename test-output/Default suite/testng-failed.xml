@@ -5,8 +5,7 @@
     <classes>
       <class name="com.hjs.publics.test">
         <methods>
-          <include name="testSalutationMessage"/>
-          <include name="initEnvironmentTest"/>
+          <include name="testException"/>
         </methods>
       </class> <!-- com.hjs.publics.test -->
     </classes>

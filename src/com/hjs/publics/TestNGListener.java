@@ -46,7 +46,7 @@ public class TestNGListener implements ITestListener {
     public void captureScreenShot(ITestResult result){      
         File srcFile = TradeTestCase.driver.getScreenshotAs(OutputType.FILE);
         DateFormat dateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
-        File location = new File("snapshot");
+        File location = new File("surefire-reports"+File.separator+"html");
         String dest = result.getMethod().getRealClass().getSimpleName()+"."+result.getMethod().getMethodName();
         //File targetFile = new File(location.getAbsolutePath()+File.separator+dest+dateFormat.format(new Date())+".png");
         File targetFile = new File(location.getAbsolutePath()+File.separator+dest+CommonAppiumTest.runtime+".png");

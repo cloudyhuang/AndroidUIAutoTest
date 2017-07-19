@@ -24,6 +24,7 @@ public class GesturePwd extends CommonAppiumPage{
 	@AndroidFindBy(id="textView_gesture_setting_skip")
 	private AndroidElement skipGesturePwd;		//跳过手势密码设置
 	private By gestureTipLocator=By.id("login_gesture_tip");
+	private By gestureLoginLocator=By.id("gesture_login");
 	
 	Point point1;
     Point point2;
@@ -215,6 +216,6 @@ public class GesturePwd extends CommonAppiumPage{
         return gestureTip.getText();
     }
 	public boolean verifyInthisPage(){
-        return isElementExsit(gestureTipLocator);
+        return isElementExsit(gestureLoginLocator);
     }
 }

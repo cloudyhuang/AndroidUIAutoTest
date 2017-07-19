@@ -8,6 +8,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.client.LaxRedirectStrategy;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.annotations.Test;
@@ -23,16 +25,17 @@ public class test {
 	
 	@Test
 	public void getOrder() throws IOException{
-		String url = ("http://172.16.57.62:48080/eif-omc-web/auth/login");
-		String params = "account=huangxiao&password=123456";
-		//httpResult = orderpushstatus.sendJsonPost(url,params);
-		httpResult = orderpushstatus.sendx_www_form_urlencodedPost(url, params);//响应结果
-		httpStatusCode=orderpushstatus.getStatusCode();  //响应码
-		System.out.println(httpResult+"status:"+httpStatusCode);
-		Reporter.log("请求地址："+orderpushstatus.geturl());
-		Reporter.log("返回响应码: "+httpStatusCode);
-		Reporter.log("返回结果: "+httpResult);
-		Assert.assertEquals(200, httpStatusCode);
+		String url="http://172.16.57.47:48080//eif-fis-web/rpc/call/com.eif.fis.facade.biz.omc.OmcFacade/productPullOffShelves";
+		String params="[{\"ids\":[]}]";		
+		JSONArray postJsonArray=new JSONArray(params);
+		postJsonArray.getJSONObject(0).getJSONArray("ids").put(41327);
+		httpResult = orderpushstatus.sendJsonPost(url, postJsonArray.toString());
+		httpStatusCode = orderpushstatus.getStatusCode(); // 响应码
+		System.out.println(httpResult);
+		JSONObject postJsonobj = new JSONObject(httpResult);
+		String msg=String.valueOf(postJsonobj.get("msg"));
+		boolean success=postJsonobj.getBoolean("success");
+		Assert.assertTrue(success,"接口返回错误，错误信息:"+msg);
 
 	}
 }

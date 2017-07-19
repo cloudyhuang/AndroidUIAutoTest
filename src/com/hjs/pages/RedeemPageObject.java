@@ -25,10 +25,8 @@ public class RedeemPageObject extends CommonAppiumPage{
 		super(driver);
 	}
 	public RedeemResultPageObject redeemToBalance(String amount,String tradePwd) throws Exception{
-		this.skipGuide();
 		if(!ransomReturnToName.getText().equals("账户余额")){
-			clickEle(ransomReturnToName,"赎回到哪名称");
-			
+			clickEle(ransomReturnToName,"赎回到哪名称");	
 		}
 		clickEle(ransomInput,"赎回金额输入框");
 		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
@@ -49,11 +47,12 @@ public class RedeemPageObject extends CommonAppiumPage{
 		
 	}
 	public void skipGuide(){
-		if(super.isElementExsit(guideTipsLocator)){
+		if(super.isElementExsit(3,guideTipsLocator)){
 			clickEle(guideTips,"引导知道了按钮");
 		}
 	}
 	public boolean verifyInthisPage(){
+		this.skipGuide();
 		return isElementExsit(ransomInputLocator);
 	}
 }

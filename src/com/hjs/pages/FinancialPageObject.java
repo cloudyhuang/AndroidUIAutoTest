@@ -17,6 +17,7 @@ import com.hjs.publics.Util;
 public class FinancialPageObject extends CommonAppiumPage{
 
 	private By titleSwitchLocator=By.id("title_switch");
+	private By refreshViewLocator=By.id("refresh_animationView");
 	public FinancialPageObject(AndroidDriver<AndroidElement> driver) {
 		super(driver);
 	}
@@ -50,9 +51,12 @@ public class FinancialPageObject extends CommonAppiumPage{
 				.setMrktPlusRate(mrktPlusRate).build();
 		product.creatProduct();
 		swipeToDown(1000,1);	//下滑刷新
+		waitEleUnVisible(refreshViewLocator, 30);
+		swipeToDown(1000,1);	//下滑刷新
+		waitEleUnVisible(refreshViewLocator, 30);
+		threadsleep(5000);
 		String productXpath="//android.widget.TextView[@text='"+productName+"']";
 		super.scrollTo(productXpath);
-		//driver.scrollTo(productName);
 		AndroidElement baseProfitEle=driver.findElement(By.xpath("//android.widget.TextView[@text='"+productName+"']/ancestor::android.widget.LinearLayout[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/item_financial_home_privilege']//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/base_profit']"));
 		AndroidElement extraProfitEle=driver.findElement(By.xpath("//android.widget.TextView[@text='"+productName+"']/ancestor::android.widget.LinearLayout[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/item_financial_home_privilege']//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/extra_profit']"));
 		AndroidElement productLimitAndMinBuyAmtEle=driver.findElement(By.xpath("//android.widget.TextView[@text='"+productName+"']/ancestor::android.widget.LinearLayout[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/item_financial_home_privilege']//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/home_page_item_time']"));
@@ -71,6 +75,21 @@ public class FinancialPageObject extends CommonAppiumPage{
 		String appMinBuyAmt=Util.getNumInString(productLimitAndMinBuyAmtEle.getText().split("\\|")[1]);	//前端显示x 天  |  y元起 ,取出y
 		Assert.assertEquals(minBuyAmt,appMinBuyAmt,"前端显示起投金额与OMC配置不同，OMC："+minBuyAmt+"前端显示："+appMinBuyAmt);	//验证起投金额
 		return productName;
+	}
+	public void productPullOffAndFindProduct(String productName) throws Exception{
+		InitProduct product = new InitProduct.Builder("").build();
+		product.productPullOffShelves(productName);
+		swipeToDown(1000,1);	//下滑刷新
+		waitEleUnVisible(refreshViewLocator, 30);
+		swipeToDown(1000,1);	//下滑刷新
+		waitEleUnVisible(refreshViewLocator, 30);
+		threadsleep(5000);
+		String productXpath="//android.widget.TextView[@text='"+productName+"']";
+		try {
+			super.scrollTo(productXpath);
+		} catch (Exception e) {
+			throw new Exception("找不到下架产品");
+		}
 	}
 	public boolean verifyInthisPage(){
 		return isElementExsit(titleSwitchLocator);

@@ -96,12 +96,10 @@ public class CommonAppiumPage {
      * @throws Exception 
      */
     public void scrollTo(String xpath) throws Exception{
+   		waitAuto(0);
     	while(true){
     		//滑动前获取pagesource
     		String beforeScrollStr=driver.getPageSource();  
-    		this.swipeToUp(1000, 1);
-    		String afterScrollStr=driver.getPageSource(); 
-    		waitAuto(0);
     		try{
     		AndroidElement scrollToEle=driver.findElement(By.xpath(xpath));
 	    		if(scrollToEle.isDisplayed()){
@@ -112,6 +110,8 @@ public class CommonAppiumPage {
     		catch(Exception e){
     			e.getMessage();
     		}
+    		this.swipeToUp(1000, 1);
+    		String afterScrollStr=driver.getPageSource();
     		if(beforeScrollStr.equals(afterScrollStr)){
     			waitAuto(WAIT_TIME);
     			throw new Exception("滑动到底找不到该元素"+xpath);
@@ -237,7 +237,7 @@ public class CommonAppiumPage {
         int width = driver.manage().window().getSize().width;
         int height = driver.manage().window().getSize().height;
         for(int i=1;i<=times;i++){
-        driver.swipe(width * 3 / 4, height / 2, width / 4, height / 2, during);
+        driver.swipe(width * 9 / 10, height / 2, width / 10, height / 2, during);
         threadsleep(1000);
         }
         // wait for page loading
@@ -400,7 +400,7 @@ public class CommonAppiumPage {
 	}
 	
 	public void waitEleUnVisible(By by,int waittime){ 
-		waitAuto(0);
+		waitAuto(2);
         for (int attempt = 0; attempt < waittime; attempt++) {  
             try {  
                 driver.findElement(by);  

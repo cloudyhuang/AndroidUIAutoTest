@@ -17,6 +17,7 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import com.hjs.config.CommonAppiumPage;
 import com.hjs.db.BankProvider;
 import com.hjs.mybatis.inter.EifPayCoreOperation;
+import com.hjs.publics.Util;
 
 public class WithdrawCashPageObject extends CommonAppiumPage{
 
@@ -27,6 +28,8 @@ public class WithdrawCashPageObject extends CommonAppiumPage{
 	private AndroidElement withdrawMaxTV;		//最大提现额
 	@AndroidFindBy(id="btn_confirm_withdraw")
 	private AndroidElement confirmWithdrawBtn;		//确认提现按钮
+	@AndroidFindBy(id="tv_withdraw_count_tips")
+	private AndroidElement withdrawCountTips;		//剩余提现次数Tips
 	
 	private By withdrawMoneyInputLocator=By.id("edit_withdraw_money");
 	public WithdrawCashPageObject(AndroidDriver<AndroidElement> driver) {
@@ -50,6 +53,11 @@ public class WithdrawCashPageObject extends CommonAppiumPage{
 		}
 		safeKeyBoard.sendNum(tradePwd);
 		return new WithdrawCashResultPageObject(driver);
+	}
+	public double getWithdrawCount(){
+		String withdrawCountTipsText=withdrawCountTips.getText();
+		String withdrawCount=Util.getNumInString(withdrawCountTipsText);
+		return Util.stringToDouble(withdrawCount);
 	}
 	public void onlyOpenSHENGFUTONGProvider() throws IOException{
 		String resource = "eifPayCoreConfig.xml";

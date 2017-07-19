@@ -97,6 +97,6 @@ public class SafeKeyBoard extends CommonAppiumPage{
 	}
 	
 	public boolean verifySafeKeyBoardLocated(){
-		return isElementExsit(2,finishBtnLocator);
+		return isElementExsit(finishBtnLocator);
 	}
 }

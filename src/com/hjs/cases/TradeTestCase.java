@@ -37,8 +37,8 @@ import com.hjs.publics.Util;
 
 
 public class TradeTestCase extends CommonAppiumTest{
-	private static String DEPOSITE_PRODUCT_NAME="黄XAutoTest产品170710181113";
-	private static String CURRENTDEPOSITE_PRODUCT_NAME="恒存金(10000038)";
+	private static String DEPOSITE_PRODUCT_NAME="黄XAutoTest产品170719080529";
+	private static String CURRENTDEPOSITE_PRODUCT_NAME="恒存金-灵活理财";
     @Test(priority = 1)
 	public void test理财页产品信息() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
@@ -327,7 +327,17 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(investResult.equals("交易失败"),"未跳转到投资失败页面，页面信息为:"+investResult);
 
     }
-    @Test(priority = 15)
+    @Test(priority = 15,expectedExceptions = Exception.class, expectedExceptionsMessageRegExp="找不到下架产品")
+    public void test下架产品() throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
+    	HomePageObject homepage=new HomePageObject(driver); 
+    	FinancialPageObject financialPage=homepage.enterFinancialPage();
+    	Assert.assertTrue(financialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
+    	financialPage.productPullOffAndFindProduct(DEPOSITE_PRODUCT_NAME);
+
+
+    }
+    @Test(priority = 16)
     public void test提现()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -342,14 +352,19 @@ public class TradeTestCase extends CommonAppiumTest{
     	String stringHalfWithdrawCash=String.valueOf(halfWithdrawCash);
     	WithdrawCashPageObject withdrawCashPage=accountBanlancePage.gotoWithdrawCashPage();
     	Assert.assertTrue(withdrawCashPage.verifyInthisPage(), "点击提现未进入到提现页面");
-    	WithdrawCashResultPageObject withdrawCashResultPage=withdrawCashPage.withdrawCash(stringHalfWithdrawCash, "123456");
-    	Assert.assertTrue(withdrawCashResultPage.verifyInthisPage(), "提现输入密码后未跳转到提现结果页");
-    	Assert.assertTrue(withdrawCashResultPage.getWithdrawCashResult().contains("申请成功"), "提现申请失败，失败信息为："+withdrawCashResultPage.getWithdrawCashResult());
-    	accountBanlancePage=withdrawCashResultPage.gotoBalancePage();
-    	int actualCash=accountBanlancePage.getAvailableBalance();
-    	Assert.assertEquals(actualCash, expectCash,"实际剩余余额为"+actualCash+"预期剩余余额为"+expectCash);
+    	if(withdrawCashPage.getWithdrawCount()>0){
+	    	WithdrawCashResultPageObject withdrawCashResultPage=withdrawCashPage.withdrawCash(stringHalfWithdrawCash, "123456");
+	    	Assert.assertTrue(withdrawCashResultPage.verifyInthisPage(), "提现输入密码后未跳转到提现结果页");
+	    	Assert.assertTrue(withdrawCashResultPage.getWithdrawCashResult().contains("申请成功"), "提现申请失败，失败信息为："+withdrawCashResultPage.getWithdrawCashResult());
+	    	accountBanlancePage=withdrawCashResultPage.gotoBalancePage();
+	    	int actualCash=accountBanlancePage.getAvailableBalance();
+	    	Assert.assertEquals(actualCash, expectCash,"实际剩余余额为"+actualCash+"预期剩余余额为"+expectCash);
+    	}
+    	else{
+    		Reporter.log("注意：当前提现次数为0！");
+    	}
     }
-    @Test(priority = 16)
+    @Test(priority = 17)
     public void test我的定期产品信息()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
