@@ -4,9 +4,9 @@
            failures="1"
            errors="0"
            skipped="0"
-           time="1034.097">
+           time="1179.895">
   <properties />
-            <testcase name="testRiskEvaluation" time="74.196" classname="com.hjs.cases.AccountManageTestCase">
+            <testcase name="testRiskEvaluation" time="86.394" classname="com.hjs.cases.AccountManageTestCase">
                 <failure type="java.lang.AssertionError"
                   message="实际风评结果为成长型然而期待结果为进取型 expected [进取型] but found [成长型]"
               >
@@ -49,15 +49,15 @@
           </testcase>
   
   
-            <testcase name="testWelcomePage" time="14.154" classname="com.hjs.cases.AccountManageTestCase" />
-                <testcase name="testGesturePwd" time="32.637" classname="com.hjs.cases.AccountManageTestCase" />
-                <testcase name="testResetTradePwd" time="159.581" classname="com.hjs.cases.AccountManageTestCase" />
-                <testcase name="testSignedPhoneLogin" time="68.583" classname="com.hjs.cases.AccountManageTestCase" />
-                <testcase name="testResetLoginPwd" time="63.878" classname="com.hjs.cases.AccountManageTestCase" />
-                <testcase name="testReRiskEvaluation" time="101.281" classname="com.hjs.cases.AccountManageTestCase" />
-                <testcase name="testUnBundBankCard" time="76.821" classname="com.hjs.cases.AccountManageTestCase" />
-                <testcase name="testRealNameAndSetBankCard" time="249.530" classname="com.hjs.cases.AccountManageTestCase" />
-                <testcase name="testSignAccount" time="174.040" classname="com.hjs.cases.AccountManageTestCase" />
-                <testcase name="testLogOut" time="19.396" classname="com.hjs.cases.AccountManageTestCase" />
+            <testcase name="testResetTradePwd" time="207.357" classname="com.hjs.cases.AccountManageTestCase" />
+                <testcase name="testReRiskEvaluation" time="126.031" classname="com.hjs.cases.AccountManageTestCase" />
+                <testcase name="testWelcomePage" time="16.185" classname="com.hjs.cases.AccountManageTestCase" />
+                <testcase name="testGesturePwd" time="32.954" classname="com.hjs.cases.AccountManageTestCase" />
+                <testcase name="testRealNameAndSetBankCard" time="260.616" classname="com.hjs.cases.AccountManageTestCase" />
+                <testcase name="testSignedPhoneLogin" time="67.835" classname="com.hjs.cases.AccountManageTestCase" />
+                <testcase name="testSignAccount" time="203.153" classname="com.hjs.cases.AccountManageTestCase" />
+                <testcase name="testUnBundBankCard" time="86.111" classname="com.hjs.cases.AccountManageTestCase" />
+                <testcase name="testResetLoginPwd" time="74.202" classname="com.hjs.cases.AccountManageTestCase" />
+                <testcase name="testLogOut" time="19.057" classname="com.hjs.cases.AccountManageTestCase" />
       
 </testsuite>

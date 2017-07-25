@@ -51,7 +51,7 @@ public class CommonAppiumTest {
         capabilities.setCapability("appPackage", "com.evergrande.eif.android.hengjiaosuo");
         capabilities.setCapability("unicodeKeyboard", true);	//支持中文
         capabilities.setCapability("resetKeyboard", true);	//运行完毕之后，变回系统的输入法
-        capabilities.setCapability("noReset", false);	//是否不重新安装 true不安装，false重新安装
+        capabilities.setCapability("noReset", true);	//是否不重新安装 true不安装，false重新安装
         driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         wait = new WebDriverWait(driver,30);
@@ -69,12 +69,10 @@ public class CommonAppiumTest {
         if (!result.isSuccess()) {
             File file = new File("surefire-reports"+File.separator+"html");
             Reporter.setCurrentTestResult(result);
-            Reporter.log(file.getAbsolutePath());
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+            Reporter.log("用例失败时间："+df.format(new Date()));
             String filePath = file.getAbsolutePath();
-            //filePath  = filePath.replace("/opt/apache-tomcat-7.0.64/webapps","http://172.18.44.114:8080");
-            //Reporter.log("<img src='"+filePath+"/"+result.getName()+".jpg' hight='100' width='100'/>");
             String dest = result.getMethod().getRealClass().getSimpleName()+"."+result.getMethod().getMethodName();
-            //String picName=filePath+File.separator+dest+runtime;
             String picName=dest+runtime;
             String escapePicName=escapeString(picName);
             System.out.println(escapePicName);
@@ -91,6 +89,7 @@ public class CommonAppiumTest {
         File file = new File(path);// 里面输入特定目录
         File temp = null;
         File[] filelist = file.listFiles();
+        if(filelist!=null){
         for (int i = 0; i < filelist.length; i++) {
             temp = filelist[i];
             if (temp.getName().endsWith("png") && !temp.getName().endsWith(name))// 获得文件名，如果后缀为“png”就删除文件
@@ -98,6 +97,7 @@ public class CommonAppiumTest {
                 temp.delete();// 删除文件
                 System.out.println("已删除历史截图文件："+temp.getName());
             }
+        }
         }
     }
     /**

@@ -54,7 +54,7 @@ public class PersonSettingPageObject extends CommonAppiumPage{
 	}
 	public CommonAppiumPage gotoRiskEvaluation(){
 		
-		if(riskResult.getText().contains("尚未评测")){
+		if(riskResult.getText().contains("立即评测")){
 			clickEle(gotoRiskEvaluationBtn,"跳转风险评测按钮");
 			return new RiskEvaluationPageObject(driver);
 		}

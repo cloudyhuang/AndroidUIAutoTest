@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Failed suite [Default suite]">
-  <test name="Default test(failed)">
+<suite name="Failed suite [恒大金服UI自动化测试项目报告]">
+  <listeners>
+    <listener class-name="com.hjs.publics.TestNGListener"/>
+    <listener class-name="org.uncommons.reportng.HTMLReporter"/>
+    <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
+  </listeners>
+  <test name="交易相关测试(failed)">
     <classes>
-      <class name="com.hjs.publics.test">
+      <class name="com.hjs.cases.TradeTestCase">
         <methods>
-          <include name="testException"/>
+          <include name="setUp"/>
+          <include name="afterMethod"/>
+          <include name="tearDown"/>
+          <include name="test银行卡不带券无短信验证码购买定期产品"/>
         </methods>
-      </class> <!-- com.hjs.publics.test -->
+      </class> <!-- com.hjs.cases.TradeTestCase -->
     </classes>
-  </test> <!-- Default test(failed) -->
-</suite> <!-- Failed suite [Default suite] -->
+  </test> <!-- 交易相关测试(failed) -->
+</suite> <!-- Failed suite [恒大金服UI自动化测试项目报告] -->

@@ -32,9 +32,9 @@ import org.testng.annotations.Test;
 import com.hjs.config.AppiumServer;
 
 public class test {
-	 @Test(expectedExceptions = IllegalArgumentException.class, expectedExceptionsMessageRegExp="找到了产品")
-	    public void testException(){
-	        throw new IllegalArgumentException("找不到产品");
-	    }
+	public static void main(String[] args) { 
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+		System.out.println(df.format(new Date()));// new Date()为获取当前系统时间
+		}
 
 }

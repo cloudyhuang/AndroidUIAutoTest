@@ -62,9 +62,6 @@ public class RechargePageObject extends CommonAppiumPage{
 		}
 		safeKeyBoard.sendNum(tradePwd);
 		threadsleep(2000);	//等待发送验证码
-		if(!safeKeyBoard.verifySafeKeyBoardLocated()){
-			throw new Exception("输入验证码安全键盘未出现");
-		}
 		List<SmsVerifyCode> smsVerifyCodeList=new ArrayList<SmsVerifyCode>();
 		smsVerifyCodeList=getMsgVerifyCode(bankPhoneNum);
 		if(smsVerifyCodeList.isEmpty()){

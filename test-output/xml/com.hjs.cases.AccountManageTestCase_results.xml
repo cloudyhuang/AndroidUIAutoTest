@@ -4,10 +4,10 @@
            failures="0"
            errors="0"
            skipped="0"
-           time="18.220">
+           time="171.545">
   <properties />
   
   
-            <testcase name="testWelcomePage" time="18.220" classname="com.hjs.cases.AccountManageTestCase" />
+            <testcase name="testReRiskEvaluation" time="171.545" classname="com.hjs.cases.AccountManageTestCase" />
       
 </testsuite>
