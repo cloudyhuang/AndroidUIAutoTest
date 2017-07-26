@@ -44,6 +44,8 @@ public class TestNGListener implements ITestListener {
     public void onFinish(ITestContext context) {}
 
     public void captureScreenShot(ITestResult result){      
+    	String contextName = TradeTestCase.driver.getContext();
+    	TradeTestCase.driver.context("NATIVE_APP");
         File srcFile = TradeTestCase.driver.getScreenshotAs(OutputType.FILE);
         DateFormat dateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
         File location = new File("surefire-reports"+File.separator+"html");
@@ -51,7 +53,7 @@ public class TestNGListener implements ITestListener {
         //File targetFile = new File(location.getAbsolutePath()+File.separator+dest+dateFormat.format(new Date())+".png");
         File targetFile = new File(location.getAbsolutePath()+File.separator+dest+CommonAppiumTest.runtime+".png");
         System.out.println("----------------- file is " + targetFile.getPath());
-
+        
         try {
             FileUtils.copyFile(srcFile, targetFile);
         } catch (IOException e1) {

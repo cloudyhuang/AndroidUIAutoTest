@@ -23,7 +23,7 @@
     <div class="top-banner-root">
       <span class="top-banner-title-font">Test results</span>
       <br/>
-      <span class="top-banner-font-1">1 suite</span>
+      <span class="top-banner-font-1">1 suite, 1 failed test</span>
     </div> <!-- top-banner-root -->
     <div class="navigator-root">
       <div class="navigator-suite-header">
@@ -37,7 +37,7 @@
         <div class="rounded-window">
           <div class="suite-header light-rounded-window-top">
             <a href="#" class="navigator-link" panel-name="suite-恒大金服UI自动化测试项目报告">
-              <span class="suite-name border-skipped">恒大金服UI自动化测试项目报告</span>
+              <span class="suite-name border-failed">恒大金服UI自动化测试项目报告</span>
             </a> <!-- navigator-link -->
           </div> <!-- suite-header light-rounded-window-top -->
           <div class="navigator-suite-content">
@@ -90,21 +90,21 @@
               <div class="suite-section-content">
                 <ul>
                   <li>
-                    <span class="method-stats">1 method,  1 skipped,  </span>
+                    <span class="method-stats">1 method, 1 failed,   </span>
                   </li>
                   <li>
-                    <span class="method-list-title skipped">Skipped methods</span>
-                    <span class="show-or-hide-methods skipped">
-                      <a href="#" panel-name="suite-恒大金服UI自动化测试项目报告" class="hide-methods skipped suite-恒大金服UI自动化测试项目报告"> (hide)</a> <!-- hide-methods skipped suite-恒大金服UI自动化测试项目报告 -->
-                      <a href="#" panel-name="suite-恒大金服UI自动化测试项目报告" class="show-methods skipped suite-恒大金服UI自动化测试项目报告"> (show)</a> <!-- show-methods skipped suite-恒大金服UI自动化测试项目报告 -->
+                    <span class="method-list-title failed">Failed methods</span>
+                    <span class="show-or-hide-methods failed">
+                      <a href="#" panel-name="suite-恒大金服UI自动化测试项目报告" class="hide-methods failed suite-恒大金服UI自动化测试项目报告"> (hide)</a> <!-- hide-methods failed suite-恒大金服UI自动化测试项目报告 -->
+                      <a href="#" panel-name="suite-恒大金服UI自动化测试项目报告" class="show-methods failed suite-恒大金服UI自动化测试项目报告"> (show)</a> <!-- show-methods failed suite-恒大金服UI自动化测试项目报告 -->
                     </span>
-                    <div class="method-list-content skipped suite-恒大金服UI自动化测试项目报告">
+                    <div class="method-list-content failed suite-恒大金服UI自动化测试项目报告">
                       <span>
-                        <img width="3%" src="skipped.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-恒大金服UI自动化测试项目报告" title="com.hjs.cases.TradeTestCase" hash-for-method="test银行卡不带券无短信验证码购买定期产品">test银行卡不带券无短信验证码购买定期产品</a> <!-- method navigator-link -->
+                        <img width="3%" src="failed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-恒大金服UI自动化测试项目报告" title="com.hjs.cases.AccountManageTestCase" hash-for-method="testRiskEvaluation">testRiskEvaluation</a> <!-- method navigator-link -->
                       </span>
                       <br/>
-                    </div> <!-- method-list-content skipped suite-恒大金服UI自动化测试项目报告 -->
+                    </div> <!-- method-list-content failed suite-恒大金服UI自动化测试项目报告 -->
                   </li>
                 </ul>
               </div> <!-- suite-section-content -->
@@ -116,21 +116,82 @@
     <div class="wrapper">
       <div class="main-panel-root">
         <div panel-name="suite-恒大金服UI自动化测试项目报告" class="panel 恒大金服UI自动化测试项目报告">
-          <div class="suite-恒大金服UI自动化测试项目报告-class-skipped">
+          <div class="suite-恒大金服UI自动化测试项目报告-class-failed">
             <div class="main-panel-header rounded-window-top">
-              <img src="skipped.png"/>
-              <span class="class-name">com.hjs.cases.TradeTestCase</span>
+              <img src="failed.png"/>
+              <span class="class-name">com.hjs.cases.AccountManageTestCase</span>
             </div> <!-- main-panel-header rounded-window-top -->
             <div class="main-panel-content rounded-window-bottom">
               <div class="method">
                 <div class="method-content">
-                  <a name="test银行卡不带券无短信验证码购买定期产品">
-                  </a> <!-- test银行卡不带券无短信验证码购买定期产品 -->
-                  <span class="method-name">test银行卡不带券无短信验证码购买定期产品</span>
+                  <a name="testRiskEvaluation">
+                  </a> <!-- testRiskEvaluation -->
+                  <span class="method-name">testRiskEvaluation</span>
+                  <div class="stack-trace">org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//div[@class=&apos;questions&apos;][0]/div[@class=&apos;answer-area&apos;][1]/div&quot;}
+  (Session info: webview=30.0.0.0)
+  (Driver info: chromedriver=2.18.343845 (73dd713ba7fbfb73cbb514e62641d8c96a94682a),platform=Windows NT 6.1 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 30.07 seconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: &apos;2.53.1&apos;, revision: &apos;a36b8b1cd5757287168e54b817830adce9b0158d&apos;, time: &apos;2016-06-30 19:26:09&apos;
+System info: host: &apos;SZ-PC095HFZ&apos;, ip: &apos;172.16.40.24&apos;, os.name: &apos;Windows 7&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;6.1&apos;, java.version: &apos;1.8.0_91&apos;
+Driver info: io.appium.java_client.android.AndroidDriver
+Capabilities [{app=C:\Users\huangxiao\git\Test-UI-AndroidAuto\app\app-default_channel.apk, appPackage=com.evergrande.eif.android.hengjiaosuo, networkConnectionEnabled=true, noReset=true, warnings={}, databaseEnabled=false, deviceName=127.0.0.1:52001, platform=LINUX, desired={app=C:\Users\huangxiao\git\Test-UI-AndroidAuto\app\app-default_channel.apk, appPackage=com.evergrande.eif.android.hengjiaosuo, noReset=true, platformVersion=4.4, unicodeKeyboard=true, platformName=Android, deviceName=127.0.0.1:52001, resetKeyboard=true}, platformVersion=4.4.2, webStorageEnabled=false, locationContextEnabled=false, browserName=Android, takesScreenshot=true, javascriptEnabled=true, unicodeKeyboard=true, platformName=Android, resetKeyboard=true}]
+Session ID: b2e1665a-bde2-4c4d-ab39-3750564b1f19
+*** Element info: {Using=xpath, value=//div[@class=&apos;questions&apos;][0]/div[@class=&apos;answer-area&apos;][1]/div}
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+	at io.appium.java_client.DefaultGenericMobileDriver.execute(DefaultGenericMobileDriver.java:42)
+	at io.appium.java_client.AppiumDriver.execute(AppiumDriver.java:1)
+	at io.appium.java_client.android.AndroidDriver.execute(AndroidDriver.java:1)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:363)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:500)
+	at io.appium.java_client.DefaultGenericMobileDriver.findElementByXPath(DefaultGenericMobileDriver.java:132)
+	at io.appium.java_client.AppiumDriver.findElementByXPath(AppiumDriver.java:1)
+	at io.appium.java_client.android.AndroidDriver.findElementByXPath(AndroidDriver.java:1)
+	at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:355)
+	at io.appium.java_client.DefaultGenericMobileDriver.findElement(DefaultGenericMobileDriver.java:52)
+	at io.appium.java_client.AppiumDriver.findElement(AppiumDriver.java:1)
+	at io.appium.java_client.android.AndroidDriver.findElement(AndroidDriver.java:1)
+	at com.hjs.pages.RiskEvaluationPageObject.startRiskEvaluation(RiskEvaluationPageObject.java:40)
+	at com.hjs.cases.AccountManageTestCase.testRiskEvaluation(AccountManageTestCase.java:217)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:84)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
+	at org.testng.TestRunner.privateRun(TestRunner.java:767)
+	at org.testng.TestRunner.run(TestRunner.java:617)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:348)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:343)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:305)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:254)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1224)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1149)
+	at org.testng.TestNG.run(TestNG.java:1057)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
+
+</div> <!-- stack-trace -->
+                  <em>
+(风险评测)                  </em>
                 </div> <!-- method-content -->
               </div> <!-- method -->
             </div> <!-- main-panel-content rounded-window-bottom -->
-          </div> <!-- suite-恒大金服UI自动化测试项目报告-class-skipped -->
+          </div> <!-- suite-恒大金服UI自动化测试项目报告-class-failed -->
         </div> <!-- panel 恒大金服UI自动化测试项目报告 -->
         <div panel-name="test-xml-恒大金服UI自动化测试项目报告" class="panel">
           <div class="main-panel-header rounded-window-top">
@@ -146,15 +207,15 @@
     &lt;listener class-name=&quot;org.uncommons.reportng.HTMLReporter&quot;/&gt;
     &lt;listener class-name=&quot;org.uncommons.reportng.JUnitXMLReporter&quot;/&gt;
   &lt;/listeners&gt;
-  &lt;test verbose=&quot;2&quot; name=&quot;交易相关测试&quot;&gt;
+  &lt;test verbose=&quot;2&quot; name=&quot;账户管理测试&quot;&gt;
     &lt;classes&gt;
-      &lt;class name=&quot;com.hjs.cases.TradeTestCase&quot;&gt;
+      &lt;class name=&quot;com.hjs.cases.AccountManageTestCase&quot;&gt;
         &lt;methods&gt;
-          &lt;include name=&quot;test银行卡不带券无短信验证码购买定期产品&quot;/&gt;
+          &lt;include name=&quot;testRiskEvaluation&quot;/&gt;
         &lt;/methods&gt;
-      &lt;/class&gt; &lt;!-- com.hjs.cases.TradeTestCase --&gt;
+      &lt;/class&gt; &lt;!-- com.hjs.cases.AccountManageTestCase --&gt;
     &lt;/classes&gt;
-  &lt;/test&gt; &lt;!-- 交易相关测试 --&gt;
+  &lt;/test&gt; &lt;!-- 账户管理测试 --&gt;
 &lt;/suite&gt; &lt;!-- 恒大金服UI自动化测试项目报告 --&gt;
             </pre>
           </div> <!-- main-panel-content rounded-window-bottom -->
@@ -166,7 +227,7 @@
           <div class="main-panel-content rounded-window-bottom">
             <ul>
               <li>
-                <span class="test-name">交易相关测试 (1 class)</span>
+                <span class="test-name">账户管理测试 (1 class)</span>
               </li>
             </ul>
           </div> <!-- main-panel-content rounded-window-bottom -->
@@ -194,14 +255,14 @@ data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
 data.addRows(1);
 data.setCell(0, 0, 0)
-data.setCell(0, 1, 'test银行卡不带券无短信验证码购买定期产品')
-data.setCell(0, 2, 'com.hjs.cases.TradeTestCase')
-data.setCell(0, 3, 4);
+data.setCell(0, 1, 'testRiskEvaluation')
+data.setCell(0, 2, 'com.hjs.cases.AccountManageTestCase')
+data.setCell(0, 3, 103134);
 window.suiteTableData['恒大金服UI自动化测试项目报告']= { tableData: data, tableDiv: 'times-div-恒大金服UI自动化测试项目报告'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 4 ms</span>
+              <span class="suite-total-time">Total running time: 1 minutes</span>
               <div id="times-div-恒大金服UI自动化测试项目报告">
               </div> <!-- times-div-恒大金服UI自动化测试项目报告 -->
             </div> <!-- times-div -->
@@ -213,55 +274,41 @@ return data;
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="reporter-method-div">
-              <span class="reporter-method-name">test银行卡不带券无短信验证码购买定期产品</span>
+              <span class="reporter-method-name">testRiskEvaluation</span>
               <div class="reporter-method-output-div">
-                <span class="reporter-method-output">用例失败时间：2017-07-25 10:09:42</span>
-                <span class="reporter-method-output"><img src='TradeTestCase.test银行卡不带券无短信验证码购买定期产品20170725100919.png' onclick='window.open("TradeTestCase.test银行卡不带券无短信验证码购买定期产品20170725100919.png")'' hight='100' width='100'/></span>
+                <span class="reporter-method-output">用例失败时间：2017-07-26 15:19:10</span>
+                <span class="reporter-method-output"><img src='AccountManageTestCase.testRiskEvaluation20170726031648.png' onclick='window.open("AccountManageTestCase.testRiskEvaluation20170726031648.png")'' hight='100' width='100'/></span>
               </div> <!-- reporter-method-output-div -->
             </div> <!-- reporter-method-div -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
         <div panel-name="ignored-methods-恒大金服UI自动化测试项目报告" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">17 ignored methods</span>
+            <span class="header-content">10 ignored methods</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="ignored-class-div">
-              <span class="ignored-class-name">com.hjs.cases.TradeTestCase</span>
+              <span class="ignored-class-name">com.hjs.cases.AccountManageTestCase</span>
               <div class="ignored-methods-div">
-                <span class="ignored-method-name">test余额现金券购买定期产品</span>
+                <span class="ignored-method-name">testSignedPhoneLogin</span>
                 <br/>
-                <span class="ignored-method-name">test银行卡不带券购买活期产品</span>
+                <span class="ignored-method-name">testLogOut</span>
                 <br/>
-                <span class="ignored-method-name">test银行卡不带券购买定期产品失败场景</span>
+                <span class="ignored-method-name">testGesturePwd</span>
                 <br/>
-                <span class="ignored-method-name">test理财页产品信息</span>
+                <span class="ignored-method-name">testResetLoginPwd</span>
                 <br/>
-                <span class="ignored-method-name">test我的定期产品信息</span>
+                <span class="ignored-method-name">testWelcomePage</span>
                 <br/>
-                <span class="ignored-method-name">test银行卡加息券无验证码购买定期产品</span>
+                <span class="ignored-method-name">testRealNameAndSetBankCard</span>
                 <br/>
-                <span class="ignored-method-name">test充值</span>
+                <span class="ignored-method-name">testSignAccount</span>
                 <br/>
-                <span class="ignored-method-name">test提现</span>
+                <span class="ignored-method-name">testUnBundBankCard</span>
                 <br/>
-                <span class="ignored-method-name">test银行卡现金券购买定期产品</span>
+                <span class="ignored-method-name">testResetTradePwd</span>
                 <br/>
-                <span class="ignored-method-name">test银行卡加息券购买定期理财产品</span>
-                <br/>
-                <span class="ignored-method-name">test银行卡现金券无验证码购买定期产品</span>
-                <br/>
-                <span class="ignored-method-name">test银行卡不带券购买定期产品</span>
-                <br/>
-                <span class="ignored-method-name">test余额加息券购买定期产品</span>
-                <br/>
-                <span class="ignored-method-name">test下架产品</span>
-                <br/>
-                <span class="ignored-method-name">test赎回活期产品到余额</span>
-                <br/>
-                <span class="ignored-method-name">test余额不带券购买活期产品</span>
-                <br/>
-                <span class="ignored-method-name">test余额不带券购买定期产品</span>
+                <span class="ignored-method-name">testReRiskEvaluation</span>
                 <br/>
               </div> <!-- ignored-methods-div -->
             </div> <!-- ignored-class-div -->
@@ -273,26 +320,24 @@ return data;
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="chronological-class">
-              <div class="chronological-class-name">com.hjs.cases.TradeTestCase</div> <!-- chronological-class-name -->
+              <div class="chronological-class-name">com.hjs.cases.AccountManageTestCase</div> <!-- chronological-class-name -->
               <div class="configuration-suite before">
-                <img src="failed.png">
-                </img>
                 <span class="method-name">setUp</span>
                 <span class="method-start">0 ms</span>
               </div> <!-- configuration-suite before -->
               <div class="test-method">
-                <span class="method-name">test银行卡不带券无短信验证码购买定期产品</span>
-                <span class="method-start">22586 ms</span>
-              </div> <!-- test-method -->
-              <div class="configuration-method after">
-                <span class="method-name">afterMethod([TestResult name=test银行卡不带券无短信验证码购买定期产品 status=SKIP method=TradeTestCase.test银行卡不带券无短信验证码购买定期产品()[pr...)</span>
-                <span class="method-start">22594 ms</span>
-              </div> <!-- configuration-method after -->
-              <div class="configuration-suite after">
                 <img src="failed.png">
                 </img>
+                <span class="method-name">testRiskEvaluation</span>
+                <span class="method-start">37884 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method after">
+                <span class="method-name">afterMethod([TestResult name=testRiskEvaluation status=FAILURE method=AccountManageTestCase.testRiskEvaluation()...)</span>
+                <span class="method-start">142510 ms</span>
+              </div> <!-- configuration-method after -->
+              <div class="configuration-suite after">
                 <span class="method-name">tearDown</span>
-                <span class="method-start">22787 ms</span>
+                <span class="method-start">142593 ms</span>
               </div> <!-- configuration-suite after -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->

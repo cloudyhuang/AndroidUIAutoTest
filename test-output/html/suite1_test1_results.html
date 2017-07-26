@@ -3,240 +3,95 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="" lang="">
 <head>
-  <title>自动化测试结果报告 - 交易相关测试</title>
+  <title>自动化测试结果报告 - 账户管理测试</title>
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
   <meta name="description" content="TestNG unit test results." />
   <link href="reportng.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="reportng.js"></script>
 </head>
 <body>
-<h1>交易相关测试</h1>
+<h1>账户管理测试</h1>
 <p>
-  测试耗时: 0.007s
+  测试耗时: 142.922s
 </p>
 
-  <table class="resultsTable configTable">
-    <tr><th colspan="3" class="header failedConfig">Failed Configuration</th></tr>
-              <tr class="group">
-        <td colspan="3">com.hjs.cases.TradeTestCase</td>
+
+
+  <table class="resultsTable">
+    <tr><th colspan="5" class="header failed">失败的测试</th></tr>
+          <tr>
+        <td colspan="1" class="group">com.hjs.cases.AccountManageTestCase</td>
+        <td colspan="1" class="group">耗时</td>
+        <td colspan="1" class="group">日志信息</td>
+        <td colspan="1" class="group">屏幕截图</td>
       </tr>
             
 <tr>
   <td class="method">
-                  setUp
+                  <span class="description" title="风险评测">testRiskEvaluation
+      (风险评测)</span>
       </td>
   <td class="duration">
-    0.000s
+    103.134s
   </td>
   <td class="result">
         
     
-        
+            <div class="testOutput">
+                        用例失败时间：2017-07-26 15:19:10<br />
+                                <br />
+                  </div>
+    
 
-        <a href="javascript:toggleElement('exception-0', 'block')" title="Click to expand/collapse"><b>org.openqa.selenium.remote.UnreachableBrowserException: Could not start a new session. Possible causes are invalid address of the remote server or browser start-up failure.<br/>
+        <a href="javascript:toggleElement('exception-0', 'block')" title="Click to expand/collapse"><b>org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//div[@class=&apos;questions&apos;][0]/div[@class=&apos;answer-area&apos;][1]/div&quot;}<br/>
+&nbsp; (Session info: webview=30.0.0.0)<br/>
+&nbsp; (Driver info: chromedriver=2.18.343845 (73dd713ba7fbfb73cbb514e62641d8c96a94682a),platform=Windows NT 6.1 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)<br/>
+Command duration or timeout: 30.07 seconds<br/>
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html<br/>
 Build info: version: &apos;2.53.1&apos;, revision: &apos;a36b8b1cd5757287168e54b817830adce9b0158d&apos;, time: &apos;2016-06-30 19:26:09&apos;<br/>
 System info: host: &apos;SZ-PC095HFZ&apos;, ip: &apos;172.16.40.24&apos;, os.name: &apos;Windows 7&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;6.1&apos;, java.version: &apos;1.8.0_91&apos;<br/>
-Driver info: driver.version: AndroidDriver</b></a><br />
+Driver info: io.appium.java_client.android.AndroidDriver<br/>
+Capabilities [{app=C:\Users\huangxiao\git\Test-UI-AndroidAuto\app\app-default_channel.apk, appPackage=com.evergrande.eif.android.hengjiaosuo, networkConnectionEnabled=true, noReset=true, warnings={}, databaseEnabled=false, deviceName=127.0.0.1:52001, platform=LINUX, desired={app=C:\Users\huangxiao\git\Test-UI-AndroidAuto\app\app-default_channel.apk, appPackage=com.evergrande.eif.android.hengjiaosuo, noReset=true, platformVersion=4.4, unicodeKeyboard=true, platformName=Android, deviceName=127.0.0.1:52001, resetKeyboard=true}, platformVersion=4.4.2, webStorageEnabled=false, locationContextEnabled=false, browserName=Android, takesScreenshot=true, javascriptEnabled=true, unicodeKeyboard=true, platformName=Android, resetKeyboard=true}]<br/>
+Session ID: b2e1665a-bde2-4c4d-ab39-3750564b1f19<br/>
+*** Element info: {Using=xpath, value=//div[@class=&apos;questions&apos;][0]/div[@class=&apos;answer-area&apos;][1]/div}</b></a><br />
     <div class="stackTrace" id="exception-0">
-              org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:665)<br />
+              sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)<br />
+              sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)<br />
+              sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)<br />
+              java.lang.reflect.Constructor.newInstance(Constructor.java:423)<br />
+              org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)<br />
+              org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)<br />
+              org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)<br />
               io.appium.java_client.DefaultGenericMobileDriver.execute(DefaultGenericMobileDriver.java:42)<br />
               io.appium.java_client.AppiumDriver.execute(AppiumDriver.java:1)<br />
               io.appium.java_client.android.AndroidDriver.execute(AndroidDriver.java:1)<br />
-              org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:249)<br />
-              org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:131)<br />
-              org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:144)<br />
-              io.appium.java_client.DefaultGenericMobileDriver.&lt;init&gt;(DefaultGenericMobileDriver.java:37)<br />
-              io.appium.java_client.AppiumDriver.&lt;init&gt;(AppiumDriver.java:161)<br />
-              io.appium.java_client.AppiumDriver.&lt;init&gt;(AppiumDriver.java:170)<br />
-              io.appium.java_client.android.AndroidDriver.&lt;init&gt;(AndroidDriver.java:82)<br />
-              com.hjs.config.CommonAppiumTest.setUp(CommonAppiumTest.java:55)<br />
+              org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:363)<br />
+              org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:500)<br />
+              io.appium.java_client.DefaultGenericMobileDriver.findElementByXPath(DefaultGenericMobileDriver.java:132)<br />
+              io.appium.java_client.AppiumDriver.findElementByXPath(AppiumDriver.java:1)<br />
+              io.appium.java_client.android.AndroidDriver.findElementByXPath(AndroidDriver.java:1)<br />
+              org.openqa.selenium.By$ByXPath.findElement(By.java:361)<br />
+              org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:355)<br />
+              io.appium.java_client.DefaultGenericMobileDriver.findElement(DefaultGenericMobileDriver.java:52)<br />
+              io.appium.java_client.AppiumDriver.findElement(AppiumDriver.java:1)<br />
+              io.appium.java_client.android.AndroidDriver.findElement(AndroidDriver.java:1)<br />
+              com.hjs.pages.RiskEvaluationPageObject.startRiskEvaluation(RiskEvaluationPageObject.java:40)<br />
+              com.hjs.cases.AccountManageTestCase.testRiskEvaluation(AccountManageTestCase.java:217)<br />
               sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br />
               sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br />
               sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br />
               java.lang.reflect.Method.invoke(Method.java:498)<br />
               org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:84)<br />
-              org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:564)<br />
-              org.testng.internal.Invoker.invokeConfigurations(Invoker.java:213)<br />
-              org.testng.internal.Invoker.invokeConfigurations(Invoker.java:138)<br />
-              org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)<br />
-              org.testng.SuiteRunner.run(SuiteRunner.java:254)<br />
-              org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br />
-              org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br />
-              org.testng.TestNG.runSuitesSequentially(TestNG.java:1224)<br />
-              org.testng.TestNG.runSuitesLocally(TestNG.java:1149)<br />
-              org.testng.TestNG.run(TestNG.java:1057)<br />
-              org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)<br />
-              org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)<br />
-              org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)<br />
-                    <b>Caused by: </b> <a href="javascript:toggleElement('exception-1', 'block')" title="Click to expand/collapse">org.openqa.selenium.WebDriverException: org.apache.http.conn.HttpHostConnectException: Connect to 127.0.0.1:4723 [/127.0.0.1] failed: Connection refused: connect<br/>
-Build info: version: &apos;2.53.1&apos;, revision: &apos;a36b8b1cd5757287168e54b817830adce9b0158d&apos;, time: &apos;2016-06-30 19:26:09&apos;<br/>
-System info: host: &apos;SZ-PC095HFZ&apos;, ip: &apos;172.16.40.24&apos;, os.name: &apos;Windows 7&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;6.1&apos;, java.version: &apos;1.8.0_91&apos;<br/>
-Driver info: driver.version: AndroidDriver</a><br />
-        <div class="stackTrace" id="exception-1">
-                      io.appium.java_client.remote.AppiumCommandExecutor.execute(AppiumCommandExecutor.java:79)<br />
-                      org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:644)<br />
-                      io.appium.java_client.DefaultGenericMobileDriver.execute(DefaultGenericMobileDriver.java:42)<br />
-                      io.appium.java_client.AppiumDriver.execute(AppiumDriver.java:1)<br />
-                      io.appium.java_client.android.AndroidDriver.execute(AndroidDriver.java:1)<br />
-                      org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:249)<br />
-                      org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:131)<br />
-                      org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:144)<br />
-                      io.appium.java_client.DefaultGenericMobileDriver.&lt;init&gt;(DefaultGenericMobileDriver.java:37)<br />
-                      io.appium.java_client.AppiumDriver.&lt;init&gt;(AppiumDriver.java:161)<br />
-                      io.appium.java_client.AppiumDriver.&lt;init&gt;(AppiumDriver.java:170)<br />
-                      io.appium.java_client.android.AndroidDriver.&lt;init&gt;(AndroidDriver.java:82)<br />
-                      com.hjs.config.CommonAppiumTest.setUp(CommonAppiumTest.java:55)<br />
-                      sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br />
-                      sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br />
-                      sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br />
-                      java.lang.reflect.Method.invoke(Method.java:498)<br />
-                      org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:84)<br />
-                      org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:564)<br />
-                      org.testng.internal.Invoker.invokeConfigurations(Invoker.java:213)<br />
-                      org.testng.internal.Invoker.invokeConfigurations(Invoker.java:138)<br />
-                      org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)<br />
-                      org.testng.SuiteRunner.run(SuiteRunner.java:254)<br />
-                      org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br />
-                      org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br />
-                      org.testng.TestNG.runSuitesSequentially(TestNG.java:1224)<br />
-                      org.testng.TestNG.runSuitesLocally(TestNG.java:1149)<br />
-                      org.testng.TestNG.run(TestNG.java:1057)<br />
-                      org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)<br />
-                      org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)<br />
-                      org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)<br />
-                  </div>
-              <b>Caused by: </b> <a href="javascript:toggleElement('exception-2', 'block')" title="Click to expand/collapse">org.apache.http.conn.HttpHostConnectException: Connect to 127.0.0.1:4723 [/127.0.0.1] failed: Connection refused: connect</a><br />
-        <div class="stackTrace" id="exception-2">
-                      org.apache.http.impl.conn.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:159)<br />
-                      org.apache.http.impl.conn.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:359)<br />
-                      org.apache.http.impl.execchain.MainClientExec.establishRoute(MainClientExec.java:381)<br />
-                      org.apache.http.impl.execchain.MainClientExec.execute(MainClientExec.java:237)<br />
-                      org.apache.http.impl.execchain.ProtocolExec.execute(ProtocolExec.java:185)<br />
-                      org.apache.http.impl.execchain.RetryExec.execute(RetryExec.java:89)<br />
-                      org.apache.http.impl.execchain.RedirectExec.execute(RedirectExec.java:111)<br />
-                      org.apache.http.impl.client.InternalHttpClient.doExecute(InternalHttpClient.java:185)<br />
-                      org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:72)<br />
-                      org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:56)<br />
-                      org.openqa.selenium.remote.internal.ApacheHttpClient.fallBackExecute(ApacheHttpClient.java:144)<br />
-                      org.openqa.selenium.remote.internal.ApacheHttpClient.execute(ApacheHttpClient.java:90)<br />
-                      org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:142)<br />
-                      io.appium.java_client.remote.AppiumCommandExecutor.execute(AppiumCommandExecutor.java:67)<br />
-                      org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:644)<br />
-                      io.appium.java_client.DefaultGenericMobileDriver.execute(DefaultGenericMobileDriver.java:42)<br />
-                      io.appium.java_client.AppiumDriver.execute(AppiumDriver.java:1)<br />
-                      io.appium.java_client.android.AndroidDriver.execute(AndroidDriver.java:1)<br />
-                      org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:249)<br />
-                      org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:131)<br />
-                      org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:144)<br />
-                      io.appium.java_client.DefaultGenericMobileDriver.&lt;init&gt;(DefaultGenericMobileDriver.java:37)<br />
-                      io.appium.java_client.AppiumDriver.&lt;init&gt;(AppiumDriver.java:161)<br />
-                      io.appium.java_client.AppiumDriver.&lt;init&gt;(AppiumDriver.java:170)<br />
-                      io.appium.java_client.android.AndroidDriver.&lt;init&gt;(AndroidDriver.java:82)<br />
-                      com.hjs.config.CommonAppiumTest.setUp(CommonAppiumTest.java:55)<br />
-                      sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br />
-                      sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br />
-                      sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br />
-                      java.lang.reflect.Method.invoke(Method.java:498)<br />
-                      org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:84)<br />
-                      org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:564)<br />
-                      org.testng.internal.Invoker.invokeConfigurations(Invoker.java:213)<br />
-                      org.testng.internal.Invoker.invokeConfigurations(Invoker.java:138)<br />
-                      org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)<br />
-                      org.testng.SuiteRunner.run(SuiteRunner.java:254)<br />
-                      org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br />
-                      org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br />
-                      org.testng.TestNG.runSuitesSequentially(TestNG.java:1224)<br />
-                      org.testng.TestNG.runSuitesLocally(TestNG.java:1149)<br />
-                      org.testng.TestNG.run(TestNG.java:1057)<br />
-                      org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)<br />
-                      org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)<br />
-                      org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)<br />
-                  </div>
-              <b>Caused by: </b> <a href="javascript:toggleElement('exception-3', 'block')" title="Click to expand/collapse">java.net.ConnectException: Connection refused: connect</a><br />
-        <div class="stackTrace" id="exception-3">
-                      java.net.DualStackPlainSocketImpl.waitForConnect(Native Method)<br />
-                      java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:85)<br />
-                      java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350)<br />
-                      java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)<br />
-                      java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)<br />
-                      java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)<br />
-                      java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)<br />
-                      java.net.Socket.connect(Socket.java:589)<br />
-                      org.apache.http.conn.socket.PlainConnectionSocketFactory.connectSocket(PlainConnectionSocketFactory.java:75)<br />
-                      org.apache.http.impl.conn.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:142)<br />
-                      org.apache.http.impl.conn.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:359)<br />
-                      org.apache.http.impl.execchain.MainClientExec.establishRoute(MainClientExec.java:381)<br />
-                      org.apache.http.impl.execchain.MainClientExec.execute(MainClientExec.java:237)<br />
-                      org.apache.http.impl.execchain.ProtocolExec.execute(ProtocolExec.java:185)<br />
-                      org.apache.http.impl.execchain.RetryExec.execute(RetryExec.java:89)<br />
-                      org.apache.http.impl.execchain.RedirectExec.execute(RedirectExec.java:111)<br />
-                      org.apache.http.impl.client.InternalHttpClient.doExecute(InternalHttpClient.java:185)<br />
-                      org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:72)<br />
-                      org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:56)<br />
-                      org.openqa.selenium.remote.internal.ApacheHttpClient.fallBackExecute(ApacheHttpClient.java:144)<br />
-                      org.openqa.selenium.remote.internal.ApacheHttpClient.execute(ApacheHttpClient.java:90)<br />
-                      org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:142)<br />
-                      io.appium.java_client.remote.AppiumCommandExecutor.execute(AppiumCommandExecutor.java:67)<br />
-                      org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:644)<br />
-                      io.appium.java_client.DefaultGenericMobileDriver.execute(DefaultGenericMobileDriver.java:42)<br />
-                      io.appium.java_client.AppiumDriver.execute(AppiumDriver.java:1)<br />
-                      io.appium.java_client.android.AndroidDriver.execute(AndroidDriver.java:1)<br />
-                      org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:249)<br />
-                      org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:131)<br />
-                      org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:144)<br />
-                      io.appium.java_client.DefaultGenericMobileDriver.&lt;init&gt;(DefaultGenericMobileDriver.java:37)<br />
-                      io.appium.java_client.AppiumDriver.&lt;init&gt;(AppiumDriver.java:161)<br />
-                      io.appium.java_client.AppiumDriver.&lt;init&gt;(AppiumDriver.java:170)<br />
-                      io.appium.java_client.android.AndroidDriver.&lt;init&gt;(AndroidDriver.java:82)<br />
-                      com.hjs.config.CommonAppiumTest.setUp(CommonAppiumTest.java:55)<br />
-                      sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br />
-                      sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br />
-                      sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br />
-                      java.lang.reflect.Method.invoke(Method.java:498)<br />
-                      org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:84)<br />
-                      org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:564)<br />
-                      org.testng.internal.Invoker.invokeConfigurations(Invoker.java:213)<br />
-                      org.testng.internal.Invoker.invokeConfigurations(Invoker.java:138)<br />
-                      org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)<br />
-                      org.testng.SuiteRunner.run(SuiteRunner.java:254)<br />
-                      org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br />
-                      org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br />
-                      org.testng.TestNG.runSuitesSequentially(TestNG.java:1224)<br />
-                      org.testng.TestNG.runSuitesLocally(TestNG.java:1149)<br />
-                      org.testng.TestNG.run(TestNG.java:1057)<br />
-                      org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)<br />
-                      org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)<br />
-                      org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)<br />
-                  </div>
-          </div>
-      </td>
-  <td class="screenshot">
-              </td>
-</tr>
-<tr>
-  <td class="method">
-                  tearDown
-      </td>
-  <td class="duration">
-    0.000s
-  </td>
-  <td class="result">
-        
-    
-        
-
-        <a href="javascript:toggleElement('exception-4', 'block')" title="Click to expand/collapse"><b>java.lang.NullPointerException</b></a><br />
-    <div class="stackTrace" id="exception-4">
-              com.hjs.config.CommonAppiumTest.tearDown(CommonAppiumTest.java:139)<br />
-              sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br />
-              sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br />
-              sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br />
-              java.lang.reflect.Method.invoke(Method.java:498)<br />
-              org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:84)<br />
-              org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:564)<br />
-              org.testng.internal.Invoker.invokeConfigurations(Invoker.java:213)<br />
-              org.testng.internal.Invoker.invokeConfigurations(Invoker.java:138)<br />
-              org.testng.SuiteRunner.privateRun(SuiteRunner.java:322)<br />
+              org.testng.internal.Invoker.invokeMethod(Invoker.java:714)<br />
+              org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)<br />
+              org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)<br />
+              org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)<br />
+              org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)<br />
+              org.testng.TestRunner.privateRun(TestRunner.java:767)<br />
+              org.testng.TestRunner.run(TestRunner.java:617)<br />
+              org.testng.SuiteRunner.runTest(SuiteRunner.java:348)<br />
+              org.testng.SuiteRunner.runSequentially(SuiteRunner.java:343)<br />
+              org.testng.SuiteRunner.privateRun(SuiteRunner.java:305)<br />
               org.testng.SuiteRunner.run(SuiteRunner.java:254)<br />
               org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br />
               org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br />
@@ -249,44 +104,14 @@ Driver info: driver.version: AndroidDriver</a><br />
                 </div>
       </td>
   <td class="screenshot">
-              </td>
-</tr>
-    
-      </table>
-
-
-
-  <table class="resultsTable" width="100%">
-    <tr><th colspan="3" class="header skipped">跳过的测试</th></tr>
-          <tr>
-        <td colspan="3" class="group">com.hjs.cases.TradeTestCase</td>
-      </tr>
-            
-<tr>
-  <td class="method">
-                  test银行卡不带券无短信验证码购买定期产品
-      </td>
-  <td class="duration">
-    0.004s
-  </td>
-  <td class="result">
-                               
-    
-            <div class="testOutput">
-                        用例失败时间：2017-07-25 10:09:42<br />
-                                <br />
-                  </div>
-    
-
-      </td>
-  <td class="screenshot">
                       <div class="screenshotimage">
                                                       <br />
-                                                                        <img src='TradeTestCase.test银行卡不带券无短信验证码购买定期产品20170725100919.png' onclick='window.open("TradeTestCase.test银行卡不带券无短信验证码购买定期产品20170725100919.png")'' hight='100' width='100'/><br />
+                                                                        <img src='AccountManageTestCase.testRiskEvaluation20170726031648.png' onclick='window.open("AccountManageTestCase.testRiskEvaluation20170726031648.png")'' hight='100' width='100'/><br />
                                           </div>
         </td>
 </tr>
       </table>
+
 
   
 </body>
