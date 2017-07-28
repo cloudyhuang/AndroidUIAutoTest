@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="TestNG 项目报告">
+    <parameter name="udid" value="127.0.0.1:52001" />
 	<test name="Test" preserve-order="true">
 		<classes>
-			<class name="com.hjs.Interface.test" />
+			<class name="com.hjs.publics.test" />
 		</classes>
 	</test> <!-- Test -->
-<listeners>
-
-<listener class-name="org.uncommons.reportng.HTMLReporter" />
-
-<listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
-
-</listeners>
 </suite> <!-- Suite -->

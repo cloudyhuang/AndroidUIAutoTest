@@ -24,6 +24,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Parameters;
 
 public class CommonAppiumTest {
 	public static AndroidDriver<AndroidElement> driver;
@@ -32,20 +33,21 @@ public class CommonAppiumTest {
     private WebDriverWait wait;
     AppiumServer appiumServer;
     @BeforeSuite(alwaysRun = true)
-    public void setUp() throws Exception {
+    @Parameters({"udid"})
+    public void setUp(String udid) throws Exception {
     	deletePng("surefire-reports"+File.separator+"html");	//删除历史截图文件
     	appiumServer=new AppiumServer();
     	appiumServer.stopServer();	//先结束残留进程
     	try{Thread.sleep(5000);}catch(Exception e){}
     	System.out.println("---- Starting appium server ----");
-    	appiumServer.startServer();
+    	appiumServer.startServer(udid);
 		System.out.println("---- Appium server started Successfully ! ----");
 		try{Thread.sleep(15000);}catch(Exception e){}
         File classpathRoot = new File(System.getProperty("user.dir"));
         File appDir = new File(classpathRoot, "app");
         File app = new File(appDir, "app-default_channel.apk");
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "127.0.0.1:52001"); 
+        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, udid); 
         capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "4.4");
         capabilities.setCapability(MobileCapabilityType.APP, app.getAbsolutePath());
         capabilities.setCapability("appPackage", "com.evergrande.eif.android.hengjiaosuo");

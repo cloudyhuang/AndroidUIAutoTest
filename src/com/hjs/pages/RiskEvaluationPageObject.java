@@ -32,9 +32,8 @@ public class RiskEvaluationPageObject extends CommonAppiumPage{
 			WebElement startEvaluationBtn=driver.findElement(startRiskEvaluationBtnLocator);
 			startEvaluationBtn.click();
 		}
-		//String riskOptionXpath=getRiskOptionXpath(riskLevle);
+		waitForVisible(submitBtnLocator, 15);
 		String[] riskOptionXpath=getRiskOptionXpath(riskLevle);
-		//List<AndroidElement> bestRiskOption=driver.findElements(By.xpath(riskOptionXpath));
 		List<AndroidElement> bestRiskOption=new ArrayList<AndroidElement>();
 		for(int i=0;i<riskOptionXpath.length;i++){
 			bestRiskOption.add(driver.findElement(By.xpath(riskOptionXpath[i])));

@@ -1,87 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuite name="账户管理测试"
-           tests="1"
-           failures="1"
+           tests="11"
+           failures="0"
            errors="0"
-           skipped="0"
-           time="103.134">
+           skipped="11"
+           time="0.012">
   <properties />
-            <testcase name="testRiskEvaluation" time="103.134" classname="com.hjs.cases.AccountManageTestCase">
-                <failure type="org.openqa.selenium.NoSuchElementException"
-                  message="no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//div[@class=&apos;questions&apos;][0]/div[@class=&apos;answer-area&apos;][1]/div&quot;}
-  (Session info: webview=30.0.0.0)
-  (Driver info: chromedriver=2.18.343845 (73dd713ba7fbfb73cbb514e62641d8c96a94682a),platform=Windows NT 6.1 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 30.07 seconds
-For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
-Build info: version: &apos;2.53.1&apos;, revision: &apos;a36b8b1cd5757287168e54b817830adce9b0158d&apos;, time: &apos;2016-06-30 19:26:09&apos;
-System info: host: &apos;SZ-PC095HFZ&apos;, ip: &apos;172.16.40.24&apos;, os.name: &apos;Windows 7&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;6.1&apos;, java.version: &apos;1.8.0_91&apos;
-Driver info: io.appium.java_client.android.AndroidDriver
-Capabilities [{app=C:\Users\huangxiao\git\Test-UI-AndroidAuto\app\app-default_channel.apk, appPackage=com.evergrande.eif.android.hengjiaosuo, networkConnectionEnabled=true, noReset=true, warnings={}, databaseEnabled=false, deviceName=127.0.0.1:52001, platform=LINUX, desired={app=C:\Users\huangxiao\git\Test-UI-AndroidAuto\app\app-default_channel.apk, appPackage=com.evergrande.eif.android.hengjiaosuo, noReset=true, platformVersion=4.4, unicodeKeyboard=true, platformName=Android, deviceName=127.0.0.1:52001, resetKeyboard=true}, platformVersion=4.4.2, webStorageEnabled=false, locationContextEnabled=false, browserName=Android, takesScreenshot=true, javascriptEnabled=true, unicodeKeyboard=true, platformName=Android, resetKeyboard=true}]
-Session ID: b2e1665a-bde2-4c4d-ab39-3750564b1f19
-*** Element info: {Using=xpath, value=//div[@class=&apos;questions&apos;][0]/div[@class=&apos;answer-area&apos;][1]/div}"
-              >
-<![CDATA[org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":"//div[@class='questions'][0]/div[@class='answer-area'][1]/div"}
-  (Session info: webview=30.0.0.0)
-  (Driver info: chromedriver=2.18.343845 (73dd713ba7fbfb73cbb514e62641d8c96a94682a),platform=Windows NT 6.1 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 30.07 seconds
-For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
-Build info: version: '2.53.1', revision: 'a36b8b1cd5757287168e54b817830adce9b0158d', time: '2016-06-30 19:26:09'
-System info: host: 'SZ-PC095HFZ', ip: '172.16.40.24', os.name: 'Windows 7', os.arch: 'amd64', os.version: '6.1', java.version: '1.8.0_91'
-Driver info: io.appium.java_client.android.AndroidDriver
-Capabilities [{app=C:\Users\huangxiao\git\Test-UI-AndroidAuto\app\app-default_channel.apk, appPackage=com.evergrande.eif.android.hengjiaosuo, networkConnectionEnabled=true, noReset=true, warnings={}, databaseEnabled=false, deviceName=127.0.0.1:52001, platform=LINUX, desired={app=C:\Users\huangxiao\git\Test-UI-AndroidAuto\app\app-default_channel.apk, appPackage=com.evergrande.eif.android.hengjiaosuo, noReset=true, platformVersion=4.4, unicodeKeyboard=true, platformName=Android, deviceName=127.0.0.1:52001, resetKeyboard=true}, platformVersion=4.4.2, webStorageEnabled=false, locationContextEnabled=false, browserName=Android, takesScreenshot=true, javascriptEnabled=true, unicodeKeyboard=true, platformName=Android, resetKeyboard=true}]
-Session ID: b2e1665a-bde2-4c4d-ab39-3750564b1f19
-*** Element info: {Using=xpath, value=//div[@class='questions'][0]/div[@class='answer-area'][1]/div}
-  sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-  sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
-  sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-  java.lang.reflect.Constructor.newInstance(Constructor.java:423)
-  org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
-  org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
-  org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
-  io.appium.java_client.DefaultGenericMobileDriver.execute(DefaultGenericMobileDriver.java:42)
-  io.appium.java_client.AppiumDriver.execute(AppiumDriver.java:1)
-  io.appium.java_client.android.AndroidDriver.execute(AndroidDriver.java:1)
-  org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:363)
-  org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:500)
-  io.appium.java_client.DefaultGenericMobileDriver.findElementByXPath(DefaultGenericMobileDriver.java:132)
-  io.appium.java_client.AppiumDriver.findElementByXPath(AppiumDriver.java:1)
-  io.appium.java_client.android.AndroidDriver.findElementByXPath(AndroidDriver.java:1)
-  org.openqa.selenium.By$ByXPath.findElement(By.java:361)
-  org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:355)
-  io.appium.java_client.DefaultGenericMobileDriver.findElement(DefaultGenericMobileDriver.java:52)
-  io.appium.java_client.AppiumDriver.findElement(AppiumDriver.java:1)
-  io.appium.java_client.android.AndroidDriver.findElement(AndroidDriver.java:1)
-  com.hjs.pages.RiskEvaluationPageObject.startRiskEvaluation(RiskEvaluationPageObject.java:40)
-  com.hjs.cases.AccountManageTestCase.testRiskEvaluation(AccountManageTestCase.java:217)
-  sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-  sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-  sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-  java.lang.reflect.Method.invoke(Method.java:498)
-  org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:84)
-  org.testng.internal.Invoker.invokeMethod(Invoker.java:714)
-  org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
-  org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
-  org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
-  org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
-  org.testng.TestRunner.privateRun(TestRunner.java:767)
-  org.testng.TestRunner.run(TestRunner.java:617)
-  org.testng.SuiteRunner.runTest(SuiteRunner.java:348)
-  org.testng.SuiteRunner.runSequentially(SuiteRunner.java:343)
-  org.testng.SuiteRunner.privateRun(SuiteRunner.java:305)
-  org.testng.SuiteRunner.run(SuiteRunner.java:254)
-  org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-  org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
-  org.testng.TestNG.runSuitesSequentially(TestNG.java:1224)
-  org.testng.TestNG.runSuitesLocally(TestNG.java:1149)
-  org.testng.TestNG.run(TestNG.java:1057)
-  org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
-  org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)
-  org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
-]]>
-      </failure>
-
-          </testcase>
   
+            <testcase name="testWelcomePage" time="0.0" classname="com.hjs.cases.AccountManageTestCase">
+          <skipped />
+    </testcase>
+            <testcase name="testResetLoginPwd" time="0.0" classname="com.hjs.cases.AccountManageTestCase">
+          <skipped />
+    </testcase>
+            <testcase name="testReRiskEvaluation" time="0.0" classname="com.hjs.cases.AccountManageTestCase">
+          <skipped />
+    </testcase>
+            <testcase name="testUnBundBankCard" time="0.0" classname="com.hjs.cases.AccountManageTestCase">
+          <skipped />
+    </testcase>
+            <testcase name="testSignedPhoneLogin" time="0.0" classname="com.hjs.cases.AccountManageTestCase">
+          <skipped />
+    </testcase>
+            <testcase name="testResetTradePwd" time="0.0" classname="com.hjs.cases.AccountManageTestCase">
+          <skipped />
+    </testcase>
+            <testcase name="testGesturePwd" time="0.0" classname="com.hjs.cases.AccountManageTestCase">
+          <skipped />
+    </testcase>
+            <testcase name="testLogOut" time="0.0" classname="com.hjs.cases.AccountManageTestCase">
+          <skipped />
+    </testcase>
+            <testcase name="testRealNameAndSetBankCard" time="0.0" classname="com.hjs.cases.AccountManageTestCase">
+          <skipped />
+    </testcase>
+            <testcase name="testRiskEvaluation" time="0.0" classname="com.hjs.cases.AccountManageTestCase">
+          <skipped />
+    </testcase>
+            <testcase name="testSignAccount" time="0.0" classname="com.hjs.cases.AccountManageTestCase">
+          <skipped />
+    </testcase>
   
   
 </testsuite>

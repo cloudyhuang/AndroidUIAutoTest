@@ -413,7 +413,7 @@ public class CommonAppiumPage {
         waitAuto(WAIT_TIME);
 	}
 	
-    public void waitForVisible(AndroidDriver<AndroidElement> driver,By by, int waitTime){
+    public void waitForVisible(By by, int waitTime){
         WebDriverWait wait = new WebDriverWait(driver,waitTime);
    	 	wait.until(ExpectedConditions.visibilityOfElementLocated(by)); 
     }
