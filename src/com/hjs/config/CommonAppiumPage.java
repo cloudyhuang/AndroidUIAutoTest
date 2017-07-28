@@ -158,7 +158,7 @@ public class CommonAppiumPage {
         js.executeScript("mobile: tap", tapObject);
     	
     }
-    public void clickNativeEle(AndroidDriver<AndroidElement> driver,WebElement el,int clickcount){
+    public void clickNativeEle(WebElement el,int clickcount){
 		Point elpoint = el.getLocation();
     	Dimension elSize = el.getSize();
     	double startX = elpoint.getX();

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" total="0" passed="0">
+<testng-results skipped="0" failed="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="TestNG 项目报告" duration-ms="10" started-at="2017-07-28T03:23:09Z" finished-at="2017-07-28T03:23:09Z">
+  <suite name="恒大金服UI自动化测试项目报告" duration-ms="662549" started-at="2017-07-28T08:16:56Z" finished-at="2017-07-28T08:27:59Z">
     <groups>
     </groups>
-    <test name="Test" duration-ms="10" started-at="2017-07-28T03:23:09Z" finished-at="2017-07-28T03:23:09Z">
-      <class name="com.hjs.publics.test">
-        <test-method status="PASS" signature="test(java.lang.String)[pri:0, instance:com.hjs.publics.test@4883b407]" name="test" is-config="true" duration-ms="4913" started-at="2017-07-28T11:23:04Z" finished-at="2017-07-28T11:23:09Z">
+    <test name="交易相关测试" duration-ms="662549" started-at="2017-07-28T08:16:56Z" finished-at="2017-07-28T08:27:59Z">
+      <class name="com.hjs.cases.TradeTestCase">
+        <test-method status="PASS" signature="setUp(java.lang.String)[pri:0, instance:com.hjs.cases.TradeTestCase@5aa9e4eb]" name="setUp" is-config="true" duration-ms="43001" started-at="2017-07-28T16:16:13Z" finished-at="2017-07-28T16:16:56Z">
           <params>
             <param index="0">
               <value>
@@ -17,8 +17,27 @@
           </params>
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- test -->
-      </class> <!-- com.hjs.publics.test -->
-    </test> <!-- Test -->
-  </suite> <!-- TestNG 项目报告 -->
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="test赎回活期产品到余额()[pri:0, instance:com.hjs.cases.TradeTestCase@5aa9e4eb]" name="test赎回活期产品到余额" duration-ms="662519" started-at="2017-07-28T16:16:56Z" finished-at="2017-07-28T16:27:59Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- test赎回活期产品到余额 -->
+        <test-method status="PASS" signature="afterMethod(org.testng.ITestResult)[pri:0, instance:com.hjs.cases.TradeTestCase@5aa9e4eb]" name="afterMethod" is-config="true" duration-ms="0" started-at="2017-07-28T16:27:59Z" finished-at="2017-07-28T16:27:59Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=test赎回活期产品到余额 status=SUCCESS method=TradeTestCase.test赎回活期产品到余额()[pri:0, instance:com.hjs.cases.TradeTestCase@5aa9e4eb] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method status="PASS" signature="tearDown()[pri:0, instance:com.hjs.cases.TradeTestCase@5aa9e4eb]" name="tearDown" is-config="true" duration-ms="1991" started-at="2017-07-28T16:27:59Z" finished-at="2017-07-28T16:28:01Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.hjs.cases.TradeTestCase -->
+    </test> <!-- 交易相关测试 -->
+  </suite> <!-- 恒大金服UI自动化测试项目报告 -->
 </testng-results>

@@ -27,6 +27,7 @@ public class RedeemPageObject extends CommonAppiumPage{
 	public RedeemResultPageObject redeemToBalance(String amount,String tradePwd) throws Exception{
 		if(!ransomReturnToName.getText().equals("账户余额")){
 			clickEle(ransomReturnToName,"赎回到哪名称");	
+			super.clickNativeEle(ransomReturnToName, 1);
 		}
 		clickEle(ransomInput,"赎回金额输入框");
 		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
