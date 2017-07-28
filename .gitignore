@@ -1,0 +1,39 @@
+# maven ignore
+target/
+*.jar
+*.war
+*.zip
+*.tar
+*.tar.gz
+*.class
+*.apk
+
+
+# idea ignore
+.idea/
+*.ipr
+*.iml
+*.iws
+
+# temp ignore
+*.log
+*.cache
+*.diff
+*.patch
+*.tmp
+*.java~
+*.properties~
+*.xml~
+*.gz
+eif-omc-web/temp/
+
+# system ignore
+.DS_Store
+Thumbs.db
+
+/eifConfMgr
+/ecfConfMgr
+*/disconf
+
+*.pmd
+reports

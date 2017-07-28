@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [恒大金服UI自动化测试项目报告]">
+  <listeners>
+    <listener class-name="com.hjs.publics.TestNGListener"/>
+    <listener class-name="org.uncommons.reportng.HTMLReporter"/>
+    <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
+  </listeners>
+  <test name="账户管理测试(failed)">
+    <classes>
+      <class name="com.hjs.cases.AccountManageTestCase">
+        <methods>
+          <include name="testSignedPhoneLogin"/>
+          <include name="testRiskEvaluation"/>
+          <include name="testGesturePwd"/>
+          <include name="testLogOut"/>
+          <include name="testResetLoginPwd"/>
+          <include name="afterMethod"/>
+          <include name="testRealNameAndSetBankCard"/>
+          <include name="testWelcomePage"/>
+          <include name="testSignAccount"/>
+          <include name="testResetTradePwd"/>
+          <include name="testUnBundBankCard"/>
+          <include name="testReRiskEvaluation"/>
+        </methods>
+      </class> <!-- com.hjs.cases.AccountManageTestCase -->
+      <class name="com.hjs.cases.TradeTestCase">
+        <methods>
+          <include name="setUp"/>
+          <include name="afterMethod"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- com.hjs.cases.TradeTestCase -->
+    </classes>
+  </test> <!-- 账户管理测试(failed) -->
+  <test name="交易相关测试(failed)">
+    <classes>
+      <class name="com.hjs.cases.AccountManageTestCase">
+        <methods>
+          <include name="afterMethod"/>
+        </methods>
+      </class> <!-- com.hjs.cases.AccountManageTestCase -->
+      <class name="com.hjs.cases.TradeTestCase">
+        <methods>
+          <include name="test余额现金券购买定期产品"/>
+          <include name="test银行卡不带券购买活期产品"/>
+          <include name="test银行卡不带券购买定期产品失败场景"/>
+          <include name="setUp"/>
+          <include name="test理财页产品信息"/>
+          <include name="test我的定期产品信息"/>
+          <include name="test银行卡加息券无验证码购买定期产品"/>
+          <include name="test充值"/>
+          <include name="test提现"/>
+          <include name="test银行卡现金券购买定期产品"/>
+          <include name="test银行卡加息券购买定期理财产品"/>
+          <include name="test银行卡现金券无验证码购买定期产品"/>
+          <include name="test银行卡不带券购买定期产品"/>
+          <include name="test余额加息券购买定期产品"/>
+          <include name="test下架产品"/>
+          <include name="afterMethod"/>
+          <include name="test赎回活期产品到余额"/>
+          <include name="tearDown"/>
+          <include name="test余额不带券购买活期产品"/>
+          <include name="test银行卡不带券无短信验证码购买定期产品"/>
+          <include name="test余额不带券购买定期产品"/>
+        </methods>
+      </class> <!-- com.hjs.cases.TradeTestCase -->
+    </classes>
+  </test> <!-- 交易相关测试(failed) -->
+</suite> <!-- Failed suite [恒大金服UI自动化测试项目报告] -->
