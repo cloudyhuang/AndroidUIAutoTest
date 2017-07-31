@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="恒大金服UI自动化测试项目报告" parallel="false" preserve-order="true">
-    <parameter name="udid" value="127.0.0.1:52001" />
+    <parameter name="udid" value="127.0.0.1:62001" />
 	  <test verbose="2" preserve-order="true" name="账户管理测试">
 		<classes>
 			<class name="com.hjs.cases.AccountManageTestCase">
