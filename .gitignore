@@ -1,6 +1,6 @@
 # maven ignore
 target/
-!target/app
+!target/app/
 *.jar
 *.war
 *.zip
