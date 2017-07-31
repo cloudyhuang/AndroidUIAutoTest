@@ -39,8 +39,8 @@ import com.hjs.publics.Util;
 public class TradeTestCase extends CommonAppiumTest{
 	private static String DEPOSITE_PRODUCT_NAME="黄XAutoTest产品170727002201";
 	private static String CURRENTDEPOSITE_PRODUCT_NAME="恒存金-灵活理财";
-    @Test(priority = 1)
-	public void test理财页产品信息() throws Exception{
+    @Test(priority = 1,description="理财页产品信息")
+	public void test1() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	CommonAppiumPage page=homepage.enterPersonEntrace();
@@ -63,8 +63,8 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(FinancialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
     	DEPOSITE_PRODUCT_NAME=FinancialPage.testProductInfo();
 	}
-    @Test(priority = 2)
-    public void test银行卡不带券购买定期产品() throws Exception{
+    @Test(priority = 2,description="银行卡不带券购买定期产品")
+    public void test2() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	FinancialPageObject FinancialPage=homepage.enterFinancialPage();
@@ -81,8 +81,8 @@ public class TradeTestCase extends CommonAppiumTest{
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
     }
-    @Test(priority = 3)
-    public void test银行卡现金券购买定期产品() throws Exception{
+    @Test(priority = 3,description="银行卡现金券购买定期产品")
+    public void test3() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	FinancialPageObject FinancialPage=homepage.enterFinancialPage();
@@ -102,8 +102,8 @@ public class TradeTestCase extends CommonAppiumTest{
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
     }
-    @Test(priority = 4)
-    public void test银行卡加息券购买定期理财产品() throws Exception{
+    @Test(priority = 4,description="银行卡加息券购买定期理财产品")
+    public void test4() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	FinancialPageObject FinancialPage=homepage.enterFinancialPage();
@@ -123,8 +123,8 @@ public class TradeTestCase extends CommonAppiumTest{
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
     }
-    @Test(priority = 5)
-    public void test银行卡不带券无短信验证码购买定期产品() throws Exception{
+    @Test(priority = 5,description="银行卡不带券无短信验证码购买定期产品")
+    public void test5() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	FinancialPageObject FinancialPage=homepage.enterFinancialPage();
@@ -141,8 +141,8 @@ public class TradeTestCase extends CommonAppiumTest{
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
     }
-    @Test(priority = 6)
-    public void test银行卡现金券无验证码购买定期产品() throws Exception{
+    @Test(priority = 6,description="银行卡现金券无验证码购买定期产品")
+    public void test6() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	FinancialPageObject FinancialPage=homepage.enterFinancialPage();
@@ -162,8 +162,8 @@ public class TradeTestCase extends CommonAppiumTest{
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
     }
-    @Test(priority = 7)
-    public void test银行卡加息券无验证码购买定期产品() throws Exception{
+    @Test(priority = 7,description="银行卡加息券无验证码购买定期产品")
+    public void test7() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	FinancialPageObject FinancialPage=homepage.enterFinancialPage();
@@ -183,8 +183,8 @@ public class TradeTestCase extends CommonAppiumTest{
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
     }
-    @Test(priority = 8)
-    public void test充值()throws Exception{
+    @Test(priority = 8,description="充值")
+    public void test8()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	CommonAppiumPage page=homepage.enterPersonEntrace();
@@ -206,8 +206,8 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertEquals(actualCash, expectCash,"实际剩余余额为"+actualCash+"预期剩余余额为"+expectCash);
 
     }
-    @Test(priority = 9)
-    public void test余额不带券购买定期产品() throws Exception{
+    @Test(priority = 9,description="余额不带券购买定期产品")
+    public void test9() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	FinancialPageObject FinancialPage=homepage.enterFinancialPage();
@@ -226,8 +226,8 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
  
     }
-    @Test(priority = 10)
-    public void test余额现金券购买定期产品() throws Exception{
+    @Test(priority = 10,description="余额现金券购买定期产品")
+    public void test10() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	FinancialPageObject FinancialPage=homepage.enterFinancialPage();
@@ -248,8 +248,8 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
 
     }
-    @Test(priority = 11)
-    public void test余额加息券购买定期产品() throws Exception{
+    @Test(priority = 11,description="余额加息券购买定期产品")
+    public void test11() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	FinancialPageObject FinancialPage=homepage.enterFinancialPage();
@@ -270,8 +270,8 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
 
     }
-    @Test(priority = 12)
-    public void test余额不带券购买活期产品() throws Exception{
+    @Test(priority = 12,description="余额不带券购买活期产品")
+    public void test12() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	FinancialPageObject FinancialPage=homepage.enterFinancialPage();
@@ -289,8 +289,8 @@ public class TradeTestCase extends CommonAppiumTest{
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资已成功")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
     }
-    @Test(priority = 13)
-    public void test银行卡不带券购买活期产品() throws Exception{
+    @Test(priority = 13,description="银行卡不带券购买活期产品")
+    public void test13() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	FinancialPageObject FinancialPage=homepage.enterFinancialPage();
@@ -308,8 +308,8 @@ public class TradeTestCase extends CommonAppiumTest{
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资已成功")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
     }
-    @Test(priority = 14)
-    public void test银行卡不带券购买定期产品失败场景() throws Exception{
+    @Test(priority = 14,description="银行卡不带券购买定期产品失败场景")
+    public void test14() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	FinancialPageObject FinancialPage=homepage.enterFinancialPage();
@@ -327,8 +327,8 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(investResult.equals("交易失败"),"未跳转到投资失败页面，页面信息为:"+investResult);
 
     }
-    @Test(priority = 15,expectedExceptions = Exception.class, expectedExceptionsMessageRegExp="找不到下架产品")
-    public void test下架产品() throws Exception{
+    @Test(priority = 15,expectedExceptions = Exception.class, expectedExceptionsMessageRegExp="找不到下架产品",description="下架产品")
+    public void test15() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	FinancialPageObject financialPage=homepage.enterFinancialPage();
@@ -337,8 +337,8 @@ public class TradeTestCase extends CommonAppiumTest{
 
 
     }
-    @Test(priority = 16)
-    public void test提现()throws Exception{
+    @Test(priority = 16,description="提现")
+    public void test16()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	CommonAppiumPage page=homepage.enterPersonEntrace();
@@ -364,8 +364,8 @@ public class TradeTestCase extends CommonAppiumTest{
     		Reporter.log("注意：当前提现次数为0！");
     	}
     }
-    @Test(priority = 17)
-    public void test我的定期产品信息()throws Exception{
+    @Test(priority = 17,description="我的定期产品信息")
+    public void test17()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	CommonAppiumPage page=homepage.enterPersonEntrace();
@@ -380,8 +380,8 @@ public class TradeTestCase extends CommonAppiumTest{
 
     /*
      * 请把赎回放最后一个用例*/
-    @Test(priority = 40)
-    public void test赎回活期产品到余额() throws Exception{
+    @Test(priority = 40,description="赎回活期产品到余额")
+    public void test40() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	CommonAppiumPage page=homepage.enterPersonEntrace();
