@@ -48,7 +48,7 @@ public class RedeemPageObject extends CommonAppiumPage{
 		
 	}
 	public void skipGuide(){
-		if(super.isElementExsit(3,guideTipsLocator)){
+		if(super.isElementExsit(super.getWaitTime(),guideTipsLocator)){
 			clickEle(guideTips,"引导知道了按钮");
 		}
 	}

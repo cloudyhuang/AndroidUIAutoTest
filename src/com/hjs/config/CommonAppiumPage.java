@@ -28,7 +28,7 @@ import io.appium.java_client.pagefactory.TimeOutDuration;
 public class CommonAppiumPage {
 	public AndroidDriver<AndroidElement> driver; 
 
-    private static final int WAIT_TIME = 30;    //默认的等待控件时间
+    private final int WAIT_TIME = 30;    //默认的等待控件时间
     
     public CommonAppiumPage(AndroidDriver<AndroidElement> androidDriver) {
         this.driver = androidDriver;
@@ -36,7 +36,11 @@ public class CommonAppiumPage {
         waitAuto(WAIT_TIME);
     }
     
-    /**
+    public int getWaitTime() {
+		return WAIT_TIME;
+	}
+
+	/**
      * ，隐式等待，如果在指定时间内还是找不到下个元素则会报错停止脚本
      * 全局设定的，find控件找不到就会按照这个事件来等待
      *
