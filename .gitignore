@@ -1,6 +1,6 @@
 # maven ignore
-!*.apk
-target/
+#/target/
+#!/target/app/
 *.jar
 *.war
 *.zip
