@@ -30,26 +30,15 @@ public class Test2 {
 //		properties.setProperty("jdbc.username", "em");  
 //		properties.setProperty("jdbc.password", "emadmin123"); 
 		
-        String resource = "eifFisConfig.xml";
+        String resource = "eifMarketConfig.xml";
         Reader reader = Resources.getResourceAsReader(resource);  
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
         reader.close();  
         SqlSession session = sqlSessionFactory.openSession();
         try {
-        	EifFisOperation eifFisOperation=session.getMapper(EifFisOperation.class);
-        	FisCollectPlan fisCollectPlan=eifFisOperation.getFisCollectPlan("913");
-        	if (fisCollectPlan==null){
-        		System.out.print("null");
-        	}
-        	else{
-        		 System.out.println(fisCollectPlan.getId());
-        		 System.out.println(fisCollectPlan.getAssets_id());
-        		 System.out.println(fisCollectPlan.getStart_time());
-        	}
-        		
-        }
-        catch(TooManyResultsException e){
-        	
+        	EifMarketOperation eifMarketOperation=session.getMapper(EifMarketOperation.class);
+        	eifMarketOperation.deleteUserCoupon("fb3e8117ac474936822f1dd8588c7b40");
+        	session.commit();  
         }
         finally {
             session.close();

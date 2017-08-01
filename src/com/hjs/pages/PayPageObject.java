@@ -232,6 +232,26 @@ public class PayPageObject extends CommonAppiumPage{
 		boolean flag=Boolean.parseBoolean(Common.getJsonValue(httpResult, "success")); ;	//响应结果
 		return flag;
 	}
+	public void deleteUserCoupon(String phoneNum) throws Exception{
+		String memberNo=this.getMemberNo(phoneNum);
+		if(memberNo==null||memberNo.equals("")||memberNo.equals("null")){
+			throw new Exception("查询不到"+phoneNum+"对应memberNo");
+		}
+		String resource = "eifMarketConfig.xml";
+        Reader reader = Resources.getResourceAsReader(resource);  
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
+        reader.close();  
+        SqlSession session = sqlSessionFactory.openSession();
+        try {
+        	EifMarketOperation eifMarketOperation=session.getMapper(EifMarketOperation.class);
+        	eifMarketOperation.deleteUserCoupon(memberNo);
+        	session.commit();  
+        }
+        finally {
+            session.close();
+        }
+		
+	}
 	public String getMemberNo(String phoneNum) throws Exception{
 	    String resource = "eifMemberConfig.xml";
         Reader reader = Resources.getResourceAsReader(resource);  
