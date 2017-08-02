@@ -45,7 +45,7 @@ public class CommonAppiumTest {
 		try{Thread.sleep(15000);}catch(Exception e){}
         File classpathRoot = new File(System.getProperty("user.dir"));
         File appDir = new File(classpathRoot, "app");
-        File app = new File(appDir, "app-default_channel.apk");
+        File app = new File(appDir, "app2.4.apk");
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, udid); 
         capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "4.4");
@@ -53,7 +53,7 @@ public class CommonAppiumTest {
         capabilities.setCapability("appPackage", "com.evergrande.eif.android.hengjiaosuo");
         capabilities.setCapability("unicodeKeyboard", true);	//支持中文
         capabilities.setCapability("resetKeyboard", true);	//运行完毕之后，变回系统的输入法
-        capabilities.setCapability("noReset", false);	//是否不重新安装 true不安装，false重新安装
+        capabilities.setCapability("noReset", true);	//是否不重新安装 true不安装，false重新安装
         driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         wait = new WebDriverWait(driver,30);
