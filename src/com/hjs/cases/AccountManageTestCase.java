@@ -101,14 +101,14 @@ public class AccountManageTestCase extends CommonAppiumTest {
 		String pageName=page.getClass().getName();
 		Assert.assertTrue(pageName.contains("SignUpPageObject"), "未进入注册页面");
 		GesturePwd gesturePwd = null;
-		String loginPwd="hxnearc228";
+		String loginPwd="Hd888888";
 		gesturePwd=((SignUpPageObject)page).registe(phoneNum, loginPwd);
 		Assert.assertTrue(gesturePwd.verifyInthisPage(), "设置密码后未跳转到手势密码界面");
 		String result=gesturePwd.setFirstGesturePwd(1,4,7,8);
     	Assert.assertEquals("请再画一次手势密码", result);
     	boolean setNextGestureResult=gesturePwd.setNextGesturePwd(1,4,7,8).verifyIsInHomePage();
     	Assert.assertTrue(setNextGestureResult, "第二次设置手势失败，未跳转到主页，主页我的入口未显示");
-		
+		Reporter.log("注册成功，注册账号为："+phoneNum+"密码:"+loginPwd);
     }
     @Test(priority = 6,description="实名并设置银行卡")
     public void testRealNameAndSetBankCard()throws Exception{
@@ -197,8 +197,8 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	Assert.assertTrue(pwdSettingPage.verifyInthisPage(), "点击密码管理未进入密码设置页");
     	LoginPwdResetPageObject loginPwdResetPage=pwdSettingPage.gotoLoginPwdPage();
     	Assert.assertTrue(loginPwdResetPage.verifyInthisPage(), "点击重设登录密码未进入设置登录密码页");
-    	loginPwdResetPage.resetLoginPwd(Account.getLoginPwd(), "hxnearcj228");
-    	Account.setLoginPwd("hxnearcj228");
+    	loginPwdResetPage.resetLoginPwd(Account.getLoginPwd(), "Hd666666");
+    	Account.setLoginPwd("Hd666666");
     }
     @Test(priority = 10,description="风险评测")
     public void testRiskEvaluation()throws Exception{

@@ -23,6 +23,7 @@ public class AccountBanlancePageObject extends CommonAppiumPage{
 		super(driver);
 	}
 	public int getAvailableBalance(){
+		super.waitEleUnVisible(By.id("refresh_animationView"), super.getWaitTime());//等待刷新图标消失
 		String stringAvailableBalance=availableBalance.getText();//取出余额，格式为x,xxx.xx
 		stringAvailableBalance=Util.getNumInString(stringAvailableBalance); //去掉逗号和小数点，仅保留数字 xxxxxx
 		double doubleAvailableBalance=Double.parseDouble(stringAvailableBalance); //转换为double

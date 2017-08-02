@@ -206,6 +206,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(rechargeResultPage.verifyInthisPage(), "充值输入验证码后未跳转到充值结果页");
     	Assert.assertTrue(rechargeResultPage.getRechargeResult().contains("成功充值"), "充值申请失败，失败信息为："+rechargeResultPage.getRechargeResult());
     	accountBanlancePage=rechargeResultPage.gotoBalancePage();
+    	Assert.assertTrue(accountBanlancePage.verifyInthisPage(), "充值成功后点击查看余额未进入余额页");
     	int actualCash=accountBanlancePage.getAvailableBalance();
     	Assert.assertEquals(actualCash, expectCash,"实际剩余余额为"+actualCash+"预期剩余余额为"+expectCash);
 
@@ -363,6 +364,7 @@ public class TradeTestCase extends CommonAppiumTest{
 	    	Assert.assertTrue(withdrawCashResultPage.verifyInthisPage(), "提现输入密码后未跳转到提现结果页");
 	    	Assert.assertTrue(withdrawCashResultPage.getWithdrawCashResult().contains("申请成功"), "提现申请失败，失败信息为："+withdrawCashResultPage.getWithdrawCashResult());
 	    	accountBanlancePage=withdrawCashResultPage.gotoBalancePage();
+	    	Assert.assertTrue(accountBanlancePage.verifyInthisPage(), "提现成功后点击查看余额未进入余额页");
 	    	int actualCash=accountBanlancePage.getAvailableBalance();
 	    	Assert.assertEquals(actualCash, expectCash,"实际剩余余额为"+actualCash+"预期剩余余额为"+expectCash);
     	}
