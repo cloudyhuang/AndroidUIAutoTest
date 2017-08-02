@@ -8,7 +8,7 @@
 			</class>
 		</classes>
 	</test>
-	 <test verbose="2" preserve-order="true" name="交易相关测试">
+	  <test verbose="2" preserve-order="true" name="交易相关测试">
 		<classes>
 			<class name="com.hjs.cases.TradeTestCase">
 			</class>

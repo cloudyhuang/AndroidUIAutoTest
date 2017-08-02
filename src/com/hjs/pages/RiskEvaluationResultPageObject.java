@@ -16,7 +16,7 @@ public class RiskEvaluationResultPageObject extends CommonAppiumPage{
 	private By riskResultLocator=By.xpath("//div[@class='title']");
 	public RiskEvaluationResultPageObject(AndroidDriver<AndroidElement> driver) {
 		super(driver);
-		threadsleep(5000);
+		threadsleep(15000);
 		contextWebview(driver);
 	}
 	public RiskEvaluationPageObject reEvaluation(){

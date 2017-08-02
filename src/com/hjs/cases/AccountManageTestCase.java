@@ -211,11 +211,11 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	Assert.assertTrue(personSettingPage.verifyInthisPage(), "进入我的个人头像，未进入设置页");
     	page=personSettingPage.gotoRiskEvaluation();
     	if(page.getClass().getName().contains("RiskEvaluationPageObject")){
-    		RiskEvaluationPageObject RiskEvaluationPage=new RiskEvaluationPageObject(driver);
-    		Assert.assertTrue(RiskEvaluationPage.verifyInthisPage(), "未进入风险评测页，开始评测按钮未出现");
+    		//RiskEvaluationPageObject RiskEvaluationPage=new RiskEvaluationPageObject(driver);
+    		Assert.assertTrue(((RiskEvaluationPageObject)page).verifyInthisPage(), "未进入风险评测页，开始评测按钮未出现");
     		String riskLevel="R4";
-    		RiskEvaluationResultPageObject RiskEvaluationResultPage=RiskEvaluationPage.startRiskEvaluation(riskLevel);
-    		String expectRiskResult=RiskEvaluationPage.riskLevelToRiskResult(riskLevel);
+    		RiskEvaluationResultPageObject RiskEvaluationResultPage=((RiskEvaluationPageObject)page).startRiskEvaluation(riskLevel);
+    		String expectRiskResult=((RiskEvaluationPageObject)page).riskLevelToRiskResult(riskLevel);
     		String riskResult=RiskEvaluationResultPage.getRiskResult();
     		RiskEvaluationResultPage.backNativeApp();
     		Assert.assertEquals(riskResult, expectRiskResult, "实际风评结果为"+riskResult+"然而期待结果为"+expectRiskResult);
@@ -235,14 +235,14 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	Assert.assertTrue(personSettingPage.verifyInthisPage(), "进入我的个人头像，未进入设置页"); 
     	page=personSettingPage.gotoRiskEvaluation();
     	if(page.getClass().getName().contains("RiskEvaluationResultPageObject")){
-    		RiskEvaluationResultPageObject RiskEvaluationResultPage=new RiskEvaluationResultPageObject(driver);
-    		Assert.assertTrue(RiskEvaluationResultPage.verifyInthisPage(), "未进入重新风险评测页，重新评测按钮未出现");//需要再判断按钮的文字是否为重新评测，并且按钮可点击
-    		RiskEvaluationPageObject RiskEvaluationPage=RiskEvaluationResultPage.reEvaluation();
+    		//RiskEvaluationResultPageObject RiskEvaluationResultPage=new RiskEvaluationResultPageObject(driver);
+    		Assert.assertTrue(((RiskEvaluationResultPageObject)page).verifyInthisPage(), "未进入重新风险评测页，重新评测按钮未出现");//需要再判断按钮的文字是否为重新评测，并且按钮可点击
+    		RiskEvaluationPageObject RiskEvaluationPage=((RiskEvaluationResultPageObject)page).reEvaluation();
     		String riskLevel="R3";
     		RiskEvaluationPage.startRiskEvaluation(riskLevel);
     		String expectRiskResult=RiskEvaluationPage.riskLevelToRiskResult(riskLevel);
-    		String riskResult=RiskEvaluationResultPage.getRiskResult();
-    		RiskEvaluationResultPage.backNativeApp();
+    		String riskResult=((RiskEvaluationResultPageObject)page).getRiskResult();
+    		((RiskEvaluationResultPageObject)page).backNativeApp();
     		Assert.assertEquals(riskResult, expectRiskResult, "实际风评结果为"+riskResult+"然而期待结果为"+expectRiskResult);
     	}
     	else{

@@ -24,7 +24,7 @@ public class RiskEvaluationPageObject extends CommonAppiumPage{
 	private By submitBtnLocator=By.xpath("//button[@class='submitBtn']");
 	public RiskEvaluationPageObject(AndroidDriver<AndroidElement> androidDriver) {
 		super(androidDriver);
-		threadsleep(5000);
+		threadsleep(15000);
 		contextWebview(driver);
 	}
 	public RiskEvaluationResultPageObject startRiskEvaluation(String riskLevle) throws Exception{
