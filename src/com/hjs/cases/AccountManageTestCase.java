@@ -59,7 +59,6 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	Reporter.log("未登录-跳转到登录页");
     	String phoneNum="17052411184";
     	String password="hxnearc228";
-    	Account.setLoginPwd(password);
     	LoginPageObject loginPageObject=(LoginPageObject)page;
     	String verifyPhoneNumResultPageName=loginPageObject.verifyPhoneNum(phoneNum).getClass().getName(); //com.hjs.pages.LoginPageObject
     	Assert.assertTrue(verifyPhoneNumResultPageName.contains("LoginPageObject"), "登录账户手机号验证后未进入输入密码页面！");
@@ -102,6 +101,7 @@ public class AccountManageTestCase extends CommonAppiumTest {
 		Assert.assertTrue(pageName.contains("SignUpPageObject"), "未进入注册页面");
 		GesturePwd gesturePwd = null;
 		String loginPwd="Hd888888";
+		Account.setLoginPwd(loginPwd);
 		gesturePwd=((SignUpPageObject)page).registe(phoneNum, loginPwd);
 		Assert.assertTrue(gesturePwd.verifyInthisPage(), "设置密码后未跳转到手势密码界面");
 		String result=gesturePwd.setFirstGesturePwd(1,4,7,8);
