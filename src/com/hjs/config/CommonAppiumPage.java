@@ -1,5 +1,7 @@
 package com.hjs.config;
 
+import static org.testng.AssertJUnit.assertTrue;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -59,7 +61,12 @@ public class CommonAppiumPage {
      */
     public boolean clickEle(AndroidElement ae, String str) {
         if (ae != null) {
-            ae.click();
+            try{
+            	ae.click();
+            }
+        	catch(NoSuchElementException e){
+        		assertTrue("没有找到目标元素－－"+str,false);
+        	}
             return true;
         } else {
             print(str + "为空，点击错误");
@@ -77,7 +84,12 @@ public class CommonAppiumPage {
         if (ae == null) {
             print("控件为空,输入内容失败:" + str);
         } else {
-            ae.sendKeys(str);
+        	try{
+        		ae.sendKeys(str);
+        	}
+        	catch(NoSuchElementException e){
+        		assertTrue("没有找到目标元素－－"+str,false);
+        	}
         }
 
     }
