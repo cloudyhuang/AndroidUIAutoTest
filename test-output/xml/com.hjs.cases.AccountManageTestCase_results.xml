@@ -4,40 +4,40 @@
            failures="0"
            errors="0"
            skipped="11"
-           time="0.012">
+           time="0.046">
   <properties />
   
-            <testcase name="testWelcomePage" time="0.0" classname="com.hjs.cases.AccountManageTestCase">
-          <skipped />
-    </testcase>
-            <testcase name="testResetLoginPwd" time="0.0" classname="com.hjs.cases.AccountManageTestCase">
-          <skipped />
-    </testcase>
-            <testcase name="testReRiskEvaluation" time="0.0" classname="com.hjs.cases.AccountManageTestCase">
-          <skipped />
-    </testcase>
-            <testcase name="testUnBundBankCard" time="0.0" classname="com.hjs.cases.AccountManageTestCase">
+            <testcase name="testRiskEvaluation" time="0.0" classname="com.hjs.cases.AccountManageTestCase">
           <skipped />
     </testcase>
             <testcase name="testSignedPhoneLogin" time="0.0" classname="com.hjs.cases.AccountManageTestCase">
           <skipped />
     </testcase>
+            <testcase name="testResetLoginPwd" time="0.0" classname="com.hjs.cases.AccountManageTestCase">
+          <skipped />
+    </testcase>
             <testcase name="testResetTradePwd" time="0.0" classname="com.hjs.cases.AccountManageTestCase">
+          <skipped />
+    </testcase>
+            <testcase name="testUnBundBankCard" time="0.0" classname="com.hjs.cases.AccountManageTestCase">
+          <skipped />
+    </testcase>
+            <testcase name="testWelcomePage" time="0.0" classname="com.hjs.cases.AccountManageTestCase">
           <skipped />
     </testcase>
             <testcase name="testGesturePwd" time="0.0" classname="com.hjs.cases.AccountManageTestCase">
           <skipped />
     </testcase>
-            <testcase name="testLogOut" time="0.0" classname="com.hjs.cases.AccountManageTestCase">
+            <testcase name="testReRiskEvaluation" time="0.0" classname="com.hjs.cases.AccountManageTestCase">
           <skipped />
     </testcase>
             <testcase name="testRealNameAndSetBankCard" time="0.0" classname="com.hjs.cases.AccountManageTestCase">
           <skipped />
     </testcase>
-            <testcase name="testRiskEvaluation" time="0.0" classname="com.hjs.cases.AccountManageTestCase">
+            <testcase name="testSignAccount" time="0.0" classname="com.hjs.cases.AccountManageTestCase">
           <skipped />
     </testcase>
-            <testcase name="testSignAccount" time="0.0" classname="com.hjs.cases.AccountManageTestCase">
+            <testcase name="testLogOut" time="0.0" classname="com.hjs.cases.AccountManageTestCase">
           <skipped />
     </testcase>
   

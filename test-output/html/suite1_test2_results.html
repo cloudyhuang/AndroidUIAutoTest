@@ -12,7 +12,7 @@
 <body>
 <h1>交易相关测试</h1>
 <p>
-  测试耗时: 0.037s
+  测试耗时: 0.045s
 </p>
 
   <table class="resultsTable configTable">
@@ -30,22 +30,16 @@
   </td>
   <td class="result">
         
+          <i>Method arguments: </i><span class="arguments">"127.0.0.1:62001"</span><br />
     
         
 
-        <a href="javascript:toggleElement('exception-0', 'block')" title="Click to expand/collapse"><b>org.openqa.selenium.SessionNotCreatedException: A new session could not be created. (Original error: The following desired capabilities are required, but were not provided: deviceName) (WARNING: The server did not provide any stacktrace information)<br/>
-Command duration or timeout: 243 milliseconds<br/>
+        <a href="javascript:toggleElement('exception-0', 'block')" title="Click to expand/collapse"><b>org.openqa.selenium.remote.UnreachableBrowserException: Could not start a new session. Possible causes are invalid address of the remote server or browser start-up failure.<br/>
 Build info: version: &apos;2.53.1&apos;, revision: &apos;a36b8b1cd5757287168e54b817830adce9b0158d&apos;, time: &apos;2016-06-30 19:26:09&apos;<br/>
 System info: host: &apos;SZ-PC095HFZ&apos;, ip: &apos;192.168.56.1&apos;, os.name: &apos;Windows 7&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;6.1&apos;, java.version: &apos;1.8.0_91&apos;<br/>
-Driver info: io.appium.java_client.android.AndroidDriver</b></a><br />
+Driver info: driver.version: AndroidDriver</b></a><br />
     <div class="stackTrace" id="exception-0">
-              sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)<br />
-              sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)<br />
-              sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)<br />
-              java.lang.reflect.Constructor.newInstance(Constructor.java:423)<br />
-              org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)<br />
-              org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)<br />
-              org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)<br />
+              org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:665)<br />
               io.appium.java_client.DefaultGenericMobileDriver.execute(DefaultGenericMobileDriver.java:42)<br />
               io.appium.java_client.AppiumDriver.execute(AppiumDriver.java:1)<br />
               io.appium.java_client.android.AndroidDriver.execute(AndroidDriver.java:1)<br />
@@ -56,7 +50,7 @@ Driver info: io.appium.java_client.android.AndroidDriver</b></a><br />
               io.appium.java_client.AppiumDriver.&lt;init&gt;(AppiumDriver.java:161)<br />
               io.appium.java_client.AppiumDriver.&lt;init&gt;(AppiumDriver.java:170)<br />
               io.appium.java_client.android.AndroidDriver.&lt;init&gt;(AndroidDriver.java:82)<br />
-              com.hjs.config.CommonAppiumTest.setUp(CommonAppiumTest.java:55)<br />
+              com.hjs.config.CommonAppiumTest.setUp(CommonAppiumTest.java:57)<br />
               sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br />
               sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br />
               sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br />
@@ -75,7 +69,147 @@ Driver info: io.appium.java_client.android.AndroidDriver</b></a><br />
               org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)<br />
               org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)<br />
               org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)<br />
-                </div>
+                    <b>Caused by: </b> <a href="javascript:toggleElement('exception-1', 'block')" title="Click to expand/collapse">org.openqa.selenium.WebDriverException: org.apache.http.conn.HttpHostConnectException: Connect to 127.0.0.1:4723 [/127.0.0.1] failed: Connection refused: connect<br/>
+Build info: version: &apos;2.53.1&apos;, revision: &apos;a36b8b1cd5757287168e54b817830adce9b0158d&apos;, time: &apos;2016-06-30 19:26:09&apos;<br/>
+System info: host: &apos;SZ-PC095HFZ&apos;, ip: &apos;192.168.56.1&apos;, os.name: &apos;Windows 7&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;6.1&apos;, java.version: &apos;1.8.0_91&apos;<br/>
+Driver info: driver.version: AndroidDriver</a><br />
+        <div class="stackTrace" id="exception-1">
+                      io.appium.java_client.remote.AppiumCommandExecutor.execute(AppiumCommandExecutor.java:79)<br />
+                      org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:644)<br />
+                      io.appium.java_client.DefaultGenericMobileDriver.execute(DefaultGenericMobileDriver.java:42)<br />
+                      io.appium.java_client.AppiumDriver.execute(AppiumDriver.java:1)<br />
+                      io.appium.java_client.android.AndroidDriver.execute(AndroidDriver.java:1)<br />
+                      org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:249)<br />
+                      org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:131)<br />
+                      org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:144)<br />
+                      io.appium.java_client.DefaultGenericMobileDriver.&lt;init&gt;(DefaultGenericMobileDriver.java:37)<br />
+                      io.appium.java_client.AppiumDriver.&lt;init&gt;(AppiumDriver.java:161)<br />
+                      io.appium.java_client.AppiumDriver.&lt;init&gt;(AppiumDriver.java:170)<br />
+                      io.appium.java_client.android.AndroidDriver.&lt;init&gt;(AndroidDriver.java:82)<br />
+                      com.hjs.config.CommonAppiumTest.setUp(CommonAppiumTest.java:57)<br />
+                      sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br />
+                      sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br />
+                      sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br />
+                      java.lang.reflect.Method.invoke(Method.java:498)<br />
+                      org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:84)<br />
+                      org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:564)<br />
+                      org.testng.internal.Invoker.invokeConfigurations(Invoker.java:213)<br />
+                      org.testng.internal.Invoker.invokeConfigurations(Invoker.java:138)<br />
+                      org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)<br />
+                      org.testng.SuiteRunner.run(SuiteRunner.java:254)<br />
+                      org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br />
+                      org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br />
+                      org.testng.TestNG.runSuitesSequentially(TestNG.java:1224)<br />
+                      org.testng.TestNG.runSuitesLocally(TestNG.java:1149)<br />
+                      org.testng.TestNG.run(TestNG.java:1057)<br />
+                      org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)<br />
+                      org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)<br />
+                      org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)<br />
+                  </div>
+              <b>Caused by: </b> <a href="javascript:toggleElement('exception-2', 'block')" title="Click to expand/collapse">org.apache.http.conn.HttpHostConnectException: Connect to 127.0.0.1:4723 [/127.0.0.1] failed: Connection refused: connect</a><br />
+        <div class="stackTrace" id="exception-2">
+                      org.apache.http.impl.conn.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:159)<br />
+                      org.apache.http.impl.conn.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:359)<br />
+                      org.apache.http.impl.execchain.MainClientExec.establishRoute(MainClientExec.java:381)<br />
+                      org.apache.http.impl.execchain.MainClientExec.execute(MainClientExec.java:237)<br />
+                      org.apache.http.impl.execchain.ProtocolExec.execute(ProtocolExec.java:185)<br />
+                      org.apache.http.impl.execchain.RetryExec.execute(RetryExec.java:89)<br />
+                      org.apache.http.impl.execchain.RedirectExec.execute(RedirectExec.java:111)<br />
+                      org.apache.http.impl.client.InternalHttpClient.doExecute(InternalHttpClient.java:185)<br />
+                      org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:72)<br />
+                      org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:56)<br />
+                      org.openqa.selenium.remote.internal.ApacheHttpClient.fallBackExecute(ApacheHttpClient.java:144)<br />
+                      org.openqa.selenium.remote.internal.ApacheHttpClient.execute(ApacheHttpClient.java:90)<br />
+                      org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:142)<br />
+                      io.appium.java_client.remote.AppiumCommandExecutor.execute(AppiumCommandExecutor.java:67)<br />
+                      org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:644)<br />
+                      io.appium.java_client.DefaultGenericMobileDriver.execute(DefaultGenericMobileDriver.java:42)<br />
+                      io.appium.java_client.AppiumDriver.execute(AppiumDriver.java:1)<br />
+                      io.appium.java_client.android.AndroidDriver.execute(AndroidDriver.java:1)<br />
+                      org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:249)<br />
+                      org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:131)<br />
+                      org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:144)<br />
+                      io.appium.java_client.DefaultGenericMobileDriver.&lt;init&gt;(DefaultGenericMobileDriver.java:37)<br />
+                      io.appium.java_client.AppiumDriver.&lt;init&gt;(AppiumDriver.java:161)<br />
+                      io.appium.java_client.AppiumDriver.&lt;init&gt;(AppiumDriver.java:170)<br />
+                      io.appium.java_client.android.AndroidDriver.&lt;init&gt;(AndroidDriver.java:82)<br />
+                      com.hjs.config.CommonAppiumTest.setUp(CommonAppiumTest.java:57)<br />
+                      sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br />
+                      sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br />
+                      sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br />
+                      java.lang.reflect.Method.invoke(Method.java:498)<br />
+                      org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:84)<br />
+                      org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:564)<br />
+                      org.testng.internal.Invoker.invokeConfigurations(Invoker.java:213)<br />
+                      org.testng.internal.Invoker.invokeConfigurations(Invoker.java:138)<br />
+                      org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)<br />
+                      org.testng.SuiteRunner.run(SuiteRunner.java:254)<br />
+                      org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br />
+                      org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br />
+                      org.testng.TestNG.runSuitesSequentially(TestNG.java:1224)<br />
+                      org.testng.TestNG.runSuitesLocally(TestNG.java:1149)<br />
+                      org.testng.TestNG.run(TestNG.java:1057)<br />
+                      org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)<br />
+                      org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)<br />
+                      org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)<br />
+                  </div>
+              <b>Caused by: </b> <a href="javascript:toggleElement('exception-3', 'block')" title="Click to expand/collapse">java.net.ConnectException: Connection refused: connect</a><br />
+        <div class="stackTrace" id="exception-3">
+                      java.net.DualStackPlainSocketImpl.waitForConnect(Native Method)<br />
+                      java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:85)<br />
+                      java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350)<br />
+                      java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)<br />
+                      java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)<br />
+                      java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)<br />
+                      java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)<br />
+                      java.net.Socket.connect(Socket.java:589)<br />
+                      org.apache.http.conn.socket.PlainConnectionSocketFactory.connectSocket(PlainConnectionSocketFactory.java:75)<br />
+                      org.apache.http.impl.conn.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:142)<br />
+                      org.apache.http.impl.conn.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:359)<br />
+                      org.apache.http.impl.execchain.MainClientExec.establishRoute(MainClientExec.java:381)<br />
+                      org.apache.http.impl.execchain.MainClientExec.execute(MainClientExec.java:237)<br />
+                      org.apache.http.impl.execchain.ProtocolExec.execute(ProtocolExec.java:185)<br />
+                      org.apache.http.impl.execchain.RetryExec.execute(RetryExec.java:89)<br />
+                      org.apache.http.impl.execchain.RedirectExec.execute(RedirectExec.java:111)<br />
+                      org.apache.http.impl.client.InternalHttpClient.doExecute(InternalHttpClient.java:185)<br />
+                      org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:72)<br />
+                      org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:56)<br />
+                      org.openqa.selenium.remote.internal.ApacheHttpClient.fallBackExecute(ApacheHttpClient.java:144)<br />
+                      org.openqa.selenium.remote.internal.ApacheHttpClient.execute(ApacheHttpClient.java:90)<br />
+                      org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:142)<br />
+                      io.appium.java_client.remote.AppiumCommandExecutor.execute(AppiumCommandExecutor.java:67)<br />
+                      org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:644)<br />
+                      io.appium.java_client.DefaultGenericMobileDriver.execute(DefaultGenericMobileDriver.java:42)<br />
+                      io.appium.java_client.AppiumDriver.execute(AppiumDriver.java:1)<br />
+                      io.appium.java_client.android.AndroidDriver.execute(AndroidDriver.java:1)<br />
+                      org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:249)<br />
+                      org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:131)<br />
+                      org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:144)<br />
+                      io.appium.java_client.DefaultGenericMobileDriver.&lt;init&gt;(DefaultGenericMobileDriver.java:37)<br />
+                      io.appium.java_client.AppiumDriver.&lt;init&gt;(AppiumDriver.java:161)<br />
+                      io.appium.java_client.AppiumDriver.&lt;init&gt;(AppiumDriver.java:170)<br />
+                      io.appium.java_client.android.AndroidDriver.&lt;init&gt;(AndroidDriver.java:82)<br />
+                      com.hjs.config.CommonAppiumTest.setUp(CommonAppiumTest.java:57)<br />
+                      sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br />
+                      sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br />
+                      sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br />
+                      java.lang.reflect.Method.invoke(Method.java:498)<br />
+                      org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:84)<br />
+                      org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:564)<br />
+                      org.testng.internal.Invoker.invokeConfigurations(Invoker.java:213)<br />
+                      org.testng.internal.Invoker.invokeConfigurations(Invoker.java:138)<br />
+                      org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)<br />
+                      org.testng.SuiteRunner.run(SuiteRunner.java:254)<br />
+                      org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br />
+                      org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)<br />
+                      org.testng.TestNG.runSuitesSequentially(TestNG.java:1224)<br />
+                      org.testng.TestNG.runSuitesLocally(TestNG.java:1149)<br />
+                      org.testng.TestNG.run(TestNG.java:1057)<br />
+                      org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)<br />
+                      org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)<br />
+                      org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)<br />
+                  </div>
+          </div>
       </td>
   <td class="screenshot">
               </td>
@@ -92,9 +226,9 @@ Driver info: io.appium.java_client.android.AndroidDriver</b></a><br />
     
         
 
-        <a href="javascript:toggleElement('exception-1', 'block')" title="Click to expand/collapse"><b>java.lang.NullPointerException</b></a><br />
-    <div class="stackTrace" id="exception-1">
-              com.hjs.config.CommonAppiumTest.tearDown(CommonAppiumTest.java:139)<br />
+        <a href="javascript:toggleElement('exception-4', 'block')" title="Click to expand/collapse"><b>java.lang.NullPointerException</b></a><br />
+    <div class="stackTrace" id="exception-4">
+              com.hjs.config.CommonAppiumTest.tearDown(CommonAppiumTest.java:141)<br />
               sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br />
               sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br />
               sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br />
@@ -131,55 +265,8 @@ Driver info: io.appium.java_client.android.AndroidDriver</b></a><br />
             
 <tr>
   <td class="method">
-                  test理财页产品信息
-      </td>
-  <td class="duration">
-    0.002s
-  </td>
-  <td class="result">
-                               
-    
-            <div class="testOutput">
-                        用例失败时间：2017-07-28 08:47:47<br />
-                                <br />
-                  </div>
-    
-
-      </td>
-  <td class="screenshot">
-                      <div class="screenshotimage">
-                                                      <br />
-                                                                        <img src='TradeTestCase.test理财页产品信息20170728084726.png' onclick='window.open("TradeTestCase.test理财页产品信息20170728084726.png")'' hight='100' width='100'/><br />
-                                          </div>
-        </td>
-</tr>
-<tr>
-  <td class="method">
-                  test银行卡不带券购买定期产品
-      </td>
-  <td class="duration">
-    0.002s
-  </td>
-  <td class="result">
-                               
-    
-            <div class="testOutput">
-                        用例失败时间：2017-07-28 08:47:47<br />
-                                <br />
-                  </div>
-    
-
-      </td>
-  <td class="screenshot">
-                      <div class="screenshotimage">
-                                                      <br />
-                                                                        <img src='TradeTestCase.test银行卡不带券购买定期产品20170728084726.png' onclick='window.open("TradeTestCase.test银行卡不带券购买定期产品20170728084726.png")'' hight='100' width='100'/><br />
-                                          </div>
-        </td>
-</tr>
-<tr>
-  <td class="method">
-                  test银行卡现金券购买定期产品
+                  <span class="description" title="理财页产品信息">testFinancialProductInfo
+      (理财页产品信息)</span>
       </td>
   <td class="duration">
     0.001s
@@ -188,7 +275,7 @@ Driver info: io.appium.java_client.android.AndroidDriver</b></a><br />
                                
     
             <div class="testOutput">
-                        用例失败时间：2017-07-28 08:47:47<br />
+                        用例失败时间：2017-08-04 09:19:57<br />
                                 <br />
                   </div>
     
@@ -197,37 +284,14 @@ Driver info: io.appium.java_client.android.AndroidDriver</b></a><br />
   <td class="screenshot">
                       <div class="screenshotimage">
                                                       <br />
-                                                                        <img src='TradeTestCase.test银行卡现金券购买定期产品20170728084726.png' onclick='window.open("TradeTestCase.test银行卡现金券购买定期产品20170728084726.png")'' hight='100' width='100'/><br />
+                                                                        <img src='TradeTestCase.testFinancialProductInfo20170804091930.png' onclick='window.open("TradeTestCase.testFinancialProductInfo20170804091930.png")'' hight='100' width='100'/><br />
                                           </div>
         </td>
 </tr>
 <tr>
   <td class="method">
-                  test银行卡加息券购买定期理财产品
-      </td>
-  <td class="duration">
-    0.002s
-  </td>
-  <td class="result">
-                               
-    
-            <div class="testOutput">
-                        用例失败时间：2017-07-28 08:47:47<br />
-                                <br />
-                  </div>
-    
-
-      </td>
-  <td class="screenshot">
-                      <div class="screenshotimage">
-                                                      <br />
-                                                                        <img src='TradeTestCase.test银行卡加息券购买定期理财产品20170728084726.png' onclick='window.open("TradeTestCase.test银行卡加息券购买定期理财产品20170728084726.png")'' hight='100' width='100'/><br />
-                                          </div>
-        </td>
-</tr>
-<tr>
-  <td class="method">
-                  test银行卡不带券无短信验证码购买定期产品
+                  <span class="description" title="银行卡不带券购买定期产品">testPayRegularProductsByBankCardWithoutCoupon
+      (银行卡不带券购买定期产品)</span>
       </td>
   <td class="duration">
     0.001s
@@ -236,7 +300,7 @@ Driver info: io.appium.java_client.android.AndroidDriver</b></a><br />
                                
     
             <div class="testOutput">
-                        用例失败时间：2017-07-28 08:47:47<br />
+                        用例失败时间：2017-08-04 09:19:57<br />
                                 <br />
                   </div>
     
@@ -245,13 +309,14 @@ Driver info: io.appium.java_client.android.AndroidDriver</b></a><br />
   <td class="screenshot">
                       <div class="screenshotimage">
                                                       <br />
-                                                                        <img src='TradeTestCase.test银行卡不带券无短信验证码购买定期产品20170728084726.png' onclick='window.open("TradeTestCase.test银行卡不带券无短信验证码购买定期产品20170728084726.png")'' hight='100' width='100'/><br />
+                                                                        <img src='TradeTestCase.testPayRegularProductsByBankCardWithoutCoupon20170804091930.png' onclick='window.open("TradeTestCase.testPayRegularProductsByBankCardWithoutCoupon20170804091930.png")'' hight='100' width='100'/><br />
                                           </div>
         </td>
 </tr>
 <tr>
   <td class="method">
-                  test银行卡现金券无验证码购买定期产品
+                  <span class="description" title="银行卡现金券购买定期产品">testPayRegularProductsByBankCardWithCashCoupon
+      (银行卡现金券购买定期产品)</span>
       </td>
   <td class="duration">
     0.001s
@@ -260,7 +325,7 @@ Driver info: io.appium.java_client.android.AndroidDriver</b></a><br />
                                
     
             <div class="testOutput">
-                        用例失败时间：2017-07-28 08:47:47<br />
+                        用例失败时间：2017-08-04 09:19:57<br />
                                 <br />
                   </div>
     
@@ -269,13 +334,39 @@ Driver info: io.appium.java_client.android.AndroidDriver</b></a><br />
   <td class="screenshot">
                       <div class="screenshotimage">
                                                       <br />
-                                                                        <img src='TradeTestCase.test银行卡现金券无验证码购买定期产品20170728084726.png' onclick='window.open("TradeTestCase.test银行卡现金券无验证码购买定期产品20170728084726.png")'' hight='100' width='100'/><br />
+                                                                        <img src='TradeTestCase.testPayRegularProductsByBankCardWithCashCoupon20170804091930.png' onclick='window.open("TradeTestCase.testPayRegularProductsByBankCardWithCashCoupon20170804091930.png")'' hight='100' width='100'/><br />
                                           </div>
         </td>
 </tr>
 <tr>
   <td class="method">
-                  test银行卡加息券无验证码购买定期产品
+                  <span class="description" title="银行卡加息券购买定期理财产品">testPayRegularProductsByBankCardWithBonusCoupon
+      (银行卡加息券购买定期理财产品)</span>
+      </td>
+  <td class="duration">
+    0.004s
+  </td>
+  <td class="result">
+                               
+    
+            <div class="testOutput">
+                        用例失败时间：2017-08-04 09:19:57<br />
+                                <br />
+                  </div>
+    
+
+      </td>
+  <td class="screenshot">
+                      <div class="screenshotimage">
+                                                      <br />
+                                                                        <img src='TradeTestCase.testPayRegularProductsByBankCardWithBonusCoupon20170804091930.png' onclick='window.open("TradeTestCase.testPayRegularProductsByBankCardWithBonusCoupon20170804091930.png")'' hight='100' width='100'/><br />
+                                          </div>
+        </td>
+</tr>
+<tr>
+  <td class="method">
+                  <span class="description" title="银行卡不带券无短信验证码购买定期产品">testPayRegularProductsByBankCardWithoutCouponWithoutSmsCode
+      (银行卡不带券无短信验证码购买定期产品)</span>
       </td>
   <td class="duration">
     0.001s
@@ -284,7 +375,7 @@ Driver info: io.appium.java_client.android.AndroidDriver</b></a><br />
                                
     
             <div class="testOutput">
-                        用例失败时间：2017-07-28 08:47:47<br />
+                        用例失败时间：2017-08-04 09:19:57<br />
                                 <br />
                   </div>
     
@@ -293,109 +384,14 @@ Driver info: io.appium.java_client.android.AndroidDriver</b></a><br />
   <td class="screenshot">
                       <div class="screenshotimage">
                                                       <br />
-                                                                        <img src='TradeTestCase.test银行卡加息券无验证码购买定期产品20170728084726.png' onclick='window.open("TradeTestCase.test银行卡加息券无验证码购买定期产品20170728084726.png")'' hight='100' width='100'/><br />
+                                                                        <img src='TradeTestCase.testPayRegularProductsByBankCardWithoutCouponWithoutSmsCode20170804091930.png' onclick='window.open("TradeTestCase.testPayRegularProductsByBankCardWithoutCouponWithoutSmsCode20170804091930.png")'' hight='100' width='100'/><br />
                                           </div>
         </td>
 </tr>
 <tr>
   <td class="method">
-                  test充值
-      </td>
-  <td class="duration">
-    0.001s
-  </td>
-  <td class="result">
-                               
-    
-            <div class="testOutput">
-                        用例失败时间：2017-07-28 08:47:47<br />
-                                <br />
-                  </div>
-    
-
-      </td>
-  <td class="screenshot">
-                      <div class="screenshotimage">
-                                                      <br />
-                                                                        <img src='TradeTestCase.test充值20170728084726.png' onclick='window.open("TradeTestCase.test充值20170728084726.png")'' hight='100' width='100'/><br />
-                                          </div>
-        </td>
-</tr>
-<tr>
-  <td class="method">
-                  test余额不带券购买定期产品
-      </td>
-  <td class="duration">
-    0.001s
-  </td>
-  <td class="result">
-                               
-    
-            <div class="testOutput">
-                        用例失败时间：2017-07-28 08:47:47<br />
-                                <br />
-                  </div>
-    
-
-      </td>
-  <td class="screenshot">
-                      <div class="screenshotimage">
-                                                      <br />
-                                                                        <img src='TradeTestCase.test余额不带券购买定期产品20170728084726.png' onclick='window.open("TradeTestCase.test余额不带券购买定期产品20170728084726.png")'' hight='100' width='100'/><br />
-                                          </div>
-        </td>
-</tr>
-<tr>
-  <td class="method">
-                  test余额现金券购买定期产品
-      </td>
-  <td class="duration">
-    0.001s
-  </td>
-  <td class="result">
-                               
-    
-            <div class="testOutput">
-                        用例失败时间：2017-07-28 08:47:47<br />
-                                <br />
-                  </div>
-    
-
-      </td>
-  <td class="screenshot">
-                      <div class="screenshotimage">
-                                                      <br />
-                                                                        <img src='TradeTestCase.test余额现金券购买定期产品20170728084726.png' onclick='window.open("TradeTestCase.test余额现金券购买定期产品20170728084726.png")'' hight='100' width='100'/><br />
-                                          </div>
-        </td>
-</tr>
-<tr>
-  <td class="method">
-                  test余额加息券购买定期产品
-      </td>
-  <td class="duration">
-    0.001s
-  </td>
-  <td class="result">
-                               
-    
-            <div class="testOutput">
-                        用例失败时间：2017-07-28 08:47:47<br />
-                                <br />
-                  </div>
-    
-
-      </td>
-  <td class="screenshot">
-                      <div class="screenshotimage">
-                                                      <br />
-                                                                        <img src='TradeTestCase.test余额加息券购买定期产品20170728084726.png' onclick='window.open("TradeTestCase.test余额加息券购买定期产品20170728084726.png")'' hight='100' width='100'/><br />
-                                          </div>
-        </td>
-</tr>
-<tr>
-  <td class="method">
-                  test余额不带券购买活期产品
+                  <span class="description" title="银行卡现金券无验证码购买定期产品">testtestPayRegularProductsByBankCardWithCashCouponWithoutSmsCode
+      (银行卡现金券无验证码购买定期产品)</span>
       </td>
   <td class="duration">
     0.000s
@@ -404,7 +400,7 @@ Driver info: io.appium.java_client.android.AndroidDriver</b></a><br />
                                
     
             <div class="testOutput">
-                        用例失败时间：2017-07-28 08:47:47<br />
+                        用例失败时间：2017-08-04 09:19:57<br />
                                 <br />
                   </div>
     
@@ -413,13 +409,39 @@ Driver info: io.appium.java_client.android.AndroidDriver</b></a><br />
   <td class="screenshot">
                       <div class="screenshotimage">
                                                       <br />
-                                                                        <img src='TradeTestCase.test余额不带券购买活期产品20170728084726.png' onclick='window.open("TradeTestCase.test余额不带券购买活期产品20170728084726.png")'' hight='100' width='100'/><br />
+                                                                        <img src='TradeTestCase.testtestPayRegularProductsByBankCardWithCashCouponWithoutSmsCode20170804091930.png' onclick='window.open("TradeTestCase.testtestPayRegularProductsByBankCardWithCashCouponWithoutSmsCode20170804091930.png")'' hight='100' width='100'/><br />
                                           </div>
         </td>
 </tr>
 <tr>
   <td class="method">
-                  test银行卡不带券购买活期产品
+                  <span class="description" title="银行卡加息券无验证码购买定期产品">testtestPayRegularProductsByBankCardWithBonusCouponWithoutSmsCode
+      (银行卡加息券无验证码购买定期产品)</span>
+      </td>
+  <td class="duration">
+    0.004s
+  </td>
+  <td class="result">
+                               
+    
+            <div class="testOutput">
+                        用例失败时间：2017-08-04 09:19:57<br />
+                                <br />
+                  </div>
+    
+
+      </td>
+  <td class="screenshot">
+                      <div class="screenshotimage">
+                                                      <br />
+                                                                        <img src='TradeTestCase.testtestPayRegularProductsByBankCardWithBonusCouponWithoutSmsCode20170804091930.png' onclick='window.open("TradeTestCase.testtestPayRegularProductsByBankCardWithBonusCouponWithoutSmsCode20170804091930.png")'' hight='100' width='100'/><br />
+                                          </div>
+        </td>
+</tr>
+<tr>
+  <td class="method">
+                  <span class="description" title="充值">testRecharge
+      (充值)</span>
       </td>
   <td class="duration">
     0.001s
@@ -428,7 +450,7 @@ Driver info: io.appium.java_client.android.AndroidDriver</b></a><br />
                                
     
             <div class="testOutput">
-                        用例失败时间：2017-07-28 08:47:47<br />
+                        用例失败时间：2017-08-04 09:19:57<br />
                                 <br />
                   </div>
     
@@ -437,22 +459,23 @@ Driver info: io.appium.java_client.android.AndroidDriver</b></a><br />
   <td class="screenshot">
                       <div class="screenshotimage">
                                                       <br />
-                                                                        <img src='TradeTestCase.test银行卡不带券购买活期产品20170728084726.png' onclick='window.open("TradeTestCase.test银行卡不带券购买活期产品20170728084726.png")'' hight='100' width='100'/><br />
+                                                                        <img src='TradeTestCase.testRecharge20170804091930.png' onclick='window.open("TradeTestCase.testRecharge20170804091930.png")'' hight='100' width='100'/><br />
                                           </div>
         </td>
 </tr>
 <tr>
   <td class="method">
-                  test银行卡不带券购买定期产品失败场景
+                  <span class="description" title="余额不带券购买定期产品">testPayRegularProductsByBanlanceWithoutCoupon
+      (余额不带券购买定期产品)</span>
       </td>
   <td class="duration">
-    0.001s
+    0.002s
   </td>
   <td class="result">
                                
     
             <div class="testOutput">
-                        用例失败时间：2017-07-28 08:47:47<br />
+                        用例失败时间：2017-08-04 09:19:57<br />
                                 <br />
                   </div>
     
@@ -461,22 +484,23 @@ Driver info: io.appium.java_client.android.AndroidDriver</b></a><br />
   <td class="screenshot">
                       <div class="screenshotimage">
                                                       <br />
-                                                                        <img src='TradeTestCase.test银行卡不带券购买定期产品失败场景20170728084726.png' onclick='window.open("TradeTestCase.test银行卡不带券购买定期产品失败场景20170728084726.png")'' hight='100' width='100'/><br />
+                                                                        <img src='TradeTestCase.testPayRegularProductsByBanlanceWithoutCoupon20170804091930.png' onclick='window.open("TradeTestCase.testPayRegularProductsByBanlanceWithoutCoupon20170804091930.png")'' hight='100' width='100'/><br />
                                           </div>
         </td>
 </tr>
 <tr>
   <td class="method">
-                  test下架产品
+                  <span class="description" title="余额现金券购买定期产品">testPayRegularProductsByBanlanceWithCashCoupon
+      (余额现金券购买定期产品)</span>
       </td>
   <td class="duration">
-    0.001s
+    0.002s
   </td>
   <td class="result">
                                
     
             <div class="testOutput">
-                        用例失败时间：2017-07-28 08:47:47<br />
+                        用例失败时间：2017-08-04 09:19:57<br />
                                 <br />
                   </div>
     
@@ -485,13 +509,39 @@ Driver info: io.appium.java_client.android.AndroidDriver</b></a><br />
   <td class="screenshot">
                       <div class="screenshotimage">
                                                       <br />
-                                                                        <img src='TradeTestCase.test下架产品20170728084726.png' onclick='window.open("TradeTestCase.test下架产品20170728084726.png")'' hight='100' width='100'/><br />
+                                                                        <img src='TradeTestCase.testPayRegularProductsByBanlanceWithCashCoupon20170804091930.png' onclick='window.open("TradeTestCase.testPayRegularProductsByBanlanceWithCashCoupon20170804091930.png")'' hight='100' width='100'/><br />
                                           </div>
         </td>
 </tr>
 <tr>
   <td class="method">
-                  test提现
+                  <span class="description" title="余额加息券购买定期产品">testPayRegularProductsByBanlanceWithBonusCoupon
+      (余额加息券购买定期产品)</span>
+      </td>
+  <td class="duration">
+    0.002s
+  </td>
+  <td class="result">
+                               
+    
+            <div class="testOutput">
+                        用例失败时间：2017-08-04 09:19:57<br />
+                                <br />
+                  </div>
+    
+
+      </td>
+  <td class="screenshot">
+                      <div class="screenshotimage">
+                                                      <br />
+                                                                        <img src='TradeTestCase.testPayRegularProductsByBanlanceWithBonusCoupon20170804091930.png' onclick='window.open("TradeTestCase.testPayRegularProductsByBanlanceWithBonusCoupon20170804091930.png")'' hight='100' width='100'/><br />
+                                          </div>
+        </td>
+</tr>
+<tr>
+  <td class="method">
+                  <span class="description" title="余额不带券购买活期产品">testPayCurrentProductsByBanlanceWithoutCoupon
+      (余额不带券购买活期产品)</span>
       </td>
   <td class="duration">
     0.000s
@@ -500,7 +550,7 @@ Driver info: io.appium.java_client.android.AndroidDriver</b></a><br />
                                
     
             <div class="testOutput">
-                        用例失败时间：2017-07-28 08:47:47<br />
+                        用例失败时间：2017-08-04 09:19:57<br />
                                 <br />
                   </div>
     
@@ -509,37 +559,14 @@ Driver info: io.appium.java_client.android.AndroidDriver</b></a><br />
   <td class="screenshot">
                       <div class="screenshotimage">
                                                       <br />
-                                                                        <img src='TradeTestCase.test提现20170728084726.png' onclick='window.open("TradeTestCase.test提现20170728084726.png")'' hight='100' width='100'/><br />
+                                                                        <img src='TradeTestCase.testPayCurrentProductsByBanlanceWithoutCoupon20170804091930.png' onclick='window.open("TradeTestCase.testPayCurrentProductsByBanlanceWithoutCoupon20170804091930.png")'' hight='100' width='100'/><br />
                                           </div>
         </td>
 </tr>
 <tr>
   <td class="method">
-                  test我的定期产品信息
-      </td>
-  <td class="duration">
-    0.000s
-  </td>
-  <td class="result">
-                               
-    
-            <div class="testOutput">
-                        用例失败时间：2017-07-28 08:47:47<br />
-                                <br />
-                  </div>
-    
-
-      </td>
-  <td class="screenshot">
-                      <div class="screenshotimage">
-                                                      <br />
-                                                                        <img src='TradeTestCase.test我的定期产品信息20170728084726.png' onclick='window.open("TradeTestCase.test我的定期产品信息20170728084726.png")'' hight='100' width='100'/><br />
-                                          </div>
-        </td>
-</tr>
-<tr>
-  <td class="method">
-                  test赎回活期产品到余额
+                  <span class="description" title="银行卡不带券购买活期产品">testPayCurrentProductsByBankCardWithoutCoupon
+      (银行卡不带券购买活期产品)</span>
       </td>
   <td class="duration">
     0.001s
@@ -548,7 +575,7 @@ Driver info: io.appium.java_client.android.AndroidDriver</b></a><br />
                                
     
             <div class="testOutput">
-                        用例失败时间：2017-07-28 08:47:47<br />
+                        用例失败时间：2017-08-04 09:19:57<br />
                                 <br />
                   </div>
     
@@ -557,7 +584,132 @@ Driver info: io.appium.java_client.android.AndroidDriver</b></a><br />
   <td class="screenshot">
                       <div class="screenshotimage">
                                                       <br />
-                                                                        <img src='TradeTestCase.test赎回活期产品到余额20170728084726.png' onclick='window.open("TradeTestCase.test赎回活期产品到余额20170728084726.png")'' hight='100' width='100'/><br />
+                                                                        <img src='TradeTestCase.testPayCurrentProductsByBankCardWithoutCoupon20170804091930.png' onclick='window.open("TradeTestCase.testPayCurrentProductsByBankCardWithoutCoupon20170804091930.png")'' hight='100' width='100'/><br />
+                                          </div>
+        </td>
+</tr>
+<tr>
+  <td class="method">
+                  <span class="description" title="银行卡不带券购买定期产品失败场景">testPayByBankCardFailWithoutCoupon
+      (银行卡不带券购买定期产品失败场景)</span>
+      </td>
+  <td class="duration">
+    0.002s
+  </td>
+  <td class="result">
+                               
+    
+            <div class="testOutput">
+                        用例失败时间：2017-08-04 09:19:57<br />
+                                <br />
+                  </div>
+    
+
+      </td>
+  <td class="screenshot">
+                      <div class="screenshotimage">
+                                                      <br />
+                                                                        <img src='TradeTestCase.testPayByBankCardFailWithoutCoupon20170804091930.png' onclick='window.open("TradeTestCase.testPayByBankCardFailWithoutCoupon20170804091930.png")'' hight='100' width='100'/><br />
+                                          </div>
+        </td>
+</tr>
+<tr>
+  <td class="method">
+                  <span class="description" title="下架产品">testOffProducts
+      (下架产品)</span>
+      </td>
+  <td class="duration">
+    0.001s
+  </td>
+  <td class="result">
+                               
+    
+            <div class="testOutput">
+                        用例失败时间：2017-08-04 09:19:57<br />
+                                <br />
+                  </div>
+    
+
+      </td>
+  <td class="screenshot">
+                      <div class="screenshotimage">
+                                                      <br />
+                                                                        <img src='TradeTestCase.testOffProducts20170804091930.png' onclick='window.open("TradeTestCase.testOffProducts20170804091930.png")'' hight='100' width='100'/><br />
+                                          </div>
+        </td>
+</tr>
+<tr>
+  <td class="method">
+                  <span class="description" title="提现">testWithdraw
+      (提现)</span>
+      </td>
+  <td class="duration">
+    0.001s
+  </td>
+  <td class="result">
+                               
+    
+            <div class="testOutput">
+                        用例失败时间：2017-08-04 09:19:57<br />
+                                <br />
+                  </div>
+    
+
+      </td>
+  <td class="screenshot">
+                      <div class="screenshotimage">
+                                                      <br />
+                                                                        <img src='TradeTestCase.testWithdraw20170804091930.png' onclick='window.open("TradeTestCase.testWithdraw20170804091930.png")'' hight='100' width='100'/><br />
+                                          </div>
+        </td>
+</tr>
+<tr>
+  <td class="method">
+                  <span class="description" title="我的定期产品信息">testMyRegularProductInfo
+      (我的定期产品信息)</span>
+      </td>
+  <td class="duration">
+    0.001s
+  </td>
+  <td class="result">
+                               
+    
+            <div class="testOutput">
+                        用例失败时间：2017-08-04 09:19:57<br />
+                                <br />
+                  </div>
+    
+
+      </td>
+  <td class="screenshot">
+                      <div class="screenshotimage">
+                                                      <br />
+                                                                        <img src='TradeTestCase.testMyRegularProductInfo20170804091930.png' onclick='window.open("TradeTestCase.testMyRegularProductInfo20170804091930.png")'' hight='100' width='100'/><br />
+                                          </div>
+        </td>
+</tr>
+<tr>
+  <td class="method">
+                  <span class="description" title="赎回活期产品到余额">testRedeemToBalance
+      (赎回活期产品到余额)</span>
+      </td>
+  <td class="duration">
+    0.002s
+  </td>
+  <td class="result">
+                               
+    
+            <div class="testOutput">
+                        用例失败时间：2017-08-04 09:19:57<br />
+                                <br />
+                  </div>
+    
+
+      </td>
+  <td class="screenshot">
+                      <div class="screenshotimage">
+                                                      <br />
+                                                                        <img src='TradeTestCase.testRedeemToBalance20170804091930.png' onclick='window.open("TradeTestCase.testRedeemToBalance20170804091930.png")'' hight='100' width='100'/><br />
                                           </div>
         </td>
 </tr>

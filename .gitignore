@@ -7,7 +7,9 @@
 *.tar
 *.tar.gz
 *.class
-
+# test output ignore
+/test-output
+/surefire-reports
 
 # idea ignore
 .idea/

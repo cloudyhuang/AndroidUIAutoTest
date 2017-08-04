@@ -5,7 +5,7 @@
     <classes>
       <class name="com.hjs.publics.test">
         <methods>
-          <include name="testException"/>
+          <include name="test"/>
         </methods>
       </class> <!-- com.hjs.publics.test -->
     </classes>
