@@ -39,7 +39,7 @@ public class test {
 	@BeforeSuite
     @Parameters({"udid"})
 	public void test(String udid) {
-		String cmd="cmd /c adb kill-server && adb start-server && adb connect "+udid;
+		String cmd="adb -s "+udid+" uninstall com.evergrande.eif.android.hengjiaosuo";
 		String [] cmd1={"cmd","/C","adb kill-server"}; 
 		String [] cmd2={"cmd","/C","adb start-server"};
 		String [] cmd3={"cmd","/C","adb connect 127.0.0.1:52001"}; 
