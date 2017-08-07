@@ -16,6 +16,7 @@ public class AppiumServer {
 		String cmd="cmd /c adb kill-server && adb start-server && adb connect "+udid; //重置adb
 		runCommand(cmd);
 		cmd="adb -s "+udid+" uninstall com.evergrande.eif.android.hengjiaosuo";	//卸载app
+		System.out.print("卸载app:");
 		runCommand(cmd);
 		CommandLine command = new CommandLine("cmd");
 		command.addArgument("/c");

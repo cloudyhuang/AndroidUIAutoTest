@@ -26,7 +26,9 @@ import io.appium.java_client.android.AndroidElement;
 public class TestNGListener implements ITestListener {
 	AppiumDriver<AndroidElement> driver;
 
-    public void onTestStart(ITestResult result) {}
+    public void onTestStart(ITestResult result) {
+    	System.out.println(result.getMethod().getMethodName()+result.getMethod().getDescription()+"--用例开始");
+    }
 
     public void onTestSuccess(ITestResult result) {}
 
