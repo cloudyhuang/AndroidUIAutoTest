@@ -2,16 +2,20 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="恒大金服UI自动化测试项目报告" parallel="false" preserve-order="true">
 	<parameter name="udid" value="127.0.0.1:62001" />
-	<test verbose="2" preserve-order="true" name="账户管理测试">
+	<!-- <test verbose="2" preserve-order="true" name="账户管理测试">
 		<classes>
 			<class name="com.hjs.cases.AccountManageTestCase">
 			</class>
 		</classes>
-	</test>
+	</test> -->
 
 	<test verbose="2" preserve-order="true" name="交易相关测试">
 		<classes>
 			<class name="com.hjs.cases.TradeTestCase">
+			    <methods>
+			        <include name="testMyRegularProductInfo"/>
+
+			    </methods>
 			</class>
 		</classes>
 	</test>

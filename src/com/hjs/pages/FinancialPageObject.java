@@ -2,8 +2,12 @@ package com.hjs.pages;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.HashMap;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Point;
 import org.testng.Assert;
 import org.testng.Reporter;
 
@@ -23,6 +27,8 @@ public class FinancialPageObject extends CommonAppiumPage{
 	}
 	public DepositProductDetailPageObject clickDepositProduct(String DepositProductName) throws Exception{
 		//driver.scrollTo(DepositProductName);
+		this.clickWenJian();
+		waitEleUnVisible(refreshViewLocator, 30);
 		String productXpath="//android.widget.TextView[@text='"+DepositProductName+"']";
 		super.scrollTo(productXpath);
 		AndroidElement DepositProduct=driver.findElement(By.xpath("//android.widget.TextView[@text='"+DepositProductName+"']"));
@@ -31,6 +37,8 @@ public class FinancialPageObject extends CommonAppiumPage{
 	}
 	public CurrentDepositProductDetailPageObject clickCurrentDepositProduct(String DepositProductName) throws Exception{
 		//driver.scrollTo(DepositProductName);
+		this.clickWenJian();
+		waitEleUnVisible(refreshViewLocator, 30);
 		String productXpath="//android.widget.TextView[@text='"+DepositProductName+"']";
 		super.scrollTo(productXpath);
 		AndroidElement DepositProduct=driver.findElement(By.xpath("//android.widget.TextView[@text='"+DepositProductName+"']"));
@@ -50,6 +58,8 @@ public class FinancialPageObject extends CommonAppiumPage{
 				.setProductLimit(productLimit).setDisplayRate(displayRate)
 				.setMrktPlusRate(mrktPlusRate).build();
 		product.creatProduct();
+		this.clickWenJian();	//点击稳健标签
+		waitEleUnVisible(refreshViewLocator, 30);
 		swipeToDown(1000,1);	//下滑刷新
 		waitEleUnVisible(refreshViewLocator, 30);
 		swipeToDown(1000,1);	//下滑刷新
@@ -90,6 +100,25 @@ public class FinancialPageObject extends CommonAppiumPage{
 		} catch (Exception e) {
 			throw new Exception("找不到下架产品");
 		}
+	}
+	public void clickWenJian(){
+		AndroidElement titleSwitchEle=driver.findElement(titleSwitchLocator);
+		Point elpoint = titleSwitchEle.getLocation();
+    	Dimension elSize = titleSwitchEle.getSize();
+    	double startX = elpoint.getX();
+    	double startY = elpoint.getY();
+    	double endX =elSize.getWidth()+startX;
+    	double endY =elSize.getHeight()+startY;
+    	double centerX = (startX+endX)/4;
+    	double centerY = (startY+endY)/2;
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        HashMap<String, Double> tapObject = new HashMap<String, Double>();
+        tapObject.put("x", centerX);
+        tapObject.put("y", centerY);
+        tapObject.put("duration", 0.0);
+        tapObject.put("touchCount", 1.0);
+        tapObject.put("tapCount", 3.0);
+        js.executeScript("mobile: tap", tapObject);
 	}
 	public boolean verifyInthisPage(){
 		return isElementExsit(titleSwitchLocator);
