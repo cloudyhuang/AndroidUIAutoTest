@@ -146,7 +146,8 @@ public class AccountManageTestCase extends CommonAppiumTest {
 		Account.setBankPhoneNum(phoneNum);
 		Account.setTradePwd(tradePwd);
 		Assert.assertTrue(setBankCardPageObject.verifyInthisPage(), "未出现银行卡绑卡界面，银行卡号输入框未出现");
-    	setBankCardPageObject.setBankCard(bankCardId, phoneNum);
+		MyBankCardPageObject myBankCardPage=setBankCardPageObject.setBankCard(bankCardId, phoneNum);
+		Assert.assertTrue(myBankCardPage.verifyInthisPage(),"绑卡后未跳转到我的银行卡界面");
     }
     @Test(priority = 7,description="解绑银行卡")
     public void testUnBundBankCard()throws Exception{
@@ -200,7 +201,23 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	loginPwdResetPage.resetLoginPwd(Account.getLoginPwd(), "Hd666666");
     	Account.setLoginPwd("Hd666666");
     }
-    @Test(priority = 10,description="风险评测")
+    @Test(priority = 10,description="用新密码重新登录")
+    public void testReLoginWithNewPwd()throws Exception{
+    	new HomePageObject(driver).backToHomePage();
+    	HomePageObject homepage=new HomePageObject(driver); 
+    	CommonAppiumPage page=homepage.enterPersonEntrace();
+    	String pageName=page.getClass().getName();
+    	Assert.assertTrue(pageName.contains("LoginPageObject"), "点击首页-我的入口未跳转到登录页");
+    	LoginPageObject loginPageObject=(LoginPageObject)page;
+    	String loginResult=loginPageObject.login(Account.getLoginPwd()).verifyGestureTips();
+    	Assert.assertEquals("请绘制您的手势密码", loginResult,"登录后未进入设置手密页");
+    	GesturePwd gesturePwd=new GesturePwd(driver);
+    	String result=gesturePwd.setFirstGesturePwd(1,4,7,8);
+    	Assert.assertEquals("请再画一次手势密码", result);
+    	boolean setNextGestureResult=gesturePwd.setNextGesturePwd(1,4,7,8).verifyIsInHomePage();
+    	Assert.assertTrue(setNextGestureResult, "第二次设置手势失败，未跳转到主页，主页我的入口未显示");
+    }
+    @Test(priority = 11,description="风险评测")
     public void testRiskEvaluation()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -224,7 +241,7 @@ public class AccountManageTestCase extends CommonAppiumTest {
     		throw new Exception("该账号已评测过！");
     	}
     }
-    @Test(priority = 11,description="重新风险评测")
+    @Test(priority = 12,description="重新风险评测")
     public void testReRiskEvaluation()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 

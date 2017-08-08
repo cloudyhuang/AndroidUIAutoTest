@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
@@ -29,12 +30,18 @@ public class SetBankCardPageObject extends CommonAppiumPage{
 	private AndroidElement commitBtn;		//设置银行卡提交按钮
 	@AndroidFindBy(id="dlg_sms_input_singlebtn")
 	private AndroidElement smsVerifyCodeCommitBtn;		//短信验证码确认按钮
+	@AndroidFindBy(id="dlg_msg_singlebtn")
+	private AndroidElement setBankSucConfirmBtn;		//绑卡成功确认按钮
+	@AndroidFindBy(id="dlg_msg_title")
+	private AndroidElement setBankResultTitle;		//绑卡结果
+	
+	
 	
 	private By bankCardIdInputLocator=By.xpath("//android.widget.TextView[contains(@text,'填写银行储蓄卡卡号')]");
 	public SetBankCardPageObject(AndroidDriver<AndroidElement> driver) {
 		super(driver);
 	}
-	public void setBankCard(String bankCardId,String phoneNum) throws Exception{
+	public MyBankCardPageObject setBankCard(String bankCardId,String phoneNum) throws Exception{
 		clickEle(bankCardIdInput,"银行卡号输入框");
 		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
 		if(!safeKeyBoard.verifySafeKeyBoardLocated()){
@@ -56,6 +63,10 @@ public class SetBankCardPageObject extends CommonAppiumPage{
 		safeKeyBoard.sendNum(msgVerifyCode);
 		safeKeyBoard.pressFinishBtn();
 		clickEle(smsVerifyCodeCommitBtn,"短信验证码确认按钮");
+		String setBankResult=setBankResultTitle.getText();
+		Assert.assertEquals("绑定成功", setBankResult,"绑卡失败:"+setBankResult);
+		clickEle(setBankSucConfirmBtn,"绑卡成功确认按钮");
+		return new MyBankCardPageObject(driver);
 	}
 	public boolean verifyInthisPage(){
 		return isElementExsit(bankCardIdInputLocator);

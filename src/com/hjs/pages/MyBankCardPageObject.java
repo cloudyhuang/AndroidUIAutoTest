@@ -25,6 +25,8 @@ public class MyBankCardPageObject extends CommonAppiumPage{
 	private AndroidElement bankName;		//银行名称
 	@AndroidFindBy(id="dlg_sms_input_singlebtn")
 	private AndroidElement smsVerifyCodeConfirmBtn;		//验证码确认按钮
+	@AndroidFindBy(id="btn_unbind")
+	private AndroidElement unBindBankCardBtn;		//解除绑定按钮
 	
 	private By bankNameLocator=By.id("tv_bank_name");	//银行名称Locator
 	public MyBankCardPageObject(AndroidDriver<AndroidElement> driver) {
@@ -32,7 +34,7 @@ public class MyBankCardPageObject extends CommonAppiumPage{
 	}
 	public PersonSettingPageObject unbundBankCard(String pwd,String phoneNum) throws Exception{
 		clickEle(bankName,"银行卡名称");
-		driver.tap(1, 360, 1120, 0);
+		clickEle(unBindBankCardBtn,"解除绑定按钮");
 		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
 		safeKeyBoard.sendNum(pwd);
 		threadsleep(2000);
