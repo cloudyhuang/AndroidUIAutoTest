@@ -6,7 +6,6 @@
 		<classes>
 			<class name="com.hjs.cases.AccountManageTestCase">
 			    <methods>
-			        <include name="testRiskEvaluation"/>
 			        <include name="testReRiskEvaluation"/>
 
 

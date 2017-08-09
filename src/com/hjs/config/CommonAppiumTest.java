@@ -15,6 +15,7 @@ import io.appium.java_client.remote.MobileCapabilityType;
 
 import org.apache.commons.exec.DefaultExecuteResultHandler;
 import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
@@ -54,6 +55,10 @@ public class CommonAppiumTest {
         capabilities.setCapability("unicodeKeyboard", true);	//支持中文
         capabilities.setCapability("resetKeyboard", true);	//运行完毕之后，变回系统的输入法
         capabilities.setCapability("noReset", true);	//是否不重新安装 true不安装，false重新安装
+        //关键是加上这段
+        ChromeOptions options = new ChromeOptions();
+        options.setExperimentalOption("androidProcess", "com.evergrande.eif.android.hengjiaosuo:web");
+        capabilities.setCapability(ChromeOptions.CAPABILITY, options);
         driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         wait = new WebDriverWait(driver,30);
