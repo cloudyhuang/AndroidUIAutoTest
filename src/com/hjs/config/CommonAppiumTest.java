@@ -1,6 +1,11 @@
 package com.hjs.config;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -36,6 +41,7 @@ public class CommonAppiumTest {
     @BeforeSuite(alwaysRun = true)
     @Parameters({"udid"})
     public void setUp(String udid) throws Exception {
+    	downLoadFromUrl("http://172.16.59.251:8088/app-default_channel.apk", "app2.4.apk"); //拉取最新包
     	deletePng("surefire-reports"+File.separator+"html");	//删除历史截图文件
     	appiumServer=new AppiumServer();
     	appiumServer.stopServer();	//先结束残留进程
@@ -141,6 +147,63 @@ public class CommonAppiumTest {
             default: return String.valueOf(character);
         }
     }
+	/** 
+     * 从网络Url中下载文件 
+     * @param urlStr 
+     * @param fileName 
+     * @throws IOException 
+     */  
+    public void downLoadFromUrl(String urlStr,String fileName) throws IOException{  
+        URL url = new URL(urlStr);    
+        HttpURLConnection conn = (HttpURLConnection)url.openConnection();    
+                //设置超时间为3秒  
+        conn.setConnectTimeout(3*1000);  
+        //防止屏蔽程序抓取而返回403错误  
+        conn.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");  
+  
+        //得到输入流  
+        InputStream inputStream = conn.getInputStream();    
+        //获取自己数组  
+        byte[] getData = readInputStream(inputStream);      
+  
+        //文件保存位置  
+        //File saveDir = new File(savePath);  
+        File classpathRoot = new File(System.getProperty("user.dir"));
+        File saveDir = new File(classpathRoot, "app");
+        if(!saveDir.exists()){  
+            saveDir.mkdir();  
+        }  
+        File file = new File(saveDir+File.separator+fileName);      
+        FileOutputStream fos = new FileOutputStream(file);       
+        fos.write(getData);   
+        if(fos!=null){  
+            fos.close();    
+        }  
+        if(inputStream!=null){  
+            inputStream.close();  
+        }  
+  
+  
+        System.out.println("info:"+url+" download success");   
+  
+    }
+    /** 
+     * 从输入流中获取字节数组 
+     * @param inputStream 
+     * @return 
+     * @throws IOException 
+     */  
+    public byte[] readInputStream(InputStream inputStream) throws IOException {    
+        byte[] buffer = new byte[1024];    
+        int len = 0;    
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();    
+        while((len = inputStream.read(buffer)) != -1) {    
+            bos.write(buffer, 0, len);    
+        }    
+        bos.close();    
+        return bos.toByteArray();    
+    }    
+    
     @AfterSuite(alwaysRun = true)
     public void tearDown() throws Exception {
         driver.quit();

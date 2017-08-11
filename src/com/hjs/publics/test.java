@@ -1,10 +1,14 @@
 package com.hjs.publics;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -36,41 +40,70 @@ import org.testng.annotations.Test;
 import com.hjs.config.AppiumServer;
 
 public class test {
-	@BeforeSuite
-    @Parameters({"udid"})
-	public void test(String udid) {
-		String cmd="adb -s "+udid+" uninstall com.evergrande.eif.android.hengjiaosuo";
-		String [] cmd1={"cmd","/C","adb kill-server"}; 
-		String [] cmd2={"cmd","/C","adb start-server"};
-		String [] cmd3={"cmd","/C","adb connect 127.0.0.1:52001"}; 
-//		runCommand(cmd1);
-//		runCommand(cmd2);
-//		runCommand(cmd3);
-		runCommand(cmd);
-		System.out.println("哈哈哈哈哈");
-	}
-	private static void runCommand(String cmd){
-        try {
-        	Process p =Runtime.getRuntime().exec(cmd);
-        	//取得命令结果的输出流    
-            InputStream fis=p.getInputStream();    
-           //用一个读输出流类去读    
-            InputStreamReader isr=new InputStreamReader(fis);    
-           //用缓冲器读行    
-            BufferedReader br=new BufferedReader(isr);    
-            String line=null;    
-           //直到读完为止    
-           while((line=br.readLine())!=null)    
-            {    
-                System.out.println(line);    
-            }   
-           p.waitFor();//导致当前线程等待，如果必要，一直要等到由该 Process 对象表示的进程已经终止。如果已终止该子进程，此方法立即返回。如果没有终止该子进程，调用的线程将被阻塞，直到退出子进程
-           p.exitValue() ;
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	/** 
+     * 从网络Url中下载文件 
+     * @param urlStr 
+     * @param fileName 
+     * @param savePath 
+     * @throws IOException 
+     */  
+    public static void  downLoadFromUrl(String urlStr,String fileName) throws IOException{  
+        URL url = new URL(urlStr);    
+        HttpURLConnection conn = (HttpURLConnection)url.openConnection();    
+                //设置超时间为3秒  
+        conn.setConnectTimeout(3*1000);  
+        //防止屏蔽程序抓取而返回403错误  
+        conn.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");  
+  
+        //得到输入流  
+        InputStream inputStream = conn.getInputStream();    
+        //获取自己数组  
+        byte[] getData = readInputStream(inputStream);      
+  
+        //文件保存位置  
+        //File saveDir = new File(savePath);  
+        File classpathRoot = new File(System.getProperty("user.dir"));
+        File saveDir = new File(classpathRoot, "app");
+        if(!saveDir.exists()){  
+            saveDir.mkdir();  
+        }  
+        File file = new File(saveDir+File.separator+fileName);      
+        FileOutputStream fos = new FileOutputStream(file);       
+        fos.write(getData);   
+        if(fos!=null){  
+            fos.close();    
+        }  
+        if(inputStream!=null){  
+            inputStream.close();  
+        }  
+  
+  
+        System.out.println("info:"+url+" download success");   
+  
     }
+    /** 
+     * 从输入流中获取字节数组 
+     * @param inputStream 
+     * @return 
+     * @throws IOException 
+     */  
+    public static  byte[] readInputStream(InputStream inputStream) throws IOException {    
+        byte[] buffer = new byte[1024];    
+        int len = 0;    
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();    
+        while((len = inputStream.read(buffer)) != -1) {    
+            bos.write(buffer, 0, len);    
+        }    
+        bos.close();    
+        return bos.toByteArray();    
+    }    
+  
+    public static void main(String[] args) {  
+        try{  
+            downLoadFromUrl("http://172.16.59.251:8088/app-default_channel.apk", "app2.4.apk");  
+        }catch (Exception e) {  
+            // TODO: handle exception  
+        }  
+    }  
+
 }
