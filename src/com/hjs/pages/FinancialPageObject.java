@@ -51,7 +51,7 @@ public class FinancialPageObject extends CommonAppiumPage{
 		String minBuyAmt="100";
 		String baseProductName="黄XAutoTest基础产品" + currentDate;
 		String productLimit="365";
-		String displayRate="6+0.3";
+		String displayRate="6";
 		String mrktPlusRate="0.01";
 		InitProduct product = new InitProduct.Builder(productName).setMinBuyAmt(minBuyAmt)
 				.setBaseProductName(baseProductName)
