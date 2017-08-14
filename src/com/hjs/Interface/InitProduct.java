@@ -28,6 +28,7 @@ public class InitProduct {
 	private String productLimit;
 	private String displayRate;
 	private String mrktPlusRate;
+	private String groupBuyId;
 	
 	public static class Builder{    
 		private String productName=null;
@@ -36,7 +37,8 @@ public class InitProduct {
 		private String productLimit="365";
 		private String displayRate="6+0.3";
 		private String mrktPlusRate="0.01";
-            
+		private String groupBuyId="-1";
+		
         public Builder(String productName){    
             this.productName = productName;    
         }    
@@ -62,6 +64,10 @@ public class InitProduct {
             this.mrktPlusRate = mrktPlusRate;    
             return this;    
         }       
+        public Builder setGroupBuyId(String groupBuyId){    
+            this.groupBuyId = groupBuyId;    
+            return this;    
+        }   
         public InitProduct build(){    
             return new InitProduct(this);    
         }    
@@ -74,6 +80,7 @@ public class InitProduct {
         this.productLimit = builder.productLimit;    
         this.displayRate = builder.displayRate;  
         this.mrktPlusRate=builder.mrktPlusRate;
+        this.groupBuyId=builder.groupBuyId;
     }  
 
 	public void creatProduct() throws IOException, ParseException {
@@ -124,6 +131,9 @@ public class InitProduct {
 	}
 	public String getMrktPlusRate() {
 		return mrktPlusRate;
+	}
+	public String getGroupBuyId() {
+		return groupBuyId;
 	}
 	public String createAssetChannel(String channelName){
 		String url="http://172.16.57.47:48080//eif-fis-web/rpc/call/com.eif.fis.facade.biz.omc.OmcFacade/createAssetChannel";
