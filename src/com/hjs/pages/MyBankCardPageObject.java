@@ -35,18 +35,18 @@ public class MyBankCardPageObject extends CommonAppiumPage{
 	public PersonSettingPageObject unbundBankCard(String pwd,String phoneNum) throws Exception{
 		clickEle(bankName,"银行卡名称");
 		clickEle(unBindBankCardBtn,"解除绑定按钮");
-		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
-		safeKeyBoard.sendNum(pwd);
-		threadsleep(2000);
-		List<SmsVerifyCode> smsVerifyCodeList=new ArrayList<SmsVerifyCode>();
-		smsVerifyCodeList=getMsgVerifyCode(phoneNum);
-		if(smsVerifyCodeList.isEmpty()){
-			throw new Exception("数据库未找到"+phoneNum+"的验证码");
-		}
-		String msgVerifyCode=smsVerifyCodeList.get(smsVerifyCodeList.size()-1).getVerify_code(); //最近的一个验证码
-		safeKeyBoard.sendNum(msgVerifyCode);
-		safeKeyBoard.pressFinishBtn();
-		clickEle(smsVerifyCodeConfirmBtn,"验证码确认按钮");
+//		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
+//		safeKeyBoard.sendNum(pwd);
+//		threadsleep(2000);
+//		List<SmsVerifyCode> smsVerifyCodeList=new ArrayList<SmsVerifyCode>();
+//		smsVerifyCodeList=getMsgVerifyCode(phoneNum);
+//		if(smsVerifyCodeList.isEmpty()){
+//			throw new Exception("数据库未找到"+phoneNum+"的验证码");
+//		}
+//		String msgVerifyCode=smsVerifyCodeList.get(smsVerifyCodeList.size()-1).getVerify_code(); //最近的一个验证码
+//		safeKeyBoard.sendNum(msgVerifyCode);
+//		safeKeyBoard.pressFinishBtn();
+//		clickEle(smsVerifyCodeConfirmBtn,"验证码确认按钮");
 		return new PersonSettingPageObject(driver);
 	}
 	public List<SmsVerifyCode> getMsgVerifyCode(String phoneNum) throws IOException{
