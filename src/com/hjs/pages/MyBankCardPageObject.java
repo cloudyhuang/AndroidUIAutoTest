@@ -35,8 +35,8 @@ public class MyBankCardPageObject extends CommonAppiumPage{
 	public PersonSettingPageObject unbundBankCard(String pwd,String phoneNum) throws Exception{
 		clickEle(bankName,"银行卡名称");
 		clickEle(unBindBankCardBtn,"解除绑定按钮");
-//		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
-//		safeKeyBoard.sendNum(pwd);
+		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
+		safeKeyBoard.sendNum(pwd);
 //		threadsleep(2000);
 //		List<SmsVerifyCode> smsVerifyCodeList=new ArrayList<SmsVerifyCode>();
 //		smsVerifyCodeList=getMsgVerifyCode(phoneNum);
