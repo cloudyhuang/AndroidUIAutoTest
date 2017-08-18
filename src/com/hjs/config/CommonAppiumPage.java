@@ -325,12 +325,13 @@ public class CommonAppiumPage {
 					threadsleep(1000);//等待1s
 					continue;
 				}
-				else{
-					Reporter.log(WAIT_TIME+"秒找不到元素,locator:"+locator);
-					waitAuto(WAIT_TIME);
-					break;
-				}
 			}
+			if(System.currentTimeMillis()>=endTime){
+				Reporter.log(WAIT_TIME+"秒找不到元素,locator:"+locator);
+				waitAuto(WAIT_TIME);
+				break;
+			}
+			
 		}
 		waitAuto(WAIT_TIME);
 		return ele;
