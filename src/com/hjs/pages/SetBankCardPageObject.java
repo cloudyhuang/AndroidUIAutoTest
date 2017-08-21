@@ -41,7 +41,7 @@ public class SetBankCardPageObject extends CommonAppiumPage{
 	public SetBankCardPageObject(AndroidDriver<AndroidElement> driver) {
 		super(driver);
 	}
-	public MyBankCardPageObject setBankCard(String bankCardId,String phoneNum) throws Exception{
+	public PersonInfoPageObject setBankCard(String bankCardId,String phoneNum) throws Exception{
 		clickEle(bankCardIdInput,"银行卡号输入框");
 		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
 		if(!safeKeyBoard.verifySafeKeyBoardLocated()){
@@ -66,7 +66,7 @@ public class SetBankCardPageObject extends CommonAppiumPage{
 		String setBankResult=setBankResultTitle.getText();
 		Assert.assertEquals("绑定成功", setBankResult,"绑卡失败:"+setBankResult);
 		clickEle(setBankSucConfirmBtn,"绑卡成功确认按钮");
-		return new MyBankCardPageObject(driver);
+		return new PersonInfoPageObject(driver);
 	}
 	public boolean verifyInthisPage(){
 		return isElementExsit(bankCardIdInputLocator);

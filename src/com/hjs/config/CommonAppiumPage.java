@@ -429,6 +429,22 @@ public class CommonAppiumPage {
         }  
         waitAuto(WAIT_TIME);
 	}
+	public void waitEleUnVisible(AndroidElement ele,int waittime){ 
+		waitAuto(2);
+        for (int attempt = 0; attempt < waittime; attempt++) {  
+            try {  
+                if(ele.isDisplayed()){
+                	AppiumBaseMethod.threadsleep(1000);
+                	continue;
+                }
+                else break;
+            } catch (Exception e) {  
+            	waitAuto(WAIT_TIME);
+                break; 
+            }  
+        }  
+        waitAuto(WAIT_TIME);
+	}
 	
     public void waitForVisible(By by, int waitTime){
         WebDriverWait wait = new WebDriverWait(driver,waitTime);

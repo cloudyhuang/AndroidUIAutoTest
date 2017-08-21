@@ -11,6 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -42,53 +43,16 @@ import com.hjs.config.AppiumServer;
 public class test {
 	
     public static void main(String[] args) {  
-    	System.out.print(System.getProperty("os.name"));
-    	CommandLine command = new CommandLine("cmd");
-    	command.addArgument("/c");
-    	command.addArgument("mvn");
-    	command.addArgument("-v");
-//		command.addArgument("--address");
-//		command.addArgument("127.0.0.1");
-//		command.addArgument("--port");
-//		command.addArgument("4723");
-//		command.addArgument("--device-name");
-//		command.addArgument("127.0.0.1:52001");//新加
-//		command.addArgument("--no-reset");
-//		command.addArgument("--command-timeout");
-//		command.addArgument("600");
-//		command.addArgument("--log");
-//		command.addArgument("D:/appiumLogs.txt");
-		DefaultExecuteResultHandler resultHandler = new DefaultExecuteResultHandler();
-		DefaultExecutor executor = new DefaultExecutor();
-		executor.setExitValue(1); 
-		try {
-		executor.execute(command, resultHandler);
-		} catch (IOException e) {
-		e.printStackTrace();
-		}
+    	List<String> a=new ArrayList<String>();
+    	List<String> b=new ArrayList<String>();
+    	a.add("a");
+    	a.add("b");
+    	
+    	b.add("a");
+    	b.add("b");
+
+    	System.out.println(a.equals(b));
+    	
     }  
-    private static void runCommand(String cmd){
-        try {
-        	Process p =Runtime.getRuntime().exec(cmd);
-        	//取得命令结果的输出流    
-            InputStream fis=p.getInputStream();    
-           //用一个读输出流类去读    
-            InputStreamReader isr=new InputStreamReader(fis);    
-           //用缓冲器读行    
-            BufferedReader br=new BufferedReader(isr);    
-            String line=null;    
-           //直到读完为止    
-           while((line=br.readLine())!=null)    
-            {    
-                System.out.println(line);    
-            }   
-           p.waitFor();//导致当前线程等待，如果必要，一直要等到由该 Process 对象表示的进程已经终止。如果已终止该子进程，此方法立即返回。如果没有终止该子进程，调用的线程将被阻塞，直到退出子进程
-           p.exitValue() ;
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    }
+
 }
