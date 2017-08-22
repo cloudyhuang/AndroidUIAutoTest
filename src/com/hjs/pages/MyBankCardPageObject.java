@@ -32,6 +32,7 @@ public class MyBankCardPageObject extends CommonAppiumPage{
 	private AndroidElement refreshIcon;		//刷新图标
 	
 	private By bankNameLocator=By.id("tv_bank_name");	//银行名称Locator
+	private By addBankCardBtnLocator=By.name("添加银行卡");		//添加银行卡按钮Locator
 	public MyBankCardPageObject(AndroidDriver<AndroidElement> driver) {
 		super(driver);
 	}
@@ -83,7 +84,7 @@ public class MyBankCardPageObject extends CommonAppiumPage{
         }
 	}
 	public boolean verifyInthisPage(){
-		return isElementExsit(bankNameLocator);
+		return isElementExsit(addBankCardBtnLocator);
 	}
 	
 }

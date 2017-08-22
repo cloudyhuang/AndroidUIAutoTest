@@ -106,7 +106,7 @@ public class CommonAppiumPage {
         }
     }
     /**
-     * 滑动到元素
+     * 滑动到元素,且元素滑动到屏幕中间位置
      *
      * @param xpath 元素xpath
      * @throws Exception 
@@ -119,6 +119,11 @@ public class CommonAppiumPage {
     		try{
     		AndroidElement scrollToEle=driver.findElement(By.xpath(xpath));
 	    		if(scrollToEle.isDisplayed()){
+	    			int width = driver.manage().window().getSize().width;	//屏幕像素宽
+	    			int height=driver.manage().window().getSize().height;	//屏幕像素高
+	    			int halfHeight=height/2;
+	    			Point scrollToEleCenterPoint=getNativeEleCenterPoint(scrollToEle);
+	    			driver.swipe(width / 2, scrollToEleCenterPoint.getY(), width / 2, halfHeight, 1000); //将元素滑动到屏幕中间位置 
 	    			waitAuto(WAIT_TIME);
 	    			break;
 	    		}
@@ -134,6 +139,19 @@ public class CommonAppiumPage {
     		}
     	}
     	waitAuto(WAIT_TIME);
+    }
+    public Point getNativeEleCenterPoint(AndroidElement el){
+    	int startX = el.getLocation().getX();
+        int startY = el.getLocation().getY();
+        int height = el.getSize().getHeight();
+        int width = el.getSize().getWidth();
+        int endX =width+startX;
+    	int endY =height+startY;
+        int centerX=(startX+endX)/2;
+        int centerY=(startY+endY)/2;
+        Point elCenterPoint=new Point(centerX,centerY);
+		return elCenterPoint;
+    	
     }
 	public  Point getWebElementRealPoint(AndroidDriver<AndroidElement> driver,WebElement el){
 		AppiumBaseMethod.contextNativeApp(driver);
