@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
@@ -31,9 +32,12 @@ public class PayPageObject extends CommonAppiumPage{
 	
 	@AndroidFindBy(id="button_subscribe")
 	private AndroidElement confirmPayBtn;		//确认支付按钮
-	@AndroidFindBy(xpath="//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_bankCard' and contains(@text,'银行')]")
+	@AndroidFindBy(id="show_choose_pay_way")
+	private AndroidElement choosePayWayBtn;		//更换支付方式按钮
+	
+	@AndroidFindBy(xpath="//android.widget.ListView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/listView_payway']//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_bankCard' and contains(@text,'银行')][1]")
 	private AndroidElement bankCardPayOptions;		//银行卡付款方式
-	@AndroidFindBy(xpath="//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_bankCard' and contains(@text,'余额支付')]")
+	@AndroidFindBy(xpath="//android.widget.ListView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/listView_payway']//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_bankCard' and contains(@text,'余额支付')]")
 	private AndroidElement balancePayOptions;		//余额付款方式
 	@AndroidFindBy(id="dlg_sms_input_singlebtn")
 	private AndroidElement smsVerifyCodeCommitBtn;		//短信验证码确认按钮
@@ -43,7 +47,8 @@ public class PayPageObject extends CommonAppiumPage{
 	private AndroidElement waitMessage;		//等待信息
 	
 	private By waitMessageLocator=By.id("message");
-	private By bankCardPayOptionsLocator=By.xpath("//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_bankCard' and contains(@text,'银行')]");
+	private By payOptionsLocator=By.xpath("//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_bankCard' and contains(@text,'余额支付')]");	//支付方式选项
+	private By balancePayOptionsLocator=By.xpath("//android.widget.ListView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/listView_payway']//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_bankCard' and contains(@text,'余额支付')]");	//余额支付方式选项
 	private static final String SHENGFUTONG_FailCode="555555";
 	public PayPageObject(AndroidDriver<AndroidElement> driver) {
 		super(driver);
@@ -54,7 +59,8 @@ public class PayPageObject extends CommonAppiumPage{
 		ChooseCouponPageObject chooseCouponPage=new ChooseCouponPageObject(driver);
 		chooseCouponPage.chooseCoupon("");
 		super.threadsleep(1000);
-		clickEle(bankCardPayOptions,"银行卡付款方式");
+		//clickEle(bankCardPayOptions,"银行卡付款方式");
+		this.chooseBankCardPayWays();
 		clickEle(confirmPayBtn,"确认支付按钮");
 		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
 		if(!safeKeyBoard.verifySafeKeyBoardLocated()){
@@ -86,7 +92,8 @@ public class PayPageObject extends CommonAppiumPage{
 		ChooseCouponPageObject chooseCouponPage=new ChooseCouponPageObject(driver);
 		chooseCouponPage.chooseCoupon("");
 		super.threadsleep(1000);
-		clickEle(bankCardPayOptions,"银行卡付款方式");
+		//clickEle(bankCardPayOptions,"银行卡付款方式");
+		this.chooseBankCardPayWays();
 		clickEle(confirmPayBtn,"确认支付按钮");
 		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
 		if(!safeKeyBoard.verifySafeKeyBoardLocated()){
@@ -102,7 +109,8 @@ public class PayPageObject extends CommonAppiumPage{
 		ChooseCouponPageObject chooseCouponPage=new ChooseCouponPageObject(driver);
 		chooseCouponPage.chooseCoupon("");
 		super.threadsleep(1000);
-		clickEle(bankCardPayOptions,"银行卡付款方式");
+		//clickEle(bankCardPayOptions,"银行卡付款方式");
+		this.chooseBankCardPayWays();
 		clickEle(confirmPayBtn,"确认支付按钮");
 		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
 		if(!safeKeyBoard.verifySafeKeyBoardLocated()){
@@ -126,7 +134,8 @@ public class PayPageObject extends CommonAppiumPage{
 		}
 		chooseCouponPage.chooseCoupon(couponName);
 		super.threadsleep(1000);//跳转等待
-		clickEle(bankCardPayOptions,"银行卡付款方式");
+		//clickEle(bankCardPayOptions,"银行卡付款方式");
+		this.chooseBankCardPayWays();
 		clickEle(confirmPayBtn,"确认支付按钮");
 		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
 		if(!safeKeyBoard.verifySafeKeyBoardLocated()){
@@ -162,7 +171,8 @@ public class PayPageObject extends CommonAppiumPage{
 		}
 		chooseCouponPage.chooseCoupon(couponName);
 		super.threadsleep(1000);
-		clickEle(bankCardPayOptions,"银行卡付款方式");
+		//clickEle(bankCardPayOptions,"银行卡付款方式");
+		this.chooseBankCardPayWays();
 		clickEle(confirmPayBtn,"确认支付按钮");
 		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
 		if(!safeKeyBoard.verifySafeKeyBoardLocated()){
@@ -177,7 +187,8 @@ public class PayPageObject extends CommonAppiumPage{
 		ChooseCouponPageObject chooseCouponPage=new ChooseCouponPageObject(driver);
 		chooseCouponPage.chooseCoupon("");
 		super.threadsleep(1000);
-		clickEle(balancePayOptions,"余额付款方式");
+		//clickEle(balancePayOptions,"余额付款方式");
+		this.chooseBanlancePayWays();
 		clickEle(confirmPayBtn,"确认支付按钮");
 		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
 		if(!safeKeyBoard.verifySafeKeyBoardLocated()){
@@ -196,7 +207,8 @@ public class PayPageObject extends CommonAppiumPage{
 		}
 		chooseCouponPage.chooseCoupon(couponName);
 		super.threadsleep(1000);
-		clickEle(balancePayOptions,"余额付款方式");
+		//clickEle(balancePayOptions,"余额付款方式");
+		this.chooseBanlancePayWays();
 		clickEle(confirmPayBtn,"确认支付按钮");
 		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
 		if(!safeKeyBoard.verifySafeKeyBoardLocated()){
@@ -205,6 +217,20 @@ public class PayPageObject extends CommonAppiumPage{
 		safeKeyBoard.sendNum(tradePwd);
 		waitEleUnVisible(waitMessageLocator,10);
 		return new InvestResultPageObject(driver);
+	}
+	public void chooseBankCardPayWays(){
+		clickEle(choosePayWayBtn,"更换支付方式按钮");
+		if(!isElementExsit(balancePayOptionsLocator)){
+			Assert.assertTrue(false, "点击更换支付方式后未弹出余额支付方式");
+		}
+		clickEle(bankCardPayOptions,"银行卡付款方式");
+	}
+	public void chooseBanlancePayWays(){
+		clickEle(choosePayWayBtn,"更换支付方式按钮");
+		if(!isElementExsit(balancePayOptionsLocator)){
+			Assert.assertTrue(false, "点击更换支付方式后未弹出余额支付方式");
+		}
+		clickEle(balancePayOptions,"余额付款方式");
 	}
 	public List<SmsVerifyCode> getMsgVerifyCode(String phoneNum) throws IOException{
         Reader reader = Resources.getResourceAsReader("eifGoutongMybatis.xml");  
@@ -333,6 +359,6 @@ public class PayPageObject extends CommonAppiumPage{
 	    }
 	}
 	public boolean verifyInthisPage(){
-		return isElementExsit(bankCardPayOptionsLocator);
+		return isElementExsit(payOptionsLocator);
 	}
 }

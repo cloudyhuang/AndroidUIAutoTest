@@ -1,6 +1,11 @@
 package com.hjs.config;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -15,6 +20,7 @@ import io.appium.java_client.remote.MobileCapabilityType;
 
 import org.apache.commons.exec.DefaultExecuteResultHandler;
 import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
@@ -35,6 +41,7 @@ public class CommonAppiumTest {
     @BeforeSuite(alwaysRun = true)
     @Parameters({"udid"})
     public void setUp(String udid) throws Exception {
+    	downLoadFromUrl("http://172.16.59.251:8088/app-default_channel.apk", "app2.4.apk"); //拉取最新包
     	deletePng("surefire-reports"+File.separator+"html");	//删除历史截图文件
     	appiumServer=new AppiumServer();
     	appiumServer.stopServer();	//先结束残留进程
@@ -45,7 +52,7 @@ public class CommonAppiumTest {
 		try{Thread.sleep(15000);}catch(Exception e){}
         File classpathRoot = new File(System.getProperty("user.dir"));
         File appDir = new File(classpathRoot, "app");
-        File app = new File(appDir, "app-default_channel.apk");
+        File app = new File(appDir, "app2.4.apk");
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, udid); 
         capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "4.4");
@@ -54,6 +61,10 @@ public class CommonAppiumTest {
         capabilities.setCapability("unicodeKeyboard", true);	//支持中文
         capabilities.setCapability("resetKeyboard", true);	//运行完毕之后，变回系统的输入法
         capabilities.setCapability("noReset", false);	//是否不重新安装 true不安装，false重新安装
+        //关键是加上这段
+        ChromeOptions options = new ChromeOptions();
+        options.setExperimentalOption("androidProcess", "com.evergrande.eif.android.hengjiaosuo:web");
+        capabilities.setCapability(ChromeOptions.CAPABILITY, options);
         driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         wait = new WebDriverWait(driver,30);
@@ -136,6 +147,63 @@ public class CommonAppiumTest {
             default: return String.valueOf(character);
         }
     }
+	/** 
+     * 从网络Url中下载文件 
+     * @param urlStr 
+     * @param fileName 
+     * @throws IOException 
+     */  
+    public void downLoadFromUrl(String urlStr,String fileName) throws IOException{  
+        URL url = new URL(urlStr);    
+        HttpURLConnection conn = (HttpURLConnection)url.openConnection();    
+                //设置超时间为3秒  
+        conn.setConnectTimeout(3*1000);  
+        //防止屏蔽程序抓取而返回403错误  
+        conn.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");  
+  
+        //得到输入流  
+        InputStream inputStream = conn.getInputStream();    
+        //获取自己数组  
+        byte[] getData = readInputStream(inputStream);      
+  
+        //文件保存位置  
+        //File saveDir = new File(savePath);  
+        File classpathRoot = new File(System.getProperty("user.dir"));
+        File saveDir = new File(classpathRoot, "app");
+        if(!saveDir.exists()){  
+            saveDir.mkdir();  
+        }  
+        File file = new File(saveDir+File.separator+fileName);      
+        FileOutputStream fos = new FileOutputStream(file);       
+        fos.write(getData);   
+        if(fos!=null){  
+            fos.close();    
+        }  
+        if(inputStream!=null){  
+            inputStream.close();  
+        }  
+  
+  
+        System.out.println("info:"+url+" download success");   
+  
+    }
+    /** 
+     * 从输入流中获取字节数组 
+     * @param inputStream 
+     * @return 
+     * @throws IOException 
+     */  
+    public byte[] readInputStream(InputStream inputStream) throws IOException {    
+        byte[] buffer = new byte[1024];    
+        int len = 0;    
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();    
+        while((len = inputStream.read(buffer)) != -1) {    
+            bos.write(buffer, 0, len);    
+        }    
+        bos.close();    
+        return bos.toByteArray();    
+    }    
+    
     @AfterSuite(alwaysRun = true)
     public void tearDown() throws Exception {
         driver.quit();

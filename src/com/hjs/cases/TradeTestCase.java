@@ -37,7 +37,7 @@ import com.hjs.publics.Util;
 
 
 public class TradeTestCase extends CommonAppiumTest{
-	private static String DEPOSITE_PRODUCT_NAME="黄XAutoTest产品170727002201";
+	private static String DEPOSITE_PRODUCT_NAME="黄XAutoTest产品170807120145";
 	private static String CURRENTDEPOSITE_PRODUCT_NAME="恒存金-灵活理财";
 	private static String phoneNum="17052411184";
     @Test(priority = 1,description="理财页产品信息")
@@ -54,11 +54,8 @@ public class TradeTestCase extends CommonAppiumTest{
     	page=loginPageObject.switchAccount(phoneNum);
 		pageName=page.getClass().getName();
 		Assert.assertTrue(pageName.contains("LoginPageObject"), "验证手机号后未进入登录页面");
-		GesturePwd gesturePwd=((LoginPageObject)page).login("hxnearc228");
-		String result=gesturePwd.setFirstGesturePwd(1,4,7,8);
-    	Assert.assertEquals("请再画一次手势密码", result);
-    	boolean setNextGestureResult=gesturePwd.setNextGesturePwd(1,4,7,8).verifyIsInHomePage();
-    	Assert.assertTrue(setNextGestureResult, "第二次设置手势失败，未跳转到主页，主页我的入口未显示");
+		((LoginPageObject)page).login("hxnearc228");
+		Assert.assertTrue(homepage.verifyIsInHomePage(),"登录后未跳转到主页");
     	FinancialPageObject FinancialPage=homepage.enterFinancialPage();
     	Assert.assertTrue(FinancialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
     	DEPOSITE_PRODUCT_NAME=FinancialPage.testProductInfo();
