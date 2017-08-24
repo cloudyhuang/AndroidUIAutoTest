@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+
 import org.apache.http.util.TextUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -18,6 +19,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.Reporter;
 
 import com.hjs.publics.AppiumBaseMethod;
@@ -305,6 +307,9 @@ public class CommonAppiumPage {
         System.out.println(contextname);//打印
 	       if(contextname.contains("WEBVIEW_com.evergrande"))
 	       driver.context(contextname);
+        }
+        if(!driver.getContext().contains("WEBVIEW_com.evergrande")){
+        	Assert.assertTrue(false,"当前页面未切换到WEBVIEW_com.evergrande，请确认是否打开webview的Debug模式");
         }
     }
 
