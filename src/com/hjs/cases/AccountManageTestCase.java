@@ -3,6 +3,7 @@ package com.hjs.cases;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -146,8 +147,8 @@ public class AccountManageTestCase extends CommonAppiumTest {
 		Account.setBankPhoneNum(phoneNum);
 		Account.setTradePwd(tradePwd);
 		Assert.assertTrue(setBankCardPageObject.verifyInthisPage(), "未出现银行卡绑卡界面，银行卡号输入框未出现");
-		MyBankCardPageObject myBankCardPage=setBankCardPageObject.setBankCard(bankCardId, phoneNum);
-		Assert.assertTrue(myBankCardPage.verifyInthisPage(),"绑卡后未跳转到我的银行卡界面");
+		personInfoPage=setBankCardPageObject.setBankCard(bankCardId, phoneNum);
+		Assert.assertTrue(personInfoPage.verifyInthisPage(),"绑卡后未跳转到我的个人信息界面");
     }
     @Test(priority = 7,description="解绑银行卡")
     public void testUnBundBankCard()throws Exception{
@@ -158,13 +159,17 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	Assert.assertTrue(pageName.contains("MinePageObject"), "点击首页-我的入口未进入我的页面");
     	PersonSettingPageObject personSettingPage=((MinePageObject)page).enterPersonSetting();//进入个人设置页
     	Assert.assertTrue(personSettingPage.verifyInthisPage(), "进入我的个人头像，未进入设置页");
-    	MyBankCardPageObject myBankCardPageObject=personSettingPage.gotoMyBankCard();//进入我的银行卡页面
-    	Assert.assertTrue(myBankCardPageObject.verifyInthisPage(), "进入银行卡页面未出现银行卡");
-    	PersonSettingPageObject personSettingPageObject=myBankCardPageObject.unbundBankCard(Account.getTradePwd(),Account.getBankPhoneNum());
-    	Assert.assertTrue(personSettingPageObject.verifyInthisPage(), "解绑银行卡后未跳转到个人设置页面");
-    	Thread.sleep(2000); //返回个人设置时银行卡名称会闪现，因此等待一下
-    	String bankCardName=personSettingPageObject.getBankCardName();
-    	Assert.assertEquals(bankCardName, "未设置", "解绑失败，当前银行卡为："+bankCardName);
+    	MyBankCardPageObject myBankCardPage=personSettingPage.gotoMyBankCard();//进入我的银行卡页面
+    	Assert.assertTrue(myBankCardPage.verifyInthisPage(), "进入银行卡页面未出现银行卡");
+    	List<String> bankCardName=myBankCardPage.getMyBankCardNameList();	//解绑前银行卡列表
+    	myBankCardPage=myBankCardPage.unbundBankCard(Account.getTradePwd(),Account.getBankPhoneNum());
+    	Assert.assertTrue(myBankCardPage.verifyInthisPage(), "解绑银行卡后未跳转到我的银行卡页面");
+    	List<String> AftUnBundBankCardName=myBankCardPage.getMyBankCardNameList();	//解绑后银行卡列表
+    	Assert.assertFalse(bankCardName.equals(AftUnBundBankCardName),"解绑前后银行卡列表名称相同");
+//    	Assert.assertTrue(personSettingPageObject.verifyInthisPage(), "解绑银行卡后未跳转到个人设置页面");
+//    	Thread.sleep(2000); //返回个人设置时银行卡名称会闪现，因此等待一下
+//    	String bankCardName=personSettingPageObject.getBankCardName();
+//    	Assert.assertEquals(bankCardName, "未设置", "解绑失败，当前银行卡为："+bankCardName);
     	
     }
     @Test(priority = 8,description="重设交易密码")

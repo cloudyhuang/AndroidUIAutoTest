@@ -46,6 +46,7 @@ public class test {
 		System.getProperty("os.name");
 	}
 
+
 	public static void startServer() {
 		CommandLine command = new CommandLine("appium");
 		command.addArgument("--address");

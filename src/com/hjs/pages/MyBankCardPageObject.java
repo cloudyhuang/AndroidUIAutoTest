@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
@@ -27,12 +28,15 @@ public class MyBankCardPageObject extends CommonAppiumPage{
 	private AndroidElement smsVerifyCodeConfirmBtn;		//验证码确认按钮
 	@AndroidFindBy(id="btn_unbind")
 	private AndroidElement unBindBankCardBtn;		//解除绑定按钮
+	@AndroidFindBy(id="refresh_animationView")
+	private AndroidElement refreshIcon;		//刷新图标
 	
 	private By bankNameLocator=By.id("tv_bank_name");	//银行名称Locator
+	private By addBankCardBtnLocator=By.name("添加银行卡");		//添加银行卡按钮Locator
 	public MyBankCardPageObject(AndroidDriver<AndroidElement> driver) {
 		super(driver);
 	}
-	public PersonSettingPageObject unbundBankCard(String pwd,String phoneNum) throws Exception{
+	public MyBankCardPageObject unbundBankCard(String pwd,String phoneNum) throws Exception{
 		clickEle(bankName,"银行卡名称");
 		clickEle(unBindBankCardBtn,"解除绑定按钮");
 		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
@@ -47,7 +51,24 @@ public class MyBankCardPageObject extends CommonAppiumPage{
 //		safeKeyBoard.sendNum(msgVerifyCode);
 //		safeKeyBoard.pressFinishBtn();
 //		clickEle(smsVerifyCodeConfirmBtn,"验证码确认按钮");
-		return new PersonSettingPageObject(driver);
+		return new MyBankCardPageObject(driver);
+	}
+	public List<String> getMyBankCardNameList(){
+		List<String> bankCardList=new ArrayList<String>();
+		try{
+			super.waitEleUnVisible(refreshIcon,15);	//等待刷新
+			super.waitAuto(2);
+			List<AndroidElement> bankCardEles=driver.findElements(By.id("tv_bank_name"));
+			for(int i=0;i<bankCardEles.size();i++){
+				bankCardList.add(bankCardEles.get(i).getText());
+			}
+			super.waitAuto(super.getWaitTime());
+			return bankCardList;
+		}
+		catch(Exception e){
+		}
+		super.waitAuto(super.getWaitTime());
+		return null;
 	}
 	public List<SmsVerifyCode> getMsgVerifyCode(String phoneNum) throws IOException{
         Reader reader = Resources.getResourceAsReader("eifGoutongMybatis.xml");  
@@ -63,7 +84,7 @@ public class MyBankCardPageObject extends CommonAppiumPage{
         }
 	}
 	public boolean verifyInthisPage(){
-		return isElementExsit(bankNameLocator);
+		return isElementExsit(addBankCardBtnLocator);
 	}
 	
 }
