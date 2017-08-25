@@ -44,9 +44,11 @@ public class CommonAppiumTest {
     	if(isDebug){}
     	else downLoadFromUrl("http://172.16.59.251:8088/app-default_channel.apk", "app2.4.apk"); //拉取最新包
     	deletePng("surefire-reports"+File.separator+"html");	//删除历史截图文件
-    	appiumServer=new AppiumServer();
+    	if(System.getProperty("os.name").contains("Mac")){
+        	appiumServer=new MacAppiumServer();
+    	}
+    	else appiumServer=new WinAppiumServer();
     	appiumServer.stopServer();	//先结束残留进程
-    	try{Thread.sleep(5000);}catch(Exception e){}
     	System.out.println("---- Starting appium server ----");
     	appiumServer.startServer(udid);
 		System.out.println("---- Appium server started Successfully ! ----");
@@ -100,7 +102,6 @@ public class CommonAppiumTest {
         String[] ss = abpath.split("/");
         String name = ss[ss.length - 1];
         String path = abpath.replace("/" + name, "");
-
         File file = new File(path);// 里面输入特定目录
         File temp = null;
         File[] filelist = file.listFiles();
