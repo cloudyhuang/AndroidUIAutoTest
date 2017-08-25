@@ -60,6 +60,8 @@ public class GesturePwd extends CommonAppiumPage{
 		if (pn.length<4){
 			throw new IllegalArgumentException("手势密码没有超过4个点");
 		}
+		int devWidth = driver.manage().window().getSize().width;	//屏幕像素宽
+		int devHeight=driver.manage().window().getSize().height;	//屏幕像素高
 		int startX = gestureLogin.getLocation().getX();
         int startY = gestureLogin.getLocation().getY();
         int height = gestureLogin.getSize().getHeight();
