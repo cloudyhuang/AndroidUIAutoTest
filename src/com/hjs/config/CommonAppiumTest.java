@@ -41,7 +41,7 @@ public class CommonAppiumTest {
     @BeforeSuite(alwaysRun = true)
     @Parameters({"udid"})
     public void setUp(String udid) throws Exception {
-    	//downLoadFromUrl("http://172.16.59.251:8088/app-default_channel.apk", "app2.4.apk"); //拉取最新包
+    	downLoadFromUrl("http://172.16.59.251:8088/app-default_channel.apk", "app2.4.apk"); //拉取最新包
     	deletePng("surefire-reports"+File.separator+"html");	//删除历史截图文件
     	if(System.getProperty("os.name").contains("Mac")){
         	appiumServer=new MacAppiumServer();

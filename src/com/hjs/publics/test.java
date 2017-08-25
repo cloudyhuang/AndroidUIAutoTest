@@ -8,7 +8,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,9 +43,12 @@ import org.testng.annotations.Test;
 import com.hjs.config.AppiumServer;
 
 public class test {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws UnknownHostException {
 		
-		System.getProperty("os.name");
+		System.out.println(System.getProperty("user.name"));
+		System.out.println(InetAddress.getLocalHost().getHostName());
+		System.out.println(InetAddress.getLocalHost().getHostAddress().toString());
+		
 	}
 
 
