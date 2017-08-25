@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+
 import org.apache.http.util.TextUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -18,6 +19,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.Reporter;
 
 import com.hjs.publics.AppiumBaseMethod;
@@ -106,7 +108,7 @@ public class CommonAppiumPage {
         }
     }
     /**
-     * 滑动到元素
+     * 滑动到元素,且元素滑动到屏幕中间位置
      *
      * @param xpath 元素xpath
      * @throws Exception 
@@ -119,6 +121,13 @@ public class CommonAppiumPage {
     		try{
     		AndroidElement scrollToEle=driver.findElement(By.xpath(xpath));
 	    		if(scrollToEle.isDisplayed()){
+	    			int width = driver.manage().window().getSize().width;	//屏幕像素宽
+	    			int height=driver.manage().window().getSize().height;	//屏幕像素高
+	    			int halfHeight=height/2;
+	    			Point scrollToEleCenterPoint=getNativeEleCenterPoint(scrollToEle);
+	    			if(scrollToEleCenterPoint.getY()<height/5||scrollToEleCenterPoint.getY()>height*4/5){
+	    			driver.swipe(width / 2, scrollToEleCenterPoint.getY(), width / 2, halfHeight, 2000); //只有元素在比较偏僻的地方，将元素滑动到屏幕中间位置，防止出现只滑动一点点导致直接点击的操作 
+	    			}
 	    			waitAuto(WAIT_TIME);
 	    			break;
 	    		}
@@ -134,6 +143,19 @@ public class CommonAppiumPage {
     		}
     	}
     	waitAuto(WAIT_TIME);
+    }
+    public Point getNativeEleCenterPoint(AndroidElement el){
+    	int startX = el.getLocation().getX();
+        int startY = el.getLocation().getY();
+        int height = el.getSize().getHeight();
+        int width = el.getSize().getWidth();
+        int endX =width+startX;
+    	int endY =height+startY;
+        int centerX=(startX+endX)/2;
+        int centerY=(startY+endY)/2;
+        Point elCenterPoint=new Point(centerX,centerY);
+		return elCenterPoint;
+    	
     }
 	public  Point getWebElementRealPoint(AndroidDriver<AndroidElement> driver,WebElement el){
 		AppiumBaseMethod.contextNativeApp(driver);
@@ -288,6 +310,9 @@ public class CommonAppiumPage {
 	       if(contextname.contains("WEBVIEW_com.evergrande"))
 	       driver.context(contextname);
         }
+        if(!driver.getContext().contains("WEBVIEW_com.evergrande")){
+        	Assert.assertTrue(false,"当前页面未切换到WEBVIEW_com.evergrande，请确认是否打开webview的Debug模式");
+        }
     }
 
 	public String getcurrentDate() { 
@@ -325,12 +350,13 @@ public class CommonAppiumPage {
 					threadsleep(1000);//等待1s
 					continue;
 				}
-				else{
-					Reporter.log(WAIT_TIME+"秒找不到元素,locator:"+locator);
-					waitAuto(WAIT_TIME);
-					break;
-				}
 			}
+			if(System.currentTimeMillis()>=endTime){
+				Reporter.log(WAIT_TIME+"秒找不到元素,locator:"+locator);
+				waitAuto(WAIT_TIME);
+				return null;
+			}
+			
 		}
 		waitAuto(WAIT_TIME);
 		return ele;
@@ -421,6 +447,22 @@ public class CommonAppiumPage {
             try {  
                 driver.findElement(by);  
                 AppiumBaseMethod.threadsleep(1000);
+            } catch (Exception e) {  
+            	waitAuto(WAIT_TIME);
+                break; 
+            }  
+        }  
+        waitAuto(WAIT_TIME);
+	}
+	public void waitEleUnVisible(AndroidElement ele,int waittime){ 
+		waitAuto(2);
+        for (int attempt = 0; attempt < waittime; attempt++) {  
+            try {  
+                if(ele.isDisplayed()){
+                	AppiumBaseMethod.threadsleep(1000);
+                	continue;
+                }
+                else break;
             } catch (Exception e) {  
             	waitAuto(WAIT_TIME);
                 break; 

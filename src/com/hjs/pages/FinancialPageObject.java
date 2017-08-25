@@ -72,18 +72,18 @@ public class FinancialPageObject extends CommonAppiumPage{
 		AndroidElement productLimitAndMinBuyAmtEle=driver.findElement(By.xpath("//android.widget.TextView[@text='"+productName+"']/ancestor::android.widget.LinearLayout[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/item_financial_home_privilege']//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/home_page_item_time']"));
 		String expectBaseProfit=displayRate.split("\\+")[0];
 		String appBaseProfit=Util.getNumInString(baseProfitEle.getText());//前端显示x%,取出x
-		Assert.assertEquals(expectBaseProfit, appBaseProfit,"前端显示收益率与OMC配置不同，OMC："+expectBaseProfit+"前端显示："+appBaseProfit);
+		Assert.assertEquals(appBaseProfit,expectBaseProfit,"前端显示收益率与OMC配置不同，OMC："+expectBaseProfit+"前端显示："+appBaseProfit);
 		
 		String expectExtraProfit=mrktPlusRate;
 		String appExtraProfit=Util.getNumInString(extraProfitEle.getText());//前端显示x%,取出x
 		double doubleAppExtraProfit=Util.stringToDouble(appExtraProfit);
 		doubleAppExtraProfit=doubleAppExtraProfit/100;
 		appExtraProfit=String.valueOf(doubleAppExtraProfit);
-		Assert.assertEquals(expectExtraProfit, appExtraProfit,"前端显示额外收益率与OMC配置不同，OMC："+expectExtraProfit+"前端显示："+appExtraProfit);
+		Assert.assertEquals(appExtraProfit, expectExtraProfit,"前端显示额外收益率与OMC配置不同，OMC："+expectExtraProfit+"前端显示："+appExtraProfit);
 		String appProductLimit=Util.getNumInString(productLimitAndMinBuyAmtEle.getText().split("\\|")[0]); //前端显示x 天  |  y元起 ,取出x
-		Assert.assertEquals(productLimit,appProductLimit,"前端显示投资期限与OMC配置不同，OMC："+productLimit+"前端显示："+appProductLimit);	//验证投资期限
+		Assert.assertEquals(appProductLimit,productLimit,"前端显示投资期限与OMC配置不同，OMC："+productLimit+"前端显示："+appProductLimit);	//验证投资期限
 		String appMinBuyAmt=Util.getNumInString(productLimitAndMinBuyAmtEle.getText().split("\\|")[1]);	//前端显示x 天  |  y元起 ,取出y
-		Assert.assertEquals(minBuyAmt,appMinBuyAmt,"前端显示起投金额与OMC配置不同，OMC："+minBuyAmt+"前端显示："+appMinBuyAmt);	//验证起投金额
+		Assert.assertEquals(appMinBuyAmt,minBuyAmt,"前端显示起投金额与OMC配置不同，OMC："+minBuyAmt+"前端显示："+appMinBuyAmt);	//验证起投金额
 		return productName;
 	}
 	public void productPullOffAndFindProduct(String productName) throws Exception{
