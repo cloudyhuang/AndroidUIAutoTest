@@ -125,7 +125,9 @@ public class CommonAppiumPage {
 	    			int height=driver.manage().window().getSize().height;	//屏幕像素高
 	    			int halfHeight=height/2;
 	    			Point scrollToEleCenterPoint=getNativeEleCenterPoint(scrollToEle);
-	    			driver.swipe(width / 2, scrollToEleCenterPoint.getY(), width / 2, halfHeight, 1000); //将元素滑动到屏幕中间位置 
+	    			if(scrollToEleCenterPoint.getY()<height/5||scrollToEleCenterPoint.getY()>height*4/5){
+	    			driver.swipe(width / 2, scrollToEleCenterPoint.getY(), width / 2, halfHeight, 2000); //只有元素在比较偏僻的地方，将元素滑动到屏幕中间位置，防止出现只滑动一点点导致直接点击的操作 
+	    			}
 	    			waitAuto(WAIT_TIME);
 	    			break;
 	    		}
