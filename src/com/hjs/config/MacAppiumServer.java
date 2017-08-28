@@ -16,12 +16,19 @@ import org.apache.commons.exec.DefaultExecutor;
  */
 public class MacAppiumServer extends AppiumServer {
 	@Override
-	public void startServer(String udid) {
-		String cmd = "adb kill-server && adb start-server && adb connect " + udid; // 重置adb
-		runCommand(cmd);
-		cmd = "adb -s " + udid + " uninstall com.evergrande.eif.android.hengjiaosuo"; // 卸载app
-		System.out.print("卸载app:");
-		runCommand(cmd);
+	public void startServer(String udid,boolean isDebug) {
+    	String cmd1="adb kill-server";
+    	String cmd2="adb start-server";
+    	String cmd3="adb connect 127.0.0.1:62001";
+		runCommand(cmd1);
+		runCommand(cmd2);
+		runCommand(cmd3);
+		if(isDebug){}
+		else {
+			String cmd4 = "adb -s " + udid + " uninstall com.evergrande.eif.android.hengjiaosuo"; // 卸载app
+			System.out.print("卸载app:");
+			runCommand(cmd4);
+		}
 		CommandLine command = new CommandLine("appium");
 		command.addArgument("--address");
 		command.addArgument("127.0.0.1");

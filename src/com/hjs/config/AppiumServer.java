@@ -12,7 +12,7 @@ import org.apache.commons.exec.PumpStreamHandler;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 
 public abstract class AppiumServer {
-	public abstract void startServer(String udid);
+	public abstract void startServer(String udid,boolean isDebug);
 	public abstract void startIOSServer();
 	public abstract void stopServer();
 	public void runCommand(String cmd){

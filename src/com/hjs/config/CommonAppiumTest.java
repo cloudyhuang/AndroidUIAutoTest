@@ -50,7 +50,7 @@ public class CommonAppiumTest {
     	else appiumServer=new WinAppiumServer();
     	appiumServer.stopServer();	//先结束残留进程
     	System.out.println("---- Starting appium server ----");
-    	appiumServer.startServer(udid);
+    	appiumServer.startServer(udid,isDebug);
 		System.out.println("---- Appium server started Successfully ! ----");
 		try{Thread.sleep(15000);}catch(Exception e){}
         File classpathRoot = new File(System.getProperty("user.dir"));

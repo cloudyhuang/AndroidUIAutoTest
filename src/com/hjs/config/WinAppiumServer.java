@@ -16,12 +16,15 @@ import org.apache.commons.exec.DefaultExecutor;
  */
 public class WinAppiumServer extends AppiumServer {
 	@Override
-	public void startServer(String udid) {
+	public void startServer(String udid,boolean isDebug) {
 		String cmd = "cmd /c adb kill-server && adb start-server && adb connect " + udid; // 重置adb
 		runCommand(cmd);
-		cmd = "adb -s " + udid + " uninstall com.evergrande.eif.android.hengjiaosuo"; // 卸载app
-		System.out.print("卸载app:");
-		runCommand(cmd);
+		if(isDebug){}
+		else {
+			cmd = "adb -s " + udid + " uninstall com.evergrande.eif.android.hengjiaosuo"; // 卸载app
+			System.out.print("卸载app:");
+			runCommand(cmd);
+		}
 		CommandLine command = new CommandLine("cmd");
 		command.addArgument("/c");
 		command.addArgument("appium");

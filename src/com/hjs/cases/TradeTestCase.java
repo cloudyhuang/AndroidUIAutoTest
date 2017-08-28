@@ -328,7 +328,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	InvestResultPageObject investResultPage=payPage.payByBankCardFailWithoutCoupon("123456", "17052411227");
     	Assert.assertTrue(investResultPage.verifyInthisPage(), "支付后未跳转到支付结果页面");
     	String investResult=investResultPage.getInvestResult();
-    	Assert.assertTrue(investResult.equals("交易失败"),"未跳转到投资失败页面，页面信息为:"+investResult);
+    	Assert.assertTrue(investResult.contains("失败"),"未跳转到投资失败页面，页面信息为:"+investResult);
 
     }
     @Test(priority = 15,expectedExceptions = Exception.class, expectedExceptionsMessageRegExp="找不到下架产品",description="下架产品")

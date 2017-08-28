@@ -59,7 +59,7 @@ public class MacIosAppiumServer extends AppiumServer {
 	}
 
 	@Override
-	public void startServer(String udid) {
+	public void startServer(String udid,boolean isDebug) {
 		// TODO Auto-generated method stub
 		
 	}
