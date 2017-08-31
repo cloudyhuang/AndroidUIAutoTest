@@ -7,7 +7,7 @@
 		<classes>
 			<class name="com.hjs.cases.AccountManageTestCase">
 			    <methods>
-			        <include name="testUnBundBankCard"/>
+			        <include name="testReRiskEvaluation"/>
 			    </methods>
 			</class>
 		</classes>

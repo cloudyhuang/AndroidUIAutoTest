@@ -42,7 +42,12 @@ public class CommonAppiumTest {
     @Parameters({"udid","isDebug"})
     public void setUp(String udid,boolean isDebug) throws Exception {
     	if(isDebug){}
-    	else downLoadFromUrl("http://172.16.59.251:8088/app-default_channel.apk", "app2.4.apk"); //拉取最新包
+    	else {
+    		JenkinsJob.buildAndroidApp();	//触发构建安卓app，上个包为Debug，TEST环境版本，未超过一天，不触发
+    		downLoadFromUrl("http://172.16.59.251:8088/app-default_channel.apk", "app2.4.apk"); //拉取最新包
+    	}
+    	System.out.println(System.getenv());
+    	System.out.println(System.getenv("ANDROID_HOME"));
     	deletePng("surefire-reports"+File.separator+"html");	//删除历史截图文件
     	if(System.getProperty("os.name").contains("Mac")){
         	appiumServer=new MacAppiumServer();
@@ -63,6 +68,7 @@ public class CommonAppiumTest {
         capabilities.setCapability("appPackage", "com.evergrande.eif.android.hengjiaosuo");
         capabilities.setCapability("unicodeKeyboard", true);	//支持中文
         capabilities.setCapability("resetKeyboard", true);	//运行完毕之后，变回系统的输入法
+        capabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT,"600");
         if(isDebug){capabilities.setCapability("noReset", true);}	//是否不重新安装 true不安装，false重新安装
         else {capabilities.setCapability("noReset", false);	}//是否不重新安装 true不安装，false重新安装
         //关键是加上这段

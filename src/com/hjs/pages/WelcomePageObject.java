@@ -1,6 +1,7 @@
 package com.hjs.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
@@ -36,7 +37,13 @@ public class WelcomePageObject extends CommonAppiumPage{
 	}
 	public void skipBackgroundAD(){
 		if(isElementExsit(5,skipBackgroundADLocator)){
-			clickEle(skipBackgroundAD,"跳过背景广告按钮");
+			//clickEle(skipBackgroundAD,"跳过背景广告按钮");
+			try{
+			driver.findElement(skipBackgroundADLocator).click();
+			}
+			catch(NoSuchElementException e){
+				
+			}
 		}
 		
 	}
