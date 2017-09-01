@@ -45,13 +45,8 @@ import com.hjs.config.AppiumServer;
 public class test {
 	
     public static void main(String[] args) throws UnknownHostException {  
-    	//String cmd = "adb kill-server && adb start-server && adb connect " + "127.0.0.1:62001"; // 重置adb
-    	String cmd1="adb kill-server";
-    	String cmd2="adb start-server";
-    	String cmd3="adb connect 127.0.0.1:62001";
-		runCommand(cmd1);
-		runCommand(cmd2);
-		runCommand(cmd3);
+    	String a=null;
+    	a.equals("fdf");
     	
     }  
 

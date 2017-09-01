@@ -43,8 +43,8 @@ public class CommonAppiumTest {
     public void setUp(String udid,boolean isDebug) throws Exception {
     	if(isDebug){}
     	else {
-    		JenkinsJob.buildAndroidApp();	//触发构建安卓app，上个包为Debug，TEST环境版本，未超过一天，不触发
-    		downLoadFromUrl("http://172.16.59.251:8088/app-default_channel.apk", "app2.4.apk"); //拉取最新包
+    		boolean jenkinsBuildResult=JenkinsJob.buildAndroidApp();	//触发构建安卓app，上个包为Debug，TEST环境版本，未超过一天，不触发
+    		if(jenkinsBuildResult) downLoadFromUrl("http://172.16.59.251:8088/app-default_channel.apk", "app2.4.apk"); //拉取最新包
     	}
     	System.out.println(System.getenv());
     	System.out.println(System.getenv("ANDROID_HOME"));
@@ -105,16 +105,16 @@ public class CommonAppiumTest {
         }
     }
 	public void deletePng(String abpath) {
-        String[] ss = abpath.split("/");
-        String name = ss[ss.length - 1];
-        String path = abpath.replace("/" + name, "");
-        File file = new File(path);// 里面输入特定目录
+//        String[] ss = abpath.split(File.separator);
+//        String name = ss[ss.length - 1];
+//        String path = abpath.replace(File.separator + name, "");
+        File file = new File(abpath);// 里面输入特定目录
         File temp = null;
         File[] filelist = file.listFiles();
         if(filelist!=null){
         for (int i = 0; i < filelist.length; i++) {
             temp = filelist[i];
-            if (temp.getName().endsWith("png") && !temp.getName().endsWith(name))// 获得文件名，如果后缀为“png”就删除文件
+            if (temp.getName().endsWith("png") && !temp.getName().endsWith(abpath))// 获得文件名，如果后缀为“png”就删除文件
             {
                 temp.delete();// 删除文件
                 System.out.println("已删除历史截图文件："+temp.getName());

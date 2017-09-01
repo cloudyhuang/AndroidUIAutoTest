@@ -5,6 +5,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.math.BigInteger;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpHost;
@@ -22,7 +27,10 @@ import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.jayway.jsonpath.JsonPath;
 
 /**
 * @author huangxiao
@@ -38,15 +46,24 @@ public class JenkinsJob {
 		public static String jenkinsUrl = "http://172.16.59.251:8080";
 		public static void main(String [] args) throws ClientProtocolException, IOException{
 			buildAndroidApp();
-
 		}
 
 	public static boolean buildAndroidApp() throws ClientProtocolException, IOException {
 		String lastBuildCmd = "curl -X GET http://172.16.59.251:8080/job/eif-android-app/job/release/lastSuccessfulBuild/api/json --user huangxiao:Hxnearcj228";
 		String lastBuildResult = runCommand(lastBuildCmd);
 		JSONObject lastBuildJsonObj = new JSONObject(lastBuildResult);
-		String lastJobDebugValue=lastBuildJsonObj.getJSONArray("actions").getJSONObject(0).getJSONArray("parameters").getJSONObject(2).getString("value");
-		String lastJobEnvValue=lastBuildJsonObj.getJSONArray("actions").getJSONObject(0).getJSONArray("parameters").getJSONObject(0).getString("value");
+		String lastJobDebugValue=null;
+		String lastJobEnvValue=null;
+		try{
+			//String lastJobDebugValue2 = JsonPath.read(lastBuildJsonObj, "$..actions[3]").toString();
+			lastJobDebugValue=lastBuildJsonObj.getJSONArray("actions").getJSONObject(0).getJSONArray("parameters").getJSONObject(2).getString("value");
+			lastJobEnvValue=lastBuildJsonObj.getJSONArray("actions").getJSONObject(0).getJSONArray("parameters").getJSONObject(0).getString("value");
+			
+		}
+		catch(JSONException e){
+			lastJobDebugValue=lastBuildJsonObj.getJSONArray("actions").getJSONObject(2).getJSONArray("parameters").getJSONObject(2).getString("value");
+			lastJobEnvValue=lastBuildJsonObj.getJSONArray("actions").getJSONObject(2).getJSONArray("parameters").getJSONObject(0).getString("value");
+		}
 		long lastJobTime=lastBuildJsonObj.getLong("timestamp");	//上次构建时间
 		long currentTime=System.currentTimeMillis();	//当前系统时间
 		long lastJobTomorrowTime=lastJobTime+86400000;
@@ -66,7 +83,7 @@ public class JenkinsJob {
 				JenkinsJob job = new JenkinsJob();
 				job.buildJob("eif-android-app", true , "PackageEnvironment=TEST&MTP_URL=https://dqm.hdfax.com/eif-mtp-web/mobile/&Configuration=Debug&channels=c000001");
 				System.out.println("------开始构建------");
-				try {Thread.sleep(5000);} catch (InterruptedException e) {e.printStackTrace();}	//触发后等待一下
+				try {Thread.sleep(10000);} catch (InterruptedException e) {e.printStackTrace();}	//触发后等待一下
 				while (true) {
 					String buildResult2 = runCommand(cmd);
 					JSONObject buildJsonObj2 = new JSONObject(buildResult2);

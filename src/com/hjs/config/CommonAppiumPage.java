@@ -395,6 +395,32 @@ public class CommonAppiumPage {
         waitAuto(WAIT_TIME);
         return flag;  
     } 
+	/**
+	  * times秒内判断元素是否存在
+	  *
+	  * @param times 时间s
+	  * @param ele AndroidElement元素
+	  */
+	public boolean isElementExsit(int times,AndroidElement ele){ 
+		waitAuto(0);
+        for (int attempt = 0; attempt < times; attempt++) {  
+            try {  
+                if(!ele.isDisplayed()){
+                	AppiumBaseMethod.threadsleep(1000);
+                	continue;
+                }
+                else {
+                	waitAuto(WAIT_TIME);
+                	return true;
+                }
+            } catch (Exception e) {  
+            	AppiumBaseMethod.threadsleep(1000);
+            	continue;
+            }  
+        }  
+        waitAuto(WAIT_TIME);
+		return false;
+	}
 	 /**
      * 判断元素是否存在，时间为隐式等待时间
      *
@@ -413,6 +439,7 @@ public class CommonAppiumPage {
         return flag;  
 
     } 
+
 	 /**
      * 判断元素组是否存在，只要有一个存在返回true
      *
