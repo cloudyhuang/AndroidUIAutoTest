@@ -66,6 +66,12 @@ public class PayPageObject extends CommonAppiumPage{
 		//clickEle(bankCardPayOptions,"银行卡付款方式");
 		this.chooseBankCardPayWays();
 		clickEle(confirmPayBtn,"确认支付按钮");
+		if(super.isElementExsit(5, dlgMsgRightbtn)){
+			String Msg=dlgMsgMsg.getText();
+			if(Msg.contains("本订单未使用优惠券，是否继续？")){
+				clickEle(dlgMsgRightbtn,"继续不使用优惠券确认按钮");
+			}
+		}
 		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
 		if(!safeKeyBoard.verifySafeKeyBoardLocated()){
 			throw new Exception("安全键盘未出现");
@@ -91,6 +97,7 @@ public class PayPageObject extends CommonAppiumPage{
 	}
 	public InvestResultPageObject payByBankCardWithoutCouponWithoutSmsCode(String tradePwd,String bankPhoneNum) throws Exception{
 		this.onlyOpenSHENGFUTONGProvider();	//只打开盛付通渠道
+		this.openNoProvider();		//什么渠道都不打开
 		this.openProviderStatus("0007");	//打开宝付支付渠道
 		clickEle(chooseCouponBtn,"优惠券选择入口按钮");
 		ChooseCouponPageObject chooseCouponPage=new ChooseCouponPageObject(driver);
@@ -166,6 +173,7 @@ public class PayPageObject extends CommonAppiumPage{
 	}
 	public InvestResultPageObject payByBankCardWithCouponWithoutSmsCode(String tradePwd,String bankPhoneNum,String couponId) throws Exception{
 		this.onlyOpenSHENGFUTONGProvider();	//只打开盛付通渠道
+		this.openNoProvider();		//什么渠道都不打开
 		this.openProviderStatus("0007");	//打开宝付支付渠道
 		clickEle(chooseCouponBtn,"优惠券选择入口按钮");
 		ChooseCouponPageObject chooseCouponPage=new ChooseCouponPageObject(driver);
@@ -344,7 +352,28 @@ public class PayPageObject extends CommonAppiumPage{
 	        session.close();
 	    }
 	}
-
+	
+	public void openNoProvider() throws IOException{
+		String resource = "eifPayCoreConfig.xml";
+	    Reader reader = Resources.getResourceAsReader(resource);  
+	    SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
+	    reader.close();  
+		SqlSession session = sqlSessionFactory.openSession();
+		try {
+			EifPayCoreOperation eifPayCoreOperation = session.getMapper(EifPayCoreOperation.class);
+			List<BankProvider> bankProviderList = eifPayCoreOperation.getBankProvider("03080000");
+			if (bankProviderList.size() > 0) {
+				for (int i = 0; i < bankProviderList.size(); i++) {
+					bankProviderList.get(i).setStatus(1);
+					int result = eifPayCoreOperation.updateBankProviderStatus(bankProviderList.get(i));
+				}
+				session.commit();
+			}
+	        
+	    } finally {
+	        session.close();
+	    }
+	}
 	public void openProviderStatus(String providerNo) throws IOException{
 		String resource = "eifPayCoreConfig.xml";
 	    Reader reader = Resources.getResourceAsReader(resource);  

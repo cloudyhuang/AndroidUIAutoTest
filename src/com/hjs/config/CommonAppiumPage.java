@@ -77,6 +77,50 @@ public class CommonAppiumPage {
         }
         return false;
     }
+    /**
+     * Click点击webview控件
+     *
+     * @param by  web控件locator
+     * @param str 控件的文字描述，供错误时候输出
+     * @return 返回是否存在控件
+     */
+    public boolean clickWebEle(By by, String str) {
+        if (by != null) {
+            try{
+            	this.waitForClickble(by, WAIT_TIME);
+            	driver.findElement(by).click();
+            }
+        	catch(NoSuchElementException e){
+        		assertTrue("没有找到目标元素－－"+str,false);
+        	}
+            return true;
+        } else {
+            print(str + "为空，点击错误");
+        }
+        return false;
+    }
+    /**
+     * Click点击webview控件
+     *
+     * @param ae  web控件locator
+     * @param str 控件的文字描述，供错误时候输出
+     * @return 返回是否存在控件
+     */
+    public boolean clickWebEle(WebElement we, String str) {
+        if (we != null) {
+            try{
+            	this.waitForClickble(we, WAIT_TIME);
+            	we.click();
+            }
+        	catch(NoSuchElementException e){
+        		assertTrue("没有找到目标元素－－"+str,false);
+        	}
+            return true;
+        } else {
+            print(str + "为空，点击错误");
+        }
+        return false;
+    }
     
     /**
      * 往控件输入字符串
@@ -364,6 +408,35 @@ public class CommonAppiumPage {
 		waitAuto(WAIT_TIME);
 		return ele;
 	}
+	public WebElement webFindBy(By locator){
+		final long endTime=System.currentTimeMillis()+WAIT_TIME*1000;//System.currentTimeMillis()为自1970年1月1日0时起的毫秒数
+		WebElement ele=null;
+		waitAuto(0); //清除隐式等待
+		while(true){
+			try{
+				ele=driver.findElement(locator);
+				if(ele.isDisplayed()){
+					waitAuto(WAIT_TIME);
+					break;
+				}
+			}
+			catch(Exception e){
+				if(System.currentTimeMillis()<endTime){
+					Reporter.log("找不到元素，重试，locator:"+locator);
+					threadsleep(1000);//等待1s
+					continue;
+				}
+			}
+			if(System.currentTimeMillis()>=endTime){
+				Reporter.log(WAIT_TIME+"秒找不到元素,locator:"+locator);
+				waitAuto(WAIT_TIME);
+				return null;
+			}
+			
+		}
+		waitAuto(WAIT_TIME);
+		return ele;
+	}
 	public boolean isElementExsit(AndroidDriver<AndroidElement> driver, By locator) {  
         boolean flag = false;  
         try {  
@@ -421,6 +494,7 @@ public class CommonAppiumPage {
         waitAuto(WAIT_TIME);
 		return false;
 	}
+	
 	 /**
      * 判断元素是否存在，时间为隐式等待时间
      *
@@ -439,7 +513,23 @@ public class CommonAppiumPage {
         return flag;  
 
     } 
+	 /**
+     * 判断web元素是否存在，时间为隐式等待时间
+     *
+     * @param locator 元素locator
+     */
+	public boolean isWebElementExsit(By locator) {  
+        boolean flag = false;  
+        try {  
+        	WebElement element=webFindBy(locator);
+            flag=null!=element;  
+        } catch (NoSuchElementException e) {  
+            System.out.println("Element:" + locator.toString()  
+                    + " is not exsit!");  
+        }  
+        return flag;  
 
+    } 
 	 /**
      * 判断元素组是否存在，只要有一个存在返回true
      *
@@ -505,5 +595,12 @@ public class CommonAppiumPage {
         WebDriverWait wait = new WebDriverWait(driver,waitTime);
    	 	wait.until(ExpectedConditions.visibilityOfElementLocated(by)); 
     }
-    
+    public void waitForClickble(By by, int waitTime){
+        WebDriverWait wait = new WebDriverWait(driver,waitTime);
+   	 	wait.until(ExpectedConditions.elementToBeClickable(by)); 
+    }
+    public void waitForClickble(WebElement we, int waitTime){
+        WebDriverWait wait = new WebDriverWait(driver,waitTime);
+   	 	wait.until(ExpectedConditions.elementToBeClickable(we)); 
+    }
 }

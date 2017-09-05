@@ -34,7 +34,7 @@ public class RiskEvaluationResultPageObject extends CommonAppiumPage{
 		contextNativeApp(driver);
 	}
 	public boolean verifyInthisPage(){
-		return isElementExsit(reEvaluationBtnLocator);
+		return isWebElementExsit(reEvaluationBtnLocator);
 	}
 
 }

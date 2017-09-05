@@ -75,6 +75,7 @@ public class CommonAppiumTest {
         ChromeOptions options = new ChromeOptions();
         options.setExperimentalOption("androidProcess", "com.evergrande.eif.android.hengjiaosuo:web");
         capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+        capabilities.setCapability("recreateChromeDriverSessions", true);//当移除非 ChromeDriver webview时，终止掉 ChromeDriver 的 session
         driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         wait = new WebDriverWait(driver,30);
