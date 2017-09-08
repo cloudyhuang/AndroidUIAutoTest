@@ -4,7 +4,6 @@
     <select id="getFisProdInfo" parameterType="String" resultType="com.hjs.db.FisProdInfo">
     SELECT * FROM t_fis_prod_info WHERE product_name=#{product_name} ORDER BY id DESC limit 1
     </select>
-    
      <select id="getFisCollectPlan" parameterType="String" resultType="com.hjs.db.FisCollectPlan">
     SELECT * from t_fis_collect_plan where assets_id=#{assets_id} ORDER BY id DESC limit 1
     </select>

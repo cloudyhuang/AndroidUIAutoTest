@@ -38,7 +38,7 @@ public class CommonAppiumPage {
     
     public CommonAppiumPage(AndroidDriver<AndroidElement> androidDriver) {
         this.driver = androidDriver;
-        PageFactory.initElements(new AppiumFieldDecorator(driver,new TimeOutDuration(15,TimeUnit.SECONDS)), this);
+        PageFactory.initElements(new AppiumFieldDecorator(driver), this);//,new TimeOutDuration(15,TimeUnit.SECONDS)
         waitAuto(WAIT_TIME);
     }
     
@@ -66,6 +66,7 @@ public class CommonAppiumPage {
     public boolean clickEle(AndroidElement ae, String str) {
         if (ae != null) {
             try{
+            	this.waitForClickble(ae, WAIT_TIME);
             	ae.click();
             }
         	catch(NoSuchElementException e){
@@ -171,8 +172,14 @@ public class CommonAppiumPage {
 	    			int height=driver.manage().window().getSize().height;	//屏幕像素高
 	    			int halfHeight=height/2;
 	    			Point scrollToEleCenterPoint=getNativeEleCenterPoint(scrollToEle);
-	    			if(scrollToEleCenterPoint.getY()<height/5||scrollToEleCenterPoint.getY()>height*4/5){
-	    			driver.swipe(width / 2, scrollToEleCenterPoint.getY(), width / 2, halfHeight, 2000); //只有元素在比较偏僻的地方，将元素滑动到屏幕中间位置，防止出现只滑动一点点导致直接点击的操作 
+	    			if(scrollToEleCenterPoint.getY()>height*7/8){
+		    			driver.swipe(width / 2, halfHeight, width / 2, height/4, 2000); //只有元素在比较偏僻的地方，将元素滑动到屏幕中间位置，防止出现只滑动一点点导致直接点击的操作 
+		    			}
+	    			if(scrollToEleCenterPoint.getY()<height/8){
+		    			driver.swipe(width / 2, height/4, width / 2, halfHeight, 2000); //只有元素在比较偏僻的地方，将元素滑动到屏幕中间位置，防止出现只滑动一点点导致直接点击的操作 
+		    			}
+	    			if(scrollToEleCenterPoint.getY()<height/5&&scrollToEleCenterPoint.getY()>height/8||scrollToEleCenterPoint.getY()>height*4/5&&scrollToEleCenterPoint.getY()<height*7/8){
+	    			driver.swipe(width / 2, scrollToEleCenterPoint.getY(), width / 2, halfHeight,2000); //只有元素在比较偏僻的地方，将元素滑动到屏幕中间位置，防止出现只滑动一点点导致直接点击的操作 
 	    			}
 	    			waitAuto(WAIT_TIME);
 	    			break;
@@ -189,6 +196,7 @@ public class CommonAppiumPage {
     		}
     	}
     	waitAuto(WAIT_TIME);
+    	this.threadsleep(2000);
     }
     public Point getNativeEleCenterPoint(AndroidElement el){
     	int startX = el.getLocation().getX();
@@ -602,5 +610,9 @@ public class CommonAppiumPage {
     public void waitForClickble(WebElement we, int waitTime){
         WebDriverWait wait = new WebDriverWait(driver,waitTime);
    	 	wait.until(ExpectedConditions.elementToBeClickable(we)); 
+    }
+    public void waitForClickble(AndroidElement ae, int waitTime){
+        WebDriverWait wait = new WebDriverWait(driver,waitTime);
+   	 	wait.until(ExpectedConditions.elementToBeClickable(ae)); 
     }
 }

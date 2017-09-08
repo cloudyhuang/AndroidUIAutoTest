@@ -1,80 +1,75 @@
 package com.hjs.publics;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.net.HttpURLConnection;
-import java.net.InetAddress;
-import java.net.URL;
-import java.net.UnknownHostException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.LinkedList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Properties;
-import java.util.Random;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.mail.Authenticator;
-import javax.mail.PasswordAuthentication;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecuteResultHandler;
 import org.apache.commons.exec.DefaultExecutor;
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.eclipse.jetty.websocket.api.Session;
-import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
+import com.hjs.db.FisProdInfo;
+import com.hjs.db.MarketGrouponTask;
+import com.hjs.mybatis.inter.EifFisOperation;
+import com.hjs.mybatis.inter.EifMarketOperation;
 
-import com.hjs.config.AppiumServer;
-import com.hjs.db.BankProvider;
-import com.hjs.mybatis.inter.EifPayCoreOperation;
 
 public class test {
 	
-    public static void main(String[] args) throws IOException {  
-    	openNoProvider();
+    public static void main(String[] args) throws Exception {  
+    	getGrouponTask();
     	
     }  
-    public static void openNoProvider() throws IOException{
-		String resource = "eifPayCoreConfig.xml";
+    public static String getGrouponTask() throws IOException{
+		String resource = "eifMarketConfig.xml";
+		List<Integer>rate=new ArrayList<Integer>();
 	    Reader reader = Resources.getResourceAsReader(resource);  
 	    SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
 	    reader.close();  
-		SqlSession session = sqlSessionFactory.openSession();
-		try {
-			EifPayCoreOperation eifPayCoreOperation = session.getMapper(EifPayCoreOperation.class);
-			List<BankProvider> bankProviderList = eifPayCoreOperation.getBankProvider("03080000");
-			if (bankProviderList.size() > 0) {
-				for (int i = 0; i < bankProviderList.size(); i++) {
-					bankProviderList.get(i).setStatus(0);
-					int result = eifPayCoreOperation.updateBankProviderStatus(bankProviderList.get(i));
-				}
-				session.commit();
-			}
+	    SqlSession session = sqlSessionFactory.openSession();
+	    try {
+	    	EifMarketOperation eifMarketOperation=session.getMapper(EifMarketOperation.class);
+	    	List<MarketGrouponTask> getGrouponTaskList = eifMarketOperation.getGrouponTask("4519");
+	    	if(getGrouponTaskList.size()>0){
+		    	for(int i=0;i<getGrouponTaskList.size();i++){
+		    		rate.add(Integer.parseInt(getGrouponTaskList.get(i).getAward_rates()));
+		    	}    	
+	    	}
+	    	Collections.sort(rate);
+	    	String maxRate= rate.get(rate.size()-1).toString();
+	    	return maxRate;
 	        
 	    } finally {
 	        session.close();
 	    }
+	}
+	public static String getBaseProductId(String productName) throws Exception{
+		String resource = "eifFisConfig.xml";
+        Reader reader = Resources.getResourceAsReader(resource);  
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
+        reader.close();  
+        SqlSession session = sqlSessionFactory.openSession();
+        try {
+        	EifFisOperation eifFisOperation=session.getMapper(EifFisOperation.class);
+        	FisProdInfo fisProdInfo=eifFisOperation.getFisProdInfo(productName);
+        	if(fisProdInfo==null){
+        		return null;
+        	}
+        	return fisProdInfo.getBase_product_id();
+        }
+        finally {
+            session.close();
+        }
 	}
 	public static void startServer() {
 		CommandLine command = new CommandLine("appium");

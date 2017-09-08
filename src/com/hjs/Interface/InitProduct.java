@@ -249,6 +249,11 @@ public class InitProduct {
 		}
 		return collectPlanId;
 	}
+    /**
+     * 创建基础产品
+     * @param assetsId  
+     * @param planId 
+     */
 	public void creatProduct(String assetsId,String planId) throws ParseException{
 		String userDate=Util.getUserDate("yyyy-MM-dd HH:mm:ss");
 		long startTime=Util.dateToLong(userDate,"yyyy-MM-dd HH:mm:ss");
@@ -265,11 +270,9 @@ public class InitProduct {
 		
 		postJsonobj.getJSONObject("baseInfo").put("baseProdName", baseProductName);
 		postJsonobj.getJSONObject("baseInfo").put("assetsId", assetsId);
+		postJsonobj.getJSONObject("baseInfo").put("groupBuyId", groupBuyId);
 		postJsonobj.getJSONObject("baseInfo").getJSONObject("marketExtInfo").put("mrktPlusRate", mrktPlusRate);
-		
 		postJsonobj.getJSONObject("baseInfo").put("productLimit", productLimit);
-		
-		
 		postJsonobj.getJSONObject("baseInfo").put("minBuyAmt", minBuyAmt);
 		postJsonobj.getJSONObject("prodInfo").put("displayRate", displayRate);
 		postJsonobj.getJSONObject("prodInfo").put("planId", planId);

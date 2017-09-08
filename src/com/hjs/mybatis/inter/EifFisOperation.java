@@ -6,5 +6,6 @@ import com.hjs.db.FisProdInfo;
 
 public interface EifFisOperation {
 	public FisProdInfo getFisProdInfo(String product_name);
+
 	public FisCollectPlan getFisCollectPlan(String assets_id);
 }

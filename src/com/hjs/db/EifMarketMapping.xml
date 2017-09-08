@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hjs.mybatis.inter.EifMarketOperation">
+    <!-- 为了返回list 类型而定义的returnMap -->
+    <resultMap type="com.hjs.db.MarketGrouponTask" id="resultListGrouponTask">
+        <id column="id" property="id" />
+        <result column="award_rates" property="award_rates" />
+        <result column="actvty_no" property="actvty_no" />
+        <result column="min_user_count" property="min_user_count" />
+    </resultMap>
+    <select id="getGrouponTask" parameterType="String" resultMap="resultListGrouponTask">
+        select a.id,a.award_rates,a.actvty_no,b.min_user_count from t_market_groupon_task AS a,t_market_groupon AS b,t_market_groupon_base_prod AS c where c.base_prod_id=#{base_prod_id} and c.groupon_id=b.id and b.actvty_no=a.actvty_no
+    </select>
 	<select id="getActivityCoupon" parameterType="String"
 		resultType="com.hjs.db.ActivityCoupon">
 		SELECT * from t_market_activity_coupon WHERE id=#{id}

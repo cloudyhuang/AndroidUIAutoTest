@@ -14,10 +14,12 @@ import com.hjs.config.CommonAppiumPage;
 import com.hjs.config.CommonAppiumTest;
 import com.hjs.pages.AccountBanlancePageObject;
 import com.hjs.pages.CurrentDepositProductDetailPageObject;
+import com.hjs.pages.DepositGroupBuyProductDetailPageObject;
 import com.hjs.pages.DepositProductDetailPageObject;
 import com.hjs.pages.FinancialPageObject;
 import com.hjs.pages.GesturePwd;
 import com.hjs.pages.HomePageObject;
+import com.hjs.pages.InvestGroupBuyPageObject;
 import com.hjs.pages.InvestPageObject;
 import com.hjs.pages.InvestResultPageObject;
 import com.hjs.pages.LoginPageObject;
@@ -38,6 +40,7 @@ import com.hjs.publics.Util;
 
 public class TradeTestCase extends CommonAppiumTest{
 	private static String DEPOSITE_PRODUCT_NAME="黄XAutoTest产品170807120145";
+	private static String DEPOSITE_GROUPBUYPRODUCT_NAME="黄XAutoTest团购产品170906085612";
 	private static String CURRENTDEPOSITE_PRODUCT_NAME="恒存金-灵活理财";
 	private static String phoneNum="17052411184";
     @Test(priority = 1,description="理财页产品信息")
@@ -291,7 +294,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	InvestResultPageObject investResultPage=payPage.payByBanlanceWithoutCoupon("123456", "17052411227");
     	Assert.assertTrue(investResultPage.verifyInthisPage(), "支付后未跳转到支付结果页面");
     	String investResult=investResultPage.getInvestResult();
-    	Assert.assertTrue(investResult.equals("投资已成功")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
+    	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.equals("投资已成功")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
     }
     @Test(priority = 13,description="银行卡不带券购买活期产品")
     public void testPayCurrentProductsByBankCardWithoutCoupon() throws Exception{
@@ -310,7 +313,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	InvestResultPageObject investResultPage=payPage.payByBankCardWithoutCoupon("123456", "17052411227");
     	Assert.assertTrue(investResultPage.verifyInthisPage(), "支付后未跳转到支付结果页面");
     	String investResult=investResultPage.getInvestResult();
-    	Assert.assertTrue(investResult.equals("投资已成功")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
+    	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.equals("投资已成功")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
     }
     @Test(priority = 14,description="银行卡不带券购买定期产品失败场景")
     public void testPayByBankCardFailWithoutCoupon() throws Exception{
@@ -382,7 +385,78 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(myDepositeProductDetailPage.verifyInthisPage(), "点击"+DEPOSITE_PRODUCT_NAME+"产品未进入我的理财产品详情页");
     	myDepositeProductDetailPage.assertMtpAndAppDetail(phoneNum);
     }
+    @Test(priority = 18,description="发起团",enabled = false)
+    public void testBuyGroupBuyProduct()throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
+    	HomePageObject homepage=new HomePageObject(driver); 
+    	FinancialPageObject financialPage=homepage.enterFinancialPage();
+    	Assert.assertTrue(financialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
+    	DEPOSITE_GROUPBUYPRODUCT_NAME=financialPage.testGroupBuyProductInfo();
+    	DepositGroupBuyProductDetailPageObject depositGroupBuyProductDetailPage=financialPage.clickDepositGroupBuyProduct(DEPOSITE_GROUPBUYPRODUCT_NAME);
+    	String startMonney=depositGroupBuyProductDetailPage.getStartMoney();
+    	Assert.assertTrue(depositGroupBuyProductDetailPage.verifyInthisPage(), "点击团购产品，未出现团购产品页面");
+    	depositGroupBuyProductDetailPage.checkGroupBuyInfo();
+    	InvestGroupBuyPageObject investGroupBuyPage=depositGroupBuyProductDetailPage.startGroupBuy();
+    	Assert.assertTrue(investGroupBuyPage.verifyInthisPage(), "发起团后未跳转到团购投资页");
+    	PayPageObject payPage=investGroupBuyPage.InvestGroupBuy(startMonney);
+    	Assert.assertTrue(payPage.verifyInthisPage(), "提交团购投资申请后未跳转到支付页面");
+    	InvestResultPageObject investResultPage=payPage.payByBankCardWithoutCoupon("123456", "17052411227");
+    	String investResult=investResultPage.getInvestResult();
+    	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.equals("投资已成功")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
+    }
+    @Test(priority = 19,description="检查已买团购信息",enabled = false)
+    public void testGroupBuyedProduct()throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
+    	HomePageObject homepage=new HomePageObject(driver); 
+    	FinancialPageObject financialPage=homepage.enterFinancialPage();
+    	Assert.assertTrue(financialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
+    	DepositGroupBuyProductDetailPageObject depositGroupBuyProductDetailPage=financialPage.clickDepositGroupBuyProduct(DEPOSITE_GROUPBUYPRODUCT_NAME);
+    	Assert.assertTrue(depositGroupBuyProductDetailPage.verifyInthisPage(), "点击团购产品，未出现团购产品页面");
+    	depositGroupBuyProductDetailPage.checkGroupedInfo("100", "1");
+    }
+    @Test(priority = 20,description="现金券购买团购产品",enabled = false)
+    public void testBuyGroupBuyProductWithCashCoupon()throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
+    	HomePageObject homepage=new HomePageObject(driver); 
+    	FinancialPageObject financialPage=homepage.enterFinancialPage();
+    	Assert.assertTrue(financialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
+    	DepositGroupBuyProductDetailPageObject depositGroupBuyProductDetailPage=financialPage.clickDepositGroupBuyProduct(DEPOSITE_GROUPBUYPRODUCT_NAME);
+    	String startMonney=depositGroupBuyProductDetailPage.getStartMoney();
+    	Assert.assertTrue(depositGroupBuyProductDetailPage.verifyInthisPage(), "点击团购产品，未出现团购产品页面");
+    	InvestGroupBuyPageObject investGroupBuyPage=depositGroupBuyProductDetailPage.startGroupBuy();
+    	Assert.assertTrue(investGroupBuyPage.verifyInthisPage(), "发起团后未跳转到团购投资页");
+    	PayPageObject payPage=new PayPageObject(driver);
+    	payPage.deleteUserCoupon(phoneNum);	//清除用户所有优惠券
+    	String couponId="2463";
+    	Assert.assertTrue(payPage.addCouponToUser(phoneNum, couponId), "加券失败");
+    	payPage=investGroupBuyPage.InvestGroupBuy(startMonney);
+    	Assert.assertTrue(payPage.verifyInthisPage(), "提交团购投资申请后未跳转到支付页面");
+    	InvestResultPageObject investResultPage=payPage.payByBankCardWithCoupon("123456", "17052411227",couponId);
+    	String investResult=investResultPage.getInvestResult();
+    	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.equals("投资已成功")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
+    }
+    @Test(priority = 21,description="参与团",enabled = false)
+    public void testJoinGroupBuyProductWithCashCoupon()throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
+    	HomePageObject homepage=new HomePageObject(driver); 
+    	FinancialPageObject financialPage=homepage.enterFinancialPage();
+    	Assert.assertTrue(financialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
+    	DepositGroupBuyProductDetailPageObject depositGroupBuyProductDetailPage=financialPage.clickDepositGroupBuyProduct(DEPOSITE_GROUPBUYPRODUCT_NAME);
+    	String startMonney=depositGroupBuyProductDetailPage.getStartMoney();
+    	Assert.assertTrue(depositGroupBuyProductDetailPage.verifyInthisPage(), "点击团购产品，未出现团购产品页面");
+    	InvestGroupBuyPageObject investGroupBuyPage=depositGroupBuyProductDetailPage.joinGroupBuy("A6UH");
+    	Assert.assertTrue(investGroupBuyPage.verifyInthisPage(), "发起团后未跳转到团购投资页");
+    	
+    }
+    @Test(priority = 22,expectedExceptions = Exception.class, expectedExceptionsMessageRegExp="找不到下架产品",description="下架团购产品",enabled = false)
+    public void testOffGroupBuyProducts() throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
+    	HomePageObject homepage=new HomePageObject(driver); 
+    	FinancialPageObject financialPage=homepage.enterFinancialPage();
+    	Assert.assertTrue(financialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
+    	financialPage.productPullOffAndFindProduct(DEPOSITE_GROUPBUYPRODUCT_NAME);
 
+    }
     /*
      * 请把赎回放最后一个用例*/
     @Test(priority = 40,description="赎回活期产品到余额")
@@ -401,6 +475,7 @@ public class TradeTestCase extends CommonAppiumTest{
 		pageName=page.getClass().getName();
 		Assert.assertTrue(pageName.contains("LoginPageObject"), "验证手机号后未进入登录页面");
 		GesturePwd gesturePwd=((LoginPageObject)page).login("a123456");
+		Assert.assertTrue(gesturePwd.verifyInthisPage(),"登录后未跳转到手势密码页");
 		homepage=gesturePwd.skipGesturePwd();	//跳过手势密码，无需再次测试
 		Assert.assertTrue(homepage.verifyIsInHomePage(), "跳过手势密码设置后未进入主页");
     	FinancialPageObject FinancialPage=homepage.enterFinancialPage();

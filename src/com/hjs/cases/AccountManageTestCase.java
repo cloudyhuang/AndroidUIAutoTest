@@ -63,7 +63,9 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	LoginPageObject loginPageObject=(LoginPageObject)page;
     	String verifyPhoneNumResultPageName=loginPageObject.verifyPhoneNum(phoneNum).getClass().getName(); //com.hjs.pages.LoginPageObject
     	Assert.assertTrue(verifyPhoneNumResultPageName.contains("LoginPageObject"), "登录账户手机号验证后未进入输入密码页面！");
-    	String loginResult=loginPageObject.login(password).verifyGestureTips();
+    	GesturePwd gesturePwd=loginPageObject.login(password);
+    	Assert.assertTrue(gesturePwd.verifyInthisPage(),"登录后未跳转到手势密码页");
+    	String loginResult=gesturePwd.verifyGestureTips();
     	Assert.assertEquals("请绘制您的手势密码", loginResult);
 	}
     @Test(priority = 3,description="测试手势密码")
