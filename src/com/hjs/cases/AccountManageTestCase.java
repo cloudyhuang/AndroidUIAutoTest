@@ -216,9 +216,9 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	String pageName=page.getClass().getName();
     	Assert.assertTrue(pageName.contains("LoginPageObject"), "点击首页-我的入口未跳转到登录页");
     	LoginPageObject loginPageObject=(LoginPageObject)page;
-    	String loginResult=loginPageObject.login(Account.getLoginPwd()).verifyGestureTips();
-    	Assert.assertEquals("请绘制您的手势密码", loginResult,"登录后未进入设置手密页");
-    	GesturePwd gesturePwd=new GesturePwd(driver);
+    	GesturePwd gesturePwd=loginPageObject.login(Account.getLoginPwd());
+    	Assert.assertTrue(gesturePwd.verifyInthisPage(),"登录后未跳转到手势密码页");
+    	Assert.assertEquals("请绘制您的手势密码", gesturePwd.verifyGestureTips(),"登录后未进入设置手密页");
     	String result=gesturePwd.setFirstGesturePwd(1,4,7,8);
     	Assert.assertEquals("请再画一次手势密码", result);
     	boolean setNextGestureResult=gesturePwd.setNextGesturePwd(1,4,7,8).verifyIsInHomePage();

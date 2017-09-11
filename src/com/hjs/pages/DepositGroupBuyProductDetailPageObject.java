@@ -64,6 +64,7 @@ public class DepositGroupBuyProductDetailPageObject extends CommonAppiumPage{
 	
 	
 	private By payBtnLocator=By.id("button_pay");
+	private By highestExtraProfitLocator=By.id("highest_profit");
 	public DepositGroupBuyProductDetailPageObject(AndroidDriver<AndroidElement> driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
@@ -93,7 +94,7 @@ public class DepositGroupBuyProductDetailPageObject extends CommonAppiumPage{
 	}
 	public InvestGroupBuyPageObject startGroupBuy(){
 		clickEle(payBtn,"点击参团按钮");
-		if(isElementExsit(5, highestExtraProfit)){
+		if(isElementExsit(5, highestExtraProfitLocator)){
 			clickEle(createGroupBuyBtn,"发起团按钮");
 			clickEle(submitBtn,"确认按钮");
 			clickEle(msgSubmitBtn,"弹框确认按钮");
@@ -101,11 +102,17 @@ public class DepositGroupBuyProductDetailPageObject extends CommonAppiumPage{
 		return new InvestGroupBuyPageObject(driver);
 	}
 
-	public InvestGroupBuyPageObject joinGroupBuy(String joinCode) {
-		if (isElementExsit(5, highestExtraProfit)) {
+	public InvestGroupBuyPageObject joinGroupBuy(String joinCode) throws Exception {
+		if(joinCode.length()>4){
+			throw new Exception("加入邀请码超过4位");
+		}
+		if (isElementExsit(5, highestExtraProfitLocator)) {
 			clickEle(payBtn, "点击参团按钮");
 			clickEle(joinGroupBuyBtn, "加入团按钮");
-			sendKeys(joinGroupBuyCode1, joinCode);
+			sendKeys(joinGroupBuyCode1, String.valueOf(joinCode.charAt(0)));
+			sendKeys(joinGroupBuyCode2, String.valueOf(joinCode.charAt(1)));
+			sendKeys(joinGroupBuyCode3, String.valueOf(joinCode.charAt(2)));
+			sendKeys(joinGroupBuyCode4, String.valueOf(joinCode.charAt(3)));
 			clickEle(submitBtn, "确认按钮");
 			clickEle(msgSubmitBtn, "弹框确认按钮");
 		}

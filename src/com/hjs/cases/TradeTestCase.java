@@ -39,7 +39,7 @@ import com.hjs.publics.Util;
 
 
 public class TradeTestCase extends CommonAppiumTest{
-	private static String DEPOSITE_PRODUCT_NAME="黄XAutoTest产品170807120145";
+	private static String DEPOSITE_PRODUCT_NAME="黄XAutoTest产品170908064148";
 	private static String DEPOSITE_GROUPBUYPRODUCT_NAME="黄XAutoTest团购产品170906085612";
 	private static String CURRENTDEPOSITE_PRODUCT_NAME="恒存金-灵活理财";
 	private static String phoneNum="17052411184";

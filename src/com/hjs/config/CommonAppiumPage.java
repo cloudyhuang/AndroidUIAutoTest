@@ -35,10 +35,11 @@ public class CommonAppiumPage {
 	public AndroidDriver<AndroidElement> driver; 
 
     private final int WAIT_TIME = 30;    //默认的等待控件时间
-    
+    private TimeOutDuration timeOutDuration;
     public CommonAppiumPage(AndroidDriver<AndroidElement> androidDriver) {
         this.driver = androidDriver;
-        PageFactory.initElements(new AppiumFieldDecorator(driver), this);//,new TimeOutDuration(15,TimeUnit.SECONDS)
+        timeOutDuration = new TimeOutDuration(WAIT_TIME, TimeUnit.SECONDS);
+        PageFactory.initElements(new AppiumFieldDecorator(driver,timeOutDuration), this);//,new TimeOutDuration(15,TimeUnit.SECONDS)
         waitAuto(WAIT_TIME);
     }
     
@@ -54,6 +55,7 @@ public class CommonAppiumPage {
      */
     public void waitAuto(int time) {
         driver.manage().timeouts().implicitlyWait(time, TimeUnit.SECONDS);
+        timeOutDuration.setTime(time, TimeUnit.SECONDS);
         System.out.println("设置隐式等待时间为"+time+"秒");
     }
     /**

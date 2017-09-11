@@ -27,7 +27,9 @@ import com.hjs.mybatis.inter.EifMarketOperation;
 public class test {
 	
     public static void main(String[] args) throws Exception {  
-    	getGrouponTask();
+    	String a="dfd6";
+    	System.out.println(a.length());
+    	System.out.println(a.charAt(0));
     	
     }  
     public static String getGrouponTask() throws IOException{
