@@ -15,7 +15,7 @@ public class PersonSettingPageObject extends CommonAppiumPage{
 	@AndroidFindBy(id="button_exit")
 	private AndroidElement logOutBtn;		//退出按钮
 	//@AndroidFindBy(id="dlg_msg_rightbtn")
-	@AndroidFindBy(id="dlg_msg_3pbtn_type2_2")
+	@AndroidFindBy(id="dlg_msg_3pbtn_type2_1")
 	private AndroidElement dlgMsgRightBtn;		//退出确认按钮
 	@AndroidFindBy(xpath="//android.widget.TextView[contains(@text,'银行卡')]")
 	private AndroidElement gotoBankCardBtn;		//跳转我的银行卡按钮

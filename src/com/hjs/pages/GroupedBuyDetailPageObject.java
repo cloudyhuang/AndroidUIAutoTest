@@ -1,5 +1,7 @@
 package com.hjs.pages;
 
+import org.openqa.selenium.By;
+
 import com.hjs.config.CommonAppiumPage;
 
 import io.appium.java_client.android.AndroidDriver;
@@ -31,8 +33,11 @@ public class GroupedBuyDetailPageObject extends CommonAppiumPage{
 	@AndroidFindBy(xpath="//android.widget.TextView[@text='升级奖励']/following-sibling::android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/tv_right_bottom']")
 	private AndroidElement lvupReward;		//升级奖励
 
+	private By shareCodeTVLocator=By.id("share_code");
 	public GroupedBuyDetailPageObject(AndroidDriver<AndroidElement> driver) {
 		super(driver);
 	}
-
+	public boolean verifyInthisPage(){
+		return isElementExsit(shareCodeTVLocator);
+	}
 }

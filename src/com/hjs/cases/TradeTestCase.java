@@ -18,6 +18,7 @@ import com.hjs.pages.DepositGroupBuyProductDetailPageObject;
 import com.hjs.pages.DepositProductDetailPageObject;
 import com.hjs.pages.FinancialPageObject;
 import com.hjs.pages.GesturePwd;
+import com.hjs.pages.GroupedBuyDetailPageObject;
 import com.hjs.pages.HomePageObject;
 import com.hjs.pages.InvestGroupBuyPageObject;
 import com.hjs.pages.InvestPageObject;
@@ -444,8 +445,8 @@ public class TradeTestCase extends CommonAppiumTest{
     	DepositGroupBuyProductDetailPageObject depositGroupBuyProductDetailPage=financialPage.clickDepositGroupBuyProduct(DEPOSITE_GROUPBUYPRODUCT_NAME);
     	String startMonney=depositGroupBuyProductDetailPage.getStartMoney();
     	Assert.assertTrue(depositGroupBuyProductDetailPage.verifyInthisPage(), "点击团购产品，未出现团购产品页面");
-    	InvestGroupBuyPageObject investGroupBuyPage=depositGroupBuyProductDetailPage.joinGroupBuy("A6UH");
-    	Assert.assertTrue(investGroupBuyPage.verifyInthisPage(), "发起团后未跳转到团购投资页");
+    	GroupedBuyDetailPageObject groupedBuyDetail=depositGroupBuyProductDetailPage.joinGroupBuy("A6UH");
+    	Assert.assertTrue(groupedBuyDetail.verifyInthisPage(), "发起团后未跳转到团购详情页");
     	
     }
     @Test(priority = 22,expectedExceptions = Exception.class, expectedExceptionsMessageRegExp="找不到下架产品",description="下架团购产品",enabled = false)
