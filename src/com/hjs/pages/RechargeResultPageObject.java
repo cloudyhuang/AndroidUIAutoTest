@@ -9,12 +9,12 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import com.hjs.config.CommonAppiumPage;
 
 public class RechargeResultPageObject extends CommonAppiumPage{
-	@AndroidFindBy(id="status_dec")
-	private AndroidElement statusDec;		//提现结果描述
-	@AndroidFindBy(id="stroke_view")
+	@AndroidFindBy(id="recharge_result_status_dec")
+	private AndroidElement statusDec;		//充值结果描述
+	@AndroidFindBy(id="recharge_result_balance_detail")
 	private AndroidElement seeBalanceEntrance;		//查看余额入口
 	
-	private By statusDecLocator=By.id("status_dec");
+	private By statusDecLocator=By.id("recharge_result_status_dec");
 	public RechargeResultPageObject(AndroidDriver<AndroidElement> driver) {
 		super(driver);
 	}

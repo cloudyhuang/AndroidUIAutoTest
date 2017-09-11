@@ -31,6 +31,7 @@ eif-omc-web/temp/
 # system ignore
 .DS_Store
 Thumbs.db
+appiumLogs.txt
 
 /eifConfMgr
 /ecfConfMgr
