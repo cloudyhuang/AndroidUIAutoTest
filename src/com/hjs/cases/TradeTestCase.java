@@ -447,7 +447,13 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(depositGroupBuyProductDetailPage.verifyInthisPage(), "点击团购产品，未出现团购产品页面");
     	GroupedBuyDetailPageObject groupedBuyDetail=depositGroupBuyProductDetailPage.joinGroupBuy("A6UH");
     	Assert.assertTrue(groupedBuyDetail.verifyInthisPage(), "发起团后未跳转到团购详情页");
-    	
+    	InvestGroupBuyPageObject investGroupBuyPage=groupedBuyDetail.clickInvestGroupBuyBtn();
+    	Assert.assertTrue(investGroupBuyPage.verifyInthisPage(), "成团详情点击投资未跳转到团购投资页");
+    	PayPageObject payPage=investGroupBuyPage.InvestGroupBuy(startMonney);
+    	Assert.assertTrue(payPage.verifyInthisPage(), "提交团购投资申请后未跳转到支付页面");
+    	InvestResultPageObject investResultPage=payPage.payByBankCardWithoutCoupon("123456", "17052411227");
+    	String investResult=investResultPage.getInvestResult();
+    	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.equals("投资已成功")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
     }
     @Test(priority = 22,expectedExceptions = Exception.class, expectedExceptionsMessageRegExp="找不到下架产品",description="下架团购产品",enabled = false)
     public void testOffGroupBuyProducts() throws Exception{

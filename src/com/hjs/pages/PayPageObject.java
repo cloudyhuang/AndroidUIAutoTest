@@ -45,7 +45,8 @@ public class PayPageObject extends CommonAppiumPage{
 	private AndroidElement chooseCouponBtn;		//优惠券选择入口按钮
 	@AndroidFindBy(id="message")
 	private AndroidElement waitMessage;		//等待信息
-	@AndroidFindBy(id="dlg_msg_rightbtn")
+	//@AndroidFindBy(id="dlg_msg_rightbtn")
+	@AndroidFindBy(id="dlg_msg_3pbtn_type2_1")
 	private AndroidElement dlgMsgRightbtn;		//弹出框右侧确认按钮
 	@AndroidFindBy(id="dlg_msg_msg")
 	private AndroidElement dlgMsgMsg;		//弹出框信息
@@ -53,7 +54,6 @@ public class PayPageObject extends CommonAppiumPage{
 	private By waitMessageLocator=By.id("message");
 	private By payOptionsLocator=By.xpath("//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_bankCard' and contains(@text,'余额支付')]");	//支付方式选项
 	private By balancePayOptionsLocator=By.xpath("//android.widget.ListView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/listView_payway']//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_bankCard' and contains(@text,'余额支付')]");	//余额支付方式选项
-	private By dlgMsgRightbtnLocator=By.id("dlg_msg_rightbtn");
 	private static final String SHENGFUTONG_FailCode="555555";
 	public PayPageObject(AndroidDriver<AndroidElement> driver) {
 		super(driver);
@@ -203,7 +203,7 @@ public class PayPageObject extends CommonAppiumPage{
 		//clickEle(balancePayOptions,"余额付款方式");
 		this.chooseBanlancePayWays();
 		clickEle(confirmPayBtn,"确认支付按钮");
-		if(super.isElementExsit(5, dlgMsgRightbtnLocator)){
+		if(super.isElementExsit(5, dlgMsgRightbtn)){
 			String Msg=dlgMsgMsg.getText();
 			if(Msg.contains("本订单未使用优惠券，是否继续？")){
 				clickEle(dlgMsgRightbtn,"继续不使用优惠券确认按钮");
