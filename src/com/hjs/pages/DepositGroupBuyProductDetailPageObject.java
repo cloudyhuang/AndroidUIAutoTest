@@ -53,7 +53,8 @@ public class DepositGroupBuyProductDetailPageObject extends CommonAppiumPage{
 	
 	@AndroidFindBy(id="btn_submit")
 	private AndroidElement submitBtn;		//确认按钮
-	@AndroidFindBy(id="dlg_msg_rightbtn")
+	//@AndroidFindBy(id="dlg_msg_rightbtn")
+	@AndroidFindBy(id="dlg_msg_3pbtn_type2_1")
 	private AndroidElement msgSubmitBtn;		//弹框确认按钮
 	@AndroidFindBy(xpath="//android.widget.LinearLayout[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/group_progress']/android.widget.TextView[1]")
 	private AndroidElement groupedAmount;		//已团金额
