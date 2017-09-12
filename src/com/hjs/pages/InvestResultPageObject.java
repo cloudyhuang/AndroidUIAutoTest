@@ -15,6 +15,8 @@ public class InvestResultPageObject extends CommonAppiumPage{
 	@AndroidFindBy(id="subscribe_dec")
 	private AndroidElement failResultDesc;		//失败投资结果描述
 	
+	@AndroidFindBy(id="btn_main")
+	private AndroidElement detailBtn;		//查看详情按钮
 	private By orderResultDescLocator=By.id("order_result_dec");
 	private By failResultDescLocator=By.id("subscribe_dec");
 	public InvestResultPageObject(AndroidDriver<AndroidElement> driver) {
@@ -31,6 +33,10 @@ public class InvestResultPageObject extends CommonAppiumPage{
 			else return null;
 		}
 		
+	}
+	public GroupedBuyDetailPageObject gotoGroupedBuyDetailPage(){
+		clickEle(detailBtn,"查看详情按钮");
+		return new GroupedBuyDetailPageObject(driver);
 	}
 	public boolean verifyInthisPage(){
 //		return (isElementExsit(orderResultDescLocator)||isElementExsit(failResultDescLocator));

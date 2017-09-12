@@ -3,6 +3,7 @@ package com.hjs.pages;
 import org.openqa.selenium.By;
 
 import com.hjs.config.CommonAppiumPage;
+import com.hjs.publics.Util;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
@@ -43,6 +44,19 @@ public class GroupedBuyDetailPageObject extends CommonAppiumPage{
 	}
 	public String getShareCode(){
 		return shareCodeTV.getText();
+	}
+	public String getLvupBalance(){
+		String amount=lvupBalance.getText();
+		double doubleAmount=Util.stringToDouble(amount);	
+		return Util.doubleTransToString(doubleAmount);
+	}
+	public String getCurrentReward(){
+		String reward=currentReward.getText();
+		return Util.getNumInString(reward);
+	}
+	public String getLvupReward(){
+		String reward=lvupReward.getText();
+		return Util.getNumInString(reward);
 	}
 	public boolean verifyInthisPage(){
 		return isElementExsit(shareCodeTVLocator);

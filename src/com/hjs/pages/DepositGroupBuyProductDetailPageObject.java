@@ -98,11 +98,14 @@ public class DepositGroupBuyProductDetailPageObject extends CommonAppiumPage{
 		return new GroupedBuyDetailPageObject(driver);
 	}
 	public InvestGroupBuyPageObject startGroupBuy(){
-		clickEle(payBtn,"点击参团按钮");
 		if(isElementExsit(5, highestExtraProfitLocator)){
+			clickEle(payBtn,"点击参团按钮");
 			clickEle(createGroupBuyBtn,"发起团按钮");
 			clickEle(submitBtn,"确认按钮");
 			clickEle(msgSubmitBtn,"弹框确认按钮");
+		}
+		else{
+			clickEle(payBtn,"点击参团按钮");
 		}
 		return new InvestGroupBuyPageObject(driver);
 	}

@@ -81,7 +81,18 @@ public class Util {
 //		} else
 			return m.replaceAll("").trim();
 	}
-
+	 /**
+	   * double转String，若double为小数点为x.0返回整数String
+	   *
+	   * @param double num
+	   * @return 字符串
+	   */
+	public static String doubleTransToString(double num) {
+		if (num % 1.0 == 0) {
+			return String.valueOf((long) num);
+		}
+		return String.valueOf(num);
+	}
 	public static double stringToDouble(String string) {
 		return Double.parseDouble(string);
 	}

@@ -9,6 +9,8 @@ public class GroupBuyInfo {
 	private static String groupBuyShareCode;
 	private static int groupBuyPeopleNum=0;
 	private static double groupBuyedAmountm=0;
+	private static String currentReward;
+	private static String lvupReward;
 	public static String getGroupBuyName() {
 		return groupBuyName;
 	}
@@ -32,6 +34,18 @@ public class GroupBuyInfo {
 	}
 	public static void setGroupBuyedAmountm(double groupBuyedAmountm) {
 		GroupBuyInfo.groupBuyedAmountm = groupBuyedAmountm;
+	}
+	public static String getCurrentReward() {
+		return currentReward;
+	}
+	public static void setCurrentReward(String currentReward) {
+		GroupBuyInfo.currentReward = currentReward;
+	}
+	public static String getLvupReward() {
+		return lvupReward;
+	}
+	public static void setLvupReward(String lvupReward) {
+		GroupBuyInfo.lvupReward = lvupReward;
 	}
 	
 }

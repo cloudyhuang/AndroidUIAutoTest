@@ -26,11 +26,21 @@ import com.hjs.mybatis.inter.EifMarketOperation;
 
 
 public class test {
-	
-    public static void main(String[] args) throws Exception {  
-    	downloadAPKWithBuildNo("5013");
-    	
-    }  
+
+	public static void main(String[] args) {
+		double a=3.00;
+		System.out.println(doubleTrans1(a));
+
+	}
+
+	// 方法一
+	public static String doubleTrans1(double num) {
+		if (num % 1.0 == 0) {
+			return String.valueOf((long) num);
+		}
+		return String.valueOf(num);
+	}
+
     public static void downloadAPKWithBuildNo(String buildNo){
     	String cmd="curl -O target/app/app2.4.apk http://172.16.59.251:8080/job/eif-android-app/job/release/"+buildNo+"/artifact/app/build/outputs/apk/app-default_channel-debug.apk --user huangxiao:Hxnearcj228";
     	String result=runCommand(cmd);
