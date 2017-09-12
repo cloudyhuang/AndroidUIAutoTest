@@ -52,7 +52,7 @@ public class PayPageObject extends CommonAppiumPage{
 	private AndroidElement dlgMsgMsg;		//弹出框信息
 	
 	private By waitMessageLocator=By.id("message");
-	private By payOptionsLocator=By.xpath("//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_bankCard' and contains(@text,'余额支付')]");	//支付方式选项
+	private By choosePayWayBtnLocator=By.id("show_choose_pay_way");
 	private By balancePayOptionsLocator=By.xpath("//android.widget.ListView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/listView_payway']//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_bankCard' and contains(@text,'余额支付')]");	//余额支付方式选项
 	private static final String SHENGFUTONG_FailCode="555555";
 	public PayPageObject(AndroidDriver<AndroidElement> driver) {
@@ -399,6 +399,6 @@ public class PayPageObject extends CommonAppiumPage{
 	    }
 	}
 	public boolean verifyInthisPage(){
-		return isElementExsit(payOptionsLocator);
+		return isElementExsit(choosePayWayBtnLocator);
 	}
 }

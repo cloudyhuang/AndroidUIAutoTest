@@ -41,6 +41,9 @@ public class GroupedBuyDetailPageObject extends CommonAppiumPage{
 		clickEle(reInvestBtn,"点击投资按钮");
 		return new InvestGroupBuyPageObject(driver);
 	}
+	public String getShareCode(){
+		return shareCodeTV.getText();
+	}
 	public boolean verifyInthisPage(){
 		return isElementExsit(shareCodeTVLocator);
 	}

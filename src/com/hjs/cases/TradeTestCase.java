@@ -37,11 +37,12 @@ import com.hjs.pages.WelcomePageObject;
 import com.hjs.pages.WithdrawCashPageObject;
 import com.hjs.pages.WithdrawCashResultPageObject;
 import com.hjs.publics.Util;
+import com.hjs.testDate.GroupBuyInfo;
 
 
 public class TradeTestCase extends CommonAppiumTest{
 	private static String DEPOSITE_PRODUCT_NAME="黄XAutoTest产品170908064148";
-	private static String DEPOSITE_GROUPBUYPRODUCT_NAME="黄XAutoTest团购产品170906085612";
+	private static String DEPOSITE_GROUPBUYPRODUCT_NAME="黄XAutoTest团购产品170907165937";
 	private static String CURRENTDEPOSITE_PRODUCT_NAME="恒存金-灵活理财";
 	private static String phoneNum="17052411184";
     @Test(priority = 1,description="理财页产品信息")
@@ -404,6 +405,10 @@ public class TradeTestCase extends CommonAppiumTest{
     	InvestResultPageObject investResultPage=payPage.payByBankCardWithoutCoupon("123456", "17052411227");
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.equals("投资已成功")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
+    	int groupBuyPeopleNum=GroupBuyInfo.getGroupBuyPeopleNum();
+    	groupBuyPeopleNum++;
+    	double groupBuyedAmountm=GroupBuyInfo.getGroupBuyedAmountm();
+    	groupBuyedAmountm=groupBuyedAmountm+Util.stringToDouble(startMonney);
     }
     @Test(priority = 19,description="检查已买团购信息",enabled = false)
     public void testGroupBuyedProduct()throws Exception{
@@ -414,6 +419,9 @@ public class TradeTestCase extends CommonAppiumTest{
     	DepositGroupBuyProductDetailPageObject depositGroupBuyProductDetailPage=financialPage.clickDepositGroupBuyProduct(DEPOSITE_GROUPBUYPRODUCT_NAME);
     	Assert.assertTrue(depositGroupBuyProductDetailPage.verifyInthisPage(), "点击团购产品，未出现团购产品页面");
     	depositGroupBuyProductDetailPage.checkGroupedInfo("100", "1");
+    	GroupedBuyDetailPageObject groupedBuyDetailPage=depositGroupBuyProductDetailPage.gotoGroupedBuyDetailPage();
+    	Assert.assertTrue(groupedBuyDetailPage.verifyInthisPage(), "点击成团详情未出现已团购产品详情页面");
+    	GroupBuyInfo.setGroupBuyShareCode(groupedBuyDetailPage.getShareCode());
     }
     @Test(priority = 20,description="现金券购买团购产品",enabled = false)
     public void testBuyGroupBuyProductWithCashCoupon()throws Exception{
@@ -435,17 +443,31 @@ public class TradeTestCase extends CommonAppiumTest{
     	InvestResultPageObject investResultPage=payPage.payByBankCardWithCoupon("123456", "17052411227",couponId);
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.equals("投资已成功")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
+    	double groupBuyedAmountm=GroupBuyInfo.getGroupBuyedAmountm();
+    	groupBuyedAmountm=groupBuyedAmountm+Util.stringToDouble(startMonney);
     }
     @Test(priority = 21,description="参与团",enabled = false)
-    public void testJoinGroupBuyProductWithCashCoupon()throws Exception{
+    public void testJoinGroupBuyProduct()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
+    	CommonAppiumPage page=homepage.enterPersonEntrace();
+    	String pageName=page.getClass().getName();
+    	Assert.assertTrue(pageName.contains("MinePageObject"), "点击首页-我的入口未进入我的页面");
+    	PersonSettingPageObject personSettingPage=((MinePageObject)page).enterPersonSetting();
+    	Assert.assertTrue(personSettingPage.verifyInthisPage(), "进入我的个人头像，未出现安全退出按钮");
+    	LoginPageObject loginPageObject=personSettingPage.logOut();
+    	Assert.assertTrue(loginPageObject.verifyInthisPage(), "退出后未跳转到登录页面");
+    	page=loginPageObject.switchAccount("17090720054");
+		pageName=page.getClass().getName();
+		Assert.assertTrue(pageName.contains("LoginPageObject"), "验证手机号后未进入登录页面");
+		((LoginPageObject)page).login("Hd666666");
+		Assert.assertTrue(homepage.verifyIsInHomePage(),"登录后未跳转到主页");
     	FinancialPageObject financialPage=homepage.enterFinancialPage();
     	Assert.assertTrue(financialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
     	DepositGroupBuyProductDetailPageObject depositGroupBuyProductDetailPage=financialPage.clickDepositGroupBuyProduct(DEPOSITE_GROUPBUYPRODUCT_NAME);
     	String startMonney=depositGroupBuyProductDetailPage.getStartMoney();
     	Assert.assertTrue(depositGroupBuyProductDetailPage.verifyInthisPage(), "点击团购产品，未出现团购产品页面");
-    	GroupedBuyDetailPageObject groupedBuyDetail=depositGroupBuyProductDetailPage.joinGroupBuy("A6UH");
+    	GroupedBuyDetailPageObject groupedBuyDetail=depositGroupBuyProductDetailPage.joinGroupBuy(GroupBuyInfo.getGroupBuyShareCode());
     	Assert.assertTrue(groupedBuyDetail.verifyInthisPage(), "发起团后未跳转到团购详情页");
     	InvestGroupBuyPageObject investGroupBuyPage=groupedBuyDetail.clickInvestGroupBuyBtn();
     	Assert.assertTrue(investGroupBuyPage.verifyInthisPage(), "成团详情点击投资未跳转到团购投资页");

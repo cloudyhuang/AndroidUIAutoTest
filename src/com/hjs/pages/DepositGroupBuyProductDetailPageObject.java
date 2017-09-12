@@ -93,6 +93,10 @@ public class DepositGroupBuyProductDetailPageObject extends CommonAppiumPage{
 		Assert.assertEquals(appGroupedNextNum, Integer.toString(expectNextNum),"app显示还差人数："+appGroupedNextNum+"期望还差人数："+Integer.toString(expectNextNum));
 		
 	}
+	public GroupedBuyDetailPageObject gotoGroupedBuyDetailPage(){
+		clickEle(groupedPeopleNum,"已团购人数");
+		return new GroupedBuyDetailPageObject(driver);
+	}
 	public InvestGroupBuyPageObject startGroupBuy(){
 		clickEle(payBtn,"点击参团按钮");
 		if(isElementExsit(5, highestExtraProfitLocator)){
