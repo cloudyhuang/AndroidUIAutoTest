@@ -24,20 +24,28 @@ public class MyBankCardPageObject extends CommonAppiumPage{
 	
 	@AndroidFindBy(id="tv_bank_name")
 	private AndroidElement bankName;		//银行名称
+	@AndroidFindBy(id="image_security_card_mark")
+	private AndroidElement safeBankCard;	//安全卡
 	@AndroidFindBy(id="dlg_sms_input_singlebtn")
 	private AndroidElement smsVerifyCodeConfirmBtn;		//验证码确认按钮
 	@AndroidFindBy(id="btn_unbind")
 	private AndroidElement unBindBankCardBtn;		//解除绑定按钮
 	@AndroidFindBy(id="refresh_animationView")
 	private AndroidElement refreshIcon;		//刷新图标
+	@AndroidFindBy(xpath="//*[contains(@text,'添加银行卡')]")
+	private AndroidElement addBankCardBtn;		//添加银行卡按钮
 	
 	private By bankNameLocator=By.id("tv_bank_name");	//银行名称Locator
 	private By addBankCardBtnLocator=By.xpath("//*[contains(@text,'添加银行卡')]");		//添加银行卡按钮Locator
 	public MyBankCardPageObject(AndroidDriver<AndroidElement> driver) {
 		super(driver);
 	}
-	public MyBankCardPageObject unbundBankCard(String pwd,String phoneNum) throws Exception{
-		clickEle(bankName,"银行卡名称");
+	public SetBankCardPageObject addNewBankCard(){
+		clickEle(addBankCardBtn,"添加银行卡按钮");
+		return new SetBankCardPageObject(driver);
+	}
+	public MyBankCardPageObject unbundSafeBankCard(String pwd,String phoneNum) throws Exception{
+		clickEle(safeBankCard,"安全卡");
 		clickEle(unBindBankCardBtn,"解除绑定按钮");
 		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
 		safeKeyBoard.sendNum(pwd);
@@ -51,6 +59,15 @@ public class MyBankCardPageObject extends CommonAppiumPage{
 //		safeKeyBoard.sendNum(msgVerifyCode);
 //		safeKeyBoard.pressFinishBtn();
 //		clickEle(smsVerifyCodeConfirmBtn,"验证码确认按钮");
+		return new MyBankCardPageObject(driver);
+	}
+	public MyBankCardPageObject unbundNormalBankCard(String pwd,String phoneNum,String last4BankCardId) throws Exception{
+		
+		AndroidElement toUnbundCard=driver.findElement(By.xpath("//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/tv_bank_name' and contains(@text,'"+last4BankCardId+"')]"));
+		clickEle(toUnbundCard,"待解绑卡"+last4BankCardId);
+		clickEle(unBindBankCardBtn,"解除绑定按钮");
+		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
+		safeKeyBoard.sendNum(pwd);
 		return new MyBankCardPageObject(driver);
 	}
 	public List<String> getMyBankCardNameList(){

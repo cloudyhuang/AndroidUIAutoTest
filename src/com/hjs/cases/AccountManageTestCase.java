@@ -15,6 +15,7 @@ import org.testng.annotations.Test;
 
 import com.hjs.config.CommonAppiumPage;
 import com.hjs.config.CommonAppiumTest;
+import com.hjs.pages.AccountBanlancePageObject;
 import com.hjs.pages.GesturePwd;
 import com.hjs.pages.HomePageObject;
 import com.hjs.pages.LoginPageObject;
@@ -25,6 +26,7 @@ import com.hjs.pages.PersonInfoPageObject;
 import com.hjs.pages.PersonSettingPageObject;
 import com.hjs.pages.PwdSettingPageObject;
 import com.hjs.pages.RealNamePageObject;
+import com.hjs.pages.RechargePageObject;
 import com.hjs.pages.RiskEvaluationPageObject;
 import com.hjs.pages.RiskEvaluationResultPageObject;
 import com.hjs.pages.SetBankCardPageObject;
@@ -33,6 +35,7 @@ import com.hjs.pages.SignUpPageObject;
 import com.hjs.pages.TradePwdResetPageObject;
 import com.hjs.pages.WelcomePageObject;
 import com.hjs.publics.AppiumBaseMethod;
+import com.hjs.publics.Util;
 import com.hjs.testDate.Account;
 
 public class AccountManageTestCase extends CommonAppiumTest {
@@ -113,7 +116,7 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	Assert.assertTrue(setNextGestureResult, "第二次设置手势失败，未跳转到主页，主页我的入口未显示");
 		Reporter.log("注册成功，注册账号为："+phoneNum+"密码:"+loginPwd);
     }
-    @Test(priority = 6,description="实名并设置银行卡")
+    @Test(priority = 6,description="实名并设置安全卡")
     public void testRealNameAndSetBankCard()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -145,14 +148,46 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	String bankCardId="621483"+df.format(new Date());
     	int randNum = new Random().nextInt(10);//0~9随机数
 		String phoneNum=df.format(new Date())+String.valueOf(randNum);
-		Account.setBankCardID(bankCardId);
-		Account.setBankPhoneNum(phoneNum);
+		Account.setSafeBankCardID(bankCardId);
+		Account.setSafeBankPhoneNum(phoneNum);
 		Account.setTradePwd(tradePwd);
 		Assert.assertTrue(setBankCardPageObject.verifyInthisPage(), "未出现银行卡绑卡界面，银行卡号输入框未出现");
 		personInfoPage=setBankCardPageObject.setBankCard(bankCardId, phoneNum);
 		Assert.assertTrue(personInfoPage.verifyInthisPage(),"绑卡后未跳转到我的个人信息界面");
     }
-    @Test(priority = 7,description="解绑银行卡")
+    @Test(priority = 7,description="绑定普通卡")
+    public void testBundNormalBankCard()throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
+    	HomePageObject homepage=new HomePageObject(driver); 
+    	CommonAppiumPage page=homepage.enterPersonEntrace();
+    	String pageName=page.getClass().getName();
+    	Assert.assertTrue(pageName.contains("MinePageObject"), "点击首页-我的入口未进入我的页面");
+    	PersonSettingPageObject personSettingPage=((MinePageObject)page).enterPersonSetting();//进入个人设置页
+    	Assert.assertTrue(personSettingPage.verifyInthisPage(), "进入我的个人头像，未进入设置页");
+    	MyBankCardPageObject myBankCardPage=personSettingPage.gotoMyBankCard();//进入我的银行卡页面
+    	Assert.assertTrue(myBankCardPage.verifyInthisPage(), "进入银行卡页面未出现银行卡");
+    	List<String> bankCardName=myBankCardPage.getMyBankCardNameList();	//绑定前银行卡列表
+    	SetBankCardPageObject setBankCardPageObject=myBankCardPage.addNewBankCard();
+    	Assert.assertTrue(setBankCardPageObject.verifyInthisPage(), "未出现银行卡绑卡界面，银行卡号输入框未出现");
+    	SimpleDateFormat df = new SimpleDateFormat("yyMMddHHmm");//自定义日期格式
+    	String bankCardId="621483"+df.format(new Date());
+    	String last4BankCardId=bankCardId.substring(bankCardId.length()-4,bankCardId.length());
+    	int randNum = new Random().nextInt(10);//0~9随机数
+		String phoneNum=df.format(new Date())+String.valueOf(randNum);
+		myBankCardPage=setBankCardPageObject.myBankCardPageGotoSetNormalBankCard(bankCardId, phoneNum);
+    	List<String> AftUnBundBankCardName=myBankCardPage.getMyBankCardNameList();	//绑定后银行卡列表
+    	boolean flag=false;
+    	for(int i=0;i<AftUnBundBankCardName.size();i++){
+    		if(Util.getNumInString(AftUnBundBankCardName.get(i)).equals(last4BankCardId)){
+    			flag=true;
+    		}
+    	}
+    	Assert.assertTrue(flag,"绑定普通卡后四位为："+last4BankCardId+"当前卡页面未包含此卡");
+    	Assert.assertFalse(bankCardName.equals(AftUnBundBankCardName),"解绑前后银行卡列表名称相同");
+    	Account.setNormalBankCardID(bankCardId);
+    	Account.setNormalBankPhoneNum(phoneNum);
+    }
+    @Test(priority = 8,description="解绑安全卡")
     public void testUnBundBankCard()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -164,17 +199,68 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	MyBankCardPageObject myBankCardPage=personSettingPage.gotoMyBankCard();//进入我的银行卡页面
     	Assert.assertTrue(myBankCardPage.verifyInthisPage(), "进入银行卡页面未出现银行卡");
     	List<String> bankCardName=myBankCardPage.getMyBankCardNameList();	//解绑前银行卡列表
-    	myBankCardPage=myBankCardPage.unbundBankCard(Account.getTradePwd(),Account.getBankPhoneNum());
+    	myBankCardPage=myBankCardPage.unbundSafeBankCard(Account.getTradePwd(),Account.getSafeBankPhoneNum());
     	Assert.assertTrue(myBankCardPage.verifyInthisPage(), "解绑银行卡后未跳转到我的银行卡页面");
     	List<String> AftUnBundBankCardName=myBankCardPage.getMyBankCardNameList();	//解绑后银行卡列表
     	Assert.assertFalse(bankCardName.equals(AftUnBundBankCardName),"解绑前后银行卡列表名称相同");
+    	Account.setSafeBankCardID(null);
+		Account.setSafeBankPhoneNum(null);
 //    	Assert.assertTrue(personSettingPageObject.verifyInthisPage(), "解绑银行卡后未跳转到个人设置页面");
 //    	Thread.sleep(2000); //返回个人设置时银行卡名称会闪现，因此等待一下
 //    	String bankCardName=personSettingPageObject.getBankCardName();
 //    	Assert.assertEquals(bankCardName, "未设置", "解绑失败，当前银行卡为："+bankCardName);
     	
     }
-    @Test(priority = 8,description="重设交易密码")
+    @Test(priority = 9,description="解绑普通卡")
+    public void testUnBundNormalBankCard()throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
+    	HomePageObject homepage=new HomePageObject(driver); 
+    	CommonAppiumPage page=homepage.enterPersonEntrace();
+    	String pageName=page.getClass().getName();
+    	Assert.assertTrue(pageName.contains("MinePageObject"), "点击首页-我的入口未进入我的页面");
+    	PersonSettingPageObject personSettingPage=((MinePageObject)page).enterPersonSetting();//进入个人设置页
+    	Assert.assertTrue(personSettingPage.verifyInthisPage(), "进入我的个人头像，未进入设置页");
+    	MyBankCardPageObject myBankCardPage=personSettingPage.gotoMyBankCard();//进入我的银行卡页面
+    	Assert.assertTrue(myBankCardPage.verifyInthisPage(), "进入银行卡页面未出现银行卡");
+    	List<String> bankCardName=myBankCardPage.getMyBankCardNameList();	//解绑前银行卡列表
+    	String last4BankCardId=Account.getNormalBankCardID().substring(Account.getNormalBankCardID().length()-4,Account.getNormalBankCardID().length());
+    	myBankCardPage=myBankCardPage.unbundNormalBankCard(Account.getTradePwd(),Account.getNormalBankPhoneNum(),last4BankCardId);
+    	Assert.assertTrue(myBankCardPage.verifyInthisPage(), "解绑银行卡后未跳转到我的银行卡页面");
+    	List<String> AftUnBundBankCardName=myBankCardPage.getMyBankCardNameList();	//解绑后银行卡列表
+    	Assert.assertFalse(bankCardName.equals(AftUnBundBankCardName),"解绑前后银行卡列表名称相同");
+    	
+    }
+
+	@Test(priority = 10, description = "充值页绑定安全卡")
+	public void testRechargePageBundSafeBankCard() throws Exception {
+		new HomePageObject(driver).backToHomePage(1, 4, 7, 8);
+		HomePageObject homepage = new HomePageObject(driver);
+		CommonAppiumPage page = homepage.enterPersonEntrace();
+		String pageName = page.getClass().getName();
+		Assert.assertTrue(pageName.contains("MinePageObject"), "点击首页-我的入口未进入我的页面");
+		AccountBanlancePageObject accountBanlancePage = ((MinePageObject) page).enterAccountBanlancePage();
+		Assert.assertTrue(accountBanlancePage.verifyInthisPage(), "点击账户余额未进入余额页");
+		if(Account.getSafeBankCardID()==null){
+			SetBankCardPageObject setBankCardPageObject=accountBanlancePage.rechargeToSetBankCardPage();
+			Assert.assertTrue(setBankCardPageObject.verifyInthisPage(), "未出现银行卡绑卡界面，银行卡号输入框未出现");
+	    	SimpleDateFormat df = new SimpleDateFormat("yyMMddHHmm");//自定义日期格式
+	    	String bankCardId="621483"+df.format(new Date());
+	    	int randNum = new Random().nextInt(10);//0~9随机数
+			String phoneNum=df.format(new Date())+String.valueOf(randNum);
+			RechargePageObject rechargePage=setBankCardPageObject.rechargePageGotoSetNormalBankCard(bankCardId, phoneNum);
+			Assert.assertTrue(rechargePage.verifyInthisPage(), "绑定安全卡后未跳转到余额充值页面");
+	    	Account.setNormalBankCardID(bankCardId);
+	    	Account.setNormalBankPhoneNum(phoneNum);
+		}
+		else{
+			RechargePageObject rechargePage=accountBanlancePage.gotoRechargePage();
+	    	Assert.assertTrue(rechargePage.verifyInthisPage(), "点击充值未进入到充值页面");
+			Assert.assertTrue(false,"当前存在安全卡，无法绑定");
+		}
+
+	}
+  
+    @Test(priority = 11,description="重设交易密码")
     public void testResetTradePwd()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -192,7 +278,7 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	Account.setTradePwd(newTradePwd);
     	
     }
-    @Test(priority = 9,description="重设登录密码")
+    @Test(priority = 12,description="重设登录密码")
     public void testResetLoginPwd()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -208,7 +294,7 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	loginPwdResetPage.resetLoginPwd(Account.getLoginPwd(), "Hd666666");
     	Account.setLoginPwd("Hd666666");
     }
-    @Test(priority = 10,description="用新密码重新登录")
+    @Test(priority = 13,description="用新密码重新登录")
     public void testReLoginWithNewPwd()throws Exception{
     	new HomePageObject(driver).backToHomePage();
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -224,7 +310,7 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	boolean setNextGestureResult=gesturePwd.setNextGesturePwd(1,4,7,8).verifyIsInHomePage();
     	Assert.assertTrue(setNextGestureResult, "第二次设置手势失败，未跳转到主页，主页我的入口未显示");
     }
-    @Test(priority = 11,description="风险评测")
+    @Test(priority = 14,description="风险评测")
     public void testRiskEvaluation()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -248,7 +334,7 @@ public class AccountManageTestCase extends CommonAppiumTest {
     		throw new Exception("该账号已评测过！");
     	}
     }
-    @Test(priority = 12,description="重新风险评测")
+    @Test(priority = 15,description="重新风险评测")
     public void testReRiskEvaluation()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 

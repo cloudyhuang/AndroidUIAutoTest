@@ -110,7 +110,7 @@ public class DepositGroupBuyProductDetailPageObject extends CommonAppiumPage{
 		return new InvestGroupBuyPageObject(driver);
 	}
 
-	public GroupedBuyDetailPageObject joinGroupBuy(String joinCode) throws Exception {
+	public CommonAppiumPage joinGroupBuy(String joinCode) throws Exception {
 		if(joinCode.length()>4){
 			throw new Exception("加入邀请码超过4位");
 		}
@@ -126,6 +126,7 @@ public class DepositGroupBuyProductDetailPageObject extends CommonAppiumPage{
 		}
 		else {
 			clickEle(payBtn, "点击参团按钮");
+			return new InvestGroupBuyPageObject(driver);
 		}
 		return new GroupedBuyDetailPageObject(driver);
 	}

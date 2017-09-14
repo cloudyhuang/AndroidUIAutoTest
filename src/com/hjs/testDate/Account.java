@@ -1,8 +1,10 @@
 package com.hjs.testDate;
 
 public class Account {
-	private static String bankCardID;
-	private static String bankPhoneNum;
+	private static String safeBankCardID;
+	private static String normalBankCardID;
+	private static String safeBankPhoneNum;
+	private static String normalBankPhoneNum;
 	private static String tradePwd;
 	private static String realName;
 	private static String idno;
@@ -31,17 +33,30 @@ public class Account {
 	public static void setTradePwd(String tradePwd) {
 		Account.tradePwd = tradePwd;
 	}
-	public static String getBankCardID() {
-		return bankCardID;
+
+	public static String getSafeBankPhoneNum() {
+		return safeBankPhoneNum;
 	}
-	public static void setBankCardID(String bankCardID) {
-		Account.bankCardID = bankCardID;
+	public static void setSafeBankPhoneNum(String safeBankPhoneNum) {
+		Account.safeBankPhoneNum = safeBankPhoneNum;
 	}
-	public static String getBankPhoneNum() {
-		return bankPhoneNum;
+	public static String getNormalBankPhoneNum() {
+		return normalBankPhoneNum;
 	}
-	public static void setBankPhoneNum(String phoneNum) {
-		Account.bankPhoneNum = phoneNum;
+	public static void setNormalBankPhoneNum(String normalBankPhoneNum) {
+		Account.normalBankPhoneNum = normalBankPhoneNum;
+	}
+	public static String getSafeBankCardID() {
+		return safeBankCardID;
+	}
+	public static void setSafeBankCardID(String safeBankCardID) {
+		Account.safeBankCardID = safeBankCardID;
+	}
+	public static String getNormalBankCardID() {
+		return normalBankCardID;
+	}
+	public static void setNormalBankCardID(String normalBankCardID) {
+		Account.normalBankCardID = normalBankCardID;
 	}
 	
 }

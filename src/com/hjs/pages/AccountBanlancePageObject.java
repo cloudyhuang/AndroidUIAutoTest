@@ -39,6 +39,10 @@ public class AccountBanlancePageObject extends CommonAppiumPage{
 		clickEle(rechargeEntrance,"充值入口");
 		return new RechargePageObject(driver);
 	}
+	public SetBankCardPageObject rechargeToSetBankCardPage(){
+		clickEle(rechargeEntrance,"充值入口");
+		return new SetBankCardPageObject(driver);
+	}
 	public boolean verifyInthisPage(){
 		return isElementExsit(availableBalanceLocator);
 	}

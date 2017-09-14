@@ -1,5 +1,7 @@
 package com.hjs.pages;
 
+import java.text.DecimalFormat;
+
 import org.openqa.selenium.By;
 
 import com.hjs.config.CommonAppiumPage;
@@ -47,16 +49,20 @@ public class GroupedBuyDetailPageObject extends CommonAppiumPage{
 	}
 	public String getLvupBalance(){
 		String amount=lvupBalance.getText();
-		double doubleAmount=Util.stringToDouble(amount);	
-		return Util.doubleTransToString(doubleAmount);
+		String b=Util.getNumInString(amount);
+		double c=Util.stringToDouble(b);
+		c=c/100.0;
+		DecimalFormat df = new DecimalFormat("#0");
+		String d=df.format(c);
+		return d;
 	}
 	public String getCurrentReward(){
 		String reward=currentReward.getText();
-		return Util.getNumInString(reward);
+		return Util.get2DecimalPointsNumInString(reward);
 	}
 	public String getLvupReward(){
 		String reward=lvupReward.getText();
-		return Util.getNumInString(reward);
+		return Util.get2DecimalPointsNumInString(reward);
 	}
 	public boolean verifyInthisPage(){
 		return isElementExsit(shareCodeTVLocator);

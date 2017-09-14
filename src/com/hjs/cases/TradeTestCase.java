@@ -41,7 +41,7 @@ import com.hjs.testDate.GroupBuyInfo;
 
 
 public class TradeTestCase extends CommonAppiumTest{
-	private static String DEPOSITE_PRODUCT_NAME="黄XAutoTest产品170908064148";
+	private static String DEPOSITE_PRODUCT_NAME="黄XAutoTest产品170907165937";
 	private static String DEPOSITE_GROUPBUYPRODUCT_NAME="黄XAutoTest团购产品170907165937";
 	private static String CURRENTDEPOSITE_PRODUCT_NAME="恒存金-灵活理财";
 	private static String phoneNum="17052411184";
@@ -469,23 +469,31 @@ public class TradeTestCase extends CommonAppiumTest{
     	DepositGroupBuyProductDetailPageObject depositGroupBuyProductDetailPage=financialPage.clickDepositGroupBuyProduct(DEPOSITE_GROUPBUYPRODUCT_NAME);
     	String startMonney=depositGroupBuyProductDetailPage.getStartMoney();
     	Assert.assertTrue(depositGroupBuyProductDetailPage.verifyInthisPage(), "点击团购产品，未出现团购产品页面");
-    	GroupedBuyDetailPageObject groupedBuyDetail=depositGroupBuyProductDetailPage.joinGroupBuy(GroupBuyInfo.getGroupBuyShareCode());
-    	Assert.assertTrue(groupedBuyDetail.verifyInthisPage(), "发起团后未跳转到团购详情页");
-    	InvestGroupBuyPageObject investGroupBuyPage=groupedBuyDetail.clickInvestGroupBuyBtn();
+    	page=depositGroupBuyProductDetailPage.joinGroupBuy(GroupBuyInfo.getGroupBuyShareCode());
+    	InvestGroupBuyPageObject investGroupBuyPage = null;
+    	if(page.getClass().getName().contains("GroupedBuyDetailPageObject")){
+    		GroupedBuyDetailPageObject groupedBuyDetail=(GroupedBuyDetailPageObject)page;
+    		Assert.assertTrue(groupedBuyDetail.verifyInthisPage(), "加入团后未跳转到团购详情页");
+    		investGroupBuyPage=groupedBuyDetail.clickInvestGroupBuyBtn();
+    	}
+    	else if(page.getClass().getName().contains("InvestGroupBuyPageObject")){
+    		investGroupBuyPage=(InvestGroupBuyPageObject)page;
+    	}
+
     	Assert.assertTrue(investGroupBuyPage.verifyInthisPage(), "成团详情点击投资未跳转到团购投资页");
     	PayPageObject payPage=investGroupBuyPage.InvestGroupBuy(startMonney);
     	Assert.assertTrue(payPage.verifyInthisPage(), "提交团购投资申请后未跳转到支付页面");
     	InvestResultPageObject investResultPage=payPage.payByBankCardWithoutCoupon("456123", "17052411227");
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.equals("投资已成功")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
-    	groupedBuyDetail=investResultPage.gotoGroupedBuyDetailPage();
+    	GroupedBuyDetailPageObject groupedBuyDetail=investResultPage.gotoGroupedBuyDetailPage();
     	Assert.assertTrue(groupedBuyDetail.verifyInthisPage(), "投资成功查看详情未跳转到团购详情页");
     	String currentReward=groupedBuyDetail.getCurrentReward();
     	String lvupReward=groupedBuyDetail.getLvupReward();
     	GroupBuyInfo.setCurrentReward(currentReward);
     	GroupBuyInfo.setLvupReward(lvupReward);
     }
-    @Test(priority = 21,description="购买金额、人数达到团购加息阶梯")
+    @Test(priority = 22,description="购买金额、人数达到团购加息阶梯")
     public void testJoinGroupBuyProductToPlusProfit()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -493,8 +501,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(financialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
     	DepositGroupBuyProductDetailPageObject depositGroupBuyProductDetailPage=financialPage.clickDepositGroupBuyProduct(DEPOSITE_GROUPBUYPRODUCT_NAME);
     	Assert.assertTrue(depositGroupBuyProductDetailPage.verifyInthisPage(), "点击团购产品，未出现团购产品页面");
-    	GroupedBuyDetailPageObject groupedBuyDetail=depositGroupBuyProductDetailPage.joinGroupBuy(GroupBuyInfo.getGroupBuyShareCode());
-    	Assert.assertTrue(groupedBuyDetail.verifyInthisPage(), "发起团后未跳转到团购详情页");
+    	GroupedBuyDetailPageObject groupedBuyDetail=depositGroupBuyProductDetailPage.gotoGroupedBuyDetailPage();
     	String getLvupBalance=groupedBuyDetail.getLvupBalance();
     	InvestGroupBuyPageObject investGroupBuyPage=groupedBuyDetail.clickInvestGroupBuyBtn();
     	Assert.assertTrue(investGroupBuyPage.verifyInthisPage(), "成团详情点击投资未跳转到团购投资页");
@@ -511,7 +518,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	GroupBuyInfo.setCurrentReward(currentReward);
     	GroupBuyInfo.setLvupReward(lvupReward);
     }
-    @Test(priority = 22,expectedExceptions = Exception.class, expectedExceptionsMessageRegExp="找不到下架产品",description="下架团购产品",enabled = false)
+    @Test(priority = 23,expectedExceptions = Exception.class, expectedExceptionsMessageRegExp="找不到下架产品",description="下架团购产品",enabled = false)
     public void testOffGroupBuyProducts() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 

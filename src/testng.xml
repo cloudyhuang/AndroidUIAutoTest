@@ -3,27 +3,26 @@
 <suite name="恒大金服UI自动化测试项目报告" parallel="false" preserve-order="true">
 	<parameter name="udid" value="127.0.0.1:62001" />
 	<parameter name="isDebug" value="true" />
-	  <!--  <test verbose="2" preserve-order="true" name="账户管理测试">
+	  <test verbose="2" preserve-order="true" name="账户管理测试">
 		<classes>
 			<class name="com.hjs.cases.AccountManageTestCase">
 			    <methods>
-			        <include name="testBuyGroupBuyProduct"/>
-			    </methods>
-			</class>
-		</classes>
-	</test>-->
-
-	  <test verbose="2" preserve-order="true" name="交易相关测试">
-		<classes>
-			<class name="com.hjs.cases.TradeTestCase">
-			    <methods>
-			        <include name="testBuyGroupBuyProduct"/>
-			        <include name="testGroupBuyedProduct"/>
-			        <include name="testJoinGroupBuyProduct"/>
+			        <include name="testRechargePageBundSafeBankCard"/>
 			    </methods>
 			</class>
 		</classes>
 	</test>
+
+	  <!--  <test verbose="2" preserve-order="true" name="交易相关测试">
+		<classes>
+			<class name="com.hjs.cases.TradeTestCase">
+			    <methods>
+			        <include name="testJoinGroupBuyProductToPlusProfit"/>
+			        
+			    </methods>
+			</class>
+		</classes>
+	</test>-->
 	<listeners>
 		<listener class-name="com.hjs.publics.TestNGListener" />
 		<listener class-name="org.uncommons.reportng.HTMLReporter" />

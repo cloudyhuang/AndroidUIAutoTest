@@ -1,5 +1,6 @@
 package com.hjs.publics;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -80,6 +81,14 @@ public class Util {
 //			return m.group();
 //		} else
 			return m.replaceAll("").trim();
+	}
+	public static String get2DecimalPointsNumInString(String a){
+		String b=Util.getNumInString(a);
+		double c=Util.stringToDouble(b);
+		c=c/100.0;
+		DecimalFormat df = new DecimalFormat("#0.00");
+		String d=df.format(c);
+		return d;
 	}
 	 /**
 	   * double转String，若double为小数点为x.0返回整数String
