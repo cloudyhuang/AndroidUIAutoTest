@@ -71,16 +71,13 @@ public class TradePwdResetPageObject extends CommonAppiumPage{
 		sendKeys(realNameInput,realName);
 		clickEle(idNoInput,"身份证输入框");
 		sendKeys(idNoInput,idNo);
-		if(!(bankCardNo.isEmpty()||bankCardNo.equals(""))){
+		if(!(bankCardNo==null)){
 			clickEle(bankCardInput,"银行卡输入框");
 			if(!safeKeyBoard.verifySafeKeyBoardLocated()){
 				throw new Exception("安全键盘未出现");
 			}
 			safeKeyBoard.sendNum(bankCardNo);
 			safeKeyBoard.pressFinishBtn();
-			if(safeKeyBoard.verifySafeKeyBoardLocated()){
-				throw new Exception("点击完成后，安全键盘未消失");
-			}
 		}
 		clickEle(verifyIdBtn,"验证身份按钮");
 		if(!safeKeyBoard.verifySafeKeyBoardLocated()){

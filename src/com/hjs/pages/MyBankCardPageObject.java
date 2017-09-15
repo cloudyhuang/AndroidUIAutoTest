@@ -2,8 +2,11 @@ package com.hjs.pages;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -11,6 +14,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.testng.Assert;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
@@ -19,6 +23,8 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import com.hjs.config.CommonAppiumPage;
 import com.hjs.db.SmsVerifyCode;
 import com.hjs.mybatis.inter.SmsVerifyCodeOperation;
+import com.hjs.publics.Util;
+import com.hjs.testDate.Account;
 
 public class MyBankCardPageObject extends CommonAppiumPage{
 	
@@ -45,10 +51,29 @@ public class MyBankCardPageObject extends CommonAppiumPage{
 		return new SetBankCardPageObject(driver);
 	}
 	public MyBankCardPageObject unbundSafeBankCard(String pwd,String phoneNum) throws Exception{
-		clickEle(safeBankCard,"安全卡");
-		clickEle(unBindBankCardBtn,"解除绑定按钮");
-		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
-		safeKeyBoard.sendNum(pwd);
+		List<String> bankCardName=getMyBankCardNameList();	//解绑前银行卡列表
+		if (bankCardName.size() == 1) {
+			clickEle(safeBankCard, "安全卡");
+			clickEle(unBindBankCardBtn, "解除绑定按钮");
+			SafeKeyBoard safeKeyBoard = new SafeKeyBoard(driver);
+			safeKeyBoard.sendNum(pwd);
+			Account.setSafeBankCardID(null);
+			Account.setSafeBankPhoneNum(null);
+		}
+		else if(bankCardName.size()>1){
+			clickEle(safeBankCard, "安全卡");
+			clickEle(unBindBankCardBtn, "解除绑定按钮");
+			SetSafeBankCardPageObject setSafeBankCard=new SetSafeBankCardPageObject(driver);
+			Assert.assertTrue(setSafeBankCard.verifyInthisPage(),"当前卡数量大于1，解绑未跳转到设置安全卡界面");
+			setSafeBankCard.unbundSafeCardSetOtherSafeCard(pwd);
+			Account.setSafeBankCardID(Account.getNormalBankCardID());
+			Account.setSafeBankPhoneNum(Account.getNormalBankPhoneNum());
+			Account.setNormalBankCardID(null);
+			Account.setNormalBankPhoneNum(null);
+		}
+		else{
+			throw new Exception("当前无卡，无法解绑！");
+		}
 //		threadsleep(2000);
 //		List<SmsVerifyCode> smsVerifyCodeList=new ArrayList<SmsVerifyCode>();
 //		smsVerifyCodeList=getMsgVerifyCode(phoneNum);
@@ -61,8 +86,11 @@ public class MyBankCardPageObject extends CommonAppiumPage{
 //		clickEle(smsVerifyCodeConfirmBtn,"验证码确认按钮");
 		return new MyBankCardPageObject(driver);
 	}
-	public MyBankCardPageObject unbundNormalBankCard(String pwd,String phoneNum,String last4BankCardId) throws Exception{
-		
+	public MyBankCardPageObject unbundNormalBankCard(String pwd,String last4BankCardId) throws Exception{
+		List<String> bankCardName=this.getMyBankCardNameList();	//绑定前银行卡列表
+	    if(bankCardName.size()<=1){
+	    	throw new Exception("当前无普通卡，无法解绑");
+	    }
 		AndroidElement toUnbundCard=driver.findElement(By.xpath("//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/tv_bank_name' and contains(@text,'"+last4BankCardId+"')]"));
 		clickEle(toUnbundCard,"待解绑卡"+last4BankCardId);
 		clickEle(unBindBankCardBtn,"解除绑定按钮");

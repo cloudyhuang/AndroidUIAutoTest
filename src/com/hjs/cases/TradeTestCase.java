@@ -462,8 +462,13 @@ public class TradeTestCase extends CommonAppiumTest{
     	page=loginPageObject.switchAccount("17090720054");
 		pageName=page.getClass().getName();
 		Assert.assertTrue(pageName.contains("LoginPageObject"), "验证手机号后未进入登录页面");
-		((LoginPageObject)page).login("Hd666666");
-		Assert.assertTrue(homepage.verifyIsInHomePage(),"登录后未跳转到主页");
+		GesturePwd gesturePwd=((LoginPageObject)page).login("Hd666666");
+		Assert.assertTrue(gesturePwd.verifyInthisPage(),"登录后未跳转到手势密码页");
+    	Assert.assertEquals("请绘制您的手势密码", gesturePwd.verifyGestureTips(),"登录后未进入设置手密页");
+    	String result=gesturePwd.setFirstGesturePwd(1,4,7,8);
+    	Assert.assertEquals("请再画一次手势密码", result);
+    	boolean setNextGestureResult=gesturePwd.setNextGesturePwd(1,4,7,8).verifyIsInHomePage();
+    	Assert.assertTrue(setNextGestureResult, "第二次设置手势失败，未跳转到主页，主页我的入口未显示");
     	FinancialPageObject financialPage=homepage.enterFinancialPage();
     	Assert.assertTrue(financialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
     	DepositGroupBuyProductDetailPageObject depositGroupBuyProductDetailPage=financialPage.clickDepositGroupBuyProduct(DEPOSITE_GROUPBUYPRODUCT_NAME);

@@ -99,7 +99,7 @@ public class SetBankCardPageObject extends CommonAppiumPage{
 		clickEle(setBankSucConfirmBtn,"绑卡成功确认按钮");
 		return new MyBankCardPageObject(driver);
 	}
-	public RechargePageObject rechargePageGotoSetNormalBankCard(String bankCardId,String phoneNum) throws Exception{
+	public RechargePageObject rechargePageGotoSetSafeBankCard(String bankCardId,String phoneNum) throws Exception{
 		clickEle(bankCardIdInput,"银行卡号输入框");
 		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
 		if(!safeKeyBoard.verifySafeKeyBoardLocated()){

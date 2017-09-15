@@ -17,7 +17,7 @@ public class WithdrawCashResultPageObject extends CommonAppiumPage{
 	@AndroidFindBy(id="filled_view")
 	private AndroidElement seeBalanceEntrance;		//查看余额入口
 	
-	private By statusDecLocator=By.id("status_dec");
+	private By statusDecLocator=By.id("withdraw_result_status_dec");
 	public WithdrawCashResultPageObject(
 			AndroidDriver<AndroidElement> driver) {
 		super(driver);
