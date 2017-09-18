@@ -7,8 +7,8 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import com.hjs.config.CommonAppiumPage;
 
 public class SetTradePwdPageObject extends CommonAppiumPage{
-	//@AndroidFindBy(id="dlg_msg_rightbtn")
-	@AndroidFindBy(id="dlg_msg_3pbtn_type2_1")
+	@AndroidFindBy(id="dlg_msg_rightbtn")
+	//@AndroidFindBy(id="dlg_msg_3pbtn_type2_1")
 	private AndroidElement confirmBtn;		//设置密码确认按钮
 	public SetTradePwdPageObject(AndroidDriver<AndroidElement> driver) {
 		super(driver);
