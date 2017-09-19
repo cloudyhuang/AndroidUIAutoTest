@@ -183,7 +183,7 @@ public class AccountManageTestCase extends CommonAppiumTest {
     		}
     	}
     	Assert.assertTrue(flag,"绑定普通卡后四位为："+last4BankCardId+"当前卡页面未包含此卡");
-    	Assert.assertFalse(bankCardName.equals(AftUnBundBankCardName),"解绑前后银行卡列表名称相同");
+    	Assert.assertFalse(bankCardName.equals(AftUnBundBankCardName),"绑定前后银行卡列表名称相同");
     	Account.setNormalBankCardID(bankCardId);
     	Account.setNormalBankPhoneNum(phoneNum);
     }
@@ -222,6 +222,7 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	Assert.assertTrue(myBankCardPage.verifyInthisPage(), "进入银行卡页面未出现银行卡");
     	List<String> bankCardName=myBankCardPage.getMyBankCardNameList();	//解绑前银行卡列表
     	if(bankCardName.size()==1){//若只有1张安全卡，加一张普通卡
+    		Reporter.log("当前只有一张安全卡，添加一张普通卡");
     		SetBankCardPageObject setBankCardPageObject=myBankCardPage.addNewBankCard();
         	Assert.assertTrue(setBankCardPageObject.verifyInthisPage(), "未出现银行卡绑卡界面，银行卡号输入框未出现");
         	SimpleDateFormat df = new SimpleDateFormat("yyMMddHHmm");//自定义日期格式
@@ -239,6 +240,7 @@ public class AccountManageTestCase extends CommonAppiumTest {
         	}
         	Assert.assertTrue(flag,"绑定普通卡后四位为："+last4BankCardId+"当前卡页面未包含此卡");
         	Assert.assertFalse(bankCardName.equals(AftUnBundBankCardName),"解绑前后银行卡列表名称相同");
+        	Reporter.log("添加普通卡成功");
         	Account.setNormalBankCardID(bankCardId);
         	Account.setNormalBankPhoneNum(phoneNum);
     	}
@@ -249,7 +251,9 @@ public class AccountManageTestCase extends CommonAppiumTest {
     	if(!(Account.getNormalBankCardID()==null)){
     		last4BankCardId=Account.getNormalBankCardID().substring(Account.getNormalBankCardID().length()-4,Account.getNormalBankCardID().length());
     	}
+    	bankCardName=myBankCardPage.getMyBankCardNameList();	//解绑前银行卡列表
     	myBankCardPage=myBankCardPage.unbundNormalBankCard(Account.getTradePwd(),last4BankCardId);
+    	Reporter.log("解绑普通卡。。");
     	Assert.assertTrue(myBankCardPage.verifyInthisPage(), "解绑银行卡后未跳转到我的银行卡页面");
     	List<String> AftUnBundBankCardName=myBankCardPage.getMyBankCardNameList();	//解绑后银行卡列表
     	Assert.assertFalse(bankCardName.equals(AftUnBundBankCardName),"解绑前后银行卡列表名称相同");
@@ -295,8 +299,8 @@ public class AccountManageTestCase extends CommonAppiumTest {
 			String phoneNum=df.format(new Date())+String.valueOf(randNum);
 			RechargePageObject rechargePage=setBankCardPageObject.rechargePageGotoSetSafeBankCard(bankCardId, phoneNum);
 			Assert.assertTrue(rechargePage.verifyInthisPage(), "绑定安全卡后未跳转到余额充值页面");
-	    	Account.setNormalBankCardID(bankCardId);
-	    	Account.setNormalBankPhoneNum(phoneNum);
+	    	Account.setSafeBankCardID(bankCardId);
+	    	Account.setSafeBankPhoneNum(phoneNum);
 		}
 		else{
 			RechargePageObject rechargePage=accountBanlancePage.gotoRechargePage();

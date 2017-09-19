@@ -42,7 +42,8 @@ import com.hjs.testDate.GroupBuyInfo;
 
 public class TradeTestCase extends CommonAppiumTest{
 	private static String DEPOSITE_PRODUCT_NAME="黄XAutoTest产品170907165937";
-	private static String DEPOSITE_GROUPBUYPRODUCT_NAME="黄XAutoTest团购产品170907165937";
+	private static String DEPOSITE_GROUPBUYPRODUCT_NAME="黄XAutoTest团购产品170919042116";
+	private static String DEPOSITE_TRANSPRODUCT_NAME="黄XAutoTest可转让产品170907165937";
 	private static String CURRENTDEPOSITE_PRODUCT_NAME="恒存金-灵活理财";
 	private static String phoneNum="17052411184";
     @Test(priority = 1,description="理财页产品信息")
@@ -452,29 +453,30 @@ public class TradeTestCase extends CommonAppiumTest{
     public void testJoinGroupBuyProduct()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
-    	CommonAppiumPage page=homepage.enterPersonEntrace();
-    	String pageName=page.getClass().getName();
-    	Assert.assertTrue(pageName.contains("MinePageObject"), "点击首页-我的入口未进入我的页面");
-    	PersonSettingPageObject personSettingPage=((MinePageObject)page).enterPersonSetting();
-    	Assert.assertTrue(personSettingPage.verifyInthisPage(), "进入我的个人头像，未出现安全退出按钮");
-    	LoginPageObject loginPageObject=personSettingPage.logOut();
-    	Assert.assertTrue(loginPageObject.verifyInthisPage(), "退出后未跳转到登录页面");
-    	page=loginPageObject.switchAccount("17090720054");
-		pageName=page.getClass().getName();
-		Assert.assertTrue(pageName.contains("LoginPageObject"), "验证手机号后未进入登录页面");
-		GesturePwd gesturePwd=((LoginPageObject)page).login("Hd666666");
-		Assert.assertTrue(gesturePwd.verifyInthisPage(),"登录后未跳转到手势密码页");
-    	Assert.assertEquals("请绘制您的手势密码", gesturePwd.verifyGestureTips(),"登录后未进入设置手密页");
-    	String result=gesturePwd.setFirstGesturePwd(1,4,7,8);
-    	Assert.assertEquals("请再画一次手势密码", result);
-    	boolean setNextGestureResult=gesturePwd.setNextGesturePwd(1,4,7,8).verifyIsInHomePage();
-    	Assert.assertTrue(setNextGestureResult, "第二次设置手势失败，未跳转到主页，主页我的入口未显示");
+//    	CommonAppiumPage page=homepage.enterPersonEntrace();
+//    	String pageName=page.getClass().getName();
+//    	Assert.assertTrue(pageName.contains("MinePageObject"), "点击首页-我的入口未进入我的页面");
+//    	PersonSettingPageObject personSettingPage=((MinePageObject)page).enterPersonSetting();
+//    	Assert.assertTrue(personSettingPage.verifyInthisPage(), "进入我的个人头像，未出现安全退出按钮");
+//    	LoginPageObject loginPageObject=personSettingPage.logOut();
+//    	Assert.assertTrue(loginPageObject.verifyInthisPage(), "退出后未跳转到登录页面");
+//    	page=loginPageObject.switchAccount("17090720054");
+//		pageName=page.getClass().getName();
+//		Assert.assertTrue(pageName.contains("LoginPageObject"), "验证手机号后未进入登录页面");
+//		GesturePwd gesturePwd=((LoginPageObject)page).login("Hd666666");
+//		Assert.assertTrue(gesturePwd.verifyInthisPage(),"登录后未跳转到手势密码页");
+//    	Assert.assertEquals("请绘制您的手势密码", gesturePwd.verifyGestureTips(),"登录后未进入设置手密页");
+//    	String result=gesturePwd.setFirstGesturePwd(1,4,7,8);
+//    	Assert.assertEquals("请再画一次手势密码", result);
+//    	boolean setNextGestureResult=gesturePwd.setNextGesturePwd(1,4,7,8).verifyIsInHomePage();
+//    	Assert.assertTrue(setNextGestureResult, "第二次设置手势失败，未跳转到主页，主页我的入口未显示");
     	FinancialPageObject financialPage=homepage.enterFinancialPage();
     	Assert.assertTrue(financialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
     	DepositGroupBuyProductDetailPageObject depositGroupBuyProductDetailPage=financialPage.clickDepositGroupBuyProduct(DEPOSITE_GROUPBUYPRODUCT_NAME);
     	String startMonney=depositGroupBuyProductDetailPage.getStartMoney();
     	Assert.assertTrue(depositGroupBuyProductDetailPage.verifyInthisPage(), "点击团购产品，未出现团购产品页面");
-    	page=depositGroupBuyProductDetailPage.joinGroupBuy(GroupBuyInfo.getGroupBuyShareCode());
+    	//page=depositGroupBuyProductDetailPage.joinGroupBuy(GroupBuyInfo.getGroupBuyShareCode());
+    	CommonAppiumPage page=depositGroupBuyProductDetailPage.joinGroupBuy(GroupBuyInfo.getGroupBuyShareCode());
     	InvestGroupBuyPageObject investGroupBuyPage = null;
     	if(page.getClass().getName().contains("GroupedBuyDetailPageObject")){
     		GroupedBuyDetailPageObject groupedBuyDetail=(GroupedBuyDetailPageObject)page;
@@ -531,6 +533,14 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(financialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
     	financialPage.productPullOffAndFindProduct(DEPOSITE_GROUPBUYPRODUCT_NAME);
 
+    }
+    @Test(priority = 24,description="可转让产品",enabled=false)
+    public void testTransProduct()throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
+    	HomePageObject homepage=new HomePageObject(driver); 
+    	FinancialPageObject financialPage=homepage.enterFinancialPage();
+    	Assert.assertTrue(financialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
+    	DEPOSITE_TRANSPRODUCT_NAME=financialPage.testTransSPVProductInfo();
     }
     /*
      * 请把赎回放最后一个用例*/

@@ -20,6 +20,11 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
+import com.github.ltsopensource.core.domain.Job;
+import com.github.ltsopensource.jobclient.JobClient;
+import com.github.ltsopensource.jobclient.RetryJobClient;
+import com.github.ltsopensource.jobclient.domain.Response;
 import com.hjs.db.FisProdInfo;
 import com.hjs.db.MarketGrouponTask;
 import com.hjs.mybatis.inter.EifFisOperation;
@@ -29,9 +34,22 @@ import com.hjs.mybatis.inter.EifMarketOperation;
 public class test {
 
 	public static void main(String[] args) {
-		String a="8890000";
-		a=a.substring(a.length()-4, a.length());
-		System.out.println(a);
+		JobClient jobClient = new RetryJobClient();
+		jobClient.setNodeGroup("test_jobClient");
+		jobClient.setClusterName("test_cluster");
+		jobClient.setRegistryAddress("zookeeper://127.0.0.1:2181");
+		jobClient.start();
+
+		// 提交任务
+		Job job = new Job();
+		job.setTaskId("3213213123");
+		job.setParam("jobDate", "20161212");
+		job.setParam("type", "PRODUCT_ESTABLISH");
+		job.setParam("prodType", "1");
+		job.setTaskTrackerNodeGroup("test_trade_TaskTracker");
+		// job.setCronExpression("0 0/1 * * * ?");  // 支持 cronExpression表达式
+		// job.setTriggerTime(new Date()); // 支持指定时间执行
+		Response response = jobClient.submitJob(job);
 
 	}
 

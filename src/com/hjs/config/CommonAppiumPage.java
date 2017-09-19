@@ -15,6 +15,7 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -95,6 +96,9 @@ public class CommonAppiumPage {
             }
         	catch(NoSuchElementException e){
         		assertTrue("没有找到目标元素－－"+str,false);
+        	}
+            catch(TimeoutException e){
+        		assertTrue("超时"+WAIT_TIME+"秒，元素\""+str+"\"为不可点击状态！",false);
         	}
             return true;
         } else {
