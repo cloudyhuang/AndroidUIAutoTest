@@ -17,7 +17,7 @@
 		<classes>
 			<class name="com.hjs.cases.TradeTestCase">
 			    <methods>
-			        <include name="testJoinGroupBuyProduct"/>
+			        <include name="testCancleTransAcceptTransProduct"/>
 			        
 			    </methods>
 			</class>

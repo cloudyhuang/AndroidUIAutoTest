@@ -218,6 +218,6 @@ public class GesturePwd extends CommonAppiumPage{
         return gestureTip.getText();
     }
 	public boolean verifyInthisPage(){
-        return isElementExsit(gestureLoginLocator);
+        return isElementExsit(5,gestureLoginLocator);
     }
 }

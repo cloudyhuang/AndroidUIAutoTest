@@ -37,6 +37,8 @@ public class CommonAppiumTest {
 	public static DateFormat dateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
 	public static String runtime=dateFormat.format(new Date());
     private WebDriverWait wait;
+    private DisConfConfig disConfConfig;	//disconf配置
+    private String beforeTestVerifyCodeConfigValue; //验证码配置
     AppiumServer appiumServer;
     @BeforeSuite(alwaysRun = true)
     @Parameters({"udid","isDebug"})
@@ -46,6 +48,8 @@ public class CommonAppiumTest {
     		boolean jenkinsBuildResult=JenkinsJob.buildAndroidApp();	//触发构建安卓app，上个包为Debug，TEST环境版本，未超过一天，不触发
     		if(jenkinsBuildResult) downLoadFromUrl("http://172.16.59.251:8088/app-default_channel.apk", "app2.4.apk"); //拉取最新包
     	}
+    	disConfConfig=new DisConfConfig();
+    	beforeTestVerifyCodeConfigValue=disConfConfig.getVerifyCodeConfigValue();
     	System.out.println(System.getenv());
     	System.out.println(System.getenv("ANDROID_HOME"));
     	deletePng("surefire-reports"+File.separator+"html");	//删除历史截图文件
@@ -216,6 +220,7 @@ public class CommonAppiumTest {
     
     @AfterSuite(alwaysRun = true)
     public void tearDown() throws Exception {
+    	disConfConfig.updateDisConfConfig("1855", beforeTestVerifyCodeConfigValue);	//恢复配置
         driver.quit();
         System.out.println("---- Stoping appium server ----");
         appiumServer.stopServer();

@@ -204,6 +204,12 @@ public class CommonAppiumPage {
     	waitAuto(WAIT_TIME);
     	this.threadsleep(2000);
     }
+    /**
+     * 得到元素中心点坐标
+     *
+     * @param el 元素
+     * @return 元素中心点坐标Point
+     */
     public Point getNativeEleCenterPoint(AndroidElement el){
     	int startX = el.getLocation().getX();
         int startY = el.getLocation().getY();
@@ -255,6 +261,13 @@ public class CommonAppiumPage {
         tapObject.put("tapCount", 3.0);
         js.executeScript("mobile: tap", tapObject);
     	
+    }
+    public void clickPoint(int x,int y){
+    	int screen_width_execute_phone = driver.manage().window().getSize().width;//screen width
+    	int screen_height_execute_phone = driver.manage().window().getSize().height; //screen height
+    	int x_click = x * screen_width_execute_phone / 720; //x coordinates on execute phone
+    	int y_click = y * screen_height_execute_phone / 1280; //y coordinates on execute phone
+    	driver.tap(1, x_click, y_click, 0);
     }
     public void clickNativeEle(WebElement el,int clickcount){
 		Point elpoint = el.getLocation();

@@ -7,6 +7,5 @@
      <select id="getFisCollectPlan" parameterType="String" resultType="com.hjs.db.FisCollectPlan">
     SELECT * from t_fis_collect_plan where assets_id=#{assets_id} ORDER BY id DESC limit 1
     </select>
-	
 
 </mapper>

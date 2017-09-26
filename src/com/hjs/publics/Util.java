@@ -32,6 +32,21 @@ public class Util {
 	     return date.getTime();
 	}
 	/**
+	   * 传入时间戳和需要减少的天数，返回n天后的时间戳。
+	   *
+	   * @param time 时间戳
+	   * @param minusDays 减少天数
+	   * @return time-minusDays
+	   */
+	public  static long minusDate(long time,int minusDays){
+		Date date = new Date(time);
+	     Calendar   calendar   =   new   GregorianCalendar(); 
+	     calendar.setTime(date); 
+	     calendar.add(calendar.DATE,(0-minusDays));//把日期往后增加一天.整数往后推,负数往前移动 
+	     date=calendar.getTime();   //这个时间就是日期往后推一天的结果 
+	     return date.getTime();
+	}
+	/**
 	   * 根据用户传入的时间表示格式，返回当前时间的格式 如果是yyyyMMdd，注意字母y不能大写。
 	   *
 	   * @param sformat yyyyMMddhhmmss
@@ -64,6 +79,12 @@ public class Util {
 	public static String longToDate(long times) {
 		Date date = new Date(times);
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String dateString = formatter.format(date);
+		return dateString;
+	}
+	public static String longToDate(long times,String sformat) {
+		Date date = new Date(times);
+		SimpleDateFormat formatter = new SimpleDateFormat(sformat);
 		String dateString = formatter.format(date);
 		return dateString;
 	}

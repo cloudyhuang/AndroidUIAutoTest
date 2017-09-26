@@ -17,8 +17,8 @@ public class RiskEvaluationPageObject extends CommonAppiumPage{
 	private AndroidElement startRiskEvaluationBtn;		//开始测评按钮
 	@AndroidFindBy(xpath="//button[@class='submitBtn']")
 	private AndroidElement submitBtn;		//提交按钮
-	@AndroidFindBy(id="dlg_msg_rightbtn")
-	//@AndroidFindBy(id="dlg_msg_3pbtn_type2_1")
+	//@AndroidFindBy(id="dlg_msg_rightbtn")
+	@AndroidFindBy(id="dlg_msg_3pbtn_type2_1")
 	private AndroidElement dlgConfirmBtn;		//对话框确认按钮
 	
 	private By startRiskEvaluationBtnLocator=By.xpath("//button[@class='btn-start']");

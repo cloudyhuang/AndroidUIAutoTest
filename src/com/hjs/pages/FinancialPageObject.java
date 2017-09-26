@@ -1,24 +1,18 @@
 package com.hjs.pages;
 
-import java.io.IOException;
-import java.text.ParseException;
-import java.util.HashMap;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
 import org.testng.Assert;
-import org.testng.Reporter;
+
+import com.hjs.Interface.InitProduct;
+import com.hjs.config.CommonAppiumPage;
+import com.hjs.publics.Util;
 
 import io.appium.java_client.MobileDriver;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
-
-import com.hjs.Interface.InitProduct;
-import com.hjs.config.CommonAppiumPage;
-import com.hjs.publics.Util;
 
 public class FinancialPageObject extends CommonAppiumPage{
 
@@ -46,6 +40,16 @@ public class FinancialPageObject extends CommonAppiumPage{
 		AndroidElement DepositProduct=driver.findElement(By.xpath("//android.widget.TextView[@text='"+DepositGroupBuyProductName+"']"));
 		clickEle(DepositProduct,"定期团购产品名称："+DepositGroupBuyProductName);
 		return new DepositGroupBuyProductDetailPageObject(driver);
+	}
+	public DepositTransProductDetailPageObject clickDepositTransProduct(String DepositTransProductName) throws Exception{
+		//driver.scrollTo(DepositProductName);
+		this.clickZhuanRang();
+		waitEleUnVisible(refreshViewLocator, 30);
+		String productXpath="//android.widget.TextView[@text='"+DepositTransProductName+"']";
+		super.scrollTo(productXpath);
+		AndroidElement DepositProduct=driver.findElement(By.xpath("//android.widget.TextView[@text='"+DepositTransProductName+"']"));
+		clickEle(DepositProduct,"转让产品名称："+DepositTransProductName);
+		return new DepositTransProductDetailPageObject(driver);
 	}
 	public CurrentDepositProductDetailPageObject clickCurrentDepositProduct(String DepositProductName) throws Exception{
 		//driver.scrollTo(DepositProductName);
@@ -215,6 +219,18 @@ public class FinancialPageObject extends CommonAppiumPage{
 //        tapObject.put("touchCount", 1.0);
 //        tapObject.put("tapCount", 3.0);
 //        js.executeScript("mobile: tap", tapObject);
+    	new TouchAction((MobileDriver) driver).tap(centerX, centerY).perform();
+	}
+	public void clickZhuanRang(){
+		AndroidElement titleSwitchEle=driver.findElement(titleSwitchLocator);
+		Point elpoint = titleSwitchEle.getLocation();
+    	Dimension elSize = titleSwitchEle.getSize();
+    	int startX = elpoint.getX();
+    	int startY = elpoint.getY();
+    	int endX =elSize.getWidth()+startX;
+    	int endY =elSize.getHeight()+startY;
+    	int centerX = (int) ((startX+endX)*0.38);
+    	int centerY = (startY+endY)/2;
     	new TouchAction((MobileDriver) driver).tap(centerX, centerY).perform();
 	}
 	public boolean verifyInthisPage(){

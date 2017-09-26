@@ -24,6 +24,7 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 
 import com.hjs.Interface.GetOrderPushStatus;
 import com.hjs.config.CommonAppiumPage;
+import com.hjs.db.FisHonorOrder;
 import com.hjs.db.FisProdInfo;
 import com.hjs.db.Member;
 import com.hjs.mybatis.inter.EifFisOperation;
@@ -42,6 +43,8 @@ public class MyDepositeProductDetailPageObject extends CommonAppiumPage{
 	private AndroidElement dueDateTv;		//投资到期日
 	@AndroidFindBy(xpath="//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/tv_item_title' and @text='协议']/following-sibling::android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/tv_item_remark_des']")
 	private AndroidElement agreementBtn;		//协议查看按钮
+	@AndroidFindBy(id="btn_cancel_transfer")
+	private AndroidElement transCancelBtn;		//转让撤销按钮
 	@AndroidFindBy(id="textView_redeemWay")
 	private AndroidElement redeemWayTv;		//回款方式
 	@AndroidFindBy(id="textView_redeemGoal")
@@ -56,6 +59,10 @@ public class MyDepositeProductDetailPageObject extends CommonAppiumPage{
 	private By expectAnnualTvLocator=By.id("textView_expectAnnual");
 	public MyDepositeProductDetailPageObject(AndroidDriver<AndroidElement> driver) {
 		super(driver);
+	}
+	public TransCancleDetailPageObject cancelTrans(){
+		clickEle(transCancelBtn,"转让撤销按钮");
+		return new TransCancleDetailPageObject(driver);
 	}
 	public Map<String,String>getDetailMap(){
 		Map<String,String> productDetailMap=new HashMap<String,String>();
@@ -179,6 +186,7 @@ public class MyDepositeProductDetailPageObject extends CommonAppiumPage{
         }
         
 	}
+	
 	public boolean verifyInthisPage(){
 		return isElementExsit(expectAnnualTvLocator);
 	}

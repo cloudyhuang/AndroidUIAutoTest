@@ -20,6 +20,7 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.entity.StringEntity;
@@ -169,19 +170,96 @@ public class GetOrderPushStatus {
 
 		return httpResults;
 	}
+	public String sendx_www_form_urlencodedPut(String url, String param) {
+		String httpResults = null;
+		this.url = url;
+		HttpClientBuilder builder = HttpClients.custom()
+				.setDefaultCookieStore(cookieStore).disableAutomaticRetries() // 关闭自动处理重定向
+				.setRedirectStrategy(new LaxRedirectStrategy());// 利用LaxRedirectStrategy处理POST重定向问题
 
-	public void sendGet(String url) {
-		CloseableHttpClient httpClient = null;
-		HttpGet httpGet = null;
+		httpclient = builder.build();
+		// CloseableHttpClient httpclient = HttpClients.createDefault();
+		// HttpClientBuilder build = HttpClients.custom();
+		// HttpHost proxy = new HttpHost("127.0.0.1", 8888);
+		// CloseableHttpClient httpclient = build.setProxy(proxy).build(); ///
+		// 代理
+		HttpPut httpPut = new HttpPut(url);
+		CloseableHttpResponse response = null;
 		try {
-			httpClient = HttpClients.createDefault();
+			httpPut.setHeader("Content-type",
+					"application/x-www-form-urlencoded");
+			StringEntity reqEntity = new StringEntity(param);
+			httpPut.setEntity(reqEntity);
+			// System.out.println("executing request " + httppost.getURI());
+			response = httpclient.execute(httpPut);
+			String JSESSIONID = null;
+            String cookie_user = null;
+            List<Cookie> cookies = cookieStore.getCookies();
+            for (int i = 0; i < cookies.size(); i++) {
+                if (cookies.get(i).getName().equals("JSESSIONID")) {
+                    JSESSIONID = cookies.get(i).getValue();
+                }
+                if (cookies.get(i).getName().equals("cookie_user")) {
+                    cookie_user = cookies.get(i).getValue();
+                }
+            }
+//            if (cookie_user != null) {
+//                result = JSESSIONID;
+//            }
+			System.out.println(cookieStore.getCookies());
+			this.setStatusCode(response.getStatusLine().getStatusCode());
+			
+			HttpEntity entity = response.getEntity();
+			if (entity != null) {
+				httpResults = EntityUtils.toString(entity, "UTF-8");
+				// System.out.println("--------------------------------------");
+				// System.out.println("Response content: " + httpResults);
+				// System.out.println("--------------------------------------");
+			}
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+
+				httpclient.close();
+				if (response != null) {
+					response.close();
+				}
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return httpResults;
+	}
+	public String sendGet(String url) {
+		//CloseableHttpClient httpClient = null;
+		HttpGet httpGet = null;
+		String httpResults = null;
+		try {
+			HttpClientBuilder builder = HttpClients.custom()
+					.setDefaultCookieStore(cookieStore).disableAutomaticRetries() // 关闭自动处理重定向
+					.setRedirectStrategy(new LaxRedirectStrategy());// 利用LaxRedirectStrategy处理POST重定向问题
+
+			httpclient = builder.build();
+//			httpClient = HttpClients.createDefault();
 			RequestConfig requestConfig = RequestConfig.custom()
 					.setSocketTimeout(20000).setConnectTimeout(20000).build();
 			httpGet = new HttpGet(url);
 			httpGet.setConfig(requestConfig);
-			CloseableHttpResponse response = httpClient.execute(httpGet);
+			CloseableHttpResponse response = httpclient.execute(httpGet);
 			HttpEntity httpEntity = response.getEntity();
-			System.out.println(EntityUtils.toString(httpEntity, "utf-8"));
+			if (httpEntity != null) {
+				httpResults = EntityUtils.toString(httpEntity, "UTF-8");
+				// System.out.println("--------------------------------------");
+				// System.out.println("Response content: " + httpResults);
+				// System.out.println("--------------------------------------");
+			}
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -191,13 +269,14 @@ public class GetOrderPushStatus {
 				if (httpGet != null) {
 					httpGet.releaseConnection();
 				}
-				if (httpClient != null) {
-					httpClient.close();
+				if (httpclient != null) {
+					httpclient.close();
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
+		return httpResults;
 	}
 
 

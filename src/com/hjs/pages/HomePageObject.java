@@ -25,7 +25,8 @@ public class HomePageObject extends CommonAppiumPage{
 	private AndroidElement financialEnrace;		//首页-理财入口
 	
 	
-	private By noRemindUpdateLocator=By.id("btn_no_remind");		//下次更新locator
+	//private By noRemindUpdateLocator=By.id("btn_no_remind");		//下次更新locator
+	private By noRemindUpdateLocator=By.id("btn_remind_next");		//下次更新locator
 	private By personEnraceLocator=By.id("button_person");		//首页-我的入口locator
 	private By adCloseBtnLocator=By.id("icv_advertisement_close");		//我的入口广告关闭按钮locator
 	public HomePageObject(AndroidDriver<AndroidElement> driver) {

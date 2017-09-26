@@ -45,8 +45,8 @@ public class PayPageObject extends CommonAppiumPage{
 	private AndroidElement chooseCouponBtn;		//优惠券选择入口按钮
 	@AndroidFindBy(id="message")
 	private AndroidElement waitMessage;		//等待信息
-	@AndroidFindBy(id="dlg_msg_rightbtn")
-	//@AndroidFindBy(id="dlg_msg_3pbtn_type2_1")
+	//@AndroidFindBy(id="dlg_msg_rightbtn")
+	@AndroidFindBy(id="dlg_msg_3pbtn_type2_1")
 	private AndroidElement dlgMsgRightbtn;		//弹出框右侧确认按钮
 	@AndroidFindBy(id="dlg_msg_msg")
 	private AndroidElement dlgMsgMsg;		//弹出框信息

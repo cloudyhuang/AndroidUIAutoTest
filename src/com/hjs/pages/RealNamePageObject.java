@@ -29,8 +29,8 @@ public class RealNamePageObject extends CommonAppiumPage{
 	private AndroidElement commitBtn;		//实名确认提交按钮
 	@AndroidFindBy(id="dlg_msg_msg")
 	private AndroidElement dlgMsg;		//对话框信息
-	@AndroidFindBy(id="dlg_msg_rightbtn")
-	//@AndroidFindBy(id="dlg_msg_3pbtn_type2_1")
+	//@AndroidFindBy(id="dlg_msg_rightbtn")
+	@AndroidFindBy(id="dlg_msg_3pbtn_type2_1")
 	private AndroidElement msgRightBtn;		//对话框右侧按钮（确认）
 	
 	

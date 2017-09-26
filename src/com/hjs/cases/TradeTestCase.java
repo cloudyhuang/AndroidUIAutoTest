@@ -1,21 +1,17 @@
 package com.hjs.cases;
 
 
-import java.io.File;
-
 import org.testng.Assert;
-import org.testng.ITestResult;
 import org.testng.Reporter;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
-import com.hjs.Interface.InitProduct;
 import com.hjs.config.CommonAppiumPage;
 import com.hjs.config.CommonAppiumTest;
 import com.hjs.pages.AccountBanlancePageObject;
 import com.hjs.pages.CurrentDepositProductDetailPageObject;
 import com.hjs.pages.DepositGroupBuyProductDetailPageObject;
 import com.hjs.pages.DepositProductDetailPageObject;
+import com.hjs.pages.DepositTransProductDetailPageObject;
 import com.hjs.pages.FinancialPageObject;
 import com.hjs.pages.GesturePwd;
 import com.hjs.pages.GroupedBuyDetailPageObject;
@@ -23,6 +19,7 @@ import com.hjs.pages.HomePageObject;
 import com.hjs.pages.InvestGroupBuyPageObject;
 import com.hjs.pages.InvestPageObject;
 import com.hjs.pages.InvestResultPageObject;
+import com.hjs.pages.InvestTransPageObject;
 import com.hjs.pages.LoginPageObject;
 import com.hjs.pages.MinePageObject;
 import com.hjs.pages.MyDepositeProductDetailPageObject;
@@ -33,7 +30,11 @@ import com.hjs.pages.RechargePageObject;
 import com.hjs.pages.RechargeResultPageObject;
 import com.hjs.pages.RedeemPageObject;
 import com.hjs.pages.RedeemResultPageObject;
-import com.hjs.pages.WelcomePageObject;
+import com.hjs.pages.TransCancelResultPageObject;
+import com.hjs.pages.TransCancleDetailPageObject;
+import com.hjs.pages.TransConfirmPageObject;
+import com.hjs.pages.TransDetailPageObject;
+import com.hjs.pages.TransResultPageObject;
 import com.hjs.pages.WithdrawCashPageObject;
 import com.hjs.pages.WithdrawCashResultPageObject;
 import com.hjs.publics.Util;
@@ -43,7 +44,7 @@ import com.hjs.testDate.GroupBuyInfo;
 public class TradeTestCase extends CommonAppiumTest{
 	private static String DEPOSITE_PRODUCT_NAME="黄XAutoTest产品170907165937";
 	private static String DEPOSITE_GROUPBUYPRODUCT_NAME="黄XAutoTest团购产品170919042116";
-	private static String DEPOSITE_TRANSPRODUCT_NAME="黄XAutoTest可转让产品170907165937";
+	private static String DEPOSITE_TRANSPRODUCT_NAME="黄XAutoTest可转让产品170918152608";
 	private static String CURRENTDEPOSITE_PRODUCT_NAME="恒存金-灵活理财";
 	private static String phoneNum="17052411184";
     @Test(priority = 1,description="理财页产品信息")
@@ -453,30 +454,29 @@ public class TradeTestCase extends CommonAppiumTest{
     public void testJoinGroupBuyProduct()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
-//    	CommonAppiumPage page=homepage.enterPersonEntrace();
-//    	String pageName=page.getClass().getName();
-//    	Assert.assertTrue(pageName.contains("MinePageObject"), "点击首页-我的入口未进入我的页面");
-//    	PersonSettingPageObject personSettingPage=((MinePageObject)page).enterPersonSetting();
-//    	Assert.assertTrue(personSettingPage.verifyInthisPage(), "进入我的个人头像，未出现安全退出按钮");
-//    	LoginPageObject loginPageObject=personSettingPage.logOut();
-//    	Assert.assertTrue(loginPageObject.verifyInthisPage(), "退出后未跳转到登录页面");
-//    	page=loginPageObject.switchAccount("17090720054");
-//		pageName=page.getClass().getName();
-//		Assert.assertTrue(pageName.contains("LoginPageObject"), "验证手机号后未进入登录页面");
-//		GesturePwd gesturePwd=((LoginPageObject)page).login("Hd666666");
-//		Assert.assertTrue(gesturePwd.verifyInthisPage(),"登录后未跳转到手势密码页");
-//    	Assert.assertEquals("请绘制您的手势密码", gesturePwd.verifyGestureTips(),"登录后未进入设置手密页");
-//    	String result=gesturePwd.setFirstGesturePwd(1,4,7,8);
-//    	Assert.assertEquals("请再画一次手势密码", result);
-//    	boolean setNextGestureResult=gesturePwd.setNextGesturePwd(1,4,7,8).verifyIsInHomePage();
-//    	Assert.assertTrue(setNextGestureResult, "第二次设置手势失败，未跳转到主页，主页我的入口未显示");
+    	CommonAppiumPage page=homepage.enterPersonEntrace();
+    	String pageName=page.getClass().getName();
+    	Assert.assertTrue(pageName.contains("MinePageObject"), "点击首页-我的入口未进入我的页面");
+    	PersonSettingPageObject personSettingPage=((MinePageObject)page).enterPersonSetting();
+    	Assert.assertTrue(personSettingPage.verifyInthisPage(), "进入我的个人头像，未出现安全退出按钮");
+    	LoginPageObject loginPageObject=personSettingPage.logOut();
+    	Assert.assertTrue(loginPageObject.verifyInthisPage(), "退出后未跳转到登录页面");
+    	page=loginPageObject.switchAccount("17090720054");
+		pageName=page.getClass().getName();
+		Assert.assertTrue(pageName.contains("LoginPageObject"), "验证手机号后未进入登录页面");
+		GesturePwd gesturePwd=((LoginPageObject)page).login("Hd666666");
+		Assert.assertTrue(gesturePwd.verifyInthisPage(),"登录后未跳转到手势密码页");
+    	Assert.assertEquals("请绘制您的手势密码", gesturePwd.verifyGestureTips(),"登录后未进入设置手密页");
+    	String result=gesturePwd.setFirstGesturePwd(1,4,7,8);
+    	Assert.assertEquals("请再画一次手势密码", result);
+    	boolean setNextGestureResult=gesturePwd.setNextGesturePwd(1,4,7,8).verifyIsInHomePage();
+    	Assert.assertTrue(setNextGestureResult, "第二次设置手势失败，未跳转到主页，主页我的入口未显示");
     	FinancialPageObject financialPage=homepage.enterFinancialPage();
     	Assert.assertTrue(financialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
     	DepositGroupBuyProductDetailPageObject depositGroupBuyProductDetailPage=financialPage.clickDepositGroupBuyProduct(DEPOSITE_GROUPBUYPRODUCT_NAME);
     	String startMonney=depositGroupBuyProductDetailPage.getStartMoney();
     	Assert.assertTrue(depositGroupBuyProductDetailPage.verifyInthisPage(), "点击团购产品，未出现团购产品页面");
-    	//page=depositGroupBuyProductDetailPage.joinGroupBuy(GroupBuyInfo.getGroupBuyShareCode());
-    	CommonAppiumPage page=depositGroupBuyProductDetailPage.joinGroupBuy(GroupBuyInfo.getGroupBuyShareCode());
+    	page=depositGroupBuyProductDetailPage.joinGroupBuy(GroupBuyInfo.getGroupBuyShareCode());
     	InvestGroupBuyPageObject investGroupBuyPage = null;
     	if(page.getClass().getName().contains("GroupedBuyDetailPageObject")){
     		GroupedBuyDetailPageObject groupedBuyDetail=(GroupedBuyDetailPageObject)page;
@@ -490,7 +490,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(investGroupBuyPage.verifyInthisPage(), "成团详情点击投资未跳转到团购投资页");
     	PayPageObject payPage=investGroupBuyPage.InvestGroupBuy(startMonney);
     	Assert.assertTrue(payPage.verifyInthisPage(), "提交团购投资申请后未跳转到支付页面");
-    	InvestResultPageObject investResultPage=payPage.payByBankCardWithoutCoupon("456123", "17052411227");
+    	InvestResultPageObject investResultPage=payPage.payByBankCardWithoutCoupon("123456", "17052411227");
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.equals("投资已成功")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
     	GroupedBuyDetailPageObject groupedBuyDetail=investResultPage.gotoGroupedBuyDetailPage();
@@ -514,7 +514,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(investGroupBuyPage.verifyInthisPage(), "成团详情点击投资未跳转到团购投资页");
     	PayPageObject payPage=investGroupBuyPage.InvestGroupBuy(getLvupBalance);
     	Assert.assertTrue(payPage.verifyInthisPage(), "提交团购投资申请后未跳转到支付页面");
-    	InvestResultPageObject investResultPage=payPage.payByBankCardWithoutCoupon("456123", "17052411227");
+    	InvestResultPageObject investResultPage=payPage.payByBankCardWithoutCoupon("123456", "17052411227");
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.equals("投资已成功")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
     	groupedBuyDetail=investResultPage.gotoGroupedBuyDetailPage();
@@ -525,7 +525,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	GroupBuyInfo.setCurrentReward(currentReward);
     	GroupBuyInfo.setLvupReward(lvupReward);
     }
-    @Test(priority = 23,expectedExceptions = Exception.class, expectedExceptionsMessageRegExp="找不到下架产品",description="下架团购产品",enabled = false)
+    @Test(priority = 23,expectedExceptions = Exception.class, expectedExceptionsMessageRegExp="找不到下架产品",description="下架团购产品")
     public void testOffGroupBuyProducts() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -534,13 +534,164 @@ public class TradeTestCase extends CommonAppiumTest{
     	financialPage.productPullOffAndFindProduct(DEPOSITE_GROUPBUYPRODUCT_NAME);
 
     }
-    @Test(priority = 24,description="可转让产品",enabled=false)
-    public void testTransProduct()throws Exception{
+    @Test(priority = 24,description="购买可转让产品")
+    public void testBuyTransProduct()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
+    	CommonAppiumPage page=homepage.enterPersonEntrace();
+    	String pageName=page.getClass().getName();
+    	Assert.assertTrue(pageName.contains("MinePageObject"), "点击首页-我的入口未进入我的页面");
+    	PersonSettingPageObject personSettingPage=((MinePageObject)page).enterPersonSetting();
+    	Assert.assertTrue(personSettingPage.verifyInthisPage(), "进入我的个人头像，未出现安全退出按钮");
+    	LoginPageObject loginPageObject=personSettingPage.logOut();
+    	Assert.assertTrue(loginPageObject.verifyInthisPage(), "退出后未跳转到登录页面");
+    	page=loginPageObject.switchAccount(phoneNum);
+		pageName=page.getClass().getName();
+		Assert.assertTrue(pageName.contains("LoginPageObject"), "验证手机号后未进入登录页面");
+		((LoginPageObject)page).login("hxnearc228");
+		Assert.assertTrue(homepage.verifyIsInHomePage(),"登录后未跳转到主页"); 
     	FinancialPageObject financialPage=homepage.enterFinancialPage();
     	Assert.assertTrue(financialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
     	DEPOSITE_TRANSPRODUCT_NAME=financialPage.testTransSPVProductInfo();
+    	DepositProductDetailPageObject depositProductDetailPage=financialPage.clickDepositProduct(DEPOSITE_TRANSPRODUCT_NAME);
+    	Assert.assertTrue(depositProductDetailPage.verifyInthisPage(), "理财页点击定期产品后未出现定期理财产品详情页");
+    	String startMonney=depositProductDetailPage.getStartMoney();
+    	InvestPageObject investPage=depositProductDetailPage.clickPayBtn();
+    	Assert.assertTrue(investPage.verifyInthisPage(), "点击立即投资后未进入到投资页");
+    	PayPageObject payPage=investPage.invest(startMonney);
+    	Assert.assertTrue(payPage.verifyInthisPage(), "点击确认投资未跳转到支付页面");
+    	InvestResultPageObject investResultPage=payPage.payByBankCardWithoutCoupon("123456", "17052411227");
+    	Assert.assertTrue(investResultPage.verifyInthisPage(), "支付后未跳转到支付结果页面");
+    	String investResult=investResultPage.getInvestResult();
+    	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
+    }
+    @Test(priority = 25,description="转让产品")
+    public void testTransTransProduct()throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
+    	HomePageObject homepage=new HomePageObject(driver); 
+    	CommonAppiumPage page=homepage.enterPersonEntrace();
+    	String pageName=page.getClass().getName();
+    	Assert.assertTrue(pageName.contains("MinePageObject"), "点击首页-我的入口未进入我的页面");
+    	MyDepositeProductPageObject myDepositeProductPage=((MinePageObject)page).enterMyDepositeProductPage();
+    	Assert.assertTrue(myDepositeProductPage.verifyInthisPage(), "点击定期理财未进入我的理财产品页");
+    	TransDetailPageObject transDetailPage=myDepositeProductPage.transApply(DEPOSITE_TRANSPRODUCT_NAME);
+    	Assert.assertTrue(transDetailPage.verifyInthisPage(), "申请转让后未跳转到转让详情页面");
+    	TransConfirmPageObject transConfirmPage=transDetailPage.applyTrans();
+    	Assert.assertTrue(transConfirmPage.verifyInthisPage(), "申请转让后未跳转到转让确认页面");
+    	TransResultPageObject transResultPage=transConfirmPage.confirmTrans("123456");
+    	Assert.assertTrue(transResultPage.verifyInthisPage(), "申请转让确认后未跳转到转让结果页面");
+    	String result=transResultPage.getTransResult();
+    	Assert.assertTrue(result.equals("转让申请已提交")||result.contains("已受理"), "转让失败，转让结果为:"+result);
+    }
+    @Test(priority = 26,description="撤销转让产品")
+    public void testCancleTransProduct()throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
+    	HomePageObject homepage=new HomePageObject(driver); 
+    	CommonAppiumPage page=homepage.enterPersonEntrace();
+    	String pageName=page.getClass().getName();
+    	Assert.assertTrue(pageName.contains("MinePageObject"), "点击首页-我的入口未进入我的页面");
+    	MyDepositeProductPageObject myDepositeProductPage=((MinePageObject)page).enterMyDepositeProductPage();
+    	Assert.assertTrue(myDepositeProductPage.verifyInthisPage(), "点击定期理财未进入我的理财产品页");
+    	MyDepositeProductDetailPageObject myDepositeProductDetailPage=myDepositeProductPage.enterTransProductDetail(DEPOSITE_TRANSPRODUCT_NAME);
+    	Assert.assertTrue(myDepositeProductDetailPage.verifyInthisPage(), "点击产品后未跳转到我的产品详情页面");
+    	TransCancleDetailPageObject transCancleDetailPage=myDepositeProductDetailPage.cancelTrans();
+    	Assert.assertTrue(transCancleDetailPage.verifyInthisPage(), "撤销转让后未跳转到撤销转让详情页面");
+    	TransCancelResultPageObject transCancelResultPage=transCancleDetailPage.cancelTrans("123456");
+    	Assert.assertTrue(transCancelResultPage.verifyInthisPage(), "撤销转让输入密码后未跳转到撤销转让结果页面");
+    	String result=transCancelResultPage.getTransCancelResult();
+    	Assert.assertTrue(result.equals("撤销成功")||result.contains("已受理"), "撤销转让失败，撤销转让结果为:"+result);
+    }
+    @Test(priority = 27,description="受让产品")
+    public void testAcceptTransProduct()throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
+    	HomePageObject homepage=new HomePageObject(driver); 
+    	CommonAppiumPage page=homepage.enterPersonEntrace();
+    	String pageName=page.getClass().getName();
+    	Assert.assertTrue(pageName.contains("MinePageObject"), "点击首页-我的入口未进入我的页面");
+    	MyDepositeProductPageObject myDepositeProductPage=((MinePageObject)page).enterMyDepositeProductPage();
+    	Assert.assertTrue(myDepositeProductPage.verifyInthisPage(), "点击定期理财未进入我的理财产品页");
+    	String transProdStatus=myDepositeProductPage.getTransProductStatus(DEPOSITE_TRANSPRODUCT_NAME);
+    	if(transProdStatus.equals("投资中")){//如果产品在投资中则再转让
+	    	TransDetailPageObject transDetailPage=myDepositeProductPage.transApply(DEPOSITE_TRANSPRODUCT_NAME);
+	    	Assert.assertTrue(transDetailPage.verifyInthisPage(), "申请转让后未跳转到转让详情页面");
+	    	TransConfirmPageObject transConfirmPage=transDetailPage.applyTrans();
+	    	Assert.assertTrue(transConfirmPage.verifyInthisPage(), "申请转让后未跳转到转让确认页面");
+	    	TransResultPageObject transResultPage=transConfirmPage.confirmTrans("123456");
+	    	Assert.assertTrue(transResultPage.verifyInthisPage(), "申请转让确认后未跳转到转让结果页面");
+	    	String result=transResultPage.getTransResult();
+	    	Assert.assertTrue(result.equals("转让申请已提交")||result.contains("已受理"), "转让失败，转让结果为:"+result);
+    	}
+    	//-----登录另一个账号受让产品-----
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
+    	homepage=new HomePageObject(driver); 
+    	page=homepage.enterPersonEntrace();
+    	pageName=page.getClass().getName();
+    	Assert.assertTrue(pageName.contains("MinePageObject"), "点击首页-我的入口未进入我的页面");
+    	PersonSettingPageObject personSettingPage=((MinePageObject)page).enterPersonSetting();
+    	Assert.assertTrue(personSettingPage.verifyInthisPage(), "进入我的个人头像，未出现安全退出按钮");
+    	LoginPageObject loginPageObject=personSettingPage.logOut();
+    	Assert.assertTrue(loginPageObject.verifyInthisPage(), "退出后未跳转到登录页面");
+    	page=loginPageObject.switchAccount("17090720054");
+		pageName=page.getClass().getName();
+		Assert.assertTrue(pageName.contains("LoginPageObject"), "验证手机号后未进入登录页面");
+		GesturePwd gesturePwd=((LoginPageObject)page).login("Hd666666");
+		if(gesturePwd.verifyInthisPage()){
+			Assert.assertTrue(gesturePwd.verifyInthisPage(),"登录后未跳转到手势密码页");
+	    	Assert.assertEquals("请绘制您的手势密码", gesturePwd.verifyGestureTips(),"登录后未进入设置手密页");
+	    	String result=gesturePwd.setFirstGesturePwd(1,4,7,8);
+	    	Assert.assertEquals("请再画一次手势密码", result);
+	    	boolean setNextGestureResult=gesturePwd.setNextGesturePwd(1,4,7,8).verifyIsInHomePage();
+	    	Assert.assertTrue(setNextGestureResult, "第二次设置手势失败，未跳转到主页，主页我的入口未显示"); 
+		}
+    	//-----登录另一个账号受让产品-----
+    	FinancialPageObject financialPage=homepage.enterFinancialPage();
+    	Assert.assertTrue(financialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
+    	DepositTransProductDetailPageObject depositTransProductDetailPage=financialPage.clickDepositTransProduct(DEPOSITE_TRANSPRODUCT_NAME);
+    	Assert.assertTrue(depositTransProductDetailPage.verifyInthisPage(), "理财页点击定期产品后未出现定期理财产品详情页");
+    	InvestTransPageObject investTransPage=depositTransProductDetailPage.clickPayBtn();
+    	Assert.assertTrue(investTransPage.verifyInthisPage(), "点击立即投资后未进入到投资转让产品页");
+    	PayPageObject payPage=investTransPage.investTransPro();
+    	Assert.assertTrue(payPage.verifyInthisPage(), "点击确认投资未跳转到支付页面");
+    	InvestResultPageObject investResultPage=payPage.payByBankCardWithoutCoupon("123456", "17052411227");
+    	Assert.assertTrue(investResultPage.verifyInthisPage(), "支付后未跳转到支付结果页面");
+    	String investResult=investResultPage.getInvestResult();
+    	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
+    }
+    @Test(priority = 28,description="转让受让产品")
+    public void testTransAcceptTransProduct()throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
+    	HomePageObject homepage=new HomePageObject(driver); 
+    	CommonAppiumPage page=homepage.enterPersonEntrace();
+    	String pageName=page.getClass().getName();
+    	Assert.assertTrue(pageName.contains("MinePageObject"), "点击首页-我的入口未进入我的页面");
+    	MyDepositeProductPageObject myDepositeProductPage=((MinePageObject)page).enterMyDepositeProductPage();
+    	Assert.assertTrue(myDepositeProductPage.verifyInthisPage(), "点击定期理财未进入我的理财产品页");
+    	TransDetailPageObject transDetailPage=myDepositeProductPage.acceptTransProdTransApply(DEPOSITE_TRANSPRODUCT_NAME);
+    	Assert.assertTrue(transDetailPage.verifyInthisPage(), "申请转让后未跳转到转让详情页面");
+    	TransConfirmPageObject transConfirmPage=transDetailPage.applyTrans();
+    	Assert.assertTrue(transConfirmPage.verifyInthisPage(), "申请转让后未跳转到转让确认页面");
+    	TransResultPageObject transResultPage=transConfirmPage.confirmTrans("123456");
+    	Assert.assertTrue(transResultPage.verifyInthisPage(), "申请转让确认后未跳转到转让结果页面");
+    	String result=transResultPage.getTransResult();
+    	Assert.assertTrue(result.equals("转让申请已提交")||result.contains("已受理"), "转让失败，转让结果为:"+result);
+    }
+    @Test(priority = 29,description="撤销转让受让产品")
+    public void testCancleTransAcceptTransProduct()throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
+    	HomePageObject homepage=new HomePageObject(driver); 
+    	CommonAppiumPage page=homepage.enterPersonEntrace();
+    	String pageName=page.getClass().getName();
+    	Assert.assertTrue(pageName.contains("MinePageObject"), "点击首页-我的入口未进入我的页面");
+    	MyDepositeProductPageObject myDepositeProductPage=((MinePageObject)page).enterMyDepositeProductPage();
+    	Assert.assertTrue(myDepositeProductPage.verifyInthisPage(), "点击定期理财未进入我的理财产品页");
+    	MyDepositeProductDetailPageObject myDepositeProductDetailPage=myDepositeProductPage.enterAcceptTransProductDetail(DEPOSITE_TRANSPRODUCT_NAME);
+    	Assert.assertTrue(myDepositeProductDetailPage.verifyInthisPage(), "点击产品后未跳转到我的产品详情页面");
+    	TransCancleDetailPageObject transCancleDetailPage=myDepositeProductDetailPage.cancelTrans();
+    	Assert.assertTrue(transCancleDetailPage.verifyInthisPage(), "撤销转让后未跳转到撤销转让详情页面");
+    	TransCancelResultPageObject transCancelResultPage=transCancleDetailPage.cancelTrans("123456");
+    	Assert.assertTrue(transCancelResultPage.verifyInthisPage(), "撤销转让输入密码后未跳转到撤销转让结果页面");
+    	String result=transCancelResultPage.getTransCancelResult();
+    	Assert.assertTrue(result.equals("撤销成功")||result.contains("已受理"), "撤销转让失败，撤销转让结果为:"+result);
     }
     /*
      * 请把赎回放最后一个用例*/

@@ -11,8 +11,8 @@ import com.hjs.config.CommonAppiumPage;
 public class WithdrawCashResultPageObject extends CommonAppiumPage{
 
 	
-	@AndroidFindBy(id="status_dec")
-	//@AndroidFindBy(id="withdraw_result_status_dec")
+	//@AndroidFindBy(id="status_dec")
+	@AndroidFindBy(id="withdraw_result_status_dec")
 	private AndroidElement statusDec;		//提现结果描述
 	@AndroidFindBy(id="filled_view")
 	private AndroidElement seeBalanceEntrance;		//查看余额入口
