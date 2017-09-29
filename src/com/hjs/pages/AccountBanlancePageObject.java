@@ -17,10 +17,14 @@ public class AccountBanlancePageObject extends CommonAppiumPage{
 	private AndroidElement withdrawCashEntrance;		//提现入口
 	@AndroidFindBy(id="btn_balance_recharge")
 	private AndroidElement rechargeEntrance;		//充值入口
+	@AndroidFindBy(id="imgv_balance_tips")
+	private AndroidElement guideTips;		//引导按钮
+	
 	
 	private By availableBalanceLocator=By.id("tv_available_balance");
 	public AccountBanlancePageObject(AndroidDriver<AndroidElement> driver) {
 		super(driver);
+		this.skipGuideTips();
 	}
 	public int getAvailableBalance(){
 		super.waitEleUnVisible(By.id("refresh_animationView"), super.getWaitTime());//等待刷新图标消失
@@ -30,6 +34,11 @@ public class AccountBanlancePageObject extends CommonAppiumPage{
 		doubleAvailableBalance=doubleAvailableBalance/100; //由于去掉小数点，所以除以100还原数值
 		int intAvailableBalance=(int)doubleAvailableBalance; //取整
 		return intAvailableBalance;
+	}
+	public void skipGuideTips(){
+		if(super.isElementExsit(5, guideTips)){
+			clickEle(guideTips,"引导按钮");
+		}
 	}
 	public WithdrawCashPageObject gotoWithdrawCashPage(){
 		clickEle(withdrawCashEntrance,"提现入口");

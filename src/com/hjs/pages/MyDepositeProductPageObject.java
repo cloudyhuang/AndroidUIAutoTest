@@ -33,6 +33,11 @@ public class MyDepositeProductPageObject extends CommonAppiumPage{
 	private AndroidElement filterBtn;		//筛选按钮
 	@AndroidFindBy(id="refresh_animationView")
 	private AndroidElement refreshView;		//刷新图标
+	@AndroidFindBy(id="tv_filter_all")
+	private AndroidElement allFilter;		//全部持有筛选项
+	@AndroidFindBy(id="tv_filter_transfer")
+	private AndroidElement transferFilter;		//可转让筛选项
+	
 	
 	private By productNameLocator=By.id("textView_product");
 	private By refreshViewLocator=By.id("refresh_animationView");
@@ -110,7 +115,7 @@ public class MyDepositeProductPageObject extends CommonAppiumPage{
 			clickEle(applyTransBtn,"申请转让按钮");
 		}
 		catch(Exception e){
-			Assert.assertTrue(false,"未找到\""+prodName+"\"理财产品");
+			Assert.assertTrue(false,"未找到\""+"[受让]"+prodName+"\"受让产品");
 		}
 		return new TransDetailPageObject(driver);
 		
@@ -118,7 +123,9 @@ public class MyDepositeProductPageObject extends CommonAppiumPage{
 	public void filterTransProduct(){
 		clickEle(filterBtn,"筛选按钮");
 		threadsleep(1000);
-		clickPoint(54,283);// 点击可转让
+		//clickPoint(54,283);// 点击可转让
+		clickEle(transferFilter,"可转让筛选项");
+		waitEleUnVisible(refreshViewLocator, 30);
 		swipeToDown(1000,1);	//下滑刷新
 		waitEleUnVisible(refreshViewLocator, 30);
 	}

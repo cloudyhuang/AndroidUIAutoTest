@@ -61,6 +61,16 @@ public class FinancialPageObject extends CommonAppiumPage{
 		clickEle(DepositProduct,"活期产品名称："+DepositProductName);
 		return new CurrentDepositProductDetailPageObject(driver);
 	}
+	public FundDetailPageObject clickFundProduct(String fundProdName) throws Exception{
+		//driver.scrollTo(DepositProductName);
+		this.clickJiJin();
+		waitEleUnVisible(refreshViewLocator, 30);
+		String productXpath="//android.widget.TextView[@text='"+fundProdName+"']";
+		super.scrollTo(productXpath);
+		AndroidElement fundProduct=driver.findElement(By.xpath("//android.widget.TextView[@text='"+fundProdName+"']"));
+		clickEle(fundProduct,"基金产品名称："+fundProdName);
+		return new FundDetailPageObject(driver);
+	}
 	public String testProductInfo() throws Exception{
 		String currentDate=Util.getcurrentDate();
 		String productName="黄XAutoTest产品"+ currentDate;
@@ -230,6 +240,18 @@ public class FinancialPageObject extends CommonAppiumPage{
     	int endX =elSize.getWidth()+startX;
     	int endY =elSize.getHeight()+startY;
     	int centerX = (int) ((startX+endX)*0.38);
+    	int centerY = (startY+endY)/2;
+    	new TouchAction((MobileDriver) driver).tap(centerX, centerY).perform();
+	}
+	public void clickJiJin(){
+		AndroidElement titleSwitchEle=driver.findElement(titleSwitchLocator);
+		Point elpoint = titleSwitchEle.getLocation();
+    	Dimension elSize = titleSwitchEle.getSize();
+    	int startX = elpoint.getX();
+    	int startY = elpoint.getY();
+    	int endX =elSize.getWidth()+startX;
+    	int endY =elSize.getHeight()+startY;
+    	int centerX = (int) ((startX+endX)*0.61);
     	int centerY = (startY+endY)/2;
     	new TouchAction((MobileDriver) driver).tap(centerX, centerY).perform();
 	}

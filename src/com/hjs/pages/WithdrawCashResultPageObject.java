@@ -14,7 +14,8 @@ public class WithdrawCashResultPageObject extends CommonAppiumPage{
 	//@AndroidFindBy(id="status_dec")
 	@AndroidFindBy(id="withdraw_result_status_dec")
 	private AndroidElement statusDec;		//提现结果描述
-	@AndroidFindBy(id="filled_view")
+	//@AndroidFindBy(id="filled_view")
+	@AndroidFindBy(id="withdraw_result_balance_detail")
 	private AndroidElement seeBalanceEntrance;		//查看余额入口
 	
 	private By statusDecLocator=By.id("withdraw_result_status_dec");

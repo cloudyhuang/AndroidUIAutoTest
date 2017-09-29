@@ -116,6 +116,7 @@ public class DepositGroupBuyProductDetailPageObject extends CommonAppiumPage{
 		}
 		if (isElementExsit(5, highestExtraProfitLocator)) {
 			clickEle(payBtn, "点击参团按钮");
+			clickEle(joinGroupBuyBtn,"加入团按钮");
 			sendKeys(joinGroupBuyCode1, String.valueOf(joinCode.charAt(0)));
 			joinGroupBuyCode2.clear();
 			sendKeys(joinGroupBuyCode2, String.valueOf(joinCode.charAt(1)));

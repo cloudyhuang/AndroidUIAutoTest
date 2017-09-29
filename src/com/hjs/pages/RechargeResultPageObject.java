@@ -12,8 +12,8 @@ public class RechargeResultPageObject extends CommonAppiumPage{
 	@AndroidFindBy(id="recharge_result_status_dec")
 	//@AndroidFindBy(id="status_dec")
 	private AndroidElement statusDec;		//充值结果描述
-	//@AndroidFindBy(id="recharge_result_balance_detail")
-	@AndroidFindBy(id="stroke_view")
+	@AndroidFindBy(id="recharge_result_balance_detail")
+	//@AndroidFindBy(id="stroke_view")
 	private AndroidElement seeBalanceEntrance;		//查看余额入口
 	
 	private By statusDecLocator=By.id("recharge_result_status_dec");
