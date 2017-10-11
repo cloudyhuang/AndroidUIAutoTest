@@ -1,8 +1,18 @@
 package com.hjs.pages;
 
+import java.io.IOException;
+import java.io.Reader;
+
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.openqa.selenium.By;
 
 import com.hjs.config.CommonAppiumPage;
+import com.hjs.db.MemberFundAccount;
+import com.hjs.mybatis.inter.EifMemberOperation;
+import com.hjs.testDate.Account;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
@@ -35,15 +45,36 @@ public class FundDetailPageObject extends CommonAppiumPage{
 		super(driver);
 		this.skipEnterYMTips();
 	}
-	public FundPurchasePageObject purchaseFund(){
+	public CommonAppiumPage purchaseFund() throws IOException{
 		clickEle(fundPurchaseBtn,"基金申购按钮");
-		return new FundPurchasePageObject(driver);
+		if(this.isExitFundAccount("17092807345")){//Account.getCurrentAccount()
+			return new FundPurchasePageObject(driver);
+		}
+		else return new FundAccountCreatPageObject(driver);
+		
 	}
 	public void skipEnterYMTips(){
 		if(super.isElementExsit(5, enterYMBtn)){
 			clickEle(enterYMBtn,"进入盈米按钮");
 		}
-		
+	}
+	public boolean isExitFundAccount(String phoneNum) throws IOException{
+		String resource = "eifMemberConfig.xml";
+	    Reader reader = Resources.getResourceAsReader(resource);  
+	    SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
+	    reader.close();  
+	    SqlSession session = sqlSessionFactory.openSession();
+	    
+	    try {
+	    	EifMemberOperation eifMemberOperation=session.getMapper(EifMemberOperation.class);
+	    	MemberFundAccount memberFundAccount=eifMemberOperation.getFundAccount(phoneNum);
+	    	if(memberFundAccount==null){
+	    		return false;
+	    	}
+	    	else return true;
+	    } finally {
+	        session.close();
+	    }
 	}
 	public boolean verifyInthisPage(){
 		return isElementExsit(fundPurchaseBtnLocator);

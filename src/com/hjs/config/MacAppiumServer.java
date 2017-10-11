@@ -10,6 +10,9 @@ import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecuteResultHandler;
 import org.apache.commons.exec.DefaultExecutor;
 
+import com.hjs.publics.ShellUtils;
+import com.hjs.publics.ShellUtils.CommandResult;
+
 /**
  * @author huangxiao
  * @version 创建时间：2017年8月17日 下午2:24:12 mac os启动appium服务
@@ -17,12 +20,45 @@ import org.apache.commons.exec.DefaultExecutor;
 public class MacAppiumServer extends AppiumServer {
 	@Override
 	public void startServer(String udid,boolean isDebug) {
+		if(!isDebug){
+			String[] commands1 = new String[] { "pkill Nox", "pkill VBox" };	//结束模拟器进程
+			CommandResult result = ShellUtils.execCommand(commands1, false);
+			try {
+				Thread.currentThread().sleep(5000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			commands1 = new String[] { "cd /Applications", "open Nox\\ App\\ Player.app" };
+			ShellUtils.execCommand(commands1, false);
+			try {
+				Thread.currentThread().sleep(5000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			commands1 = new String[] { "cd /Applications", "open Nox\\ App\\ Player.app" };
+			ShellUtils.execCommand(commands1, false);
+			try {
+				Thread.currentThread().sleep(60000);	//等待模拟器60s启动
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		
     	String cmd1="adb kill-server";
     	String cmd2="adb start-server";
-    	String cmd3="adb connect 127.0.0.1:62001";
+    	String cmd3="adb connect "+udid;
 		runCommand(cmd1);
 		runCommand(cmd2);
 		runCommand(cmd3);
+		try {
+			Thread.currentThread().sleep(2000);	
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		String[] commands2 = new String[]{"exec adb -s "+"127.0.0.1:62001"+" shell","cd data/local/tmp","rm *.apk"};	//删除缓存apk
+		CommandResult result = ShellUtils.execCommand(commands2,false);
+		System.out.println("删除缓存apk"+result.successMsg);
+		System.out.println("删除缓存apk"+result.errorMsg);
 		if(isDebug){}
 		else {
 			String cmd4 = "adb -s " + udid + " uninstall com.evergrande.eif.android.hengjiaosuo"; // 卸载app

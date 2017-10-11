@@ -13,6 +13,11 @@ import com.hjs.pages.DepositGroupBuyProductDetailPageObject;
 import com.hjs.pages.DepositProductDetailPageObject;
 import com.hjs.pages.DepositTransProductDetailPageObject;
 import com.hjs.pages.FinancialPageObject;
+import com.hjs.pages.FundAccountCreatPageObject;
+import com.hjs.pages.FundAccountCreatVerifySmsCodePageObject;
+import com.hjs.pages.FundDetailPageObject;
+import com.hjs.pages.FundPurchasePageObject;
+import com.hjs.pages.FundPurchaseResultPageObject;
 import com.hjs.pages.GesturePwd;
 import com.hjs.pages.GroupedBuyDetailPageObject;
 import com.hjs.pages.HomePageObject;
@@ -38,13 +43,15 @@ import com.hjs.pages.TransResultPageObject;
 import com.hjs.pages.WithdrawCashPageObject;
 import com.hjs.pages.WithdrawCashResultPageObject;
 import com.hjs.publics.Util;
+import com.hjs.testDate.Account;
 import com.hjs.testDate.GroupBuyInfo;
 
 
 public class TradeTestCase extends CommonAppiumTest{
 	private static String DEPOSITE_PRODUCT_NAME="黄XAutoTest产品170907165937";
 	private static String DEPOSITE_GROUPBUYPRODUCT_NAME="黄XAutoTest团购产品170919042116";
-	private static String DEPOSITE_TRANSPRODUCT_NAME="黄XAutoTest可转让产品170918152608";
+	private static String DEPOSITE_TRANSPRODUCT_NAME="黄XAutoTest可转让产品171010002539";
+	private static String FUND_PRODUCT_NAME="国寿安保增金宝货币";
 	private static String CURRENTDEPOSITE_PRODUCT_NAME="恒存金-灵活理财";
 	private static String phoneNum="17052411184";
     @Test(priority = 1,description="理财页产品信息")
@@ -405,6 +412,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	PayPageObject payPage=investGroupBuyPage.InvestGroupBuy(startMonney);
     	Assert.assertTrue(payPage.verifyInthisPage(), "提交团购投资申请后未跳转到支付页面");
     	InvestResultPageObject investResultPage=payPage.payByBankCardWithoutCoupon("123456", "17052411227");
+    	Assert.assertTrue(investResultPage.verifyInthisPage(), "支付后未跳转到支付结果页面");
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.equals("投资已成功")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
     	int groupBuyPeopleNum=GroupBuyInfo.getGroupBuyPeopleNum();
@@ -445,6 +453,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	payPage=investGroupBuyPage.InvestGroupBuy(startMonney);
     	Assert.assertTrue(payPage.verifyInthisPage(), "提交团购投资申请后未跳转到支付页面");
     	InvestResultPageObject investResultPage=payPage.payByBankCardWithCoupon("123456", "17052411227",couponId);
+    	Assert.assertTrue(investResultPage.verifyInthisPage(), "支付后未跳转到支付结果页面");
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.equals("投资已成功")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
     	double groupBuyedAmountm=GroupBuyInfo.getGroupBuyedAmountm();
@@ -491,6 +500,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	PayPageObject payPage=investGroupBuyPage.InvestGroupBuy(startMonney);
     	Assert.assertTrue(payPage.verifyInthisPage(), "提交团购投资申请后未跳转到支付页面");
     	InvestResultPageObject investResultPage=payPage.payByBankCardWithoutCoupon("123456", "17052411227");
+    	Assert.assertTrue(investResultPage.verifyInthisPage(), "支付后未跳转到支付结果页面");
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.equals("投资已成功")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
     	GroupedBuyDetailPageObject groupedBuyDetail=investResultPage.gotoGroupedBuyDetailPage();
@@ -515,6 +525,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	PayPageObject payPage=investGroupBuyPage.InvestGroupBuy(getLvupBalance);
     	Assert.assertTrue(payPage.verifyInthisPage(), "提交团购投资申请后未跳转到支付页面");
     	InvestResultPageObject investResultPage=payPage.payByBankCardWithoutCoupon("123456", "17052411227");
+    	Assert.assertTrue(investResultPage.verifyInthisPage(), "支付后未跳转到支付结果页面");
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.equals("投资已成功")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
     	groupedBuyDetail=investResultPage.gotoGroupedBuyDetailPage();
@@ -693,6 +704,52 @@ public class TradeTestCase extends CommonAppiumTest{
     	String result=transCancelResultPage.getTransCancelResult();
     	Assert.assertTrue(result.equals("撤销成功")||result.contains("已受理"), "撤销转让失败，撤销转让结果为:"+result);
     }
+    @Test(priority = 30,description="基金开户",enabled=false)
+    public void testCreatFundAccount()throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
+    	HomePageObject homepage=new HomePageObject(driver); 
+    	CommonAppiumPage page=homepage.enterPersonEntrace();
+    	String pageName=page.getClass().getName();
+    	Assert.assertTrue(pageName.contains("MinePageObject"), "点击首页-我的入口未进入我的页面");
+    	PersonSettingPageObject personSettingPage=((MinePageObject)page).enterPersonSetting();
+    	Assert.assertTrue(personSettingPage.verifyInthisPage(), "进入我的个人头像，未出现安全退出按钮");
+    	LoginPageObject loginPageObject=personSettingPage.logOut();
+    	Assert.assertTrue(loginPageObject.verifyInthisPage(), "退出后未跳转到登录页面");
+    	String switchPhoneNum=Account.getLoginAccount();
+    	page=loginPageObject.switchAccount(switchPhoneNum);
+		pageName=page.getClass().getName();
+		Assert.assertTrue(pageName.contains("LoginPageObject"), "验证手机号后未进入登录页面");
+		((LoginPageObject)page).login(Account.getLoginPwd());	
+		Assert.assertTrue(homepage.verifyIsInHomePage(),"登录后未跳转到主页"); 
+		Account.setCurrentAccount(switchPhoneNum);
+    	FinancialPageObject financialPage=homepage.enterFinancialPage();
+    	Assert.assertTrue(financialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
+    	FundDetailPageObject fundDetailPage=financialPage.clickFundProduct(FUND_PRODUCT_NAME);
+    	Assert.assertTrue(fundDetailPage.verifyInthisPage(), "未进入基金详情页");
+    	page=fundDetailPage.purchaseFund();
+    	pageName=page.getClass().getName();
+    	Assert.assertTrue(pageName.contains("FundAccountCreatPageObject"),switchPhoneNum+"该账户已开通基金账户");
+    	FundAccountCreatVerifySmsCodePageObject fundAccountCreatVerifySmsCodePage=((FundAccountCreatPageObject)page).creatFundAccount();
+    	Assert.assertTrue(fundAccountCreatVerifySmsCodePage.verifyInthisPage(), "确认开户后未跳转到短信验证码输入页面");
+    	FundPurchasePageObject fundPurchasePage=fundAccountCreatVerifySmsCodePage.inputSmsCode(switchPhoneNum);
+    	Assert.assertTrue(fundPurchasePage.verifyInthisPage(), "输入完毕验证码后未回到基金申购页面");
+    }
+    @Test(priority = 31,description="基金申购",enabled=false)
+    public void testPurchaseFund()throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
+    	HomePageObject homepage=new HomePageObject(driver); 
+    	FinancialPageObject financialPage=homepage.enterFinancialPage();
+    	Assert.assertTrue(financialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
+    	FundDetailPageObject fundDetailPage=financialPage.clickFundProduct(FUND_PRODUCT_NAME);
+    	Assert.assertTrue(fundDetailPage.verifyInthisPage(), "未进入基金详情页");
+    	CommonAppiumPage page=fundDetailPage.purchaseFund();
+    	String pageName=page.getClass().getName();
+    	Assert.assertTrue(pageName.contains("FundPurchasePageObject"),"当前账户未开通基金账户");
+    	FundPurchaseResultPageObject fundPurchaseResultPage=((FundPurchasePageObject)page).purchaseFund("100", "456123");
+    	Assert.assertTrue(fundPurchaseResultPage.verifyInthisPage(), "申购基金后未跳转到申购结果页面");
+    	String purchaseResult=fundPurchaseResultPage.getPurchaseResult();
+    	Assert.assertTrue(purchaseResult.contains("成功"), "申购失败，"+purchaseResult);
+    }
     /*
      * 请把赎回放最后一个用例*/
     @Test(priority = 40,description="赎回活期产品到余额")
@@ -711,9 +768,14 @@ public class TradeTestCase extends CommonAppiumTest{
 		pageName=page.getClass().getName();
 		Assert.assertTrue(pageName.contains("LoginPageObject"), "验证手机号后未进入登录页面");
 		GesturePwd gesturePwd=((LoginPageObject)page).login("a123456");
-		Assert.assertTrue(gesturePwd.verifyInthisPage(),"登录后未跳转到手势密码页");
-		homepage=gesturePwd.skipGesturePwd();	//跳过手势密码，无需再次测试
-		Assert.assertTrue(homepage.verifyIsInHomePage(), "跳过手势密码设置后未进入主页");
+		if(gesturePwd.verifyInthisPage()){
+			Assert.assertTrue(gesturePwd.verifyInthisPage(),"登录后未跳转到手势密码页");
+	    	Assert.assertEquals("请绘制您的手势密码", gesturePwd.verifyGestureTips(),"登录后未进入设置手密页");
+	    	String result=gesturePwd.setFirstGesturePwd(1,4,7,8);
+	    	Assert.assertEquals("请再画一次手势密码", result);
+	    	boolean setNextGestureResult=gesturePwd.setNextGesturePwd(1,4,7,8).verifyIsInHomePage();
+	    	Assert.assertTrue(setNextGestureResult, "第二次设置手势失败，未跳转到主页，主页我的入口未显示"); 
+		}
     	FinancialPageObject FinancialPage=homepage.enterFinancialPage();
     	Assert.assertTrue(FinancialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
     	CurrentDepositProductDetailPageObject currentDepositProductDetailPage=FinancialPage.clickCurrentDepositProduct(CURRENTDEPOSITE_PRODUCT_NAME);
@@ -726,6 +788,23 @@ public class TradeTestCase extends CommonAppiumTest{
     	String redeemResult=redeemResultPage.getRedeemResult();
     	Assert.assertTrue(redeemResult.equals("提交成功"), "投资失败，投资结果为:"+redeemResult);
     }
-
+    /*
+     * 请把赎回放最后一个用例*/
+    @Test(priority = 41,description="赎回活期产品到银行卡")
+    public void testRedeemToBankCard() throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
+    	HomePageObject homepage=new HomePageObject(driver); 
+    	FinancialPageObject FinancialPage=homepage.enterFinancialPage();
+    	Assert.assertTrue(FinancialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
+    	CurrentDepositProductDetailPageObject currentDepositProductDetailPage=FinancialPage.clickCurrentDepositProduct(CURRENTDEPOSITE_PRODUCT_NAME);
+    	Assert.assertTrue(currentDepositProductDetailPage.verifyInthisPage(), "理财页点击活期产品后未出现活期理财产品详情页");
+    	String redeemAmount="1";
+    	RedeemPageObject redeemPage=currentDepositProductDetailPage.clickRansomBtn();
+    	Assert.assertTrue(redeemPage.verifyInthisPage(), "点击赎回后未进入到赎回页");
+    	RedeemResultPageObject redeemResultPage=redeemPage.redeemToBankCard(redeemAmount, "111111");
+    	Assert.assertTrue(redeemResultPage.verifyInthisPage(), "赎回后未跳转到赎回结果页面");
+    	String redeemResult=redeemResultPage.getRedeemResult();
+    	Assert.assertTrue(redeemResult.equals("提交成功"), "投资失败，投资结果为:"+redeemResult);
+    }
 
 }

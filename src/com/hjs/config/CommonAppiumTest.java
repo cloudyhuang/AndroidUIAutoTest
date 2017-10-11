@@ -67,7 +67,7 @@ public class CommonAppiumTest {
         File app = new File(appDir, "app2.4.apk");
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, udid); 
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "4.4");
+        //capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "4.4");
         capabilities.setCapability(MobileCapabilityType.APP, app.getAbsolutePath());
         capabilities.setCapability("appPackage", "com.evergrande.eif.android.hengjiaosuo");
         capabilities.setCapability("unicodeKeyboard", true);	//支持中文

@@ -111,7 +111,10 @@ public class DepositGroupBuyProductDetailPageObject extends CommonAppiumPage{
 	}
 
 	public CommonAppiumPage joinGroupBuy(String joinCode) throws Exception {
-		if(joinCode.length()>4){
+		if(joinCode==null){
+			throw new Exception("邀请码为空！");
+		}
+		if(joinCode!=null&&joinCode.length()>4){
 			throw new Exception("加入邀请码超过4位");
 		}
 		if (isElementExsit(5, highestExtraProfitLocator)) {

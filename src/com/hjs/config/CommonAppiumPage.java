@@ -75,6 +75,9 @@ public class CommonAppiumPage {
         	catch(NoSuchElementException e){
         		assertTrue("没有找到目标元素－－"+str,false);
         	}
+            catch(TimeoutException e){
+        		assertTrue("超时"+WAIT_TIME+"秒，元素\""+str+"\"为不可点击状态！",false);
+        	}
             return true;
         } else {
             print(str + "为空，点击错误");
@@ -269,7 +272,7 @@ public class CommonAppiumPage {
     	int y_click = y * screen_height_execute_phone / 1280; //y coordinates on execute phone
     	driver.tap(1, x_click, y_click, 0);
     }
-    public void clickNativeEle(WebElement el,int clickcount){
+    public void clickNativeEle(AndroidElement el,int clickcount){
 		Point elpoint = el.getLocation();
     	Dimension elSize = el.getSize();
     	int startX = elpoint.getX();

@@ -8,7 +8,22 @@ public class Account {
 	private static String tradePwd;
 	private static String realName;
 	private static String idno;
+	private static String loginAccount;
 	private static String loginPwd;
+	private static String currentAccount;
+	
+	public static String getCurrentAccount() {
+		return currentAccount;
+	}
+	public static void setCurrentAccount(String currentAccount) {
+		Account.currentAccount = currentAccount;
+	}
+	public static String getLoginAccount() {
+		return loginAccount;
+	}
+	public static void setLoginAccount(String loginAccount) {
+		Account.loginAccount = loginAccount;
+	}
 	public static String getLoginPwd() {
 		return loginPwd;
 	}

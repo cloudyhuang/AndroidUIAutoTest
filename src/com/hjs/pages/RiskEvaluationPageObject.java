@@ -30,8 +30,9 @@ public class RiskEvaluationPageObject extends CommonAppiumPage{
 	}
 	public RiskEvaluationResultPageObject startRiskEvaluation(String riskLevle) throws Exception{
 		if(super.isElementExsit(5,startRiskEvaluationBtnLocator)){
-			WebElement startEvaluationBtn=driver.findElement(startRiskEvaluationBtnLocator);
-			startEvaluationBtn.click();
+//			WebElement startEvaluationBtn=driver.findElement(startRiskEvaluationBtnLocator);
+//			startEvaluationBtn.click();
+			clickWebEle(startRiskEvaluationBtnLocator,"开始测评按钮");
 		}
 		waitForVisible(submitBtnLocator, 15);
 		String[] riskOptionXpath=getRiskOptionXpath(riskLevle);

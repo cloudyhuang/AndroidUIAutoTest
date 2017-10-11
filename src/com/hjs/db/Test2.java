@@ -46,20 +46,16 @@ public class Test2 {
 //    }
 	public static void main(String[] args) throws Exception {
 		
-		String resource = "eifFisConfig.xml";
+		String resource = "eifMemberConfig.xml";
 	    Reader reader = Resources.getResourceAsReader(resource);  
 	    SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
 	    reader.close();  
 	    SqlSession session = sqlSessionFactory.openSession();
-	    FisSecMarketProd fisSecMarketProd=new FisSecMarketProd();
-	    fisSecMarketProd.setInception_date("2017-09-10");
-	    fisSecMarketProd.setProduct_name("黄XAutoTest可转让产品170918152608");
 	    
 	    try {
-	    	EifFisOperation eifFisOperation=session.getMapper(EifFisOperation.class);
-			eifFisOperation.setSecMarketInceptionDate(fisSecMarketProd);
-		    session.commit();
-	        
+	    	EifMemberOperation eifMemberOperation=session.getMapper(EifMemberOperation.class);
+	    	MemberFundAccount memberFundAccount=eifMemberOperation.getFundAccount("123");
+	        System.out.println(memberFundAccount==null);
 	    } finally {
 	        session.close();
 	    }

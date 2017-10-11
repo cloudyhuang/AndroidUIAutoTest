@@ -20,9 +20,9 @@ public class RiskEvaluationResultPageObject extends CommonAppiumPage{
 		contextWebview(driver);
 	}
 	public RiskEvaluationPageObject reEvaluation(){
-		//clickEle(reEvaluationBtn,"重新评测按钮");
-		AndroidElement reEvaluationBtn=driver.findElement(reEvaluationBtnLocator);
-		reEvaluationBtn.click();
+//		AndroidElement reEvaluationBtn=driver.findElement(reEvaluationBtnLocator);
+//		reEvaluationBtn.click();
+		clickWebEle(reEvaluationBtnLocator,"重新测评按钮");
 		this.backNativeApp();
 		return new RiskEvaluationPageObject(driver);
 	}

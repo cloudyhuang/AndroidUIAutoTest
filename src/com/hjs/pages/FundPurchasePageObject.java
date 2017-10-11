@@ -24,7 +24,7 @@ public class FundPurchasePageObject extends CommonAppiumPage{
 	public FundPurchasePageObject(AndroidDriver<AndroidElement> driver) {
 		super(driver);
 	}
-	public void purchaseFund(String amount,String pwd) throws Exception{
+	public FundPurchaseResultPageObject purchaseFund(String amount,String pwd) throws Exception{
 		clickEle(purchaseAmountInput,"申购金额输入框");
 		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
 		if(!safeKeyBoard.verifySafeKeyBoardLocated()){
@@ -38,6 +38,7 @@ public class FundPurchasePageObject extends CommonAppiumPage{
 		}
 		safeKeyBoard.sendNum(pwd);
 		safeKeyBoard.pressFinishBtn();
+		return new FundPurchaseResultPageObject(driver);
 	}
 	public boolean verifyInthisPage(){
 		return isElementExsit(purchaseAmountInputLocator);

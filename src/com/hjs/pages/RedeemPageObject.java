@@ -13,10 +13,13 @@ public class RedeemPageObject extends CommonAppiumPage{
 	private AndroidElement guideTips;		//引导知道了按钮
 	@AndroidFindBy(id="ransom_return_to_name")
 	private AndroidElement ransomReturnToName;		//赎回到哪名称
+	@AndroidFindBy(id="ransom_amount")
+	private AndroidElement ransomMaxAmount;		//赎回最大金额
 	@AndroidFindBy(id="ransom_input")
 	private AndroidElement ransomInput;		//赎回金额输入框
 	@AndroidFindBy(id="ransom")
 	private AndroidElement ransomConfirmBtn;		//确认赎回按钮
+	
 	
 	private By ransomInputLocator=By.id("ransom_input");
 	private By guideTipsLocator=By.id("ransom_know");
@@ -39,6 +42,26 @@ public class RedeemPageObject extends CommonAppiumPage{
 		if(safeKeyBoard.verifySafeKeyBoardLocated()){
 			throw new Exception("点击完成后，安全键盘未消失");
 		}
+		clickEle(ransomConfirmBtn,"确认赎回按钮");
+		if(!safeKeyBoard.verifySafeKeyBoardLocated()){
+			throw new Exception("安全键盘未出现");
+		}
+		safeKeyBoard.sendNum(tradePwd);
+		return new RedeemResultPageObject(driver);
+		
+	}
+	public RedeemResultPageObject redeemToBankCard(String amount,String tradePwd) throws Exception{
+		if(!ransomReturnToName.getText().contains("银行")){
+			clickEle(ransomReturnToName,"赎回到哪名称");	
+			super.clickNativeEle(ransomMaxAmount, 1);
+		}
+		clickEle(ransomInput,"赎回金额输入框");
+		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
+		if(!safeKeyBoard.verifySafeKeyBoardLocated()){
+			throw new Exception("安全键盘未出现");
+		}
+		safeKeyBoard.sendNum(amount);
+		safeKeyBoard.pressFinishBtn();
 		clickEle(ransomConfirmBtn,"确认赎回按钮");
 		if(!safeKeyBoard.verifySafeKeyBoardLocated()){
 			throw new Exception("安全键盘未出现");

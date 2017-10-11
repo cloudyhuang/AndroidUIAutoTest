@@ -30,8 +30,9 @@ public class FundAccountCreatPageObject extends CommonAppiumPage{
 	public FundAccountCreatPageObject(AndroidDriver<AndroidElement> driver) {
 		super(driver);
 	}
-	public void creatFundAccount(){
+	public FundAccountCreatVerifySmsCodePageObject creatFundAccount(){
 		clickEle(confirmBtn,"确认开户按钮");
+		return new FundAccountCreatVerifySmsCodePageObject(driver);
 	}
 	public boolean verifyInthisPage(){
 		return isElementExsit(accountUserNameLocator);
