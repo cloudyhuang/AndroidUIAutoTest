@@ -704,7 +704,16 @@ public class TradeTestCase extends CommonAppiumTest{
     	String result=transCancelResultPage.getTransCancelResult();
     	Assert.assertTrue(result.equals("撤销成功")||result.contains("已受理"), "撤销转让失败，撤销转让结果为:"+result);
     }
-    @Test(priority = 30,description="基金开户",enabled=false)
+    @Test(priority = 30,expectedExceptions = Exception.class, expectedExceptionsMessageRegExp="找不到下架产品",description="下架可转让产品")
+    public void testOffTransProduct() throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
+    	HomePageObject homepage=new HomePageObject(driver); 
+    	FinancialPageObject financialPage=homepage.enterFinancialPage();
+    	Assert.assertTrue(financialPage.verifyInthisPage(), "点击首页理财入口，未出现理财页面");
+    	financialPage.productPullOffAndFindProduct(DEPOSITE_TRANSPRODUCT_NAME);
+
+    }
+    @Test(priority = 31,description="基金开户",enabled=false)
     public void testCreatFundAccount()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -734,7 +743,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	FundPurchasePageObject fundPurchasePage=fundAccountCreatVerifySmsCodePage.inputSmsCode(switchPhoneNum);
     	Assert.assertTrue(fundPurchasePage.verifyInthisPage(), "输入完毕验证码后未回到基金申购页面");
     }
-    @Test(priority = 31,description="基金申购",enabled=false)
+    @Test(priority = 32,description="基金申购",enabled=false)
     public void testPurchaseFund()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
