@@ -3,13 +3,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.math.BigInteger;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpHost;
@@ -30,8 +24,6 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.jayway.jsonpath.JsonPath;
-
 /**
 * @author huangxiao
 * @version 创建时间：2017年8月31日 上午10:13:32
@@ -41,7 +33,7 @@ public class JenkinsJob {
 	//jenkins登录账号
 		public static String username = "huangxiao";
 		//jenkins登录密码
-		public static String password = "Hxnearcj228";
+		public static String password = "HDHxnearcj228";
 		//jenkins登录url
 		public static String jenkinsUrl = "http://172.16.59.251:8080";
 		public static void main(String [] args) throws ClientProtocolException, IOException{
@@ -49,7 +41,7 @@ public class JenkinsJob {
 		}
 		
 	public static boolean buildAndroidApp() throws ClientProtocolException, IOException {
-		String lastBuildCmd = "curl -X GET http://172.16.59.251:8080/job/eif-android-app/job/release/lastSuccessfulBuild/api/json --user huangxiao:Hxnearcj228";
+		String lastBuildCmd = "curl -X GET http://172.16.59.251:8080/job/eif-android-app/job/release/lastSuccessfulBuild/api/json --user "+username+":"+password;
 		String lastBuildResult = runCommand(lastBuildCmd);
 		JSONObject lastBuildJsonObj = new JSONObject(lastBuildResult);
 		String lastJobDebugValue=null;
@@ -73,7 +65,7 @@ public class JenkinsJob {
 		}
 		else{
 		while (true) {
-			String cmd = "curl -X GET http://172.16.59.251:8080/job/eif-android-app/job/release/api/json --user huangxiao:Hxnearcj228";
+			String cmd = "curl -X GET http://172.16.59.251:8080/job/eif-android-app/job/release/api/json --user "+username+":"+password;
 			String buildResult = runCommand(cmd);
 			JSONObject buildJsonObj = new JSONObject(buildResult);
 			int lastBuild = buildJsonObj.getJSONObject("lastBuild").getInt("number");
