@@ -50,34 +50,34 @@ public class SafeKeyBoard extends CommonAppiumPage{
 	public void pressBtn(int num){
 		switch(num){
 		case 0:
-			clickEle(num0,"安全键盘数字0");
+			clickNativeElePoint(num0,"安全键盘数字0");
 			break;
 		case 1:
-			clickEle(num1,"安全键盘数字1");
+			clickNativeElePoint(num1,"安全键盘数字1");
 			break;
 		case 2:
-			clickEle(num2,"安全键盘数字2");
+			clickNativeElePoint(num2,"安全键盘数字2");
 			break;
 		case 3:
-			clickEle(num3,"安全键盘数字3");
+			clickNativeElePoint(num3,"安全键盘数字3");
 			break;
 		case 4:
-			clickEle(num4,"安全键盘数字4");
+			clickNativeElePoint(num4,"安全键盘数字4");
 			break;
 		case 5:
-			clickEle(num5,"安全键盘数字5");
+			clickNativeElePoint(num5,"安全键盘数字5");
 			break;
 		case 6:
-			clickEle(num6,"安全键盘数字6");
+			clickNativeElePoint(num6,"安全键盘数字6");
 			break;
 		case 7:
-			clickEle(num7,"安全键盘数字7");
+			clickNativeElePoint(num7,"安全键盘数字7");
 			break;
 		case 8:
-			clickEle(num8,"安全键盘数字8");
+			clickNativeElePoint(num8,"安全键盘数字8");
 			break;
 		case 9:
-			clickEle(num9,"安全键盘数字9");
+			clickNativeElePoint(num9,"安全键盘数字9");
 			break;
 			
 		}

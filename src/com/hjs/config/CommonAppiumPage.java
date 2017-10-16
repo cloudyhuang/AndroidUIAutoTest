@@ -297,6 +297,26 @@ public class CommonAppiumPage {
         }
     	
     }
+    public void clickNativeElePoint(AndroidElement el,String str){
+		try{
+    	Point elpoint = el.getLocation();
+    	Dimension elSize = el.getSize();
+    	int startX = elpoint.getX();
+    	int startY = elpoint.getY();
+    	int endX =elSize.getWidth()+startX;
+    	int endY =elSize.getHeight()+startY;
+    	int centerX = (startX+endX)/2;
+    	int centerY = (startY+endY)/2;
+        new TouchAction((MobileDriver) driver).tap(centerX, centerY).perform();
+		}
+		catch(NoSuchElementException e){
+    		assertTrue("没有找到目标元素－－"+str,false);
+    	}
+        catch(TimeoutException e){
+    		assertTrue("超时"+WAIT_TIME+"秒，元素\""+str+"\"为不可点击状态！",false);
+    	}
+    	
+    }
     public void  multiPointClick(By[] clickLocator,AndroidDriver<AndroidElement> driver){
     	for(int i=0;i<=clickLocator.length-1;i++)
     	{
