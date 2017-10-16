@@ -68,7 +68,7 @@ public class HomePageObject extends CommonAppiumPage{
 		 //driver.startActivity("com.evergrande.eif.android.hengjiaosuo", "com.evergrande.eif.userInterface.activity.modules.homePage.HDHomePageShowActivity");
 		//try {driver.runAppInBackground(1);}catch(Exception e){}
 		driver.closeApp();
-		try {driver.runAppInBackground(1);}catch(Exception e){}
+		driver.launchApp();
 	    new WelcomePageObject(driver).skipBackgroundAD();
 	    GesturePwd gesturePwd=new GesturePwd(driver);
 	    if(gesturePwds.length>0&&gesturePwd.verifyInthisPage()){
