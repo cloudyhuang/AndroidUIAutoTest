@@ -41,7 +41,7 @@ public class WelcomePageObject extends CommonAppiumPage{
 			try{
 			driver.findElement(skipBackgroundADLocator).click();
 			}
-			catch(NoSuchElementException e){
+			catch(Exception e){
 				
 			}
 		}

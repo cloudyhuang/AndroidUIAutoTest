@@ -34,7 +34,10 @@ public class RiskEvaluationPageObject extends CommonAppiumPage{
 //			startEvaluationBtn.click();
 			clickWebEle(startRiskEvaluationBtnLocator,"开始测评按钮");
 		}
-		waitForVisible(submitBtnLocator, 15);
+		if(!isElementExsit(submitBtnLocator)){
+			throw new Exception("评测页面提交按钮未出现");
+		}
+		//waitForVisible(submitBtnLocator, 15);
 		String[] riskOptionXpath=getRiskOptionXpath(riskLevle);
 		List<AndroidElement> bestRiskOption=new ArrayList<AndroidElement>();
 		for(int i=0;i<riskOptionXpath.length;i++){
