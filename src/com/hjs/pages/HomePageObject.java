@@ -64,11 +64,11 @@ public class HomePageObject extends CommonAppiumPage{
 		return isElementExsit(5,personEnraceLocator);
 	}
 	 public void backToHomePage(int...gesturePwds){
-		//driver.startActivity("com.evergrande.eif.android.hengjiaosuo", "com.evergrande.eif.userInterface.activity.modules.gesturePwd.HDLoginGestureActivity");
+		//driver.startActivity("com.evergrande.eif.android.hengjiaosuo", ".HDSplashActivity");
 		 //driver.startActivity("com.evergrande.eif.android.hengjiaosuo", "com.evergrande.eif.userInterface.activity.modules.homePage.HDHomePageShowActivity");
 		//try {driver.runAppInBackground(1);}catch(Exception e){}
 		driver.closeApp();
-		super.threadsleep(1000);
+//		super.threadsleep(1000);
 		driver.launchApp();
 	    new WelcomePageObject(driver).skipBackgroundAD();
 	    GesturePwd gesturePwd=new GesturePwd(driver);
