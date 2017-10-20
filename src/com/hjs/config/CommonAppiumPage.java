@@ -189,7 +189,7 @@ public class CommonAppiumPage {
 	    			if(scrollToEleCenterPoint.getY()<height/8&&loopi>1){
 		    			driver.swipe(width / 2, height/4, width / 2, halfHeight, 2000); //只有元素在比较偏僻的地方，将元素滑动到屏幕中间位置，防止出现只滑动一点点导致直接点击的操作 
 		    			}
-	    			if((scrollToEleCenterPoint.getY()<height/5&&scrollToEleCenterPoint.getY()>height/8&&loopi>1)||(scrollToEleCenterPoint.getY()>height*4/5&&scrollToEleCenterPoint.getY()<height*7/8&&loopi>1)){
+	    			if((scrollToEleCenterPoint.getY()<height/5&&scrollToEleCenterPoint.getY()>height/8&&loopi>1)||(scrollToEleCenterPoint.getY()>height*4/5&&scrollToEleCenterPoint.getY()<height*7/8)){
 	    			driver.swipe(width / 2, scrollToEleCenterPoint.getY(), width / 2, halfHeight,2000); //只有元素在比较偏僻的地方，将元素滑动到屏幕中间位置，防止出现只滑动一点点导致直接点击的操作 
 	    			}
 	    			waitAuto(WAIT_TIME);
