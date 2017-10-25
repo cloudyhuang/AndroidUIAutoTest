@@ -68,7 +68,6 @@ public class CommonAppiumTest {
         capabilities.setCapability("resetKeyboard", true);	//运行完毕之后，变回系统的输入法
         capabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT,"600");
         capabilities.setCapability(MobileCapabilityType.APP_WAIT_ACTIVITY, "com.evergrande.eif.userInterface.activity.modules.guide.*");
-        //capabilities.setCapability(MobileCapabilityType.APP_WAIT_ACTIVITY, "com.evergrande.eif.userInterface.activity.modules.guide.HDPerformActivity");
         if(isDebug){capabilities.setCapability("noReset", true);}	//是否不重新安装 true不安装，false重新安装
         else {capabilities.setCapability("noReset", true);	}//是否不重新安装 true不安装，false重新安装
         //关键是加上这段

@@ -31,8 +31,7 @@ import com.hjs.publics.ShellUtils.CommandResult;
 public class test {
 
 	public static void main(String[] args) throws ParseException {
-		String[] commands = new String[]{"exec adb -s "+"127.0.0.1:62001"+" shell","cd data/local/tmp","ls"};	//删除缓存apk
-		//String[] commands = new String[]{"ls -al"};
+		String[] commands = new String[]{"exec adb -s "+"127.0.0.1:62001"+" shell","input text \"HD888888\"","input keyevent 66"};	//删除缓存apk
 		CommandResult result = ShellUtils.execCommand(commands, false);
 		System.out.println(result.successMsg);
 	}

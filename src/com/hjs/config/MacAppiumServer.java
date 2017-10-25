@@ -55,6 +55,11 @@ public class MacAppiumServer extends AppiumServer {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		if(!isDebug){
+			String[] commands = new String[]{"exec adb -s "+"127.0.0.1:62001"+" shell","input text \"HD888888\"","input keyevent 66"};	//输入开机密码
+			CommandResult result = ShellUtils.execCommand(commands, false);
+			System.out.println("输入开机密码："+result.successMsg);
+		}
 		String[] commands2 = new String[]{"exec adb -s "+"127.0.0.1:62001"+" shell","cd data/local/tmp","rm *.apk"};	//删除缓存apk
 		CommandResult result = ShellUtils.execCommand(commands2,false);
 		System.out.println("删除缓存apk"+result.successMsg);
