@@ -48,7 +48,7 @@ import com.hjs.testDate.GroupBuyInfo;
 
 
 public class TradeTestCase extends CommonAppiumTest{
-	private static String DEPOSITE_PRODUCT_NAME="黄XAutoTest产品171013061452";
+	private static String DEPOSITE_PRODUCT_NAME="黄XAutoTest产品171025110038";
 	private static String DEPOSITE_GROUPBUYPRODUCT_NAME="黄XAutoTest团购产品170919042116";
 	private static String DEPOSITE_TRANSPRODUCT_NAME="黄XAutoTest可转让产品171019211321";
 	private static String FUND_PRODUCT_NAME="国寿安保增金宝货币";

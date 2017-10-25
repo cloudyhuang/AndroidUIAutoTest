@@ -50,9 +50,15 @@ public class LoginPageObject extends CommonAppiumPage{
 		}
 		clickEle(assertPhoneNumBtn,"验证手机号按钮");
 		if(this.verifyInthisPage()){
+			DisConfConfig disConfConfig=new DisConfConfig();
+	    	disConfConfig.openVerifyCode();	//打开验证码验证
 			return new LoginPageObject(driver);
 		}
-		else return new SignUpPageObject(driver);
+		else {
+			DisConfConfig disConfConfig=new DisConfConfig();
+	    	disConfConfig.openVerifyCode();	//打开验证码验证
+			return new SignUpPageObject(driver);
+		}
 	}
 	public CommonAppiumPage switchAccount(String phoneNumber){
 		clickEle(switchAccountBtn,"切换账号或注册按钮");
@@ -69,9 +75,15 @@ public class LoginPageObject extends CommonAppiumPage{
 		clickEle(assertPhoneNumBtn,"验证手机号按钮");
 		//driver.findElement(By.id("phone_view")).click();
 		if(this.verifyInthisPage()){
+			DisConfConfig disConfConfig=new DisConfConfig();
+	    	disConfConfig.openVerifyCode();	//打开验证码验证
 			return new LoginPageObject(driver);
 		}
-		else return new SignUpPageObject(driver);
+		else {
+			DisConfConfig disConfConfig=new DisConfConfig();
+	    	disConfConfig.openVerifyCode();	//打开验证码验证
+			return new SignUpPageObject(driver);
+		}
 	}
 	public boolean verifyInthisPage(){
 		return isElementExsit(loginedAccountLocator);
