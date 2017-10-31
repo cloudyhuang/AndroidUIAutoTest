@@ -17,7 +17,8 @@ public class AccountBanlancePageObject extends CommonAppiumPage{
 	private AndroidElement withdrawCashEntrance;		//提现入口
 	@AndroidFindBy(id="btn_balance_recharge")
 	private AndroidElement rechargeEntrance;		//充值入口
-	@AndroidFindBy(id="imgv_balance_tips")
+	//@AndroidFindBy(id="imgv_balance_tips")
+	@AndroidFindBy(id="imgv_balance_tips_btn")
 	private AndroidElement guideTips;		//引导按钮
 	
 	

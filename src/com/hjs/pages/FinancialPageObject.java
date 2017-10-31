@@ -86,6 +86,7 @@ public class FinancialPageObject extends CommonAppiumPage{
 		product.creatProduct();
 		this.clickWenJian();	//点击稳健标签
 		waitEleUnVisible(refreshViewLocator, 30);
+		super.threadsleep(5000);  //等待job刷新app前端产品
 		swipeToDown(1000,1);	//下滑刷新
 		waitEleUnVisible(refreshViewLocator, 30);
 		swipeToDown(1000,1);	//下滑刷新
@@ -128,6 +129,7 @@ public class FinancialPageObject extends CommonAppiumPage{
 		product.creatProduct();
 		this.clickWenJian();	//点击稳健标签
 		waitEleUnVisible(refreshViewLocator, 30);
+		super.threadsleep(5000);  //等待job刷新app前端产品
 		swipeToDown(1000,1);	//下滑刷新
 		waitEleUnVisible(refreshViewLocator, 30);
 		swipeToDown(1000,1);	//下滑刷新
@@ -170,6 +172,7 @@ public class FinancialPageObject extends CommonAppiumPage{
 		product.creatProduct();
 		this.clickWenJian();	//点击稳健标签
 		waitEleUnVisible(refreshViewLocator, 30);
+		super.threadsleep(5000);  //等待job刷新app前端产品
 		swipeToDown(1000,1);	//下滑刷新
 		waitEleUnVisible(refreshViewLocator, 30);
 		swipeToDown(1000,1);	//下滑刷新
@@ -199,6 +202,7 @@ public class FinancialPageObject extends CommonAppiumPage{
 	public void productPullOffAndFindProduct(String productName) throws Exception{
 		InitProduct product = new InitProduct.Builder("").build();
 		product.productPullOffShelves(productName);
+		super.threadsleep(5000);  //等待job刷新app前端产品
 		swipeToDown(1000,1);	//下滑刷新
 		waitEleUnVisible(refreshViewLocator, 30);
 		swipeToDown(1000,1);	//下滑刷新
