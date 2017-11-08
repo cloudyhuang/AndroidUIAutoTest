@@ -50,7 +50,7 @@ public class RealNamePageObject extends CommonAppiumPage{
 	}
 	public SafeKeyBoard openSafeKeyBoard(){
 		clickEle(idCardInput,"实名身份证输入框");
-		clickEle(idCardInput,"实名身份证输入框");
+		//clickEle(idCardInput,"实名身份证输入框");
 		return new SafeKeyBoard(driver);
 	}
 	public SetTradePwdPageObject confirmRealName(){
