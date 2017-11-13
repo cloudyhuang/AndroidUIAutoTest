@@ -51,6 +51,7 @@ public class LoginPageObject extends CommonAppiumPage{
 			clickEle(captchaInput,"验证码输入框");
 			super.sendKeys(captchaInput, "1234");
 		}
+		super.threadsleep(2000);//使之disconf关闭验证码生效等待
 		clickEle(assertPhoneNumBtn,"验证手机号按钮");
 		if(this.verifyInthisPage()){
 			return new LoginPageObject(driver);
@@ -71,6 +72,7 @@ public class LoginPageObject extends CommonAppiumPage{
 			clickEle(captchaInput,"验证码输入框");
 			super.sendKeys(captchaInput, "1234");
 		}
+		super.threadsleep(2000);//使之disconf关闭验证码生效等待
 		clickEle(assertPhoneNumBtn,"验证手机号按钮");
 		//driver.findElement(By.id("phone_view")).click();
 		if(this.verifyInthisPage()){
