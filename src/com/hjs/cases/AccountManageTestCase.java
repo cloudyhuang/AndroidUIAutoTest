@@ -108,6 +108,7 @@ public class AccountManageTestCase extends CommonAppiumTest {
 		GesturePwd gesturePwd = null;
 		String loginPwd="Hd888888";
 		Account.setLoginPwd(loginPwd);
+		Assert.assertTrue(((SignUpPageObject)page).verifyInthisPage(),"未进入注册页面");
 		gesturePwd=((SignUpPageObject)page).registe(phoneNum, loginPwd);
 		Assert.assertTrue(gesturePwd.verifyInthisPage(), "设置密码后未跳转到手势密码界面");
 		String result=gesturePwd.setFirstGesturePwd(1,4,7,8);
