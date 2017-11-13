@@ -51,7 +51,7 @@ public class MacAppiumServer extends AppiumServer {
 		runCommand(cmd2);
 		runCommand(cmd3);
 		try {
-			Thread.currentThread().sleep(2000);	
+			Thread.currentThread().sleep(5000);	
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
