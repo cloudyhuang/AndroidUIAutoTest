@@ -65,7 +65,7 @@ public class JenkinsJob {
 		}
 		else{
 		while (true) {
-			String cmd = "curl -X GET http://172.16.59.251:8080/job/eif-android-app/job/release/api/json --user "+username+":"+password;
+			String cmd = "curl -X GET http://172.16.59.251:8080/job/eif-android-app/job/Compile/api/json --user "+username+":"+password;
 			String buildResult = runCommand(cmd);
 			JSONObject buildJsonObj = new JSONObject(buildResult);
 			int lastBuild = buildJsonObj.getJSONObject("lastBuild").getInt("number");
@@ -129,9 +129,9 @@ public class JenkinsJob {
 		 */
 		public void buildJob(String jobName ,Boolean isNeedParams ,String buildJobParams) throws ClientProtocolException, IOException{
 			//jenkins构建job的url
-			String jenkinsBuildUrl = jenkinsUrl + "/job/" + jobName +"/job/release"+ "/build";
+			String jenkinsBuildUrl = jenkinsUrl + "/job/" + jobName +"/job/Compile"+ "/build";
 			if(isNeedParams == true){
-				jenkinsBuildUrl = jenkinsUrl + "/job/" + jobName +"/job/release"+ "/buildWithParameters" + "?" + buildJobParams;
+				jenkinsBuildUrl = jenkinsUrl + "/job/" + jobName +"/job/Compile"+ "/buildWithParameters" + "?" + buildJobParams;
 			}
 			URI uri = URI.create(jenkinsBuildUrl);
 			HttpHost host = new HttpHost(uri.getHost(), uri.getPort(), uri.getScheme());
