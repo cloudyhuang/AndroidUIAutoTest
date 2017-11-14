@@ -10,6 +10,7 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 
 import io.appium.java_client.android.AndroidDriver;
@@ -30,6 +31,7 @@ public class SignUpPageObject extends CommonAppiumPage{
 	@AndroidFindBy(id="button_register")
 	private AndroidElement registerBtn;		//确认注册按钮
 	
+	private By verifyCodeInputLocator=By.id("phone_view");
 	public SignUpPageObject(AndroidDriver<AndroidElement> driver) {
 		super(driver);
 	}
@@ -75,6 +77,8 @@ public class SignUpPageObject extends CommonAppiumPage{
             session.close();
         }
 	}
-	
+	public boolean verifyInthisPage(){
+		return isElementExsit(verifyCodeInputLocator);
+	}
 
 }
