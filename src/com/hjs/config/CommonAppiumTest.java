@@ -3,6 +3,7 @@ package com.hjs.config;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -22,6 +23,8 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
 
+import com.hjs.publics.LogReader;
+
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.remote.MobileCapabilityType;
@@ -30,6 +33,8 @@ public class CommonAppiumTest {
 	public static AndroidDriver<AndroidElement> driver;
 	public static DateFormat dateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
 	public static String runtime=dateFormat.format(new Date());
+	public static File tmpAPILogFile = new File("/Users/master/Documents/workspace/Test-UI-AndroidAuto/log/urlLog.log");
+	public static LogReader logReader =new LogReader(tmpAPILogFile);
     private WebDriverWait wait;
     private DisConfConfig disConfConfig;	//disconf配置
     private String beforeTestVerifyCodeConfigValue; //验证码配置
@@ -47,6 +52,7 @@ public class CommonAppiumTest {
     	System.out.println(System.getenv());
     	System.out.println(System.getenv("ANDROID_HOME"));
     	deletePng("surefire-reports"+File.separator+"html");	//删除历史截图文件
+    	clearInfoForFile(tmpAPILogFile);		//清除api Log文件内容
     	if(System.getProperty("os.name").contains("Mac")){
         	appiumServer=new MacAppiumServer();
     	}
@@ -195,6 +201,23 @@ public class CommonAppiumTest {
   
         System.out.println("info:"+url+" download success");   
   
+    }
+    /** 
+     * 清除文件内容 
+     * @param fileName 
+     */ 
+	public static void clearInfoForFile(File file) {
+        try {
+            if(!file.exists()) {
+                file.createNewFile();
+            }
+            FileWriter fileWriter =new FileWriter(file);
+            fileWriter.write("");
+            fileWriter.flush();
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     /** 
      * 从输入流中获取字节数组 

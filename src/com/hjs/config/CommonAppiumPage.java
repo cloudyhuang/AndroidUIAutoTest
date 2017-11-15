@@ -78,6 +78,7 @@ public class CommonAppiumPage {
             catch(TimeoutException e){
         		assertTrue("超时"+WAIT_TIME+"秒，元素\""+str+"\"为不可点击状态！",false);
         	}
+            CommonAppiumTest.logReader.readLog();
             return true;
         } else {
             print(str + "为空，点击错误");

@@ -35,6 +35,9 @@ public class TestNGListener implements ITestListener {
     public void onTestFailure(ITestResult result) {
         System.out.println("========================failed, create snapshot here==============");
         captureScreenShot(result);      
+        System.out.println("========================failed, print api log here==============");
+        CommonAppiumTest.logReader.readLog(CommonAppiumTest.logReader.getBeforeLastTimeFileSize());
+        
     }
 
     public void onTestSkipped(ITestResult result) {}

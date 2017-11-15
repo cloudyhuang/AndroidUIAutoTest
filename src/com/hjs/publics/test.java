@@ -3,6 +3,7 @@ package com.hjs.publics;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -31,11 +32,22 @@ import com.hjs.publics.ShellUtils.CommandResult;
 public class test {
 
 	public static void main(String[] args) throws ParseException {
-		String[] commands = new String[]{"exec adb -s "+"127.0.0.1:62001"+" shell","input text \"HD888888\"","input keyevent 66"};	//删除缓存apk
-		CommandResult result = ShellUtils.execCommand(commands, false);
-		System.out.println(result.successMsg);
+		clearInfoForFile("/Users/master/Documents/workspace/Test-UI-AndroidAuto/log/urlLog.log");
 	}
-
+	public static void clearInfoForFile(String fileName) {
+        File file =new File(fileName);
+        try {
+            if(!file.exists()) {
+                file.createNewFile();
+            }
+            FileWriter fileWriter =new FileWriter(file);
+            fileWriter.write("");
+            fileWriter.flush();
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 	// 方法一
 	public static String doubleTrans1(double num) {
 		if (num % 1.0 == 0) {
