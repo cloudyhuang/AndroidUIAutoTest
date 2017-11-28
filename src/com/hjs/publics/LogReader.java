@@ -16,6 +16,7 @@ public class LogReader implements Runnable {
 	private File logFile = null;
 	private long lastTimeFileSize = 0; // 上次文件大小
 	private long beforeLastTimeFileSize=0;	//上上次文件大小
+	private int readLogID=0;
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	public LogReader(File logFile) {
@@ -38,7 +39,7 @@ public class LogReader implements Runnable {
 				String tmp = null;
 				while ((tmp = randomFile.readLine()) != null) {
 					tmp = new String(tmp.getBytes("iso8859-1"), "utf-8");
-					System.out.println(dateFormat.format(new Date()) + "\t" + tmp);
+					//System.out.println(dateFormat.format(new Date()) + "\t" + tmp);
 				}
 				beforeLastTimeFileSize=lastTimeFileSize;
 				lastTimeFileSize = randomFile.length();
@@ -63,15 +64,16 @@ public class LogReader implements Runnable {
 				System.out.println("Log file was reset. Restarting logging from start of file.");
 				lastTimeFileSize = len;
 			} else if (len > fileSize) {
+				readLogID=readLogID+1;
 				RandomAccessFile randomFile = new RandomAccessFile(logFile, "r");
 				randomFile.seek(fileSize);
 				String tmp = null;
-				Reporter.log("失败附近调用接口信息：");
+				Reporter.log("<self><a href=\"javascript:toggleElement('exceptionLog-"+readLogID+"', 'block')\" title=\"Click to expand/collapse\"><b>失败附近调用接口信息(点击展开详细)↓：</b></a><br /><div class=\"stackTrace\" id=\"exceptionLog-"+readLogID+"\"></self>");
 				while ((tmp = randomFile.readLine()) != null) {
 					tmp = new String(tmp.getBytes("iso8859-1"), "utf-8");
-					System.out.println(dateFormat.format(new Date()) + "\t" + tmp);
-					Reporter.log(dateFormat.format(new Date()) + "\t" + tmp+"\n");
+					Reporter.log("<self>"+dateFormat.format(new Date()) + "\t" + tmp+"</self>");
 				}
+				Reporter.log("<self></div></self>");
 				lastTimeFileSize = randomFile.length();
 				beforeLastTimeFileSize=fileSize;
 				randomFile.close();

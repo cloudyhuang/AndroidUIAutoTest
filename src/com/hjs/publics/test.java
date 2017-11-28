@@ -13,6 +13,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecuteResultHandler;
@@ -23,16 +25,42 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
+import com.hjs.config.AnyproxyServer;
 import com.hjs.db.FisProdInfo;
 import com.hjs.db.MarketGrouponTask;
 import com.hjs.mybatis.inter.EifFisOperation;
 import com.hjs.mybatis.inter.EifMarketOperation;
-import com.hjs.publics.ShellUtils.CommandResult;
 
 public class test {
 
 	public static void main(String[] args) throws ParseException {
-		clearInfoForFile("/Users/master/Documents/workspace/Test-UI-AndroidAuto/log/urlLog.log");
+		String a ="<self><a href=\"javascript:toggleElement('exception-1', 'block';)\" title=\"Click to expand/collapse\"><b>失败附近调用接口信息(点击展开详细)↓：</b></a><br /><div class=\"stackTrace\" id=\"exception-1\"></self>";
+		//System.out.println(getImageString(a));
+		System.out.println(matchApiLogs(a));
+
+	}
+	public static boolean matchApiLogs(String s){
+		String regex="(<self>([\\d\\D]*)</self>)";
+		Pattern pattern=Pattern.compile(regex);
+		Matcher matcher=pattern.matcher(s);
+		return matcher.matches();
+	}
+	public static String removeApiLog(String s){
+		s=s.replaceAll("<self>([\\d\\D]*)</self><br />", "");
+		s=s.replaceAll("<img(.*?)/>", "");
+		return s;
+	}
+	public static String getImageString(String s)
+	{
+	    String regex = "(<self>([\\d\\D]*)</self>)";
+	    Pattern pattern = Pattern.compile(regex);
+	    Matcher matcher = pattern.matcher(s);
+	    while (matcher.find()) {
+	        String group = matcher.group(1);
+	        //可根据实际情况多个图片 全部一起return
+	        return group;
+	    }
+	    return "";
 	}
 	public static void clearInfoForFile(String fileName) {
         File file =new File(fileName);
@@ -151,7 +179,7 @@ public class test {
 
 	public static void runAdbCommand() {
 		try {
-			Process process = Runtime.getRuntime().exec("adb shell"); // adb
+			Process process = Runtime.getRuntime().exec("anyproxy --intercept --rule /usr/local/lib/node_modules/anyproxy/rule_sample/rule_log.js"); // adb
 																		// shell
 			final BufferedWriter outputStream = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
 			final BufferedReader inputStream = new BufferedReader(new InputStreamReader(process.getInputStream()));

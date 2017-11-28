@@ -33,8 +33,8 @@ public class CommonAppiumTest {
 	public static AndroidDriver<AndroidElement> driver;
 	public static DateFormat dateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
 	public static String runtime=dateFormat.format(new Date());
-	public static File tmpAPILogFile = new File("/Users/master/Documents/workspace/Test-UI-AndroidAuto/log/urlLog.log");
-	public static LogReader logReader =new LogReader(tmpAPILogFile);
+	public static String tmpAPILogFileDir = File.separator+"log"+File.separator+"urlLog.log";
+	public static LogReader logReader;
     private WebDriverWait wait;
     private DisConfConfig disConfConfig;	//disconf配置
     private String beforeTestVerifyCodeConfigValue; //验证码配置
@@ -52,17 +52,28 @@ public class CommonAppiumTest {
     	System.out.println(System.getenv());
     	System.out.println(System.getenv("ANDROID_HOME"));
     	deletePng("surefire-reports"+File.separator+"html");	//删除历史截图文件
+    	File classpathRoot = new File(System.getProperty("user.dir"));
+    	File tmpAPILogFile;
+    	if(classpathRoot.getName().equals("target")){
+    		tmpAPILogFile=new File(classpathRoot.getParent()+tmpAPILogFileDir);
+    	}
+    	else{
+    		tmpAPILogFile=new File(classpathRoot+tmpAPILogFileDir);
+    	}
     	clearInfoForFile(tmpAPILogFile);		//清除api Log文件内容
+    	logReader=new LogReader(tmpAPILogFile);		
     	if(System.getProperty("os.name").contains("Mac")){
         	appiumServer=new MacAppiumServer();
     	}
     	else appiumServer=new WinAppiumServer();
     	appiumServer.stopServer();	//先结束残留进程
+    	try{Thread.sleep(5000);}catch(Exception e){}
+    	AnyproxyServer anyproxyServer=new AnyproxyServer();		//启动anyproxy
+    	anyproxyServer.start();
     	System.out.println("---- Starting appium server ----");
     	appiumServer.startServer(udid,isDebug);
 		System.out.println("---- Appium server started Successfully ! ----");
 		try{Thread.sleep(15000);}catch(Exception e){}
-        File classpathRoot = new File(System.getProperty("user.dir"));
         File appDir = new File(classpathRoot, "app");
         File app = new File(appDir, "app2.4.apk");
         DesiredCapabilities capabilities = new DesiredCapabilities();

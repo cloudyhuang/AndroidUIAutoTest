@@ -89,6 +89,7 @@ public class MyDepositeProductPageObject extends CommonAppiumPage{
 		this.setTransProdInceptionDate(prodName, inceptionDate);
 		String jobDate=Util.longToDate(inceptionLongDate, "yyyyMMdd");
 		this.runInceptionDateJob(jobDate); //跑成立job
+		super.threadsleep(15000);	//等待Job生效
 		this.filterTransProduct();
 		try{
 			String productXpath="//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_product' and @text='"+prodName+"']";
