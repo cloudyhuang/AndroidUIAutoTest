@@ -220,6 +220,9 @@ public class CommonAppiumTest {
 	public static void clearInfoForFile(File file) {
         try {
             if(!file.exists()) {
+            	if(!file.getParentFile().exists()){
+            		file.getParentFile().mkdirs();
+            	}
                 file.createNewFile();
             }
             FileWriter fileWriter =new FileWriter(file);

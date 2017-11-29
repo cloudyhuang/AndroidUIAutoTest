@@ -34,9 +34,21 @@ import com.hjs.mybatis.inter.EifMarketOperation;
 public class test {
 
 	public static void main(String[] args) throws ParseException {
-		String a ="<self><a href=\"javascript:toggleElement('exception-1', 'block';)\" title=\"Click to expand/collapse\"><b>失败附近调用接口信息(点击展开详细)↓：</b></a><br /><div class=\"stackTrace\" id=\"exception-1\"></self>";
-		//System.out.println(getImageString(a));
-		System.out.println(matchApiLogs(a));
+		File file=new File("/Users/master/Documents/workspace/Test-UI-AndroidAuto/haha/haha.log");
+		 try {
+	            if(!file.exists()) {
+	            	if(!file.getParentFile().exists()){
+	            		file.getParentFile().mkdirs();
+	            	}
+	                file.createNewFile();
+	            }
+	            FileWriter fileWriter =new FileWriter(file);
+	            fileWriter.write("");
+	            fileWriter.flush();
+	            fileWriter.close();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
 
 	}
 	public static boolean matchApiLogs(String s){
