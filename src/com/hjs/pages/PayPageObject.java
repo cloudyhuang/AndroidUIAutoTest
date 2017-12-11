@@ -35,7 +35,7 @@ public class PayPageObject extends CommonAppiumPage{
 	@AndroidFindBy(id="show_choose_pay_way")
 	private AndroidElement choosePayWayBtn;		//更换支付方式按钮
 	
-	@AndroidFindBy(xpath="//android.widget.ListView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/listView_payway']//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_bankCard' and contains(@text,'银行')][1]")
+	@AndroidFindBy(xpath="//android.widget.ListView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/listView_payway']//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_bankCard' and contains(@text,'招商银行')][1]")
 	private AndroidElement bankCardPayOptions;		//银行卡付款方式
 	@AndroidFindBy(xpath="//android.widget.ListView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/listView_payway']//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_bankCard' and contains(@text,'余额支付')]")
 	private AndroidElement balancePayOptions;		//余额付款方式

@@ -16,6 +16,7 @@
 			</class>
 		</classes>
 	</test>
+
 	<listeners>
 		<listener class-name="com.hjs.publics.TestNGListener" />
 		<listener class-name="org.uncommons.reportng.HTMLReporter" />
