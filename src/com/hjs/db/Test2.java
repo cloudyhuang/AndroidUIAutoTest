@@ -54,8 +54,15 @@ public class Test2 {
 	    
 	    try {
 	    	EifMemberOperation eifMemberOperation=session.getMapper(EifMemberOperation.class);
-	    	MemberFundAccount memberFundAccount=eifMemberOperation.getFundAccount("123");
-	        System.out.println(memberFundAccount==null);
+	    	MemberClientCertification memberClientCertification=eifMemberOperation.getMemberClientCertification("17411184");
+	    	if(memberClientCertification==null){
+	    		throw new Exception("数据库找不到");
+	    	}
+	    	else{
+	    		System.out.println(memberClientCertification.getIdno());
+		        System.out.println(memberClientCertification.getName());
+	    	}
+	        
 	    } finally {
 	        session.close();
 	    }

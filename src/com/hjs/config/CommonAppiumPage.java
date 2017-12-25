@@ -32,13 +32,15 @@ import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.pagefactory.TimeOutDuration;
 
-public class CommonAppiumPage {
+public class CommonAppiumPage{
 	public AndroidDriver<AndroidElement> driver; 
 
     private final int WAIT_TIME = 30;    //默认的等待控件时间
+    private final int KEYCODE_BACK=4;	//返回键
+   
     private TimeOutDuration timeOutDuration;
-    public CommonAppiumPage(AndroidDriver<AndroidElement> androidDriver) {
-        this.driver = androidDriver;
+    public CommonAppiumPage(AndroidDriver<AndroidElement> driver) {
+        this.driver = driver;
         timeOutDuration = new TimeOutDuration(WAIT_TIME, TimeUnit.SECONDS);
         PageFactory.initElements(new AppiumFieldDecorator(driver,timeOutDuration), this);//,new TimeOutDuration(15,TimeUnit.SECONDS)
         waitAuto(WAIT_TIME);
@@ -153,6 +155,48 @@ public class CommonAppiumPage {
 
     }
     /**
+     * 得到控件文字
+     *
+     * @param ae  控件
+     * @param str 控件名称
+     * @return aeText 元素文字内容
+     */
+    public String getEleText(AndroidElement ae, String str) {
+    	String aeText=null;
+        if (ae == null) {
+            print("控件为空,得到文字内容失败:" + str);
+        } else {
+        	try{
+        		aeText=ae.getText();
+        	}
+        	catch(NoSuchElementException e){
+        		assertTrue("没有找到目标元素－－"+str,false);
+        	}
+        }
+        return aeText;
+
+    }
+    /**
+     * 清除控件内容
+     *
+     * @param ae  要输入的控件
+     * @param str 控件名称
+     */
+    public void clearKeys(AndroidElement ae, String str) {
+        if (ae == null) {
+            print("控件为空," + str);
+        } else {
+        	try{
+        		ae.click();
+        		ae.clear();
+        	}
+        	catch(NoSuchElementException e){
+        		assertTrue("没有找到目标元素－－"+str,false);
+        	}
+        }
+
+    }
+    /**
      * 打印字符
      *
      * @param str 要打印的字符
@@ -164,6 +208,14 @@ public class CommonAppiumPage {
             System.out.println("输出了空字符");
         }
     }
+    /**
+     * 键盘返回
+     *
+     */
+    public void backKeyEvent(){
+    	driver.pressKeyCode(KEYCODE_BACK);
+    }
+    
     /**
      * 滑动到元素,且元素滑动到屏幕中间位置
      *
@@ -446,13 +498,13 @@ public class CommonAppiumPage {
 			}
 			catch(Exception e){
 				if(System.currentTimeMillis()<endTime){
-					Reporter.log("找不到元素，重试，locator:"+locator);
+					//Reporter.log("找不到元素，重试，locator:"+locator);
 					threadsleep(1000);//等待1s
 					continue;
 				}
 			}
 			if(System.currentTimeMillis()>=endTime){
-				Reporter.log(WAIT_TIME+"秒找不到元素,locator:"+locator);
+				//Reporter.log(WAIT_TIME+"秒找不到元素,locator:"+locator);
 				waitAuto(WAIT_TIME);
 				return null;
 			}
@@ -475,13 +527,13 @@ public class CommonAppiumPage {
 			}
 			catch(Exception e){
 				if(System.currentTimeMillis()<endTime){
-					Reporter.log("找不到元素，重试，locator:"+locator);
+					//Reporter.log("找不到元素，重试，locator:"+locator);
 					threadsleep(1000);//等待1s
 					continue;
 				}
 			}
 			if(System.currentTimeMillis()>=endTime){
-				Reporter.log(WAIT_TIME+"秒找不到元素,locator:"+locator);
+				//Reporter.log(WAIT_TIME+"秒找不到元素,locator:"+locator);
 				waitAuto(WAIT_TIME);
 				return null;
 			}
@@ -660,4 +712,5 @@ public class CommonAppiumPage {
         WebDriverWait wait = new WebDriverWait(driver,waitTime);
    	 	wait.until(ExpectedConditions.elementToBeClickable(ae)); 
     }
+
 }

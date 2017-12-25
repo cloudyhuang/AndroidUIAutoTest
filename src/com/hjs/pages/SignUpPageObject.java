@@ -12,6 +12,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.testng.Reporter;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
@@ -51,7 +52,11 @@ public class SignUpPageObject extends CommonAppiumPage{
 		List<SmsVerifyCode> smsVerifyCodeList=new ArrayList<SmsVerifyCode>();
 		smsVerifyCodeList=getMsgVerifyCode(phoneNum);
 		if(smsVerifyCodeList.isEmpty()){
-			throw new Exception("数据库未找到"+phoneNum+"的验证码");
+			Reporter.log("数据库未找到"+phoneNum+"的验证码");
+			safeKeyBoard.sendNum("111111");
+			safeKeyBoard.pressFinishBtn();
+			return;
+			//throw new Exception("数据库未找到"+phoneNum+"的验证码");
 		}
 		String msgVerifyCode=smsVerifyCodeList.get(smsVerifyCodeList.size()-1).getVerify_code(); //最近的一个验证码
 		safeKeyBoard.sendNum(msgVerifyCode);

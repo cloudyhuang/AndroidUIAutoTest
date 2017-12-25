@@ -20,6 +20,9 @@ public class LoginPwdResetPageObject extends CommonAppiumPage{
 	@AndroidFindBy(id="button_change_pwd")
 	private AndroidElement commitChangePwdBtn;		//提交新密码按钮
 	
+	@AndroidFindBy(xpath="//android.widget.Button[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/dlg_msg_singlebtn' and @text='找回密码']")
+	private AndroidElement findPwdAtTips;		//找回密码
+	
 	private By oldLoginPwdInputLoactor=By.id("editText_oldPwd");
 	private By newPwdInputLocator=By.id("editText_newPwd");
 	public LoginPwdResetPageObject(AndroidDriver<AndroidElement> driver) {
@@ -38,6 +41,21 @@ public class LoginPwdResetPageObject extends CommonAppiumPage{
 		sendKeys(newPwdAgainInput,newLoginPwd);
 		clickEle(commitChangePwdBtn,"提交新密码按钮");
 		return new PwdSettingPageObject(driver);
+	}
+	public FindPwdVerifyPhonePageObject resetLoginPwdByWrongLoginPwd(String wrongLoginPwd) throws Exception{
+		clickEle(oldLoginPwdInput,"旧登录密码输入框");
+		sendKeys(oldLoginPwdInput,wrongLoginPwd);
+		while(true){
+			clickEle(changePwdBtn,"验证密码按钮");
+			if(super.isElementExsit(3, findPwdAtTips)){
+				clickEle(findPwdAtTips,"找回密码");
+				break;
+			}
+		
+		}
+		
+		
+		return new FindPwdVerifyPhonePageObject(driver);
 	}
 	public boolean verifyInthisPage(){
 		return isElementExsit(oldLoginPwdInputLoactor);

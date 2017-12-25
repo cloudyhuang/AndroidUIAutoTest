@@ -18,11 +18,18 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.pagefactory.TimeOutDuration;
 
 public class HomePageObject extends CommonAppiumPage{
-
+	@AndroidFindBy(id="btn_new_user_guide")
+	private AndroidElement loginEntrance;		//首页-登录入口
 	@AndroidFindBy(id="button_person")
-	private AndroidElement personEnrace;		//首页-我的入口
+	private AndroidElement personEntrance;		//首页-我的入口
 	@AndroidFindBy(id="button_buy")
-	private AndroidElement financialEnrace;		//首页-理财入口
+	private AndroidElement financialEntrance;		//首页-理财入口
+	@AndroidFindBy(id="button_discover")
+	private AndroidElement discoverEntrance;		//首页-发现入口
+	@AndroidFindBy(id="button_home")
+	private AndroidElement homeEntrance;		//首页-首页入口
+	
+	
 	
 	
 	//private By noRemindUpdateLocator=By.id("btn_no_remind");		//下次更新locator
@@ -34,9 +41,17 @@ public class HomePageObject extends CommonAppiumPage{
 		this.noRemindUpdate();
 		this.closeAD();
 	}
+	public LoginPageObject clickLoginEntrance(){
+		clickEle(loginEntrance,"首页-登录入口");
+		return new LoginPageObject(driver);
+	}
+	public DiscoverPageObject clickdiscoverEntrance(){
+		clickEle(discoverEntrance,"首页-发现入口");
+		return new DiscoverPageObject(driver);
+	}
 	public CommonAppiumPage enterPersonEntrace(){
 		this.noRemindUpdate();
-		clickEle(personEnrace,"首页-我的入口");
+		clickEle(personEntrance,"首页-我的入口");
 		this.closeAD();
 		if(this.verifyIsInHomePage()){
 			return new MinePageObject(driver);
@@ -55,8 +70,13 @@ public class HomePageObject extends CommonAppiumPage{
 	}
 	public FinancialPageObject enterFinancialPage(){
 		this.noRemindUpdate();
-		clickEle(financialEnrace,"首页-理财入口");
+		clickEle(financialEntrance,"首页-理财入口");
 		this.closeAD();
+		return new FinancialPageObject(driver);
+	}
+	public FinancialPageObject reloadFinancialPage(){
+		clickEle(homeEntrance,"首页-首页入口");
+		clickEle(financialEntrance,"首页-理财入口");
 		return new FinancialPageObject(driver);
 	}
 	public boolean verifyIsInHomePage(){

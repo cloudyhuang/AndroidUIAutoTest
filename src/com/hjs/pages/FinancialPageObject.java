@@ -13,13 +13,19 @@ import io.appium.java_client.MobileDriver;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
+import io.appium.java_client.pagefactory.AndroidFindBy;
 
 public class FinancialPageObject extends CommonAppiumPage{
-
+	@AndroidFindBy(id="image")
+	private AndroidElement bannerImage;		//banner图
+	
 	private By titleSwitchLocator=By.id("title_switch");
 	private By refreshViewLocator=By.id("refresh_animationView");
 	public FinancialPageObject(AndroidDriver<AndroidElement> driver) {
 		super(driver);
+	}
+	public void clickBannerImage(){
+		clickEle(bannerImage,"banner图");
 	}
 	public DepositProductDetailPageObject clickDepositProduct(String DepositProductName) throws Exception{
 		//driver.scrollTo(DepositProductName);
@@ -29,6 +35,16 @@ public class FinancialPageObject extends CommonAppiumPage{
 		super.scrollTo(productXpath);
 		AndroidElement DepositProduct=driver.findElement(By.xpath("//android.widget.TextView[@text='"+DepositProductName+"']"));
 		clickEle(DepositProduct,"定期产品名称："+DepositProductName);
+		return new DepositProductDetailPageObject(driver);
+	}
+	public DepositProductDetailPageObject clickFirstDepositProduct() throws Exception{
+		this.clickWenJian();
+		waitEleUnVisible(refreshViewLocator, 30);
+		String depositeTitle="//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/group_title' and @text='定期']";
+		super.scrollTo(depositeTitle);
+		String firstProductXpath="//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/group_title' and @text='定期']/ancestor::android.widget.LinearLayout[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/item_financial_home_privilege']//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_title']";
+		AndroidElement DepositProduct=driver.findElement(By.xpath(firstProductXpath));
+		clickEle(DepositProduct,"第一个定期产品");
 		return new DepositProductDetailPageObject(driver);
 	}
 	public DepositGroupBuyProductDetailPageObject clickDepositGroupBuyProduct(String DepositGroupBuyProductName) throws Exception{
