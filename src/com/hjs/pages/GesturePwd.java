@@ -1,22 +1,26 @@
 package com.hjs.pages;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.Point;
 import org.testng.Assert;
 import org.testng.Reporter;
+
+import com.hjs.config.CommonAppiumPage;
 
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 
-import com.hjs.config.CommonAppiumPage;
-
 public class GesturePwd extends CommonAppiumPage{
+	
+	@AndroidFindBy(id="layout_title")
+	private AndroidElement title;		//手势密码title
 	@AndroidFindBy(id="gesture_login")
 	private AndroidElement gestureLogin;		//手势密码区域
 	@AndroidFindBy(id="login_gesture_tip")
@@ -198,15 +202,15 @@ public class GesturePwd extends CommonAppiumPage{
 		List<Point> pointList=new ArrayList<Point>();
         pointList=getPointList(pn);
         gestureTouchAction(pointList);//输入密码
-        try{
-        	result=verifyGestureTips();
-        	Reporter.log("第二次输入手势密码有误："+result);
-        	print("第二次输入手势密码有误："+result);
-        	throw new Exception(result);
-        }
-        catch(Exception e){
-        	
-        }
+//        try{
+//        	result=verifyGestureTips();
+//        	Reporter.log("第二次输入手势密码有误："+result);
+//        	print("第二次输入手势密码有误："+result);
+//        	throw new Exception(result);
+//        }
+//        catch(Exception e){
+//        	
+//        }
         return new HomePageObject(driver);
 		
 	}
@@ -233,13 +237,13 @@ public class GesturePwd extends CommonAppiumPage{
 	public void gestureTouchAction(List<Point> gesturePoints){
 		Point prePoint = gesturePoints.get(0);
 		TouchAction touchAction = new TouchAction(driver);
-		TouchAction cur = touchAction.press(prePoint.getX(),prePoint.getY()).waitAction(1000);
+		TouchAction cur = touchAction.press(prePoint.getX(),prePoint.getY()).waitAction(Duration.ofMillis(1000));
 		for(int i = 1;i<gesturePoints.size();i++){
 		   Point nextPoint = gesturePoints.get(i);
-		   cur = cur.moveTo(nextPoint.getX()-prePoint.getX(),nextPoint.getY()-prePoint.getY()).waitAction(1000);
+		   cur = cur.moveTo(nextPoint.getX()-prePoint.getX(),nextPoint.getY()-prePoint.getY()).waitAction(Duration.ofMillis(1000));
 		   prePoint = nextPoint;
 		  }
-		cur.release().waitAction(1000).perform();
+		cur.release().waitAction(Duration.ofMillis(1000)).perform();
 	}
 	public LoginPageObject switchUser(){
 		clickEle(switchUserTV,"其他账号登录");
@@ -250,6 +254,17 @@ public class GesturePwd extends CommonAppiumPage{
 		super.waitForClickble(reLoginBtnOnTips, super.getWaitTime());
 		clickEle(reLoginBtnOnTips,"重新登录");
 		return new LoginPageObject(driver);
+	}
+	public LoginPageObject waitforGstExperied(Duration duration,int...pn) throws Exception{
+		super.threadsleep((int)duration.toMillis());
+       	this.inputGesturePwd(pn);
+       	if(super.isElementExsit(super.getWaitTime(), dlgMsgMsg)){
+       		Assert.assertEquals(super.getEleText(dlgMsgMsg, "弹出框信息内容"), "手势密码已失效,请重新登录,登录成功之后,重设手势密码");
+       		clickEle(tipsConfirmBtn,"重新登录按钮");
+       		return new LoginPageObject(driver);
+       	}
+       	else throw new Exception("未出现‘手势密码已失效’提示");
+       	
 	}
 	public String verifyGestureTips(){
         return gestureTip.getText();

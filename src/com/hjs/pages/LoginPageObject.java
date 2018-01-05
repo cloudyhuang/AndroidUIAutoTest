@@ -25,6 +25,8 @@ public class LoginPageObject extends CommonAppiumPage{
 	private AndroidElement loginBtn;		//登录按钮
 	@AndroidFindBy(id="button_switch_account")
 	private AndroidElement switchAccountBtn;		//更换账号或注册
+	@AndroidFindBy(id="button_forget_pwd")
+	private AndroidElement forgetPwdBtn;		//忘记密码按钮
 	@AndroidFindBy(xpath="//android.widget.Button[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/dlg_msg_3pbtn_type2_2' and @text='切换账号']")
 	private AndroidElement swichAccountBtnOnTips;		//提示弹框中切换账号按钮
 	@AndroidFindBy(xpath="//android.widget.Button[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/dlg_msg_3pbtn_type2_1' and @text='找回密码']")
@@ -92,6 +94,25 @@ public class LoginPageObject extends CommonAppiumPage{
 		else {
 			return new SignUpPageObject(driver);
 		}
+	}
+	public void verifyPhoneNumByWrongCaptcha(String phoneNumber){
+		clickEle(loginPhoneInput,"登录手机号输入框");
+		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
+		safeKeyBoard.sendNum(phoneNumber);
+		safeKeyBoard.pressFinishBtn();
+		if(super.isElementExsit(5,captchaInput)){
+			DisConfConfig disConfConfig=new DisConfConfig();
+	    	disConfConfig.openVerifyCode();;	//打开验证码验证
+			clickEle(captchaInput,"验证码输入框");
+			super.sendKeys(captchaInput, "1234");
+		}
+		super.threadsleep(2000);//使之disconf关闭验证码生效等待
+		clickEle(assertPhoneNumBtn,"验证手机号按钮");
+		verifyToast("图片验证码错误");
+	}
+	public FindPwdVerifyPhonePageObject forgotPwd(){
+		clickEle(forgetPwdBtn,"忘记密码按钮");
+		return new FindPwdVerifyPhonePageObject(driver);
 	}
 	public CommonAppiumPage switchAccount(String phoneNumber){
 		clickEle(switchAccountBtn,"切换账号或注册按钮");

@@ -82,7 +82,8 @@ public class MyDepositeProductDetailPageObject extends CommonAppiumPage{
 		for(int i=0;i<agreementListEle.size();i++){
 			agreementList.add(agreementListEle.get(i).getText());
 		}
-		clickEle(backBtn,"返回按钮");
+		//clickEle(backBtn,"返回按钮");
+		super.backKeyEvent();  //返回
 		return agreementList;
 	}
 

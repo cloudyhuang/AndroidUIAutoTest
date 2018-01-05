@@ -33,7 +33,7 @@ public class JenkinsJob {
 	//jenkins登录账号
 		public static String username = "huangxiao";
 		//jenkins登录密码
-		public static String password = "HDhxnearc228";
+		public static String password = "HDhxnearcj228";
 		//jenkins登录url
 		public static String jenkinsUrl = "http://172.16.59.251:8080";
 		public static void main(String [] args) throws ClientProtocolException, IOException{

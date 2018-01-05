@@ -27,6 +27,8 @@ import com.hjs.publics.LogReader;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
+import io.appium.java_client.remote.AndroidMobileCapabilityType;
+import io.appium.java_client.remote.AutomationName;
 import io.appium.java_client.remote.MobileCapabilityType;
 
 public class CommonAppiumTest {
@@ -84,8 +86,9 @@ public class CommonAppiumTest {
         capabilities.setCapability("unicodeKeyboard", true);	//支持中文
         capabilities.setCapability("resetKeyboard", true);	//运行完毕之后，变回系统的输入法
         capabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT,"600");
+        //capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.ANDROID_UIAUTOMATOR2);		//uiautomator2支持toast
         //capabilities.setCapability(MobileCapabilityType.APP_WAIT_ACTIVITY, "com.evergrande.eif.userInterface.activity.modules.guide.*");
-        capabilities.setCapability(MobileCapabilityType.APP_WAIT_ACTIVITY, "com.evergrande.eif.userInterface.activity.modules.*");
+        capabilities.setCapability(AndroidMobileCapabilityType.APP_WAIT_ACTIVITY, "com.evergrande.eif.userInterface.activity.modules.*");
         if(isDebug){capabilities.setCapability("noReset", true);}	//是否不重新安装 true不安装，false重新安装
         else {capabilities.setCapability("noReset", true);	}//是否不重新安装 true不安装，false重新安装
         //关键是加上这段

@@ -21,6 +21,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 
@@ -101,7 +102,8 @@ public class AppiumBaseMethod {
     	Point scroToPoint=AppiumBaseMethod.getWebElementRealPoint(driver,scroToElement);
     	while(!scroIdex_1Point.equals(scroToPoint)){
     	AppiumBaseMethod.contextNativeApp(driver);
-    	driver.swipe(scroIdex_1Point.getX(),scroIdex_1Point.getY(),scroIdex_1Point.getX(),scroIdex_1Point.getY()-60, 500);
+    	//driver.swipe(scroIdex_1Point.getX(),scroIdex_1Point.getY(),scroIdex_1Point.getX(),scroIdex_1Point.getY()-60, 500);
+    	new TouchAction(driver).press(scroIdex_1Point.getX(),scroIdex_1Point.getY()).moveTo(scroIdex_1Point.getX(),scroIdex_1Point.getY()-60).release().perform();
     	scroToPoint=AppiumBaseMethod.getWebElementRealPoint(driver,scroToElement);
     	}
     	AppiumBaseMethod.contextWebview(driver);
@@ -116,8 +118,9 @@ public class AppiumBaseMethod {
         int width = driver.manage().window().getSize().width;
         int height = driver.manage().window().getSize().height;
         for(int i=1;i<=times;i++){
-        driver.swipe(width / 2, height * 3 / 4, width / 2, height / 4, during);
-        AppiumBaseMethod.threadsleep(500);
+        	new TouchAction(driver).press(width / 2,height * 3 / 4).moveTo(width / 2,height / 4).release().perform();
+       // driver.swipe(width / 2, height * 3 / 4, width / 2, height / 4, during);
+        	AppiumBaseMethod.threadsleep(500);
         }
         // wait for page loading
     }
@@ -130,8 +133,9 @@ public class AppiumBaseMethod {
         int height = driver.manage().window().getSize().height;
     	for(int i=1;i<=times;i++)
     	{
-        driver.swipe(width / 2, height / 4, width / 2, height * 3 / 4, during);
-        AppiumBaseMethod.threadsleep(500);
+    		new TouchAction(driver).press(width / 2,height / 4).moveTo(width / 2,height * 3 / 4).release().perform();
+        //driver.swipe(width / 2, height / 4, width / 2, height * 3 / 4, during);
+    		AppiumBaseMethod.threadsleep(500);
     	}
         // wait for page loading
     }
@@ -143,8 +147,9 @@ public class AppiumBaseMethod {
         int width = driver.manage().window().getSize().width;
         int height = driver.manage().window().getSize().height;
         for(int i=1;i<=times;i++){
-        driver.swipe(width * 3 / 4, height / 2, width / 4, height / 2, during);
-        AppiumBaseMethod.threadsleep(500);
+        	new TouchAction(driver).press(width * 3 / 4,height / 2).moveTo(width / 4,height / 2).release().perform();
+        //driver.swipe(width * 3 / 4, height / 2, width / 4, height / 2, during);
+        	AppiumBaseMethod.threadsleep(500);
         }
         // wait for page loading
     }
@@ -156,8 +161,9 @@ public class AppiumBaseMethod {
         int width = driver.manage().window().getSize().width;
         int height = driver.manage().window().getSize().height;
         for(int i=1;i<=times;i++){
-        driver.swipe(width / 4, height / 2, width * 3 / 4, height / 2, during);
-        AppiumBaseMethod.threadsleep(500);
+        	new TouchAction(driver).press(width / 4,height / 2).moveTo(width * 3 / 4,height / 2).release().perform();
+        //driver.swipe(width / 4, height / 2, width * 3 / 4, height / 2, during);
+        	AppiumBaseMethod.threadsleep(500);
         }
         // wait for page loading
     }

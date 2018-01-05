@@ -49,6 +49,20 @@ public class PwdSettingPageObject extends CommonAppiumPage{
 			clickEle(tipsConfirmBtn,"弹出框确认按钮");
 		}
 		else throw new Exception("当前手密开关为关");
+		switchStatus=gesture_switch.getAttribute("checked");
+		if(switchStatus.equals("true")){
+			Assert.assertTrue(false,"关闭手密后手密开关未关闭");
+		}
+	}
+	public GesturePwd openGestureSwitch(String pwd) throws Exception{
+		String switchStatus=gesture_switch.getAttribute("checked");
+		if(switchStatus.equals("false")){
+			clickEle(gesture_switch,"手势密码开关");
+			super.sendKeys(loginPwdInput, pwd);
+			clickEle(loginPwdConfirmBtn,"登录密码确认按钮");
+		}
+		else throw new Exception("当前手密开关为开");
+		return new GesturePwd(driver);
 	}
 	public boolean verifyInthisPage(){
 		return isElementExsit(resetTradePwdLocator);

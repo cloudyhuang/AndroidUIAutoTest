@@ -15,6 +15,7 @@ public class ChooseCouponPageObject extends CommonAppiumPage{
 	@AndroidFindBy(id="icon_isChoosed")
 	private AndroidElement isChoosedIcon;		//已选择图标
 	@AndroidFindBy(id="imageView_back")
+	//@AndroidFindBy(id="layout_back")
 	private AndroidElement backBtn;		//返回按钮
 	
 	private By isChoosedIconLocator=By.id("icon_isChoosed");
@@ -25,10 +26,12 @@ public class ChooseCouponPageObject extends CommonAppiumPage{
 		if(couponName.equals("")){
 			if(isElementExsit(3,isChoosedIconLocator)){
 				clickEle(isChoosedIcon,"已选择图标");
-				clickEle(backBtn,"返回按钮");
+				//clickEle(backBtn,"返回按钮");
+				super.backKeyEvent();  //返回
 			}
 			else {
-				clickEle(backBtn,"返回按钮");
+				super.backKeyEvent();  //返回
+				//clickEle(backBtn,"返回按钮");
 			}
 		}
 		else{

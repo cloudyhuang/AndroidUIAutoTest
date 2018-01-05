@@ -3,6 +3,7 @@ package com.hjs.config;
 import static org.testng.AssertJUnit.assertTrue;
 
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Set;
@@ -23,6 +24,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.Reporter;
 
+import com.hjs.pages.DebugPageObject;
 import com.hjs.publics.AppiumBaseMethod;
 
 import io.appium.java_client.MobileDriver;
@@ -36,7 +38,8 @@ public class CommonAppiumPage{
 	public AndroidDriver<AndroidElement> driver; 
 
     private final int WAIT_TIME = 30;    //默认的等待控件时间
-    private final int KEYCODE_BACK=4;	//返回键
+    public final int KEYCODE_BACK=4;	//返回键
+    public final int KEYCODE_VOLUME_DOWN=25;	//音量下键
    
     private TimeOutDuration timeOutDuration;
     public CommonAppiumPage(AndroidDriver<AndroidElement> driver) {
@@ -61,6 +64,12 @@ public class CommonAppiumPage{
         timeOutDuration.setTime(time, TimeUnit.SECONDS);
         System.out.println("设置隐式等待时间为"+time+"秒");
     }
+    public DebugPageObject gotoDebugPage(){
+		longPressKeyEvent(KEYCODE_VOLUME_DOWN);
+		threadsleep(2000);
+		clickPoint(88, 64);	//点击debug元素
+		return new DebugPageObject(driver);
+	}
     /**
      * Click点击控件
      *
@@ -177,6 +186,23 @@ public class CommonAppiumPage{
 
     }
     /**
+     * 得到控件文字
+     *
+     * @param toast toast内容
+     * @return boolean 是否存在toast
+     */
+    public boolean verifyToast (String toast) {
+    	final WebDriverWait wait = new WebDriverWait(driver,3);  
+    	try{
+    	Assert.assertNotNull(wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//*[contains(@text,'"+ toast + "')]"))));  
+    	return true;  
+    	} catch (Exception e) {  
+    	throw new AssertionError("找不到toast:\""+toast+"\"");
+    	}
+
+    }
+    
+    /**
      * 清除控件内容
      *
      * @param ae  要输入的控件
@@ -215,7 +241,13 @@ public class CommonAppiumPage{
     public void backKeyEvent(){
     	driver.pressKeyCode(KEYCODE_BACK);
     }
-    
+    /**
+     * 长按实体键
+     *
+     */
+    public void longPressKeyEvent(int key){
+    	driver.longPressKeyCode(key);
+    }
     /**
      * 滑动到元素,且元素滑动到屏幕中间位置
      *
@@ -237,13 +269,16 @@ public class CommonAppiumPage{
 	    			int halfHeight=height/2;
 	    			Point scrollToEleCenterPoint=getNativeEleCenterPoint(scrollToEle);
 	    			if(scrollToEleCenterPoint.getY()>height*7/8){
-		    			driver.swipe(width / 2, halfHeight, width / 2, height/4, 2000); //只有元素在比较偏僻的地方，将元素滑动到屏幕中间位置，防止出现只滑动一点点导致直接点击的操作 
+	    				new TouchAction(driver).press(width / 2,halfHeight).waitAction(Duration.ofMillis(1000)).moveTo(width / 2,height/4).release().perform();
+		    			//driver.swipe(width / 2, halfHeight, width / 2, height/4, 2000); //只有元素在比较偏僻的地方，将元素滑动到屏幕中间位置，防止出现只滑动一点点导致直接点击的操作 
 		    			}
 	    			if(scrollToEleCenterPoint.getY()<height/8&&loopi>1){
-		    			driver.swipe(width / 2, height/4, width / 2, halfHeight, 2000); //只有元素在比较偏僻的地方，将元素滑动到屏幕中间位置，防止出现只滑动一点点导致直接点击的操作 
+	    				new TouchAction(driver).press(width / 2,height/4).waitAction(Duration.ofMillis(1000)).moveTo(width / 2,halfHeight).release().perform();
+		    			//driver.swipe(width / 2, height/4, width / 2, halfHeight, 2000); //只有元素在比较偏僻的地方，将元素滑动到屏幕中间位置，防止出现只滑动一点点导致直接点击的操作 
 		    			}
 	    			if((scrollToEleCenterPoint.getY()<height/5&&scrollToEleCenterPoint.getY()>height/8&&loopi>1)||(scrollToEleCenterPoint.getY()>height*4/5&&scrollToEleCenterPoint.getY()<height*7/8)){
-	    			driver.swipe(width / 2, scrollToEleCenterPoint.getY(), width / 2, halfHeight,2000); //只有元素在比较偏僻的地方，将元素滑动到屏幕中间位置，防止出现只滑动一点点导致直接点击的操作 
+	    				new TouchAction(driver).press(width / 2,scrollToEleCenterPoint.getY()).waitAction(Duration.ofMillis(1000)).moveTo(width / 2,halfHeight).release().perform();
+	    				//driver.swipe(width / 2, scrollToEleCenterPoint.getY(), width / 2, halfHeight,2000); //只有元素在比较偏僻的地方，将元素滑动到屏幕中间位置，防止出现只滑动一点点导致直接点击的操作 
 	    			}
 	    			waitAuto(WAIT_TIME);
 	    			break;
@@ -282,11 +317,11 @@ public class CommonAppiumPage{
     	
     }
 	public  Point getWebElementRealPoint(AndroidDriver<AndroidElement> driver,WebElement el){
-		AppiumBaseMethod.contextNativeApp(driver);
+		this.contextNativeApp(driver);
 	   	int devWidth= driver.manage().window().getSize().width;//[720]
 	   	int devHeight=driver.manage().window().getSize().height;//[1280]
 	   	Point appWvpoint=driver.findElement(By.id("app_detaill_wv")).getLocation();//webview左上角坐标[0,127]
-	   	AppiumBaseMethod.contextWebview(driver);
+	   	this.contextWebview(driver);
 		Point elpoint = el.getLocation();
     	Dimension elSize = el.getSize();
     	double appWvX=appWvpoint.getX();
@@ -307,7 +342,7 @@ public class CommonAppiumPage{
         return elpoint;
 	}
     public void clickWebviewEle(AndroidDriver<AndroidElement> driver,WebElement el){
-    	Point elRealPoint=AppiumBaseMethod.getWebElementRealPoint(driver,el);
+    	Point elRealPoint=this.getWebElementRealPoint(driver,el);
     	double elX=elRealPoint.getX();
     	double elY=elRealPoint.getY();
         JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -325,7 +360,8 @@ public class CommonAppiumPage{
     	int screen_height_execute_phone = driver.manage().window().getSize().height; //screen height
     	int x_click = x * screen_width_execute_phone / 720; //x coordinates on execute phone
     	int y_click = y * screen_height_execute_phone / 1280; //y coordinates on execute phone
-    	driver.tap(1, x_click, y_click, 0);
+    	//driver.tap(1, x_click, y_click, 0);
+    	new TouchAction((MobileDriver) driver).tap(x_click, y_click).perform();
     }
     public void clickNativeEle(AndroidElement el,int clickcount){
 		Point elpoint = el.getLocation();
@@ -381,14 +417,16 @@ public class CommonAppiumPage{
     	WebElement scrollElement=driver.findElement(scrollLocator);
     	WebElement scroIdex_1Element=scrollElement.findElement(By.xpath("./li[1]/div[@class='dw-i']"));
     	WebElement scroToElement=scrollElement.findElement(By.xpath(".//div[@class='dw-i' and text()='"+scrollToText+"']"));
-    	Point scroIdex_1Point=AppiumBaseMethod.getWebElementRealPoint(driver,scroIdex_1Element);
-    	Point scroToPoint=AppiumBaseMethod.getWebElementRealPoint(driver,scroToElement);
+    	Point scroIdex_1Point=this.getWebElementRealPoint(driver,scroIdex_1Element);
+    	Point scroToPoint=this.getWebElementRealPoint(driver,scroToElement);
     	while(!scroIdex_1Point.equals(scroToPoint)){
-    	AppiumBaseMethod.contextNativeApp(driver);
-    	driver.swipe(scroIdex_1Point.getX(),scroIdex_1Point.getY(),scroIdex_1Point.getX(),scroIdex_1Point.getY()-60, 500);
-    	scroToPoint=AppiumBaseMethod.getWebElementRealPoint(driver,scroToElement);
+    	this.contextNativeApp(driver);
+    	new TouchAction(driver).press(scroIdex_1Point.getX(),scroIdex_1Point.getY()).waitAction(Duration.ofMillis(1000)).moveTo(scroIdex_1Point.getX(),scroIdex_1Point.getY()-60).release().perform();
+    	//driver.swipe(scroIdex_1Point.getX(),scroIdex_1Point.getY(),scroIdex_1Point.getX(),scroIdex_1Point.getY()-60, 500);
+    	
+    	scroToPoint=this.getWebElementRealPoint(driver,scroToElement);
     	}
-    	AppiumBaseMethod.contextWebview(driver);
+    	this.contextWebview(driver);
     
     	
     	//((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();" ,el);
@@ -400,7 +438,8 @@ public class CommonAppiumPage{
         int width = driver.manage().window().getSize().width;
         int height = driver.manage().window().getSize().height;
         for(int i=1;i<=times;i++){
-        driver.swipe(width / 2, height * 3 / 4, width / 2, height / 4, during);
+        	new TouchAction(driver).press(width / 2,height * 3 / 4).waitAction(Duration.ofMillis(during)).moveTo(width / 2,height / 4).release().perform();
+        //driver.swipe(width / 2, height * 3 / 4, width / 2, height / 4, during);
         threadsleep(1000);
         }
         // wait for page loading
@@ -414,7 +453,8 @@ public class CommonAppiumPage{
         int height = driver.manage().window().getSize().height;
     	for(int i=1;i<=times;i++)
     	{
-        driver.swipe(width / 2, height / 4, width / 2, height * 3 / 4, during);
+    		new TouchAction(driver).press(width / 2,height / 4).waitAction(Duration.ofMillis(during)).moveTo(width / 2,height * 3 / 4).release().perform();
+        //driver.swipe(width / 2, height / 4, width / 2, height * 3 / 4, during);
         threadsleep(1000);
     	}
         // wait for page loading
@@ -427,7 +467,8 @@ public class CommonAppiumPage{
         int width = driver.manage().window().getSize().width;
         int height = driver.manage().window().getSize().height;
         for(int i=1;i<=times;i++){
-        driver.swipe(width * 9 / 10, height / 2, width / 10, height / 2, during);
+        	new TouchAction(driver).press(width * 9 / 10,height / 2).waitAction(Duration.ofMillis(during)).moveTo(width / 10,height / 2).release().perform();
+        //driver.swipe(width * 9 / 10, height / 2, width / 10, height / 2, during);
         threadsleep(1000);
         }
         // wait for page loading
@@ -440,8 +481,9 @@ public class CommonAppiumPage{
         int width = driver.manage().window().getSize().width;
         int height = driver.manage().window().getSize().height;
         for(int i=1;i<=times;i++){
-        driver.swipe(width / 4, height / 2, width * 3 / 4, height / 2, during);
-        threadsleep(1000);
+        	new TouchAction(driver).press(width / 4,height / 2).waitAction(Duration.ofMillis(during)).moveTo(width * 3 / 4,height / 2).release().perform();
+        	//driver.swipe(width / 4, height / 2, width * 3 / 4, height / 2, during);
+        	threadsleep(1000);
         }
         // wait for page loading
     }
@@ -584,7 +626,7 @@ public class CommonAppiumPage{
         for (int attempt = 0; attempt < times; attempt++) {  
             try {  
                 if(!ele.isDisplayed()){
-                	AppiumBaseMethod.threadsleep(1000);
+                	this.threadsleep(1000);
                 	continue;
                 }
                 else {
@@ -592,7 +634,7 @@ public class CommonAppiumPage{
                 	return true;
                 }
             } catch (Exception e) {  
-            	AppiumBaseMethod.threadsleep(1000);
+            	this.threadsleep(1000);
             	continue;
             }  
         }  
@@ -657,7 +699,7 @@ public class CommonAppiumPage{
 			if (flag) {
 				break;
 			}
-			AppiumBaseMethod.threadsleep(1000);
+			this.threadsleep(1000);
 
 		}
 		waitAuto(WAIT_TIME);
@@ -671,7 +713,7 @@ public class CommonAppiumPage{
         for (int attempt = 0; attempt < waittime; attempt++) {  
             try {  
                 driver.findElement(by);  
-                AppiumBaseMethod.threadsleep(1000);
+                this.threadsleep(1000);
             } catch (Exception e) {  
             	waitAuto(WAIT_TIME);
                 break; 
@@ -684,7 +726,7 @@ public class CommonAppiumPage{
         for (int attempt = 0; attempt < waittime; attempt++) {  
             try {  
                 if(ele.isDisplayed()){
-                	AppiumBaseMethod.threadsleep(1000);
+                	this.threadsleep(1000);
                 	continue;
                 }
                 else break;
@@ -699,6 +741,10 @@ public class CommonAppiumPage{
     public void waitForVisible(By by, int waitTime){
         WebDriverWait wait = new WebDriverWait(driver,waitTime);
    	 	wait.until(ExpectedConditions.visibilityOfElementLocated(by)); 
+    }
+    public void waitForVisible(AndroidElement ae, int waitTime){
+        WebDriverWait wait = new WebDriverWait(driver,waitTime);
+   	 	wait.until(ExpectedConditions.visibilityOf(ae)); 
     }
     public void waitForClickble(By by, int waitTime){
         WebDriverWait wait = new WebDriverWait(driver,waitTime);
