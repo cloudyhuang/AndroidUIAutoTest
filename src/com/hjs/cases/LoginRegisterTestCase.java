@@ -25,6 +25,7 @@ import com.hjs.pages.MinePageObject;
 import com.hjs.pages.PersonSettingPageObject;
 import com.hjs.pages.PwdSettingPageObject;
 import com.hjs.pages.WelcomePageObject;
+import com.hjs.testDate.Account;
 
 /**
 * @author huangxiao
@@ -377,4 +378,16 @@ public class LoginRegisterTestCase extends CommonAppiumTest{
        	debugSettingPage.changeGstExpiredTimeOut(duration);
        	Assert.assertTrue(homepage.verifyIsInHomePage(),"设置debug setting后未回到主页");
    	}
+    @Test(description="定期回款设置",priority = 17)
+    public void testBackMoneySetting()throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
+    	HomePageObject homepage=new HomePageObject(driver); 
+    	CommonAppiumPage page=homepage.enterPersonEntrace();
+    	String pageName=page.getClass().getName();
+    	Assert.assertTrue(pageName.contains("MinePageObject"), "点击首页-我的入口未进入我的页面");
+    	PersonSettingPageObject personSettingPage=((MinePageObject)page).enterPersonSetting();
+    	Assert.assertTrue(personSettingPage.verifyInthisPage(), "进入我的个人头像，未进入设置页");
+    	PwdSettingPageObject pwdSettingPage=personSettingPage.gotoPwdResetPage();
+    	
+    }
 }
