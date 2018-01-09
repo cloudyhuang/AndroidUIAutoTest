@@ -115,15 +115,21 @@ public class InitProduct {
 		String bgAssetsName="黄XAutoTest资管项目"+currentDate;
 		String bgAssetsNo="黄XAutoTest资管项目编号"+currentDate;
 		String bgAssetId=this.createBackgroundAssets(bgAssetsName, bgAssetsNo, assetPathId, assetProjectId);
-		//创建资管份额
+		//创建排期
 		String assetsName="黄XAutoTest资管份额"+currentDate;	
 		String assetsNo="资管项目编号"+currentDate;
-		long collectEndTime = Util.addDate(Util.dateToLong(userDate,"yyyy-MM-dd HH:mm:ss"),10);
-		String assetsId=this.createAsset(assetsName, assetsNo,bgAssetId,collectEndTime);
+		//long collectEndTime = Util.addDate(Util.dateToLong(userDate,"yyyy-MM-dd HH:mm:ss"),10);
+		long collectEndTime = Util.addDate(Util.dateToLong(userDate,"yyyy-MM-dd HH:mm:ss"),30);
+		long inceptionDate=Util.addDate(Util.dateToLong(userDate,"yyyy-MM-dd HH:mm:ss"),10);
+		//String assetsId=this.createAsset(assetsName, assetsNo,bgAssetId,collectEndTime);
+		String assetsId=this.createAssetsSchedule(assetsName, assetsNo,bgAssetId,inceptionDate,collectEndTime);
 		//创建募集计划
 		long startTime=Util.dateToLong(userDate,"yyyy-MM-dd HH:mm:ss");
 		long endTime=Util.addDate(Util.dateToLong(userDate,"yyyy-MM-dd HH:mm:ss"),10);
 		String planId=this.createCollectPlan(assetsId, startTime,endTime);
+		//调整资管份额规模
+		String scale="50000000";	//增加份额
+		this.adjustAssetsScale(assetsId, scale);
 		//创建产品
 		this.creatProduct(assetsId, planId);
 		//产品上架
@@ -241,6 +247,47 @@ public class InitProduct {
 		Assert.assertTrue(success,"接口返回错误，错误信息:"+msg);
 		String assetProjectId=String.valueOf(postJsonobj.get("id"));
 		return assetProjectId;
+	}
+	public String createAssetsSchedule(String assetsName,String assetsNo,String bgAssetId,long inceptionDate,long collectEndTime) throws ParseException{
+		String url="http://172.16.57.47:48080//eif-fis-web/rpc/call/com.eif.fis.facade.biz.omc.OmcFacade/createAssetsSchedule";
+		String params="[{\"AssetSchedule\":{\"createTime\":1515273008604,\"assetsName\":\"资管份额65c89fa219004d8690ae312c50d5b284\",\"clearAccountSignMonth\":\"12\",\"status\":\"1\",\"valueDays\":\"1\",\"bgAssetId\":21,\"isRevenuesOnRedemptionDay\":\"false\",\"inceptionDate\":1516137008604,\"assetsNo\":\"资管项目编号1880b0810eff428e8d8c593c17a8c676\",\"batchNo\":\"1323\",\"collectEndTime\":1517865008604,\"comment\":\"1\",\"modifyTime\":1515273008604,\"clearAccountSign\":\"5004\",\"dueDate\":1515359408604,\"productLimit\":\"360\"}}]";
+		String userDate=Util.getUserDate("yyyy-MM-dd HH:mm:ss");
+		long modifyTime = Util.dateToLong(userDate,"yyyy-MM-dd HH:mm:ss");
+		long dueDate=Util.addDate(Util.dateToLong(userDate,"yyyy-MM-dd HH:mm:ss"), 1);
+		
+		JSONArray postJsonArray=new JSONArray(params);
+		postJsonArray.getJSONObject(0).getJSONObject("AssetSchedule").put("assetsName", assetsName);
+		postJsonArray.getJSONObject(0).getJSONObject("AssetSchedule").put("assetsNo", assetsNo);
+		postJsonArray.getJSONObject(0).getJSONObject("AssetSchedule").put("bgAssetId", bgAssetId);
+		postJsonArray.getJSONObject(0).getJSONObject("AssetSchedule").put("inceptionDate", inceptionDate);
+		postJsonArray.getJSONObject(0).getJSONObject("AssetSchedule").put("collectEndTime", collectEndTime);
+		postJsonArray.getJSONObject(0).getJSONObject("AssetSchedule").put("modifyTime", modifyTime);
+		postJsonArray.getJSONObject(0).getJSONObject("AssetSchedule").put("dueDate", dueDate);
+		
+		
+		httpResult = orderpushstatus.sendJsonPost(url, postJsonArray.toString());
+		httpStatusCode = orderpushstatus.getStatusCode(); // 响应码
+		JSONObject postJsonobj = new JSONObject(httpResult);
+		String msg=String.valueOf(postJsonobj.get("msg"));
+		boolean success=postJsonobj.getBoolean("success");
+		Assert.assertTrue(success,"接口返回错误，错误信息:"+msg);
+		String assetProjectId=String.valueOf(postJsonobj.get("assetId"));
+		return assetProjectId;
+	}
+
+	public void adjustAssetsScale(String assetsId, String scale) {
+		String url = "http://172.16.57.47:48080//eif-fis-web/rpc/call/com.eif.fis.facade.biz.omc.OmcFacade/adjustAssetsScale";
+		String params = "[{\"assetsId\":\"4363\",\"scaleVariation\":\"50000000\"}]";
+
+		JSONArray postJsonArray = new JSONArray(params);
+		postJsonArray.getJSONObject(0).put("assetsId", assetsId);
+		postJsonArray.getJSONObject(0).put("scaleVariation", scale);
+		httpResult = orderpushstatus.sendJsonPost(url, postJsonArray.toString());
+		httpStatusCode = orderpushstatus.getStatusCode(); // 响应码
+		JSONObject postJsonobj = new JSONObject(httpResult);
+		String msg = String.valueOf(postJsonobj.get("msg"));
+		boolean success = postJsonobj.getBoolean("success");
+		Assert.assertTrue(success, "接口返回错误，错误信息:" + msg);
 	}
 	public String createCollectPlan(String assetsId,long startTime,long endTime) throws IOException{
 		String url="http://172.16.57.47:48080//eif-fis-web/rpc/call/com.eif.fis.facade.biz.omc.OmcFacade/createCollectPlan";

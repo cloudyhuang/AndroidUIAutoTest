@@ -112,34 +112,34 @@ public class MyDepositeProductDetailPageObject extends CommonAppiumPage{
 		mtpYieldRate=df.format(mtpYieldRateDouble); 
 		mtpYieldRate=mtpYieldRate+"%";	//mtp不显示%，app显示%
 		String appYieldRate=appProductDetailMap.get("expectAnnual"); //app预期年化
-		Assert.assertEquals(mtpYieldRate, appYieldRate,"预期年化app显示错误,mtp:"+mtpYieldRate+"app实际："+appYieldRate);
+		Assert.assertEquals(appYieldRate, mtpYieldRate,"预期年化app显示错误,mtp:"+mtpYieldRate+"app实际："+appYieldRate);
 		
 		String mtpProductLimit=String.valueOf(mtpProductDetailJson.getJSONObject("fixedProductDetail").get("productLimit"));	//项目期限
 		mtpProductLimit=mtpProductLimit+" 天";	//app显示“xxx 天”
 		String appProductLimit=appProductDetailMap.get("productLimit"); //app项目期限
 		appProductLimit=appProductLimit.trim();
-		Assert.assertEquals(mtpProductLimit, appProductLimit,"项目期限pp显示错误,mtp:"+mtpProductLimit+"app实际："+appProductLimit);
+		Assert.assertEquals(appProductLimit, mtpProductLimit,"项目期限pp显示错误,mtp:"+mtpProductLimit+"app实际："+appProductLimit);
 		
 		String mtpValueDate=mtpProductDetailJson.getJSONObject("fixedProductDetail").getString("valueDate");	//投资起始日
 		String appValueDate=appProductDetailMap.get("valueDate");	//app投资起始日
-		Assert.assertEquals(mtpValueDate, appValueDate,"投资起始日pp显示错误,mtp:"+mtpValueDate+"app实际："+appValueDate);
+		Assert.assertEquals(appValueDate, mtpValueDate,"投资起始日pp显示错误,mtp:"+mtpValueDate+"app实际："+appValueDate);
 		
 		String mtpDueDate=mtpProductDetailJson.getJSONObject("fixedProductDetail").getString("dueDate");	//投资到期日
 		String appDueDate=appProductDetailMap.get("dueDate");	//app投资到期日
-		Assert.assertEquals(mtpDueDate, appDueDate,"投资到期日pp显示错误,mtp:"+mtpDueDate+"app实际："+appDueDate);
+		Assert.assertEquals(appDueDate,mtpDueDate ,"投资到期日pp显示错误,mtp:"+mtpDueDate+"app实际："+appDueDate);
 		
 		String mtpProfitModeDesc=mtpProductDetailJson.getJSONObject("fixedProductDetail").getString("profitModeDesc");	//回款方式
 		String appProfitModeDesc=appProductDetailMap.get("redeemWay");	//app回款方式
-		Assert.assertEquals(mtpProfitModeDesc, appProfitModeDesc,"回款方式app显示错误,mtp:"+mtpProfitModeDesc+"app实际："+appProfitModeDesc);
+		Assert.assertEquals(appProfitModeDesc, mtpProfitModeDesc,"回款方式app显示错误,mtp:"+mtpProfitModeDesc+"app实际："+appProfitModeDesc);
 		
 		String mtpReturnTo=mtpProductDetailJson.getJSONObject("fixedProductDetail").getString("returnTo");	//回款去向
 		String appReturnTo=appProductDetailMap.get("redeemGoal");	//app回款去向
-		Assert.assertEquals(mtpReturnTo, appReturnTo,"回款去向app显示错误,mtp:"+mtpReturnTo+"app实际："+appReturnTo);
+		Assert.assertEquals(appReturnTo, mtpReturnTo,"回款去向app显示错误,mtp:"+mtpReturnTo+"app实际："+appReturnTo);
 		
 		String mtpAccountingDate=mtpProductDetailJson.getJSONObject("fixedProductDetail").getString("accountingDate");	//回款日期
 		mtpAccountingDate="预计"+mtpAccountingDate; //app显示预计xxxx-xx-xx
 		String appAccountingDate=appProductDetailMap.get("refundDate");	//app回款日期
-		Assert.assertEquals(mtpAccountingDate, appAccountingDate,"回款日期app显示错误,mtp:"+mtpAccountingDate+"app实际："+appAccountingDate);
+		Assert.assertEquals(appAccountingDate, mtpAccountingDate,"回款日期app显示错误,mtp:"+mtpAccountingDate+"app实际："+appAccountingDate);
 		
 	}
 	public JSONObject getMtpProductDetailJson(String ProductId,String memberNo){

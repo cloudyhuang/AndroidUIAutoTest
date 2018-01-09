@@ -31,6 +31,7 @@ import com.hjs.pages.MyDepositeProductDetailPageObject;
 import com.hjs.pages.MyDepositeProductPageObject;
 import com.hjs.pages.PayPageObject;
 import com.hjs.pages.PersonSettingPageObject;
+import com.hjs.pages.PwdSettingPageObject;
 import com.hjs.pages.RechargePageObject;
 import com.hjs.pages.RechargeResultPageObject;
 import com.hjs.pages.RedeemPageObject;
@@ -758,6 +759,18 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(fundPurchaseResultPage.verifyInthisPage(), "申购基金后未跳转到申购结果页面");
     	String purchaseResult=fundPurchaseResultPage.getPurchaseResult();
     	Assert.assertTrue(purchaseResult.contains("成功"), "申购失败，"+purchaseResult);
+    }
+    @Test(priority = 33,description="定期回款设置")
+    public void testBackMoneySetting()throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
+    	HomePageObject homepage=new HomePageObject(driver); 
+    	CommonAppiumPage page=homepage.enterPersonEntrace();
+    	String pageName=page.getClass().getName();
+    	Assert.assertTrue(pageName.contains("MinePageObject"), "点击首页-我的入口未进入我的页面");
+    	PersonSettingPageObject personSettingPage=((MinePageObject)page).enterPersonSetting();
+    	Assert.assertTrue(personSettingPage.verifyInthisPage(), "进入我的个人头像，未进入设置页");
+    	PwdSettingPageObject pwdSettingPage=personSettingPage.gotoPwdResetPage();
+    	
     }
     /*
      * 请把赎回放最后一个用例*/

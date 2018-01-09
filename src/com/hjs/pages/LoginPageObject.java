@@ -72,7 +72,7 @@ public class LoginPageObject extends CommonAppiumPage{
 		}
 		clickEle(findPwdBtnOnTips,"提示弹框中找回密码按钮");
 		DisConfConfig disConfConfig=new DisConfConfig();
-    	disConfConfig.openVerifyCode();	//打开验证码验证
+    	disConfConfig.closeVerifyCode();	//关闭验证码验证
 		return new FindPwdVerifyPhonePageObject(driver);
 	}
 	public CommonAppiumPage verifyPhoneNum(String phoneNumber){

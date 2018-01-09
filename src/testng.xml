@@ -19,7 +19,7 @@
 		<classes>
 			<class name="com.hjs.cases.TradeTestCase">
 				<methods>
-					<include name="testAcceptTransProduct" />
+					<include name="testFinancialProductInfo" />
 				</methods>
 			</class>
 		</classes>
@@ -28,9 +28,7 @@
 	<test verbose="2" preserve-order="true" name="注册登录">
 		<classes>
 			<class name="com.hjs.cases.LoginRegisterTestCase">
-				<methods>
-					<include name="testGstExpriedTimeOut" />
-				</methods>
+			    
 			</class>
 		</classes>
 	</test>
