@@ -28,6 +28,9 @@
 	<test verbose="2" preserve-order="true" name="注册登录">
 		<classes>
 			<class name="com.hjs.cases.LoginRegisterTestCase">
+			    <methods>
+					<include name="testGstExpriedTimeOut" />
+				</methods>
 			    
 			</class>
 		</classes>

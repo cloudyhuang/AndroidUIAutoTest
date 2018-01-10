@@ -256,8 +256,12 @@ public class GesturePwd extends CommonAppiumPage{
 		return new LoginPageObject(driver);
 	}
 	public LoginPageObject waitforGstExperied(Duration duration,int...pn) throws Exception{
-		super.threadsleep((int)duration.toMillis());
+		
        	this.inputGesturePwd(pn);
+       	new HomePageObject(driver).backToHomePage();
+       	Assert.assertTrue(this.verifyInthisPage(), "当前未在手势密码页");
+       	super.threadsleep((int)duration.toMillis());
+    	this.inputGesturePwd(pn);
        	if(super.isElementExsit(super.getWaitTime(), dlgMsgMsg)){
        		Assert.assertEquals(super.getEleText(dlgMsgMsg, "弹出框信息内容"), "手势密码已失效,请重新登录,登录成功之后,重设手势密码");
        		clickEle(tipsConfirmBtn,"重新登录按钮");

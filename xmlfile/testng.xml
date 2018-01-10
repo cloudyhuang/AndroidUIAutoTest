@@ -6,7 +6,7 @@
 	<parameter name="isDebug" value="false" />
 	 <test verbose="2" preserve-order="true" name="账户管理测试">
 		<classes>
-			<class name="com.hjs.cases.AccountManageTestCase">
+			<class name="com.hjs.cases.LoginRegisterTestCase">
 			</class>
 		</classes>
 	</test>
