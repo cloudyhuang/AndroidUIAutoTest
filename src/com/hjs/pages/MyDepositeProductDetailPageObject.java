@@ -86,6 +86,11 @@ public class MyDepositeProductDetailPageObject extends CommonAppiumPage{
 		super.backKeyEvent();  //返回
 		return agreementList;
 	}
+	public void assertBackMoneyTo(String expectBackMoneyTo) {
+		Map<String,String> appProductDetailMap=this.getDetailMap();
+		String appReturnTo=appProductDetailMap.get("redeemGoal");	//app回款去向
+		Assert.assertEquals(appReturnTo, expectBackMoneyTo,"回款去向app显示错误,mtp:"+expectBackMoneyTo+"app实际："+appReturnTo);
+	}
 
 	public void assertMtpAndAppDetail(String phoneNum) throws Exception{
 		String memberNo=this.getMemberNo(phoneNum);

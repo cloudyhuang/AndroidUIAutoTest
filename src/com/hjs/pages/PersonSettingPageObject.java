@@ -22,9 +22,9 @@ public class PersonSettingPageObject extends CommonAppiumPage{
 	@AndroidFindBy(xpath="(//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/tv_item_remark_des'])[1]")
 	private AndroidElement bankCardName;		//银行卡名称
 	@AndroidFindBy(xpath="//android.widget.TextView[contains(@text,'定期回款')]")
-	private AndroidElement DepositeBackMoney;		//跳转密码管理按钮
+	private AndroidElement depositeBackMoney;		//定期回款按钮
 	@AndroidFindBy(xpath="//android.widget.TextView[contains(@text,'密码管理')]")
-	private AndroidElement gotoPwdResetBtn;		//定期回款按钮
+	private AndroidElement gotoPwdResetBtn;		//跳转密码管理按钮
 	@AndroidFindBy(xpath="//android.widget.TextView[contains(@text,'风险评测')]")
 	private AndroidElement gotoRiskEvaluationBtn;		//跳转风险评测按钮
 	@AndroidFindBy(xpath="//android.widget.TextView[contains(@text,'风险评测')]/following-sibling::android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/tv_item_remark_des']")
@@ -54,6 +54,10 @@ public class PersonSettingPageObject extends CommonAppiumPage{
 	public PwdSettingPageObject gotoPwdResetPage(){
 		clickEle(gotoPwdResetBtn,"跳转密码管理页面按钮");
 		return new PwdSettingPageObject(driver);
+	}
+	public DepositeBackMoneySettingPageObject gotoBackMoneySettingPage(){
+		clickEle(depositeBackMoney,"定期回款按钮");
+		return new DepositeBackMoneySettingPageObject(driver);
 	}
 	public CommonAppiumPage gotoRiskEvaluation(){
 		

@@ -12,6 +12,7 @@ import com.hjs.pages.CurrentDepositProductDetailPageObject;
 import com.hjs.pages.DepositGroupBuyProductDetailPageObject;
 import com.hjs.pages.DepositProductDetailPageObject;
 import com.hjs.pages.DepositTransProductDetailPageObject;
+import com.hjs.pages.DepositeBackMoneySettingPageObject;
 import com.hjs.pages.FinancialPageObject;
 import com.hjs.pages.FundAccountCreatPageObject;
 import com.hjs.pages.FundAccountCreatVerifySmsCodePageObject;
@@ -49,7 +50,7 @@ import com.hjs.testDate.GroupBuyInfo;
 
 
 public class TradeTestCase extends CommonAppiumTest{
-	private static String DEPOSITE_PRODUCT_NAME="黄XAutoTest产品171225042938";
+	private static String DEPOSITE_PRODUCT_NAME="黄XAutoTest产品180109092948";
 	private static String DEPOSITE_GROUPBUYPRODUCT_NAME="黄XAutoTest团购产品170919042116";
 	private static String DEPOSITE_TRANSPRODUCT_NAME="黄XAutoTest可转让产品180102033557";
 	private static String FUND_PRODUCT_NAME="国寿安保增金宝货币";
@@ -760,8 +761,8 @@ public class TradeTestCase extends CommonAppiumTest{
     	String purchaseResult=fundPurchaseResultPage.getPurchaseResult();
     	Assert.assertTrue(purchaseResult.contains("成功"), "申购失败，"+purchaseResult);
     }
-    @Test(priority = 33,description="定期回款设置")
-    public void testBackMoneySetting()throws Exception{
+    @Test(priority = 33,description="定期回款设置到银行卡")
+    public void testBackMoneySettingToBankCard()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
     	CommonAppiumPage page=homepage.enterPersonEntrace();
@@ -769,8 +770,43 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(pageName.contains("MinePageObject"), "点击首页-我的入口未进入我的页面");
     	PersonSettingPageObject personSettingPage=((MinePageObject)page).enterPersonSetting();
     	Assert.assertTrue(personSettingPage.verifyInthisPage(), "进入我的个人头像，未进入设置页");
-    	PwdSettingPageObject pwdSettingPage=personSettingPage.gotoPwdResetPage();
-    	
+    	DepositeBackMoneySettingPageObject depositeBackMoneySettingPage=personSettingPage.gotoBackMoneySettingPage();
+    	Assert.assertTrue(depositeBackMoneySettingPage.verifyInthisPage(), "点击定期回款按钮未进入定期回款设置页面");
+    	depositeBackMoneySettingPage.setToBankCard();
+    	depositeBackMoneySettingPage.backKeyEvent();
+    	Assert.assertTrue(personSettingPage.verifyInthisPage(), "从个人设置页返回后未进入设置页");
+    	personSettingPage.backKeyEvent();
+    	Assert.assertTrue(((MinePageObject)page).verifyInthisPage(), "从设置页返回后未进入我的页");
+    	MyDepositeProductPageObject myDepositeProductPage=((MinePageObject)page).enterMyDepositeProductPage();
+    	Assert.assertTrue(myDepositeProductPage.verifyInthisPage(), "点击定期理财未进入我的理财产品页");
+    	MyDepositeProductDetailPageObject myDepositeProductDetailPage=myDepositeProductPage.enterDepositeProductDetail(DEPOSITE_PRODUCT_NAME);
+    	Assert.assertTrue(myDepositeProductDetailPage.verifyInthisPage(), "点击"+DEPOSITE_PRODUCT_NAME+"产品未进入我的理财产品详情页");
+    	myDepositeProductDetailPage.backKeyEvent();
+    	myDepositeProductPage.enterDepositeProductDetail(DEPOSITE_PRODUCT_NAME);	//防止缓存再进入一次
+    	Assert.assertTrue(myDepositeProductDetailPage.verifyInthisPage(), "点击"+DEPOSITE_PRODUCT_NAME+"产品未进入我的理财产品详情页");
+    	myDepositeProductDetailPage.assertBackMoneyTo("至银行卡");
+    }
+    @Test(priority = 34,description="定期回款设置到余额")
+    public void testBackMoneySettingToBanlance()throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
+    	HomePageObject homepage=new HomePageObject(driver); 
+    	CommonAppiumPage page=homepage.enterPersonEntrace();
+    	String pageName=page.getClass().getName();
+    	Assert.assertTrue(pageName.contains("MinePageObject"), "点击首页-我的入口未进入我的页面");
+    	PersonSettingPageObject personSettingPage=((MinePageObject)page).enterPersonSetting();
+    	Assert.assertTrue(personSettingPage.verifyInthisPage(), "进入我的个人头像，未进入设置页");
+    	DepositeBackMoneySettingPageObject depositeBackMoneySettingPage=personSettingPage.gotoBackMoneySettingPage();
+    	Assert.assertTrue(depositeBackMoneySettingPage.verifyInthisPage(), "点击定期回款按钮未进入定期回款设置页面");
+    	depositeBackMoneySettingPage.setToBalance();
+    	depositeBackMoneySettingPage.backKeyEvent();
+    	Assert.assertTrue(personSettingPage.verifyInthisPage(), "从个人设置页返回后未进入设置页");
+    	personSettingPage.backKeyEvent();
+    	Assert.assertTrue(((MinePageObject)page).verifyInthisPage(), "从设置页返回后未进入我的页");
+    	MyDepositeProductPageObject myDepositeProductPage=((MinePageObject)page).enterMyDepositeProductPage();
+    	Assert.assertTrue(myDepositeProductPage.verifyInthisPage(), "点击定期理财未进入我的理财产品页");
+    	MyDepositeProductDetailPageObject myDepositeProductDetailPage=myDepositeProductPage.enterDepositeProductDetail(DEPOSITE_PRODUCT_NAME);
+    	Assert.assertTrue(myDepositeProductDetailPage.verifyInthisPage(), "点击"+DEPOSITE_PRODUCT_NAME+"产品未进入我的理财产品详情页");
+    	myDepositeProductDetailPage.assertBackMoneyTo("至账户余额");
     }
     /*
      * 请把赎回放最后一个用例*/
