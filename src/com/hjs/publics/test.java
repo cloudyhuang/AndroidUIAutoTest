@@ -36,8 +36,9 @@ import com.hjs.mybatis.inter.EifPayCoreOperation;
 public class test {
 
 	public static void main(String[] args) throws ParseException, IOException {
-		onlyOpenSHENGFUTONGProvider();
-
+		String a="已检测到最新版本 2.7.0";
+		String b=Util.getNumInString(a);
+		System.out.println(b);
 	}
 	public static void onlyOpenSHENGFUTONGProvider() throws IOException{
 		String resource = "eifPayCoreConfig.xml";

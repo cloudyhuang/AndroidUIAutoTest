@@ -12,16 +12,14 @@ import org.testng.annotations.Test;
 
 import com.hjs.config.CommonAppiumPage;
 import com.hjs.config.CommonAppiumTest;
+import com.hjs.pages.AboutPageObject;
 import com.hjs.pages.AccountBanlancePageObject;
 import com.hjs.pages.DebugPageObject;
 import com.hjs.pages.DebugSettingPageObject;
-import com.hjs.pages.DepositProductDetailPageObject;
 import com.hjs.pages.DiscoverPageObject;
-import com.hjs.pages.FinancialPageObject;
 import com.hjs.pages.FindPwdResetLoginPwdPageObject;
 import com.hjs.pages.FindPwdVerifyPhonePageObject;
 import com.hjs.pages.FindPwdVerifyRealNamePageObject;
-import com.hjs.pages.FundDetailPageObject;
 import com.hjs.pages.GesturePwd;
 import com.hjs.pages.HomePageObject;
 import com.hjs.pages.LoginPageObject;
@@ -407,8 +405,10 @@ public class LoginRegisterTestCase extends CommonAppiumTest{
     	Assert.assertTrue(pageName.contains("MinePageObject"), "点击首页-我的入口未进入我的页面");
     	PersonSettingPageObject personSettingPage=((MinePageObject)page).enterPersonSetting();
     	Assert.assertTrue(personSettingPage.verifyInthisPage(), "进入我的个人头像，未出现安全退出按钮");
+    	personSettingPage=personSettingPage.noLogOut();
+    	Assert.assertTrue(personSettingPage.verifyInthisPage(), "安全退出弹框提示点击否为回到个人设置页");
     	boolean isLogout=personSettingPage.logOut().verifyInthisPage();
-    	Assert.assertTrue(isLogout, "退出后未跳转到首页");
+    	Assert.assertTrue(isLogout, "退出后未跳转到登录页");
     }
     @Test(priority = 18,description="注册账号")
     public void testSignAccount()throws Exception{
@@ -726,5 +726,19 @@ public class LoginRegisterTestCase extends CommonAppiumTest{
     	else{
     		throw new Exception("该账号未评测过，不能重新评测");
     	}
+    }
+    @Test(priority = 30,description="跳转关于页")
+    public void testGotoAboutPage()throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
+    	HomePageObject homepage=new HomePageObject(driver); 
+    	CommonAppiumPage page=homepage.enterPersonEntrace();
+    	String pageName=page.getClass().getName();
+    	Assert.assertTrue(pageName.contains("MinePageObject"), "点击首页-我的入口未进入我的页面");
+    	PersonSettingPageObject personSettingPage=((MinePageObject)page).enterPersonSetting();
+    	Assert.assertTrue(personSettingPage.verifyInthisPage(), "进入我的个人头像，未进入设置页"); 
+    	AboutPageObject aboutPage=personSettingPage.gotoAboutPage();
+    	Assert.assertTrue(aboutPage.verifyInthisPage(), "点击关于未进入关于页面"); 
+    	aboutPage.isHaveNewAppVersion();
+    	
     }
 }

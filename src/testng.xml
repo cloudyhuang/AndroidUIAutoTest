@@ -15,7 +15,7 @@
 		</classes>
 	</test>-->
 
-	<test verbose="2" preserve-order="true" name="交易相关测试">
+	<!--<test verbose="2" preserve-order="true" name="交易相关测试">
 		<classes>
 			<class name="com.hjs.cases.TradeTestCase">
 				<methods>
@@ -23,18 +23,18 @@
 				</methods>
 			</class>
 		</classes>
-	</test> 
+	</test> -->
 	
-	<!--<test verbose="2" preserve-order="true" name="注册登录">
+	<test verbose="2" preserve-order="true" name="注册登录">
 		<classes>
 			<class name="com.hjs.cases.LoginRegisterTestCase">
 			    <methods>
-					<include name="testGstExpriedTimeOut" />
+					<include name="testLoginEntrance" />
 				</methods>
 			    
 			</class>
 		</classes>
-	</test>-->
+	</test>
 	<listeners>
 		<listener class-name="com.hjs.publics.TestNGListener" />
 		<listener class-name="org.uncommons.reportng.HTMLReporter" />

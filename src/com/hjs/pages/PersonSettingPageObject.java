@@ -17,6 +17,8 @@ public class PersonSettingPageObject extends CommonAppiumPage{
 	//@AndroidFindBy(id="dlg_msg_rightbtn")
 	@AndroidFindBy(id="dlg_msg_3pbtn_type2_1")
 	private AndroidElement dlgMsgRightBtn;		//退出确认按钮
+	@AndroidFindBy(id="dlg_msg_3pbtn_type2_2")
+	private AndroidElement dlgMsgLeftBtn;		//退出否认按钮	
 	@AndroidFindBy(xpath="//android.widget.TextView[contains(@text,'银行卡')]")
 	private AndroidElement gotoBankCardBtn;		//跳转我的银行卡按钮
 	@AndroidFindBy(xpath="(//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/tv_item_remark_des'])[1]")
@@ -29,6 +31,8 @@ public class PersonSettingPageObject extends CommonAppiumPage{
 	private AndroidElement gotoRiskEvaluationBtn;		//跳转风险评测按钮
 	@AndroidFindBy(xpath="//android.widget.TextView[contains(@text,'风险评测')]/following-sibling::android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/tv_item_remark_des']")
 	private AndroidElement riskResult;		//风险评测结果，xx型或尚未评测
+	@AndroidFindBy(xpath="//android.widget.TextView[contains(@text,'关于')]")
+	private AndroidElement gotoAboutBtn;		//跳转关于按钮
 	
 	private By logOutBtnLocator=By.id("button_exit");	//退出按钮Locator
 	//private By dlgMsgRightBtnLocator=By.id("dlgMsgRightBtn");	//退出确认按钮Locator
@@ -39,6 +43,11 @@ public class PersonSettingPageObject extends CommonAppiumPage{
 		clickEle(logOutBtn,"退出按钮");
 		clickEle(dlgMsgRightBtn,"退出确认按钮");
 		return new LoginPageObject(driver);
+	}
+	public PersonSettingPageObject noLogOut(){
+		clickEle(logOutBtn,"退出按钮");
+		clickEle(dlgMsgLeftBtn,"退出否认按钮");
+		return new PersonSettingPageObject(driver);
 	}
 	public PersonInfoPageObject gotoPersonInfo(){
 		clickEle(userPhoto,"设置-用户头像");
@@ -73,6 +82,9 @@ public class PersonSettingPageObject extends CommonAppiumPage{
 	public boolean verifyInthisPage(){
 		return isElementExsit(logOutBtnLocator);
 	}
-	
+	public AboutPageObject gotoAboutPage(){
+		clickEle(gotoAboutBtn,"跳转关于按钮");
+		return new AboutPageObject(driver);
+	}
 
 }
