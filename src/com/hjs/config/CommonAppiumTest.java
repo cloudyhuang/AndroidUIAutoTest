@@ -40,6 +40,7 @@ public class CommonAppiumTest {
     private WebDriverWait wait;
     private DisConfConfig disConfConfig;	//disconf配置
     private String beforeTestVerifyCodeConfigValue; //验证码配置
+    private String beforeTestSmsSendCountConfigValue;	//短信发送次数配置
     AppiumServer appiumServer;
     @BeforeSuite(alwaysRun = true)
     @Parameters({"udid","isDebug"})
@@ -51,6 +52,8 @@ public class CommonAppiumTest {
     	}
     	disConfConfig=new DisConfConfig();
     	beforeTestVerifyCodeConfigValue=disConfConfig.getVerifyCodeConfigValue();
+    	beforeTestSmsSendCountConfigValue=disConfConfig.getSmsSendCountConfigValue();
+    	disConfConfig.addNormalSmsCodeSendCount();		//增加短信次数
     	System.out.println(System.getenv());
     	System.out.println(System.getenv("ANDROID_HOME"));
     	deletePng("surefire-reports"+File.separator+"html");	//删除历史截图文件
@@ -256,7 +259,8 @@ public class CommonAppiumTest {
     
     @AfterSuite(alwaysRun = true)
     public void tearDown() throws Exception {
-    	disConfConfig.updateDisConfConfig("1855", beforeTestVerifyCodeConfigValue);	//恢复配置
+    	disConfConfig.updateDisConfConfig(disConfConfig.getVerifyCodeConfigId(), beforeTestVerifyCodeConfigValue);	//恢复验证码配置
+    	disConfConfig.updateDisConfConfig(disConfConfig.getSmsSendCountConfigId(), beforeTestSmsSendCountConfigValue);	//恢复短信次数配置
         driver.quit();
         System.out.println("---- Stoping appium server ----");
         appiumServer.stopServer();

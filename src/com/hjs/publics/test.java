@@ -25,20 +25,23 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-import com.hjs.config.AnyproxyServer;
+import com.hjs.Interface.InitProduct;
+import com.hjs.config.DisConfConfig;
 import com.hjs.db.BankProvider;
 import com.hjs.db.FisProdInfo;
 import com.hjs.db.MarketGrouponTask;
 import com.hjs.mybatis.inter.EifFisOperation;
 import com.hjs.mybatis.inter.EifMarketOperation;
 import com.hjs.mybatis.inter.EifPayCoreOperation;
+import com.hjs.pages.FinancialPageObject;
 
 public class test {
 
 	public static void main(String[] args) throws ParseException, IOException {
-		String a="已检测到最新版本 2.7.0";
-		String b=Util.getNumInString(a);
-		System.out.println(b);
+		DisConfConfig disconf=new DisConfConfig();
+		//disconf.addNormalSmsCodeSendCount();
+		String a=disconf.getSmsSendCountConfigValue();
+		System.out.println(a);
 	}
 	public static void onlyOpenSHENGFUTONGProvider() throws IOException{
 		String resource = "eifPayCoreConfig.xml";
