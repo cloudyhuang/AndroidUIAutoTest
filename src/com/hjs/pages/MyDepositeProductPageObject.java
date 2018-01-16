@@ -45,6 +45,7 @@ public class MyDepositeProductPageObject extends CommonAppiumPage{
 		super(driver);
 	}
 	public MyDepositeProductDetailPageObject enterDepositeProductDetail(String productName){
+		waitEleUnVisible(refreshViewLocator, 60);
 		try{
 			String productXpath="//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_product' and @text='"+productName+"']";
 			super.scrollTo(productXpath);

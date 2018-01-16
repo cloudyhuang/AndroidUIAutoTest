@@ -38,10 +38,19 @@ import com.hjs.pages.FinancialPageObject;
 public class test {
 
 	public static void main(String[] args) throws ParseException, IOException {
-		DisConfConfig disconf=new DisConfConfig();
-		//disconf.addNormalSmsCodeSendCount();
-		String a=disconf.getSmsSendCountConfigValue();
-		System.out.println(a);
+		String patt = "(\\d{1,3})(,\\d{3})*(\\.\\d+)?$";
+	    Pattern r = Pattern.compile(patt);
+	    String line = "9,902.67";
+	    String line2="99,20.00";
+	    Matcher m = r.matcher(line);
+	    
+	    while (m.find()) {
+	      // group(0)或group()将会返回整个匹配的字符串（完全匹配）；group(i)则会返回与分组i匹配的字符
+	      // 这个例子只有一个分组
+	      System.out.println(patt + " matches \"" + m.group(0) + "\" in \"" + line + "\"");
+	    }
+	    System.out.println(line.matches(patt));
+	    System.out.println(line2.matches(patt));
 	}
 	public static void onlyOpenSHENGFUTONGProvider() throws IOException{
 		String resource = "eifPayCoreConfig.xml";

@@ -33,8 +33,9 @@ public class DepositeBackMoneySettingPageObject extends CommonAppiumPage{
 		clickEle(backMoneyToBalance,"回款至余额");
 		if(super.isElementExsit(getWaitTime(), dlgMsg)){
 			Assert.assertEquals(super.getEleText(dlgMsg, "提示"), "当前正在回款中的项目，回款去向规则将不受此次变更影响");
+			clickEle(rightBtn,"提示右侧确认按钮");
 		}
-		clickEle(rightBtn,"提示右侧确认按钮");
+		
 	}
 	public void setToBankCard(){
 		clickEle(backMoneyToBankCard,"回款至银行卡");
@@ -42,7 +43,6 @@ public class DepositeBackMoneySettingPageObject extends CommonAppiumPage{
 			Assert.assertEquals(super.getEleText(dlgMsg, "提示"), "当前正在回款中的项目，回款去向规则将不受此次变更影响");
 			clickEle(rightBtn,"提示右侧确认按钮");
 		}
-		
 	}
 	public boolean verifyInthisPage(){
 		return isElementExsit(backMoneyToBankCardLocator);
