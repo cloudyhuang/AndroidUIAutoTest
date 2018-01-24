@@ -204,6 +204,7 @@ public class MyDepositeProductPageObject extends CommonAppiumPage{
 	    }
 	}
 	public boolean verifyInthisPage(){
+		waitEleUnVisible(refreshViewLocator, 60);
 		return isElementExsit(productNameLocator);
 	}
 }

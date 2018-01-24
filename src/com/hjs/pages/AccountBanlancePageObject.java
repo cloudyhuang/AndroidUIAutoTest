@@ -1,6 +1,7 @@
 package com.hjs.pages;
 
 import org.openqa.selenium.By;
+import org.testng.Assert;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
@@ -13,6 +14,8 @@ public class AccountBanlancePageObject extends CommonAppiumPage{
 
 	@AndroidFindBy(id="tv_available_balance")
 	private AndroidElement availableBalance;		//可用余额
+	@AndroidFindBy(id="imgv_balance_eye")
+	private AndroidElement balanceEye;		//余额掩码
 	@AndroidFindBy(id="tv_transit_balance")
 	private AndroidElement transitBalance;		//在途(元)
 	@AndroidFindBy(id="btn_balance_withdrawCash")
@@ -38,10 +41,46 @@ public class AccountBanlancePageObject extends CommonAppiumPage{
 		int intAvailableBalance=(int)doubleAvailableBalance; //取整
 		return intAvailableBalance;
 	}
+	public String getStringBanlance(){
+		super.waitEleUnVisible(By.id("refresh_animationView"), super.getWaitTime());//等待刷新图标消失
+		String balance=super.getEleText(availableBalance, "可用余额数值");
+		return Util.get2DecimalPointsNumInString(balance);
+		
+	}
+	public void openBanlanceEye() throws Exception{
+		String balance=super.getEleText(availableBalance, "可用余额数值");
+		String patt = "((-)?\\d{1,3})(,\\d{3})*(\\.\\d+)?$";	//含千分位分隔符的小数(包含正/负数)
+		if(balance.matches(patt)){
+			clickEle(balanceEye,"余额掩码");
+			String transitBalanceValue=super.getEleText(transitBalance, "在途数值");
+			Assert.assertEquals(transitBalanceValue, "****");
+		}
+		else if(balance.equals("****")){
+			throw new Exception("当前已经是掩码");
+		}
+		else throw new Exception("余额显示格式有误，非千分位小数或****");
+	}
+	public void closeBanlanceEye() throws Exception{
+		String balance=super.getEleText(availableBalance, "可用余额数值");
+		String patt = "((-)?\\d{1,3})(,\\d{3})*(\\.\\d+)?$";	//含千分位小数
+		if(balance.matches(patt)){
+			throw new Exception("当前是千分位显示，无需关闭掩码");
+		}
+		else if(balance.equals("****")){
+			clickEle(balanceEye,"余额掩码");
+			String transitBalanceValue=super.getEleText(transitBalance, "在途数值");
+			Assert.assertTrue(transitBalanceValue.matches(patt), "可用余额打开掩码后未显示为千分位小数");
+		}
+		else throw new Exception("余额显示格式有误，非千分位小数或****");
+	}
+	/**
+     * 余额掩码是否关闭
+     * @return true 掩码关闭，false 掩码打开
+     */
 	public boolean isBalanceMaskClose(){
 		super.waitEleUnVisible(By.id("refresh_animationView"), super.getWaitTime());//等待刷新图标消失
 		String stringAvailableBalance=super.getEleText(availableBalance, "余额数值");
-		String stringTransitBalance=super.getEleText(transitBalance, "在途");
+		String stringTransitBalance=super.getEleText(transitBalance, "在途数值");
 		String patt = "((-)?\\d{1,3})(,\\d{3})*(\\.\\d+)?$";	//含千分位分隔符的小数(包含正/负数)
 		return stringAvailableBalance.matches(patt)&&stringTransitBalance.matches(patt);
 	}

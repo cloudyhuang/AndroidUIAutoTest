@@ -21,6 +21,7 @@ import com.hjs.Interface.GetOrderPushStatus;
 import com.hjs.config.CommonAppiumPage;
 import com.hjs.db.ActivityCoupon;
 import com.hjs.db.BankProvider;
+import com.hjs.db.DBOperation;
 import com.hjs.db.Member;
 import com.hjs.db.SmsVerifyCode;
 import com.hjs.mybatis.inter.EifMarketOperation;
@@ -124,6 +125,12 @@ public class PayPageObject extends CommonAppiumPage{
 		//clickEle(bankCardPayOptions,"银行卡付款方式");
 		this.chooseBankCardPayWays();
 		clickEle(confirmPayBtn,"确认支付按钮");
+		if(super.isElementExsit(5, dlgMsgRightbtn)){
+			String Msg=dlgMsgMsg.getText();
+			if(Msg.contains("本订单未使用优惠券，是否继续？")){
+				clickEle(dlgMsgRightbtn,"继续不使用优惠券确认按钮");
+			}
+		}
 		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
 		if(!safeKeyBoard.verifySafeKeyBoardLocated()){
 			throw new Exception("安全键盘未出现");
@@ -327,6 +334,9 @@ public class PayPageObject extends CommonAppiumPage{
       }
 	}
 	public void onlyOpenSHENGFUTONGProvider() throws IOException{
+		DBOperation dboperation=new DBOperation();
+		dboperation.closeAllProvider_payment_limitationStatus();
+		dboperation.openProvider_payment_limitationStatus("0002");
 		String resource = "eifPayCoreConfig.xml";
 	    Reader reader = Resources.getResourceAsReader(resource);  
 	    SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
@@ -355,6 +365,8 @@ public class PayPageObject extends CommonAppiumPage{
 	}
 	
 	public void openNoProvider() throws IOException{
+		DBOperation dboperation=new DBOperation();
+		dboperation.closeAllProvider_payment_limitationStatus();
 		String resource = "eifPayCoreConfig.xml";
 	    Reader reader = Resources.getResourceAsReader(resource);  
 	    SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
@@ -376,6 +388,9 @@ public class PayPageObject extends CommonAppiumPage{
 	    }
 	}
 	public void openProviderStatus(String providerNo) throws IOException{
+		DBOperation dboperation=new DBOperation();
+		dboperation.closeAllProvider_payment_limitationStatus();
+		dboperation.openProvider_payment_limitationStatus(providerNo);
 		String resource = "eifPayCoreConfig.xml";
 	    Reader reader = Resources.getResourceAsReader(resource);  
 	    SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  

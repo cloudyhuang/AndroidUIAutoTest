@@ -8,6 +8,7 @@ import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 
 import com.hjs.config.CommonAppiumPage;
+import com.hjs.publics.Arith;
 import com.hjs.publics.Util;
 
 public class MinePageObject extends CommonAppiumPage{
@@ -25,6 +26,8 @@ public class MinePageObject extends CommonAppiumPage{
 	private AndroidElement lastDayEarningsValue;		//昨日收益数值
 	@AndroidFindBy(xpath="//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textview_top' and @text='累计收益(元)']/ancestor::android.widget.LinearLayout[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/layout_top_bottom_text']//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textview_bottom']")
 	private AndroidElement accumulatedIncomeValue;		//累计收益数值
+	@AndroidFindBy(xpath="//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textview_top' and @text='优惠券']/ancestor::android.widget.LinearLayout[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/layout_top_bottom_text']//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textview_bottom']")
+	private AndroidElement couponCount;		//优惠券数量
 	@AndroidFindBy(xpath="//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textview_top' and @text='账户余额']")
 	private AndroidElement accountBanlance;		//账户余额
 	@AndroidFindBy(xpath="//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textview_top' and @text='账户余额']/ancestor::android.widget.LinearLayout[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/layout_top_bottom_text']//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textview_bottom']")
@@ -40,6 +43,8 @@ public class MinePageObject extends CommonAppiumPage{
 	
 	private By personImageLocator=By.id("imageView_person");	//个人头像Locator
 	private By adCloseBtnLocator=By.id("icv_advertisement_close");		//广告关闭按钮locator
+	private By refreshViewLocator=By.id("refresh_animationView");		//刷新图标
+	
 	
 	public MinePageObject(AndroidDriver<AndroidElement> driver) {
 		super(driver);
@@ -49,6 +54,10 @@ public class MinePageObject extends CommonAppiumPage{
 		if (isElementExsit(2,adCloseBtnLocator)){
 			driver.findElement(adCloseBtnLocator).click();
 		}
+	}
+	public void refresh(){
+		swipeToDown(1000,1);	//下滑刷新
+		waitEleUnVisible(refreshViewLocator, 30);
 	}
 	public MassegePageObject gotoMsgPage(){
 		clickEle(msgImg,"站内信图标");
@@ -60,6 +69,18 @@ public class MinePageObject extends CommonAppiumPage{
 		}
 		else return "0";
 	}
+	public String getCouponCount(){
+		String CouponCount=super.getEleText(couponCount, "优惠券数量");
+		return CouponCount;
+	}
+	public MineCouponPageObject gotoCouponPage(){
+		clickEle(couponCount,"优惠券数量");
+		return new MineCouponPageObject(driver);
+	}
+	public String getBanlance(){
+		String accountBanlanceValueStr=super.getEleText(accountBanlanceValue, "账户余额数值");
+		return Util.get2DecimalPointsNumInString(accountBanlanceValueStr);
+	}
 	public boolean assertTotalAssetValue(){
 		String accountBanlanceValueStr=super.getEleText(accountBanlanceValue, "账户余额数值");
 		String hengCunJinValueStr=super.getEleText(hengCunJinValue, "恒存金数值");
@@ -68,7 +89,13 @@ public class MinePageObject extends CommonAppiumPage{
 		String totalAssetsStr=super.getEleText(totalAssetsTV, "总资产");
 		
 		double doubleAccountBanlanceValueStr=Util.stringToDouble(Util.get2DecimalPointsNumInString(accountBanlanceValueStr));
-		double doubleHengCunJinValueStr=Util.stringToDouble(Util.get2DecimalPointsNumInString(hengCunJinValueStr));
+		double doubleHengCunJinValueStr=0;
+		if(hengCunJinValueStr.equals("恒存金 灵活理财")){
+			doubleHengCunJinValueStr=0;
+		}
+		else{
+			doubleHengCunJinValueStr=Util.stringToDouble(Util.get2DecimalPointsNumInString(hengCunJinValueStr));
+		}
 		double doubleMyDepositeProductValueStr=Util.stringToDouble(Util.get2DecimalPointsNumInString(myDepositeProductValueStr));
 		double doubleFundValueStr=0;
 		if(fundValueStr.equals("申购费率低 全场4折")){
@@ -78,7 +105,7 @@ public class MinePageObject extends CommonAppiumPage{
 			doubleFundValueStr=Util.stringToDouble(Util.get2DecimalPointsNumInString(hengCunJinValueStr));
 		}
 		double doubleTotalAssetsStr=Util.stringToDouble(Util.get2DecimalPointsNumInString(totalAssetsStr));
-		double expectTotalAssets=doubleAccountBanlanceValueStr+doubleHengCunJinValueStr+doubleMyDepositeProductValueStr+doubleFundValueStr;
+		double expectTotalAssets=Arith.add(Arith.add(Arith.add(doubleAccountBanlanceValueStr, doubleHengCunJinValueStr),doubleMyDepositeProductValueStr),doubleFundValueStr);
 		Assert.assertEquals(doubleTotalAssetsStr, expectTotalAssets,"实际app总资产显示："+doubleTotalAssetsStr+"预期总资产："+expectTotalAssets);
 		return true;
 	}

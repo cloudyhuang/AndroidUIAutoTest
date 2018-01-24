@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 
 import com.hjs.config.CommonAppiumPage;
 import com.hjs.config.CommonAppiumTest;
+import com.hjs.db.DBOperation;
 import com.hjs.pages.AccountBanlancePageObject;
 import com.hjs.pages.CurrentDepositProductDetailPageObject;
 import com.hjs.pages.DepositGroupBuyProductDetailPageObject;
@@ -28,6 +29,7 @@ import com.hjs.pages.InvestResultPageObject;
 import com.hjs.pages.InvestTransPageObject;
 import com.hjs.pages.LoginPageObject;
 import com.hjs.pages.MassegePageObject;
+import com.hjs.pages.MineCouponPageObject;
 import com.hjs.pages.MinePageObject;
 import com.hjs.pages.MyDepositeProductDetailPageObject;
 import com.hjs.pages.MyDepositeProductPageObject;
@@ -50,7 +52,7 @@ import com.hjs.testDate.GroupBuyInfo;
 
 
 public class TradeTestCase extends CommonAppiumTest{
-	private static String DEPOSITE_PRODUCT_NAME="黄XAutoTest产品180112121215";
+	private static String DEPOSITE_PRODUCT_NAME="黄XAutoTest产品180121205144";
 	private static String DEPOSITE_GROUPBUYPRODUCT_NAME="黄XAutoTest团购产品170919042116";
 	private static String DEPOSITE_TRANSPRODUCT_NAME="黄XAutoTest可转让产品180102033557";
 	private static String FUND_PRODUCT_NAME="国寿安保增金宝货币";
@@ -385,7 +387,30 @@ public class TradeTestCase extends CommonAppiumTest{
     		Reporter.log("注意：当前提现次数为0！");
     	}
     }
-    @Test(priority = 17,description="我的定期产品信息")
+    @Test(priority = 17,description="账户余额展示及掩码")
+    public void testAccountBanlance()throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
+    	HomePageObject homepage=new HomePageObject(driver); 
+    	CommonAppiumPage page=homepage.enterPersonEntrace();
+    	String pageName=page.getClass().getName();
+    	Assert.assertTrue(pageName.contains("MinePageObject"), "点击首页-我的入口未进入我的页面");
+    	String minePageBanlance=((MinePageObject)page).getBanlance();
+    	AccountBanlancePageObject accountBanlancePage=((MinePageObject)page).enterAccountBanlancePage();
+    	Assert.assertTrue(accountBanlancePage.verifyInthisPage(), "点击账户余额未进入余额页");
+    	String accountPageBanlance=accountBanlancePage.getStringBanlance();
+    	Assert.assertEquals(accountPageBanlance, minePageBanlance,"我的页余额和账户余额页余额不一致");
+    	if(accountBanlancePage.isBalanceMaskClose()){
+    		accountBanlancePage.openBanlanceEye();
+        	accountBanlancePage.closeBanlanceEye();
+    	}
+    	else{
+    		accountBanlancePage.closeBanlanceEye();
+    		accountBanlancePage.openBanlanceEye();
+        	
+    	}
+    	
+    }
+    @Test(priority = 25,description="我的定期产品信息")
     public void testMyRegularProductInfo()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -398,7 +423,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(myDepositeProductDetailPage.verifyInthisPage(), "点击"+DEPOSITE_PRODUCT_NAME+"产品未进入我的理财产品详情页");
     	myDepositeProductDetailPage.assertMtpAndAppDetail(phoneNum);
     }
-    @Test(priority = 18,description="定期回款设置到银行卡")
+    @Test(priority = 26,description="定期回款设置到银行卡")
     public void testBackMoneySettingToBankCard()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -424,7 +449,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(myDepositeProductDetailPage.verifyInthisPage(), "点击"+DEPOSITE_PRODUCT_NAME+"产品未进入我的理财产品详情页");
     	myDepositeProductDetailPage.assertBackMoneyTo("至银行卡");
     }
-    @Test(priority = 19,description="定期回款设置到余额")
+    @Test(priority = 27,description="定期回款设置到余额")
     public void testBackMoneySettingToBanlance()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -447,7 +472,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(myDepositeProductDetailPage.verifyInthisPage(), "点击"+DEPOSITE_PRODUCT_NAME+"产品未进入我的理财产品详情页");
     	myDepositeProductDetailPage.assertBackMoneyTo("至账户余额");
     }
-    @Test(priority = 20,description="发起团")
+    @Test(priority = 28,description="发起团")
     public void testBuyGroupBuyProduct()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -473,7 +498,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	groupBuyedAmountm=groupBuyedAmountm+Util.stringToDouble(startMonney);
     	GroupBuyInfo.setGroupBuyedAmountm(groupBuyedAmountm);
     }
-    @Test(priority = 21,description="检查已买团购信息")
+    @Test(priority = 29,description="检查已买团购信息")
     public void testGroupBuyedProduct()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -486,7 +511,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(groupedBuyDetailPage.verifyInthisPage(), "点击成团详情未出现已团购产品详情页面");
     	GroupBuyInfo.setGroupBuyShareCode(groupedBuyDetailPage.getShareCode());
     }
-    @Test(priority = 22,description="现金券购买团购产品",enabled = false)
+    @Test(priority = 30,description="现金券购买团购产品",enabled = false)
     public void testBuyGroupBuyProductWithCashCoupon()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -510,7 +535,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	double groupBuyedAmountm=GroupBuyInfo.getGroupBuyedAmountm();
     	groupBuyedAmountm=groupBuyedAmountm+Util.stringToDouble(startMonney);
     }
-    @Test(priority = 23,description="参与团")
+    @Test(priority = 31,description="参与团")
     public void testJoinGroupBuyProduct()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -565,7 +590,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	GroupBuyInfo.setCurrentReward(currentReward);
     	GroupBuyInfo.setLvupReward(lvupReward);
     }
-    @Test(priority = 24,description="购买金额、人数达到团购加息阶梯")
+    @Test(priority = 32,description="购买金额、人数达到团购加息阶梯")
     public void testJoinGroupBuyProductToPlusProfit()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -591,7 +616,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	GroupBuyInfo.setCurrentReward(currentReward);
     	GroupBuyInfo.setLvupReward(lvupReward);
     }
-    @Test(priority = 25,expectedExceptions = Exception.class, expectedExceptionsMessageRegExp="找不到下架产品",description="下架团购产品")
+    @Test(priority = 33,expectedExceptions = Exception.class, expectedExceptionsMessageRegExp="找不到下架产品",description="下架团购产品")
     public void testOffGroupBuyProducts() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -600,7 +625,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	financialPage.productPullOffAndFindProduct(DEPOSITE_GROUPBUYPRODUCT_NAME);
 
     }
-    @Test(priority = 26,description="购买可转让产品")
+    @Test(priority = 34,description="购买可转让产品")
     public void testBuyTransProduct()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -631,7 +656,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
     }
-    @Test(priority = 27,description="转让产品")
+    @Test(priority = 35,description="转让产品")
     public void testTransTransProduct()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -649,7 +674,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	String result=transResultPage.getTransResult();
     	Assert.assertTrue(result.equals("转让申请已提交")||result.contains("已受理"), "转让失败，转让结果为:"+result);
     }
-    @Test(priority = 28,description="撤销转让产品")
+    @Test(priority = 36,description="撤销转让产品")
     public void testCancleTransProduct()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -667,7 +692,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	String result=transCancelResultPage.getTransCancelResult();
     	Assert.assertTrue(result.equals("撤销成功")||result.contains("已受理"), "撤销转让失败，撤销转让结果为:"+result);
     }
-    @Test(priority = 29,description="受让产品")
+    @Test(priority = 37,description="受让产品")
     public void testAcceptTransProduct()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -723,7 +748,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	String investResult=investResultPage.getInvestResult();
     	Assert.assertTrue(investResult.equals("投资申请已受理")||investResult.contains("已提交"), "投资失败，投资结果为:"+investResult);
     }
-    @Test(priority = 30,description="转让受让产品")
+    @Test(priority = 38,description="转让受让产品")
     public void testTransAcceptTransProduct()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -741,7 +766,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	String result=transResultPage.getTransResult();
     	Assert.assertTrue(result.equals("转让申请已提交")||result.contains("已受理"), "转让失败，转让结果为:"+result);
     }
-    @Test(priority = 31,description="撤销转让受让产品")
+    @Test(priority = 39,description="撤销转让受让产品")
     public void testCancleTransAcceptTransProduct()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -759,7 +784,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	String result=transCancelResultPage.getTransCancelResult();
     	Assert.assertTrue(result.equals("撤销成功")||result.contains("已受理"), "撤销转让失败，撤销转让结果为:"+result);
     }
-    @Test(priority = 32,expectedExceptions = Exception.class, expectedExceptionsMessageRegExp="找不到下架产品",description="下架可转让产品")
+    @Test(priority = 40,expectedExceptions = Exception.class, expectedExceptionsMessageRegExp="找不到下架产品",description="下架可转让产品")
     public void testOffTransProduct() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -768,7 +793,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	financialPage.productPullOffAndFindProduct(DEPOSITE_TRANSPRODUCT_NAME);
 
     }
-    @Test(priority = 33,description="基金开户",enabled=false)
+    @Test(priority = 41,description="基金开户",enabled=false)
     public void testCreatFundAccount()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -798,7 +823,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	FundPurchasePageObject fundPurchasePage=fundAccountCreatVerifySmsCodePage.inputSmsCode(switchPhoneNum);
     	Assert.assertTrue(fundPurchasePage.verifyInthisPage(), "输入完毕验证码后未回到基金申购页面");
     }
-    @Test(priority = 34,description="基金申购",enabled=false)
+    @Test(priority = 42,description="基金申购",enabled=false)
     public void testPurchaseFund()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -815,7 +840,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(purchaseResult.contains("成功"), "申购失败，"+purchaseResult);
     }
     
-    @Test(priority = 35,description="总资产展示")
+    @Test(priority = 43,description="总资产展示")
     public void testTotalAssetsView()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -825,7 +850,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	((MinePageObject)page).assertTotalAssetValue();
     	
     }
-    @Test(priority = 36,description="掩码测试")
+    @Test(priority = 44,description="掩码测试")
     public void testAssetsEye()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -844,7 +869,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	Assert.assertTrue(accountBanlancePage.isBalanceMaskClose(),"关闭掩码后账户余额中的掩码未关闭");
     	
     }
-    @Test(priority = 37,description="站内信测试")
+    @Test(priority = 45,description="站内信测试")
     public void testMsg()throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -864,10 +889,40 @@ public class TradeTestCase extends CommonAppiumTest{
     		Assert.assertEquals(msgPrompt2, "0","站内信进入前消息数量为"+msgPrompt+",进入后返回站内信数量未清零，当前站内信数量："+msgPrompt2);
     	}
     }
+    @Test(priority = 46,description="优惠券展示")
+    public void testCouponView()throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
+    	HomePageObject homepage=new HomePageObject(driver); 
+    	DBOperation dbOperation=new DBOperation();
+    	dbOperation.deleteUserCoupon("17090720054");	//清除用户优惠券
+    	CommonAppiumPage page=homepage.enterPersonEntrace();	
+    	String pageName=page.getClass().getName();
+    	Assert.assertTrue(pageName.contains("MinePageObject"), "点击首页-我的入口未进入我的页面");
+    	String couponCount=((MinePageObject)page).getCouponCount();
+    	Assert.assertEquals(couponCount, "可用0张","清除优惠券后，我的页面优惠券展示应该为0");
+    	//验证增加一张券前端展示
+    	String couponId="2465";
+    	Assert.assertTrue(dbOperation.addCouponToUser("17090720054", couponId), "加券失败");
+    	((MinePageObject)page).refresh();
+    	couponCount=((MinePageObject)page).getCouponCount();
+    	Assert.assertEquals(couponCount, "新增1张","新增一张优惠券后，我的页面优惠券展示应该为1");
+    	//验证查看新增券后的前端展示
+    	MineCouponPageObject mineCouponPage=((MinePageObject)page).gotoCouponPage();
+    	Assert.assertTrue(mineCouponPage.verifyInthisPage(),"我的页面点击优惠券未跳转到我的优惠券页面");
+    	mineCouponPage.backKeyEvent();
+    	Assert.assertTrue(((MinePageObject)page).verifyInthisPage(),"我的优惠券页面返回后未跳转到我的页面");
+    	couponCount=((MinePageObject)page).getCouponCount();
+    	Assert.assertEquals(couponCount, "可用1张","新增一张优惠券后，进入优惠券页面再返回前端应显示可用1张，当前显示:"+couponCount);
+    	//验证优惠券投资跳转
+    	mineCouponPage=((MinePageObject)page).gotoCouponPage();
+    	Assert.assertTrue(mineCouponPage.verifyInthisPage(),"我的页面点击优惠券未跳转到我的优惠券页面");
+    	FinancialPageObject financialPage=mineCouponPage.investByCoupon();
+    	Assert.assertTrue(financialPage.verifyInthisPage(),"优惠券页面投资按钮点击后未跳转到理财页面");
+    }
    
     /*
      * 请把赎回放最后一个用例*/
-    @Test(priority = 40,description="赎回活期产品到余额")
+    @Test(priority = 49,description="赎回活期产品到余额")
     public void testRedeemToBalance() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 
@@ -905,7 +960,7 @@ public class TradeTestCase extends CommonAppiumTest{
     }
     /*
      * 请把赎回放最后一个用例*/
-    @Test(priority = 41,description="赎回活期产品到银行卡")
+    @Test(priority = 50,description="赎回活期产品到银行卡")
     public void testRedeemToBankCard() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
     	HomePageObject homepage=new HomePageObject(driver); 

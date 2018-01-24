@@ -17,6 +17,7 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 
 import com.hjs.config.CommonAppiumPage;
 import com.hjs.db.BankProvider;
+import com.hjs.db.DBOperation;
 import com.hjs.db.SmsVerifyCode;
 import com.hjs.mybatis.inter.EifPayCoreOperation;
 import com.hjs.mybatis.inter.SmsVerifyCodeOperation;
@@ -93,6 +94,9 @@ public class RechargePageObject extends CommonAppiumPage{
         }
 	}
 	public void onlyOpenSHENGFUTONGProvider() throws IOException{
+		DBOperation dboperation=new DBOperation();
+		dboperation.closeAllProvider_payment_limitationStatus();
+		dboperation.openProvider_payment_limitationStatus("0002");
 		String resource = "eifPayCoreConfig.xml";
 	    Reader reader = Resources.getResourceAsReader(resource);  
 	    SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  

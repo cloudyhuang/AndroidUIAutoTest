@@ -20,13 +20,21 @@ import com.hjs.Interface.GetOrderPushStatus;
 public class DisConfConfig {
 	private String verifyCodeConfigId = "1855";
 	private String smsSendCountConfigId = "380";
-
+	private String pacore_pacoreConfigId="211";
 	public String getVerifyCodeConfigId() {
 		return verifyCodeConfigId;
 	}
 
 	public String getSmsSendCountConfigId() {
 		return smsSendCountConfigId;
+	}
+
+	public String getPacore_pacoreConfigId() {
+		return pacore_pacoreConfigId;
+	}
+
+	public void setPacore_pacoreConfigId(String pacore_pacoreConfigId) {
+		this.pacore_pacoreConfigId = pacore_pacoreConfigId;
 	}
 
 	public void updateDisConfConfig(String configId, String value) {
@@ -74,15 +82,11 @@ public class DisConfConfig {
 		return postJsonobj;
 	}
 
-	public String getVerifyCodeConfigValue() {
-		JSONObject json = this.getDisConfConfig(verifyCodeConfigId);
+	public String getConfigValue(String configId) {
+		JSONObject json = this.getDisConfConfig(configId);
 		return json.getJSONObject("result").getString("value");
 	}
 
-	public String getSmsSendCountConfigValue() {
-		JSONObject json = this.getDisConfConfig(smsSendCountConfigId);
-		return json.getJSONObject("result").getString("value");
-	}
 
 	public void closeVerifyCode() {
 		// captcha.captchaStatus=false\ncaptcha.captchaCode=23456789abcdefghjkmnpqrstuvwxyz\ncaptcha.captchaType=randomLineDecorator\ncaptcha.digitChars=23456789\ncaptcha.letterChars=abcdefghjkmnpqrstuvwxyz
@@ -105,23 +109,17 @@ public class DisConfConfig {
 		this.updateDisConfConfig(verifyCodeConfigId, closeVerifyCodeValue);
 	}
 
-	public void addNormalSmsCodeSendCount() {
+	public void setNormalSmsCodeSendCount(String normal_sms_send_count) {
 		String value = this.getDisConfConfig(smsSendCountConfigId).getJSONObject("result").getString("value");
-		String pattern = "(^#.*\n)"; // 提取#开头注释
-		Pattern p = Pattern.compile(pattern);
-		Matcher m = p.matcher(value);
-		String commentedOutStr = "";
-		while (m.find()) {
-			commentedOutStr = commentedOutStr + m.group(1);
-		}
-		value = value.replaceAll(pattern, "");
-		Map<String, String> valueMap = Splitter.on("\n").withKeyValueSeparator("=").split(value);
-		Map<String, String> cv = new LinkedHashMap<>();
-		cv.putAll(valueMap);
-		cv.put("goutong.normal_sms_send_count", "300");
-		String addNormalSmsCodeSendCountValue = Joiner.on("\n").withKeyValueSeparator("=").join(cv);
-		addNormalSmsCodeSendCountValue = commentedOutStr + addNormalSmsCodeSendCountValue;
-		this.updateDisConfConfig(smsSendCountConfigId, addNormalSmsCodeSendCountValue);
+		String pattern = "(?:goutong.normal_sms_send_count=)(.*)"; 
+		value = value.replaceAll(pattern, "goutong.normal_sms_send_count="+normal_sms_send_count);
+		this.updateDisConfConfig(smsSendCountConfigId, value);
+	}
+	public void fakeSms() {
+		String value = this.getDisConfConfig(pacore_pacoreConfigId).getJSONObject("result").getString("value");
+		String pattern = "(?:provider\\.enableFakeSms=)(.*)"; 
+		value = value.replaceAll(pattern, "provider.enableFakeSms=true");
+		this.updateDisConfConfig(pacore_pacoreConfigId, value);
 	}
 
 }

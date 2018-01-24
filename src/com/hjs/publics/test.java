@@ -25,32 +25,60 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-import com.hjs.Interface.InitProduct;
-import com.hjs.config.DisConfConfig;
 import com.hjs.db.BankProvider;
+import com.hjs.db.DBOperation;
 import com.hjs.db.FisProdInfo;
 import com.hjs.db.MarketGrouponTask;
 import com.hjs.mybatis.inter.EifFisOperation;
 import com.hjs.mybatis.inter.EifMarketOperation;
 import com.hjs.mybatis.inter.EifPayCoreOperation;
-import com.hjs.pages.FinancialPageObject;
 
 public class test {
 
-	public static void main(String[] args) throws ParseException, IOException {
-		String patt = "(\\d{1,3})(,\\d{3})*(\\.\\d+)?$";
-	    Pattern r = Pattern.compile(patt);
-	    String line = "9,902.67";
-	    String line2="99,20.00";
-	    Matcher m = r.matcher(line);
-	    
-	    while (m.find()) {
-	      // group(0)或group()将会返回整个匹配的字符串（完全匹配）；group(i)则会返回与分组i匹配的字符
-	      // 这个例子只有一个分组
-	      System.out.println(patt + " matches \"" + m.group(0) + "\" in \"" + line + "\"");
-	    }
-	    System.out.println(line.matches(patt));
-	    System.out.println(line2.matches(patt));
+	public static void main(String[] args) throws Exception {
+		DBOperation dbOperation=new DBOperation();
+    	dbOperation.deleteUserCoupon("17090720054");	//清除用户优惠券
+		
+		
+
+
+	}
+	public static List<FindString> findString(String pattern,String str){
+		Pattern p = Pattern.compile(pattern);
+		Matcher m = p.matcher(str);
+		List<FindString> findString=new ArrayList<FindString>();
+		while (m.find()) {
+			FindString commentedOut=new FindString();
+			commentedOut.setStartIndex(m.start());
+			commentedOut.setEndIndex(m.end());
+			commentedOut.setText(m.group(1));
+			System.out.println("start:" + m.start() + " end:" + m.end());
+			findString.add(commentedOut);
+		}
+		return findString;
+	}
+	 static  class FindString{
+		private int startIndex;
+		private int endIndex;
+		private String text;
+		public int getStartIndex() {
+			return startIndex;
+		}
+		public void setStartIndex(int startIndex) {
+			this.startIndex = startIndex;
+		}
+		public int getEndIndex() {
+			return endIndex;
+		}
+		public void setEndIndex(int endIndex) {
+			this.endIndex = endIndex;
+		}
+		public String getText() {
+			return text;
+		}
+		public void setText(String text) {
+			this.text = text;
+		}
 	}
 	public static void onlyOpenSHENGFUTONGProvider() throws IOException{
 		String resource = "eifPayCoreConfig.xml";

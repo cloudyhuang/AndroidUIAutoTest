@@ -41,6 +41,7 @@ public class CommonAppiumTest {
     private DisConfConfig disConfConfig;	//disconf配置
     private String beforeTestVerifyCodeConfigValue; //验证码配置
     private String beforeTestSmsSendCountConfigValue;	//短信发送次数配置
+    private String beforeTestPayCore_paycoreValue;	//PayCore_payCore配置
     AppiumServer appiumServer;
     @BeforeSuite(alwaysRun = true)
     @Parameters({"udid","isDebug"})
@@ -51,9 +52,11 @@ public class CommonAppiumTest {
     		if(jenkinsBuildResult) downLoadFromUrl("http://172.16.59.251:8088/app-default_channel.apk", "app2.4.apk"); //拉取最新包
     	}
     	disConfConfig=new DisConfConfig();
-    	beforeTestVerifyCodeConfigValue=disConfConfig.getVerifyCodeConfigValue();
-    	beforeTestSmsSendCountConfigValue=disConfConfig.getSmsSendCountConfigValue();
-    	disConfConfig.addNormalSmsCodeSendCount();		//增加短信次数
+    	beforeTestVerifyCodeConfigValue=disConfConfig.getConfigValue(disConfConfig.getVerifyCodeConfigId());
+    	beforeTestSmsSendCountConfigValue=disConfConfig.getConfigValue(disConfConfig.getSmsSendCountConfigId());
+    	beforeTestPayCore_paycoreValue=disConfConfig.getConfigValue(disConfConfig.getPacore_pacoreConfigId());
+    	disConfConfig.setNormalSmsCodeSendCount("300");		//增加短信次数300
+    	disConfConfig.fakeSms();	//短信fake
     	System.out.println(System.getenv());
     	System.out.println(System.getenv("ANDROID_HOME"));
     	deletePng("surefire-reports"+File.separator+"html");	//删除历史截图文件
@@ -261,6 +264,7 @@ public class CommonAppiumTest {
     public void tearDown() throws Exception {
     	disConfConfig.updateDisConfConfig(disConfConfig.getVerifyCodeConfigId(), beforeTestVerifyCodeConfigValue);	//恢复验证码配置
     	disConfConfig.updateDisConfConfig(disConfConfig.getSmsSendCountConfigId(), beforeTestSmsSendCountConfigValue);	//恢复短信次数配置
+    	disConfConfig.updateDisConfConfig(disConfConfig.getPacore_pacoreConfigId(), beforeTestPayCore_paycoreValue);	//恢复fake短信配置
         driver.quit();
         System.out.println("---- Stoping appium server ----");
         appiumServer.stopServer();

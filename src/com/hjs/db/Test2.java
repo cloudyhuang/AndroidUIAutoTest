@@ -44,27 +44,64 @@ public class Test2 {
 //            session.close();
 //        }
 //    }
-	public static void main(String[] args) throws Exception {
-		
-		String resource = "eifMemberConfig.xml";
+	public void openBaofuProvider_payment_limitationStatus() throws IOException{
+		String resource = "eifPayCoreConfig.xml";
 	    Reader reader = Resources.getResourceAsReader(resource);  
 	    SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
 	    reader.close();  
 	    SqlSession session = sqlSessionFactory.openSession();
-	    
+	    PayCore_provider_payment_limitation payCore_provider=new PayCore_provider_payment_limitation();
+	    payCore_provider.setBank_no("03080000");
+	    payCore_provider.setProvider_no("0007");
+	    payCore_provider.setStatus(0);
 	    try {
-	    	EifMemberOperation eifMemberOperation=session.getMapper(EifMemberOperation.class);
-	    	MemberClientCertification memberClientCertification=eifMemberOperation.getMemberClientCertification("17411184");
-	    	if(memberClientCertification==null){
-	    		throw new Exception("数据库找不到");
-	    	}
-	    	else{
-	    		System.out.println(memberClientCertification.getIdno());
-		        System.out.println(memberClientCertification.getName());
-	    	}
+	    	EifPayCoreOperation eifPayCoreOperation=session.getMapper(EifPayCoreOperation.class);
+	    	eifPayCoreOperation.updateProvider_payment_limitationStatus(payCore_provider);
+		    session.commit();
 	        
 	    } finally {
 	        session.close();
 	    }
+	}
+	public void openShengFuTongProvider_payment_limitationStatus() throws IOException{
+		String resource = "eifPayCoreConfig.xml";
+	    Reader reader = Resources.getResourceAsReader(resource);  
+	    SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
+	    reader.close();  
+	    SqlSession session = sqlSessionFactory.openSession();
+	    PayCore_provider_payment_limitation payCore_provider=new PayCore_provider_payment_limitation();
+	    payCore_provider.setBank_no("03080000");
+	    payCore_provider.setProvider_no("0002");
+	    payCore_provider.setStatus(0);
+	    try {
+	    	EifPayCoreOperation eifPayCoreOperation=session.getMapper(EifPayCoreOperation.class);
+	    	eifPayCoreOperation.updateProvider_payment_limitationStatus(payCore_provider);
+		    session.commit();
+	        
+	    } finally {
+	        session.close();
+	    }
+	}
+	public void closeAllProvider_payment_limitationStatus() throws IOException{
+		String resource = "eifPayCoreConfig.xml";
+	    Reader reader = Resources.getResourceAsReader(resource);  
+	    SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
+	    reader.close();  
+	    SqlSession session = sqlSessionFactory.openSession();
+	    PayCore_provider_payment_limitation payCore_provider=new PayCore_provider_payment_limitation();
+	    payCore_provider.setBank_no("03080000");
+	    payCore_provider.setStatus(1);
+	    try {
+	    	EifPayCoreOperation eifPayCoreOperation=session.getMapper(EifPayCoreOperation.class);
+	    	eifPayCoreOperation.updateProvider_payment_limitationStatusByBankNo(payCore_provider);
+		    session.commit();
+	        
+	    } finally {
+	        session.close();
+	    }
+	}
+	public static void main(String[] args) throws Exception {
+		Test2 test=new Test2();
+		test.openShengFuTongProvider_payment_limitationStatus();
 	}
 }
