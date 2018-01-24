@@ -373,7 +373,7 @@ public class LoginRegisterTestCase extends CommonAppiumTest{
        	Assert.assertTrue(debugPage.verifyInthisPage(),"长按音量键并点击元素未进入debug页面");
        	DebugSettingPageObject debugSettingPage=debugPage.gotoDebugSettingPage();
        	Assert.assertTrue(debugSettingPage.verifyInthisPage(),"点击setting后未进入debug setting页面");
-       	int timeOutMinute=1;		//设置成1分钟超时
+       	int timeOutMinute=2;		//设置成1分钟超时
        	Duration duration=Duration.ofMinutes(timeOutMinute);
        	debugSettingPage.changeGstExpiredTimeOut(duration);
        	Assert.assertTrue(gesturePwd.verifyInthisPage(),"设置debug setting后未回到手势密码页");
