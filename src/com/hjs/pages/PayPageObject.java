@@ -60,7 +60,8 @@ public class PayPageObject extends CommonAppiumPage{
 		super(driver);
 	}
 	public InvestResultPageObject payByBankCardWithoutCoupon(String tradePwd,String bankPhoneNum) throws Exception{
-		this.onlyOpenSHENGFUTONGProvider();	//只打开盛付通渠道
+		DBOperation dbOperation=new DBOperation();
+		dbOperation.onlyOpenSHENGFUTONGProvider();	//只打开盛付通渠道
 		clickEle(chooseCouponBtn,"优惠券选择入口按钮");
 		ChooseCouponPageObject chooseCouponPage=new ChooseCouponPageObject(driver);
 		chooseCouponPage.chooseCoupon("");
@@ -98,9 +99,10 @@ public class PayPageObject extends CommonAppiumPage{
 		return new InvestResultPageObject(driver);
 	}
 	public InvestResultPageObject payByBankCardWithoutCouponWithoutSmsCode(String tradePwd,String bankPhoneNum) throws Exception{
-		this.onlyOpenSHENGFUTONGProvider();	//只打开盛付通渠道
-		this.openNoProvider();		//什么渠道都不打开
-		this.openProviderStatus("0007");	//打开宝付支付渠道
+		DBOperation dbOperation=new DBOperation();
+		dbOperation.onlyOpenSHENGFUTONGProvider();	//只打开盛付通渠道
+		dbOperation.openNoProvider();		//什么渠道都不打开
+		dbOperation.openProviderStatus("0007");	//打开宝付支付渠道
 		clickEle(chooseCouponBtn,"优惠券选择入口按钮");
 		ChooseCouponPageObject chooseCouponPage=new ChooseCouponPageObject(driver);
 		chooseCouponPage.chooseCoupon("");
@@ -117,7 +119,8 @@ public class PayPageObject extends CommonAppiumPage{
 		return new InvestResultPageObject(driver);
 	}
 	public InvestResultPageObject payByBankCardFailWithoutCoupon(String tradePwd,String bankPhoneNum) throws Exception{
-		this.onlyOpenSHENGFUTONGProvider();	//只打开盛付通渠道
+		DBOperation dbOperation=new DBOperation();
+		dbOperation.onlyOpenSHENGFUTONGProvider();	//只打开盛付通渠道
 		clickEle(chooseCouponBtn,"优惠券选择入口按钮");
 		ChooseCouponPageObject chooseCouponPage=new ChooseCouponPageObject(driver);
 		chooseCouponPage.chooseCoupon("");
@@ -144,7 +147,8 @@ public class PayPageObject extends CommonAppiumPage{
 		return new InvestResultPageObject(driver);
 	}
 	public InvestResultPageObject payByBankCardWithCoupon(String tradePwd,String bankPhoneNum,String couponId) throws Exception{
-		this.onlyOpenSHENGFUTONGProvider();	//只打开盛付通渠道
+		DBOperation dbOperation=new DBOperation();
+		dbOperation.onlyOpenSHENGFUTONGProvider();	//只打开盛付通渠道
 		clickEle(chooseCouponBtn,"优惠券选择入口按钮");
 		ChooseCouponPageObject chooseCouponPage=new ChooseCouponPageObject(driver);
 		String couponName=this.getCouponName(couponId);//从数据库找优惠券名称
@@ -180,9 +184,10 @@ public class PayPageObject extends CommonAppiumPage{
 		return new InvestResultPageObject(driver);
 	}
 	public InvestResultPageObject payByBankCardWithCouponWithoutSmsCode(String tradePwd,String bankPhoneNum,String couponId) throws Exception{
-		this.onlyOpenSHENGFUTONGProvider();	//只打开盛付通渠道
-		this.openNoProvider();		//什么渠道都不打开
-		this.openProviderStatus("0007");	//打开宝付支付渠道
+		DBOperation dbOperation=new DBOperation();
+		dbOperation.onlyOpenSHENGFUTONGProvider();	//只打开盛付通渠道
+		dbOperation.openNoProvider();		//什么渠道都不打开
+		dbOperation.openProviderStatus("0007");	//打开宝付支付渠道
 		clickEle(chooseCouponBtn,"优惠券选择入口按钮");
 		ChooseCouponPageObject chooseCouponPage=new ChooseCouponPageObject(driver);
 		String couponName=this.getCouponName(couponId);//从数据库找优惠券名称
@@ -333,86 +338,86 @@ public class PayPageObject extends CommonAppiumPage{
           session.close();
       }
 	}
-	public void onlyOpenSHENGFUTONGProvider() throws IOException{
-		DBOperation dboperation=new DBOperation();
-		dboperation.closeAllProvider_payment_limitationStatus();
-		dboperation.openProvider_payment_limitationStatus("0002");
-		String resource = "eifPayCoreConfig.xml";
-	    Reader reader = Resources.getResourceAsReader(resource);  
-	    SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
-	    reader.close();  
-	    SqlSession session = sqlSessionFactory.openSession();
-	    try {
-	    	EifPayCoreOperation eifPayCoreOperation=session.getMapper(EifPayCoreOperation.class);
-	    	List<BankProvider> bankProviderList = eifPayCoreOperation.getBankProvider("03080000");
-	    	if(bankProviderList.size()>0){
-		    	for(int i=0;i<bankProviderList.size();i++){
-		    		if(!bankProviderList.get(i).getProvider_no().equals("0002")){
-		    			bankProviderList.get(i).setStatus(1);
-			    		int result=eifPayCoreOperation.updateBankProviderStatus(bankProviderList.get(i));
-		    		}
-		    		else if(bankProviderList.get(i).getProvider_no().equals("0002")){
-		    			bankProviderList.get(i).setStatus(0);
-			    		int result=eifPayCoreOperation.updateBankProviderStatus(bankProviderList.get(i));
-		    		}
-		    	}    	
-		        session.commit();
-	    	}
-	        
-	    } finally {
-	        session.close();
-	    }
-	}
-	
-	public void openNoProvider() throws IOException{
-		DBOperation dboperation=new DBOperation();
-		dboperation.closeAllProvider_payment_limitationStatus();
-		String resource = "eifPayCoreConfig.xml";
-	    Reader reader = Resources.getResourceAsReader(resource);  
-	    SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
-	    reader.close();  
-		SqlSession session = sqlSessionFactory.openSession();
-		try {
-			EifPayCoreOperation eifPayCoreOperation = session.getMapper(EifPayCoreOperation.class);
-			List<BankProvider> bankProviderList = eifPayCoreOperation.getBankProvider("03080000");
-			if (bankProviderList.size() > 0) {
-				for (int i = 0; i < bankProviderList.size(); i++) {
-					bankProviderList.get(i).setStatus(1);
-					int result = eifPayCoreOperation.updateBankProviderStatus(bankProviderList.get(i));
-				}
-				session.commit();
-			}
-	        
-	    } finally {
-	        session.close();
-	    }
-	}
-	public void openProviderStatus(String providerNo) throws IOException{
-		DBOperation dboperation=new DBOperation();
-		dboperation.closeAllProvider_payment_limitationStatus();
-		dboperation.openProvider_payment_limitationStatus(providerNo);
-		String resource = "eifPayCoreConfig.xml";
-	    Reader reader = Resources.getResourceAsReader(resource);  
-	    SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
-	    reader.close();  
-	    SqlSession session = sqlSessionFactory.openSession();
-	    try {
-	    	EifPayCoreOperation eifPayCoreOperation=session.getMapper(EifPayCoreOperation.class);
-	    	List<BankProvider> bankProviderList = eifPayCoreOperation.getBankProvider("03080000");
-	    	if(bankProviderList.size()>0){
-		    	for(int i=0;i<bankProviderList.size();i++){
-		    		if(bankProviderList.get(i).getProvider_no().equals(providerNo)){
-		    			bankProviderList.get(i).setStatus(0);
-			    		int result=eifPayCoreOperation.updateBankProviderStatus(bankProviderList.get(i));
-		    		}
-		    	}    	
-		        session.commit();
-	    	}
-	        
-	    } finally {
-	        session.close();
-	    }
-	}
+//	public void onlyOpenSHENGFUTONGProvider() throws IOException{
+//		DBOperation dboperation=new DBOperation();
+//		dboperation.closeAllProvider_payment_limitationStatus();
+//		dboperation.openProvider_payment_limitationStatus("0002");
+//		String resource = "eifPayCoreConfig.xml";
+//	    Reader reader = Resources.getResourceAsReader(resource);  
+//	    SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
+//	    reader.close();  
+//	    SqlSession session = sqlSessionFactory.openSession();
+//	    try {
+//	    	EifPayCoreOperation eifPayCoreOperation=session.getMapper(EifPayCoreOperation.class);
+//	    	List<BankProvider> bankProviderList = eifPayCoreOperation.getBankProvider("03080000");
+//	    	if(bankProviderList.size()>0){
+//		    	for(int i=0;i<bankProviderList.size();i++){
+//		    		if(!bankProviderList.get(i).getProvider_no().equals("0002")){
+//		    			bankProviderList.get(i).setStatus(1);
+//			    		int result=eifPayCoreOperation.updateBankProviderStatus(bankProviderList.get(i));
+//		    		}
+//		    		else if(bankProviderList.get(i).getProvider_no().equals("0002")){
+//		    			bankProviderList.get(i).setStatus(0);
+//			    		int result=eifPayCoreOperation.updateBankProviderStatus(bankProviderList.get(i));
+//		    		}
+//		    	}    	
+//		        session.commit();
+//	    	}
+//	        
+//	    } finally {
+//	        session.close();
+//	    }
+//	}
+//	
+//	public void openNoProvider() throws IOException{
+//		DBOperation dboperation=new DBOperation();
+//		dboperation.closeAllProvider_payment_limitationStatus();
+//		String resource = "eifPayCoreConfig.xml";
+//	    Reader reader = Resources.getResourceAsReader(resource);  
+//	    SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
+//	    reader.close();  
+//		SqlSession session = sqlSessionFactory.openSession();
+//		try {
+//			EifPayCoreOperation eifPayCoreOperation = session.getMapper(EifPayCoreOperation.class);
+//			List<BankProvider> bankProviderList = eifPayCoreOperation.getBankProvider("03080000");
+//			if (bankProviderList.size() > 0) {
+//				for (int i = 0; i < bankProviderList.size(); i++) {
+//					bankProviderList.get(i).setStatus(1);
+//					int result = eifPayCoreOperation.updateBankProviderStatus(bankProviderList.get(i));
+//				}
+//				session.commit();
+//			}
+//	        
+//	    } finally {
+//	        session.close();
+//	    }
+//	}
+//	public void openProviderStatus(String providerNo) throws IOException{
+//		DBOperation dboperation=new DBOperation();
+//		dboperation.closeAllProvider_payment_limitationStatus();
+//		dboperation.openProvider_payment_limitationStatus(providerNo);
+//		String resource = "eifPayCoreConfig.xml";
+//	    Reader reader = Resources.getResourceAsReader(resource);  
+//	    SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
+//	    reader.close();  
+//	    SqlSession session = sqlSessionFactory.openSession();
+//	    try {
+//	    	EifPayCoreOperation eifPayCoreOperation=session.getMapper(EifPayCoreOperation.class);
+//	    	List<BankProvider> bankProviderList = eifPayCoreOperation.getBankProvider("03080000");
+//	    	if(bankProviderList.size()>0){
+//		    	for(int i=0;i<bankProviderList.size();i++){
+//		    		if(bankProviderList.get(i).getProvider_no().equals(providerNo)){
+//		    			bankProviderList.get(i).setStatus(0);
+//			    		int result=eifPayCoreOperation.updateBankProviderStatus(bankProviderList.get(i));
+//		    		}
+//		    	}    	
+//		        session.commit();
+//	    	}
+//	        
+//	    } finally {
+//	        session.close();
+//	    }
+//	}
 	public boolean verifyInthisPage(){
 		return isElementExsit(choosePayWayBtnLocator);
 	}

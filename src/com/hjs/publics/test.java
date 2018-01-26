@@ -9,7 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
-import java.text.ParseException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -36,13 +36,10 @@ import com.hjs.mybatis.inter.EifPayCoreOperation;
 public class test {
 
 	public static void main(String[] args) throws Exception {
-		DBOperation dbOperation=new DBOperation();
-    	dbOperation.deleteUserCoupon("17090720054");	//清除用户优惠券
-		
-		
-
-
+		DBOperation db=new DBOperation();
+		db.updateNoProviderTransLimit("0007");
 	}
+
 	public static List<FindString> findString(String pattern,String str){
 		Pattern p = Pattern.compile(pattern);
 		Matcher m = p.matcher(str);

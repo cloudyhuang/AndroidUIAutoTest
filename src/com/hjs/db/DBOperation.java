@@ -138,8 +138,10 @@ public class DBOperation {
       }
 	}
 	public void onlyOpenSHENGFUTONGProvider() throws IOException{
-		this.closeAllProvider_payment_limitationStatus();
-		this.openProvider_payment_limitationStatus("0002");
+		
+		this.closeAllProvider_payment_limitationStatus();	//关闭Provider_payment_limitation所有渠道状态status
+		this.openProvider_payment_limitationStatus("0002");	//打开Provider_payment_limitation中0002 盛付通的状态status
+		this.updateNoProviderTransLimit("0002");	//将0002 盛付通的限额全部放开
 		String resource = "eifPayCoreConfig.xml";
 	    Reader reader = Resources.getResourceAsReader(resource);  
 	    SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
@@ -168,6 +170,7 @@ public class DBOperation {
 	}
 	
 	public void openNoProvider() throws IOException{
+		this.closeAllProvider_payment_limitationStatus();//关闭Provider_payment_limitation所有渠道状态status
 		String resource = "eifPayCoreConfig.xml";
 	    Reader reader = Resources.getResourceAsReader(resource);  
 	    SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
@@ -189,6 +192,8 @@ public class DBOperation {
 	    }
 	}
 	public void openProviderStatus(String providerNo) throws IOException{
+		this.openProvider_payment_limitationStatus(providerNo);	//打开Provider_payment_limitation中指定providerNo的状态status
+		this.updateNoProviderTransLimit(providerNo);	//将providerNo的限额全部放开
 		String resource = "eifPayCoreConfig.xml";
 	    Reader reader = Resources.getResourceAsReader(resource);  
 	    SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
@@ -243,6 +248,31 @@ public class DBOperation {
 	    try {
 	    	EifPayCoreOperation eifPayCoreOperation=session.getMapper(EifPayCoreOperation.class);
 	    	eifPayCoreOperation.updateProvider_payment_limitationStatusByBankNo(payCore_provider);
+		    session.commit();
+	        
+	    } finally {
+	        session.close();
+	    }
+	}
+	public void updateNoProviderTransLimit(String providerNo) throws IOException{
+		String resource = "eifPayCoreConfig.xml";
+	    Reader reader = Resources.getResourceAsReader(resource);  
+	    SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
+	    reader.close();  
+	    SqlSession session = sqlSessionFactory.openSession();
+	    PayCore_provider_payment_limitation payCore_provider=new PayCore_provider_payment_limitation();
+	    payCore_provider.setBank_no("03080000");
+	    payCore_provider.setProvider_no(providerNo);
+	    payCore_provider.setTrans_limit("10000000.000000");
+	    payCore_provider.setTrans_min("0.000000");
+	    payCore_provider.setDay_limit("99999999999.000000");
+	    payCore_provider.setMonth_limit("99999999999.000000");
+	    try {
+	    	EifPayCoreOperation eifPayCoreOperation=session.getMapper(EifPayCoreOperation.class);
+	    	eifPayCoreOperation.updateProviderTransLimits(payCore_provider);
+	    	eifPayCoreOperation.updateProviderTransMin(payCore_provider);
+	    	eifPayCoreOperation.updateProviderDayLimits(payCore_provider);
+	    	eifPayCoreOperation.updateProviderMonthLimit(payCore_provider);
 		    session.commit();
 	        
 	    } finally {

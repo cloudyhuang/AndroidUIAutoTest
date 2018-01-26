@@ -23,6 +23,8 @@ import com.hjs.pages.FundPurchaseResultPageObject;
 import com.hjs.pages.GesturePwd;
 import com.hjs.pages.GroupedBuyDetailPageObject;
 import com.hjs.pages.HomePageObject;
+import com.hjs.pages.IncomeAndExpensesDetailPageObject;
+import com.hjs.pages.IncomeAndExpensesDetailPageObject.BalanceExchange;
 import com.hjs.pages.InvestGroupBuyPageObject;
 import com.hjs.pages.InvestPageObject;
 import com.hjs.pages.InvestResultPageObject;
@@ -39,6 +41,7 @@ import com.hjs.pages.RechargePageObject;
 import com.hjs.pages.RechargeResultPageObject;
 import com.hjs.pages.RedeemPageObject;
 import com.hjs.pages.RedeemResultPageObject;
+import com.hjs.pages.TradeDetailPageObject;
 import com.hjs.pages.TransCancelResultPageObject;
 import com.hjs.pages.TransCancleDetailPageObject;
 import com.hjs.pages.TransConfirmPageObject;
@@ -58,6 +61,7 @@ public class TradeTestCase extends CommonAppiumTest{
 	private static String FUND_PRODUCT_NAME="国寿安保增金宝货币";
 	private static String CURRENTDEPOSITE_PRODUCT_NAME="恒存金-灵活理财";
 	private static String phoneNum="17052411184";
+	private static String withdrawValue="4594";
     @Test(priority = 1,description="理财页产品信息")
 	public void testFinancialProductInfo() throws Exception{
     	new HomePageObject(driver).backToHomePage(1,4,7,8);
@@ -372,6 +376,7 @@ public class TradeTestCase extends CommonAppiumTest{
     	int halfWithdrawCash=maxWithdrawCash/2;
     	int expectCash=maxWithdrawCash-halfWithdrawCash;
     	String stringHalfWithdrawCash=String.valueOf(halfWithdrawCash);
+    	withdrawValue=stringHalfWithdrawCash;	//赋值给全局变量读取提现金额
     	WithdrawCashPageObject withdrawCashPage=accountBanlancePage.gotoWithdrawCashPage();
     	Assert.assertTrue(withdrawCashPage.verifyInthisPage(), "点击提现未进入到提现页面");
     	if(withdrawCashPage.getWithdrawCount()>0){
@@ -408,6 +413,30 @@ public class TradeTestCase extends CommonAppiumTest{
     		accountBanlancePage.openBanlanceEye();
         	
     	}
+    	
+    }
+    @Test(priority = 18,description="余额交易明细")
+    public void testBalanceTradeDetail()throws Exception{
+    	new HomePageObject(driver).backToHomePage(1,4,7,8);
+    	HomePageObject homepage=new HomePageObject(driver); 
+    	CommonAppiumPage page=homepage.enterPersonEntrace();
+    	String pageName=page.getClass().getName();
+    	Assert.assertTrue(pageName.contains("MinePageObject"), "点击首页-我的入口未进入我的页面");
+    	AccountBanlancePageObject accountBanlancePage=((MinePageObject)page).enterAccountBanlancePage();
+    	Assert.assertTrue(accountBanlancePage.verifyInthisPage(), "点击账户余额未进入余额页");
+    	String accountPageBanlance=accountBanlancePage.getStringBanlance();	//余额页的余额
+    	IncomeAndExpensesDetailPageObject incomeAndExpensesDetailPage=accountBanlancePage.gotoIncomeAndExpensesDetailPage();
+    	Assert.assertTrue(incomeAndExpensesDetailPage.verifyInthisPage(), "点击余额页明细未进入收支明细页面");
+    	BalanceExchange balanceExchange=incomeAndExpensesDetailPage.getLastBalanceExchange();
+    	String lastTradeType=balanceExchange.getType();		//收支明细页-最近一笔交易类型
+    	String balanceSum=balanceExchange.getBalanceSum();		//收支明细页-最近一笔余额
+    	String tradeSum=balanceExchange.getValue();		//收支明细页-最近一笔交易金额
+    	Assert.assertEquals(lastTradeType, "提现","最近一笔交易类型不是提现，而是："+lastTradeType);
+    	Assert.assertEquals(balanceSum,accountPageBanlance,"余额页余额与最后一笔交易余额不相等");
+    	Assert.assertEquals(tradeSum,withdrawValue+".00","最近一笔交易金额与最近提现金额不相等");
+    	TradeDetailPageObject tradeDetailPage=incomeAndExpensesDetailPage.gotoLastTradeDetailPage();
+    	Assert.assertTrue(tradeDetailPage.verifyInthisPage(), "点击明细页面最近一笔交易后未跳转到交易详情页");
+    	tradeDetailPage.assertTradeDetails("余额提现",withdrawValue+".00");
     	
     }
     @Test(priority = 25,description="我的定期产品信息")
@@ -469,6 +498,9 @@ public class TradeTestCase extends CommonAppiumTest{
     	MyDepositeProductPageObject myDepositeProductPage=minePage.enterMyDepositeProductPage();
     	Assert.assertTrue(myDepositeProductPage.verifyInthisPage(), "点击定期理财未进入我的理财产品页");
     	MyDepositeProductDetailPageObject myDepositeProductDetailPage=myDepositeProductPage.enterDepositeProductDetail(DEPOSITE_PRODUCT_NAME);
+    	Assert.assertTrue(myDepositeProductDetailPage.verifyInthisPage(), "点击"+DEPOSITE_PRODUCT_NAME+"产品未进入我的理财产品详情页");
+    	myDepositeProductDetailPage.backKeyEvent();
+    	myDepositeProductPage.enterDepositeProductDetail(DEPOSITE_PRODUCT_NAME);	//防止缓存再进入一次
     	Assert.assertTrue(myDepositeProductDetailPage.verifyInthisPage(), "点击"+DEPOSITE_PRODUCT_NAME+"产品未进入我的理财产品详情页");
     	myDepositeProductDetailPage.assertBackMoneyTo("至账户余额");
     }

@@ -37,7 +37,8 @@ public class WithdrawCashPageObject extends CommonAppiumPage{
 		super(driver);
 	}
 	public WithdrawCashResultPageObject withdrawCash(String amount,String tradePwd) throws Exception{
-		this.onlyOpenSHENGFUTONGProvider();	//只打开盛付通渠道
+		DBOperation dbOperation=new DBOperation();
+		dbOperation.onlyOpenSHENGFUTONGProvider();	//只打开盛付通渠道
 		clickEle(withdrawMoneyInput,"提现输入框");
 		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
 		if(!safeKeyBoard.verifySafeKeyBoardLocated()){
@@ -60,36 +61,7 @@ public class WithdrawCashPageObject extends CommonAppiumPage{
 		String withdrawCount=Util.getNumInString(withdrawCountTipsText);
 		return Util.stringToDouble(withdrawCount);
 	}
-	public void onlyOpenSHENGFUTONGProvider() throws IOException{
-		DBOperation dboperation=new DBOperation();
-		dboperation.closeAllProvider_payment_limitationStatus();
-		dboperation.openProvider_payment_limitationStatus("0002");
-		String resource = "eifPayCoreConfig.xml";
-	    Reader reader = Resources.getResourceAsReader(resource);  
-	    SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
-	    reader.close();  
-	    SqlSession session = sqlSessionFactory.openSession();
-	    try {
-	    	EifPayCoreOperation eifPayCoreOperation=session.getMapper(EifPayCoreOperation.class);
-	    	List<BankProvider> bankProviderList = eifPayCoreOperation.getBankProvider("03080000");
-	    	if(bankProviderList.size()>0){
-		    	for(int i=0;i<bankProviderList.size();i++){
-		    		if(!bankProviderList.get(i).getProvider_no().equals("0002")){
-		    			bankProviderList.get(i).setStatus(1);
-			    		int result=eifPayCoreOperation.updateBankProviderStatus(bankProviderList.get(i));
-		    		}
-		    		else if(bankProviderList.get(i).getProvider_no().equals("0002")){
-		    			bankProviderList.get(i).setStatus(0);
-			    		int result=eifPayCoreOperation.updateBankProviderStatus(bankProviderList.get(i));
-		    		}
-		    	}    	
-		        session.commit();
-	    	}
-	        
-	    } finally {
-	        session.close();
-	    }
-	}
+	
 	public boolean verifyInthisPage(){
 		return isElementExsit(withdrawMoneyInputLocator);
 	}

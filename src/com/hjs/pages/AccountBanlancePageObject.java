@@ -11,7 +11,9 @@ import com.hjs.config.CommonAppiumPage;
 import com.hjs.publics.Util;
 
 public class AccountBanlancePageObject extends CommonAppiumPage{
-
+	
+	@AndroidFindBy(xpath="//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/tv_right' and @text='明细']")
+	private AndroidElement detailBtn;		//明细按钮
 	@AndroidFindBy(id="tv_available_balance")
 	private AndroidElement availableBalance;		//可用余额
 	@AndroidFindBy(id="imgv_balance_eye")
@@ -32,6 +34,10 @@ public class AccountBanlancePageObject extends CommonAppiumPage{
 		super(driver);
 		this.skipGuideTips();
 	}
+	public IncomeAndExpensesDetailPageObject gotoIncomeAndExpensesDetailPage(){
+		clickEle(detailBtn,"明细按钮");
+		return new IncomeAndExpensesDetailPageObject(driver);
+	}
 	public int getAvailableBalance(){
 		super.waitEleUnVisible(By.id("refresh_animationView"), super.getWaitTime());//等待刷新图标消失
 		String stringAvailableBalance=availableBalance.getText();//取出余额，格式为x,xxx.xx
@@ -45,7 +51,6 @@ public class AccountBanlancePageObject extends CommonAppiumPage{
 		super.waitEleUnVisible(By.id("refresh_animationView"), super.getWaitTime());//等待刷新图标消失
 		String balance=super.getEleText(availableBalance, "可用余额数值");
 		return Util.get2DecimalPointsNumInString(balance);
-		
 	}
 	public void openBanlanceEye() throws Exception{
 		String balance=super.getEleText(availableBalance, "可用余额数值");

@@ -12,6 +12,28 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Util {
+	/**
+	   * 判断日期格式是否正确
+	   *
+	   * @param time 时间戳
+	   * @param addDays 增加天数
+	   * @return time+addDays
+	   */
+	public static boolean isValidDate(String str) {
+	      boolean convertSuccess=true;
+	// 指定日期格式为四位年/两位月份/两位日期，注意yyyy/MM/dd区分大小写；
+	       SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	       try {
+	// 设置lenient为false. 否则SimpleDateFormat会比较宽松地验证日期，比如2007/02/29会被接受，并转换成2007/03/01
+	          format.setLenient(false);
+	          format.parse(str);
+	       } catch (ParseException e) {
+	          // e.printStackTrace();
+	// 如果throw java.text.ParseException或者NullPointerException，就说明格式不对
+	           convertSuccess=false;
+	       } 
+	       return convertSuccess;
+	}
 	public static String getcurrentDate() {
 		SimpleDateFormat df = new SimpleDateFormat("yyMMddHHmmss");// 自定义日期格式
 		return df.format(new Date());
@@ -103,10 +125,27 @@ public class Util {
 //		} else
 			return m.replaceAll("").trim();
 	}
+	/**
+	   * 从字符串中取出数字包括小数
+	   *
+	   * @param string 字符串
+	   * @return 字符串中的数字
+	   */
+	public static String getDecimalNumInString(String string) {
+		Pattern p=Pattern.compile("[^0-9.]");
+		Matcher m = p.matcher(string);
+		return m.replaceAll("").trim();
+	}
+	/**
+	   * 从字符串中取出数字并保留2位小数
+	   *
+	   * @param string 字符串
+	   * @return 2位小数
+	   */
 	public static String get2DecimalPointsNumInString(String a){
-		String b=Util.getNumInString(a);
+		String b=Util.getDecimalNumInString(a);
 		double c=Util.stringToDouble(b);
-		c=c/100.0;
+		//c=c/100.0;
 		DecimalFormat df = new DecimalFormat("#0.00");
 		String d=df.format(c);
 		return d;

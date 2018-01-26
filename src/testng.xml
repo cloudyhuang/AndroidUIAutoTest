@@ -19,7 +19,9 @@
 		<classes>
 			<class name="com.hjs.cases.TradeTestCase">
 				<methods>
-					<include name="testBackMoneySettingToBanlance" />
+				
+				    <include name="testBalanceTradeDetail" />
+					
 				</methods>
 			</class>
 		</classes>

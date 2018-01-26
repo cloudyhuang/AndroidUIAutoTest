@@ -191,6 +191,7 @@ public class CommonAppiumTest {
      */  
     public void downLoadFromUrl(String urlStr,String fileName) throws IOException{  
         URL url = new URL(urlStr);    
+        System.out.println("info:"+url+" download start......"); 
         HttpURLConnection conn = (HttpURLConnection)url.openConnection();    
                 //设置超时间为3秒  
         conn.setConnectTimeout(3*1000);  
