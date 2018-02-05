@@ -11,7 +11,12 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.json.JSONObject;
+
+import com.hjs.Interface.GetOrderPushStatus;
+
 public class Util {
+	public static GetOrderPushStatus orderpushstatus = new GetOrderPushStatus();
 	/**
 	   * 判断日期格式是否正确
 	   *
@@ -52,6 +57,57 @@ public class Util {
 	     calendar.add(calendar.DATE,addDays);//把日期往后增加一天.整数往后推,负数往前移动 
 	     date=calendar.getTime();   //这个时间就是日期往后推一天的结果 
 	     return date.getTime();
+	}
+	 /**
+     * 计算工作日
+     * 具体节日包含哪些,可以在HolidayMap中修改
+     * @param time 时间戳
+     * @param adddays 要加的天数
+	 * @throws ParseException 
+     */
+    public static long addDateByWorkDay(long time,int adddays) throws ParseException
+    {
+        boolean holidayFlag = false;
+        Date date = new Date(time);
+	    Calendar   src   =   new   GregorianCalendar(); 
+	    src.setTime(date); 
+        for (int i = 0; i < adddays; i++)
+        {
+            //把源日期加一天
+            src.add(Calendar.DAY_OF_MONTH, 1);
+            holidayFlag =checkHoliday(src);
+            if(holidayFlag)
+            {
+               i--;
+            }
+            System.out.println(src.getTime());
+        }
+        System.out.println("Final Result:"+src.getTime());
+        return src.getTimeInMillis();
+    }
+	/**
+	   * 判断一个时间是否为节假日
+	   *
+	   * @param time 时间
+	   * @return 是否为节假日
+	   * @throws ParseException 
+	   */
+	public  static boolean checkHoliday(Calendar cal) throws ParseException{
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+		String dateString =  formatter.format(cal.getTime());
+		String url = ("http://api.goseek.cn/Tools/holiday?date="+dateString);
+		String httpResult = orderpushstatus.sendGet(url);	//响应结果
+		int httpStatusCode=orderpushstatus.getStatusCode();  //响应码
+		System.out.println(httpResult+"status:"+httpStatusCode);
+		JSONObject postJsonobj = new JSONObject(httpResult);
+		String data=postJsonobj.get("data").toString();
+		if(data.equals("0")){
+			return false;
+		}
+		else if(data.equals("1")||data.equals("2")){
+			return true;
+		}
+		else return false;
 	}
 	/**
 	   * 传入时间戳和需要减少的天数，返回n天后的时间戳。

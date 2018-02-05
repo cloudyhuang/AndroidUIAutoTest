@@ -4,11 +4,15 @@ package com.hjs.pages;
 import java.io.IOException;
 import java.io.Reader;
 import java.text.ParseException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 
@@ -16,7 +20,9 @@ import com.github.ltsopensource.core.domain.Job;
 import com.github.ltsopensource.jobclient.JobClient;
 import com.github.ltsopensource.jobclient.RetryJobClient;
 import com.github.ltsopensource.jobclient.domain.Response;
+import com.hjs.Interface.GetOrderPushStatus;
 import com.hjs.config.CommonAppiumPage;
+import com.hjs.db.DBOperation;
 import com.hjs.db.FisHonorOrder;
 import com.hjs.db.FisProdInfo;
 import com.hjs.db.FisSecMarketProd;
@@ -37,12 +43,85 @@ public class MyDepositeProductPageObject extends CommonAppiumPage{
 	private AndroidElement allFilter;		//全部持有筛选项
 	@AndroidFindBy(id="tv_filter_transfer")
 	private AndroidElement transferFilter;		//可转让筛选项
+	@AndroidFindBy(id="tv_redeem")
+	private AndroidElement redeemFilter;		//已回款筛选项
 	
 	
 	private By productNameLocator=By.id("textView_product");
 	private By refreshViewLocator=By.id("refresh_animationView");
+	public static GetOrderPushStatus orderpushstatus = new GetOrderPushStatus();
 	public MyDepositeProductPageObject(AndroidDriver<AndroidElement> driver) {
 		super(driver);
+	}
+	public boolean assertRedeemProduct(String productName) throws Exception{
+		this.filterRedeemProduct();		//筛选已回款产品
+		String productXpath="//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_product' and @text='"+productName+"']";
+		super.scrollTo(productXpath);
+		AndroidElement productNameEle=driver.findElement(By.xpath("//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_product' and @text='"+productName+"']"));
+		AndroidElement productRedeemDay=driver.findElement(By.xpath("//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_product' and @text='"+productName+"']//ancestor::android.widget.LinearLayout[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/layout_product_title']/parent::android.widget.LinearLayout//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/tv_item_title' and contains(@text,'回款')]"));
+		AndroidElement productRedeemTo=driver.findElement(By.xpath("//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_product' and @text='"+productName+"']//ancestor::android.widget.LinearLayout[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/layout_product_title']/parent::android.widget.LinearLayout//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/tv_item_title' and contains(@text,'至')]"));
+		AndroidElement productInvestMoney=driver.findElement(By.xpath("//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_product' and @text='"+productName+"']//ancestor::android.widget.LinearLayout[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/layout_product_title']/parent::android.widget.LinearLayout//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/tv_item_remark_des'][1]"));
+		AndroidElement productInvestProfit=driver.findElement(By.xpath("//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_product' and @text='"+productName+"']//ancestor::android.widget.LinearLayout[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/layout_product_title']/parent::android.widget.LinearLayout//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/tv_item_remark_des' and contains(@text,'实际收益')]"));
+		AndroidElement productInvestStatus=driver.findElement(By.xpath("//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_product' and @text='"+productName+"']/parent::android.widget.LinearLayout/parent::android.widget.LinearLayout/parent::android.widget.LinearLayout/android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_invest_state']"));
+		String appInvestMoney=Util.get2DecimalPointsNumInString(super.getEleText(productInvestMoney, "投资金额"));
+		String appInvestProfit=Util.get2DecimalPointsNumInString(super.getEleText(productInvestProfit, "实际收益"));
+		String appProductInvestStatus=super.getEleText(productInvestStatus, "投资状态");
+		String appProductRedeemTo=super.getEleText(productRedeemTo, "回款去向");
+		Assert.assertEquals(appProductInvestStatus, "转让成功");
+		Assert.assertEquals(appInvestMoney, "100.00");
+		Assert.assertEquals(appInvestProfit, "0.87");
+		Assert.assertEquals(appProductRedeemTo, "至账户余额");
+		
+		return true;
+	}
+	public boolean assertMyDepositeProduct(String productName) throws IOException, ParseException{
+		DBOperation db=new DBOperation();
+		String productId=db.getProductId(productName);
+		String url="http://172.16.57.47:48080//eif-fis-web/rpc/call/com.eif.fis.facade.biz.omc.OmcFacade/queryProductDetail";
+		String params="[{ \"productId\":46381 }]";		
+		JSONArray postJsonArray=new JSONArray(params);
+		postJsonArray.getJSONObject(0).put("productId", productId);
+		String httpResult = orderpushstatus.sendJsonPost(url, postJsonArray.toString());
+		int httpStatusCode = orderpushstatus.getStatusCode(); // 响应码
+		System.out.println(httpResult);
+		JSONObject resJsonobj = new JSONObject(httpResult);
+		String msg=String.valueOf(resJsonobj.get("msg"));
+		boolean success=resJsonobj.getBoolean("success");
+		Assert.assertTrue(success,"接口返回错误，错误信息:"+msg);
+		long longInceptionDate=resJsonobj.getLong("inceptionDate");
+		String inceptionDate=Util.longToDate(longInceptionDate, "yyyy-MM-dd");		//成立日
+		int normalRedeemMode=resJsonobj.getInt("normalRedeemMode");	//兑付日T+N
+		long longDueDate=resJsonobj.getLong("dueDate");
+		longDueDate=Util.addDateByWorkDay(longDueDate, normalRedeemMode);	//结束日加上兑付工作日
+		String dueDate=Util.longToDate(longDueDate, "yyyy-MM-dd");
+		waitEleUnVisible(refreshViewLocator, 60);
+		try{
+			String productXpath="//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_product' and @text='"+productName+"']";
+			super.scrollTo(productXpath);
+			AndroidElement productNameEle=driver.findElement(By.xpath("//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_product' and @text='"+productName+"']"));
+			AndroidElement productInvestMoney=driver.findElement(By.xpath("//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_product' and @text='"+productName+"']//ancestor::android.widget.LinearLayout[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/layout_product_title']/parent::android.widget.LinearLayout//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/tv_item_remark_des'][1]"));
+			AndroidElement productInvestProfit=driver.findElement(By.xpath("//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_product' and @text='"+productName+"']//ancestor::android.widget.LinearLayout[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/layout_product_title']/parent::android.widget.LinearLayout//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/tv_item_remark_des' and contains(@text,'预期收益')]"));
+			AndroidElement productInvestDay=driver.findElement(By.xpath("//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_product' and @text='"+productName+"']//ancestor::android.widget.LinearLayout[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/layout_product_title']/parent::android.widget.LinearLayout//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/tv_item_title' and contains(@text,'投资')]"));
+			AndroidElement productReturnMoneyDay=driver.findElement(By.xpath("//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_product' and @text='"+productName+"']//ancestor::android.widget.LinearLayout[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/layout_product_title']/parent::android.widget.LinearLayout//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/tv_item_title' and contains(@text,'回款')]"));
+			
+			String appInvestDay=super.getEleText(productInvestDay, "投资日期");
+			String appReturnMoneyDay=super.getEleText(productReturnMoneyDay, "回款日期");
+			Pattern p=Pattern.compile("[^0-9-]");	//保留日期
+			Matcher m = p.matcher(appInvestDay);
+			appInvestDay=m.replaceAll("").trim();
+			m = p.matcher(appReturnMoneyDay);
+			appReturnMoneyDay=m.replaceAll("").trim();
+			Assert.assertEquals(appInvestDay, inceptionDate,"app显示投资日期与成立日期不同");
+			Assert.assertEquals(appReturnMoneyDay, dueDate,"app显示回款日期与‘结束日+兑付日’不相等");
+			String appInvestMoney=Util.getDecimalNumInString(super.getEleText(productInvestMoney, "产品投资金额"));
+			String appInvestProfit=Util.getDecimalNumInString(super.getEleText(productInvestProfit, "产品投资收益"));
+			Assert.assertEquals(appInvestMoney, "900.00");
+			Assert.assertEquals(appInvestProfit, "51.00");
+		}
+		catch(Exception e){
+			Assert.assertTrue(false,"未找到\""+productName+"\"理财产品");
+		}
+		return true;
 	}
 	public MyDepositeProductDetailPageObject enterDepositeProductDetail(String productName){
 		waitEleUnVisible(refreshViewLocator, 60);
@@ -129,6 +208,10 @@ public class MyDepositeProductPageObject extends CommonAppiumPage{
 		clickEle(transferFilter,"可转让筛选项");
 		waitEleUnVisible(refreshViewLocator, 30);
 		swipeToDown(1000,1);	//下滑刷新
+		waitEleUnVisible(refreshViewLocator, 30);
+	}
+	public void filterRedeemProduct(){
+		clickEle(redeemFilter,"已回款筛选按钮");
 		waitEleUnVisible(refreshViewLocator, 30);
 	}
 	public String getTransProductStatus(String productName){

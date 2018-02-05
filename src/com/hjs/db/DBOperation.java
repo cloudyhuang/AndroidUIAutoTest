@@ -11,6 +11,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import com.hjs.Interface.Common;
 import com.hjs.Interface.GetOrderPushStatus;
+import com.hjs.mybatis.inter.EifFisOperation;
 import com.hjs.mybatis.inter.EifMarketOperation;
 import com.hjs.mybatis.inter.EifMemberOperation;
 import com.hjs.mybatis.inter.EifPayCoreOperation;
@@ -278,5 +279,29 @@ public class DBOperation {
 	    } finally {
 	        session.close();
 	    }
+	}
+    /**
+     * 通过产品名称获取产品ID
+     *
+     * @param productName  产品名称
+     * @return 产品ID
+     */
+	public String getProductId(String productName) throws IOException{
+		String resource = "eifFisConfig.xml";
+        Reader reader = Resources.getResourceAsReader(resource);  
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
+        reader.close();  
+        SqlSession session = sqlSessionFactory.openSession();
+        try {
+        	EifFisOperation eifFisOperation=session.getMapper(EifFisOperation.class);
+        	FisProdInfo fisProdInfo=eifFisOperation.getFisProdInfo(productName);
+        	if(fisProdInfo==null){
+        		return null;
+        	}
+        	return fisProdInfo.getId();
+        }
+        finally {
+            session.close();
+        }
 	}
 }

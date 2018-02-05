@@ -81,6 +81,20 @@ public class MinePageObject extends CommonAppiumPage{
 		String accountBanlanceValueStr=super.getEleText(accountBanlanceValue, "账户余额数值");
 		return Util.get2DecimalPointsNumInString(accountBanlanceValueStr);
 	}
+	public HengCunJinPageObject gotoHengCunJinPage(){
+		clickEle(hengCunJinValue,"恒存金数值");
+		return new HengCunJinPageObject(driver);
+	}
+	public String getHengCunJinValue(){
+		String hengCunJinValueStr=super.getEleText(hengCunJinValue, "恒存金数值");
+		if(hengCunJinValueStr.equals("恒存金 灵活理财")){
+			return "0";
+		}
+		else{
+			return Util.get2DecimalPointsNumInString(hengCunJinValueStr);
+		}
+		
+	}
 	public boolean assertTotalAssetValue(){
 		String accountBanlanceValueStr=super.getEleText(accountBanlanceValue, "账户余额数值");
 		String hengCunJinValueStr=super.getEleText(hengCunJinValue, "恒存金数值");

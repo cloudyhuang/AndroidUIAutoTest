@@ -240,6 +240,7 @@ public class CommonAppiumPage{
      */
     public void backKeyEvent(){
     	driver.pressKeyCode(KEYCODE_BACK);
+    	this.threadsleep(2000);
     }
     /**
      * 长按实体键

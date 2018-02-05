@@ -20,7 +20,7 @@
 			<class name="com.hjs.cases.TradeTestCase">
 				<methods>
 				
-				    <include name="testBalanceTradeDetail" />
+				    <include name="testMyRegularProductAssetAndProfitInfo" />
 					
 				</methods>
 			</class>

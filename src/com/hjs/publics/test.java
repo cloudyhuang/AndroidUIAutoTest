@@ -24,7 +24,11 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.testng.Assert;
 
+import com.hjs.Interface.GetOrderPushStatus;
 import com.hjs.db.BankProvider;
 import com.hjs.db.DBOperation;
 import com.hjs.db.FisProdInfo;
@@ -34,12 +38,40 @@ import com.hjs.mybatis.inter.EifMarketOperation;
 import com.hjs.mybatis.inter.EifPayCoreOperation;
 
 public class test {
-
+	public static GetOrderPushStatus orderpushstatus = new GetOrderPushStatus();
 	public static void main(String[] args) throws Exception {
-		DBOperation db=new DBOperation();
-		db.updateNoProviderTransLimit("0007");
+		String a="2018-02-02";
+		long b=Util.dateToLong(a, "yyyy-MM-dd");
+		long c=Util.addDateByWorkDay(b,3);
+		System.out.println(Util.longToDate(c, "yyyy-MM-dd"));
 	}
-
+	public static String getDecimalNumInString(String string) {
+		Pattern p=Pattern.compile("[^0-9-]");
+		Matcher m = p.matcher(string);
+		return m.replaceAll("").trim();
+	}
+	public static boolean assertMyDepositeProduct(String productName) throws IOException{
+		DBOperation db=new DBOperation();
+		String productId=db.getProductId(productName);
+		String url="http://172.16.57.47:48080//eif-fis-web/rpc/call/com.eif.fis.facade.biz.omc.OmcFacade/queryProductDetail";
+		String params="[{ \"productId\":46381 }]";		
+		JSONArray postJsonArray=new JSONArray(params);
+		postJsonArray.getJSONObject(0).put(productId, productId);
+		String httpResult = orderpushstatus.sendJsonPost(url, postJsonArray.toString());
+		int httpStatusCode = orderpushstatus.getStatusCode(); // 响应码
+		System.out.println(httpResult);
+		JSONObject resJsonobj = new JSONObject(httpResult);
+		String msg=String.valueOf(resJsonobj.get("msg"));
+		boolean success=resJsonobj.getBoolean("success");
+		Assert.assertTrue(success,"接口返回错误，错误信息:"+msg);
+		long longInceptionDate=resJsonobj.getLong("inceptionDate");
+		String inceptionDate=Util.longToDate(longInceptionDate, "yyyy-MM-dd");		//成立日
+		int normalRedeemMode=resJsonobj.getInt("normalRedeemMode");	//兑付天数
+		long longDueDate=resJsonobj.getLong("dueDate");
+		longDueDate=Util.addDate(longDueDate, normalRedeemMode);	//结束日加上募集期
+		String dueDate=Util.longToDate(longDueDate, "yyyy-MM-dd");
+		return true;
+	}
 	public static List<FindString> findString(String pattern,String str){
 		Pattern p = Pattern.compile(pattern);
 		Matcher m = p.matcher(str);
