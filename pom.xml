@@ -68,8 +68,8 @@
 		<dependency>
 			<groupId>io.appium</groupId>
 			<artifactId>java-client</artifactId>
-			<!--  <version>3.3.0</version>-->
-			 <version>5.0.3</version>
+			<!-- <version>3.3.0</version> -->
+			<version>5.0.3</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
@@ -89,7 +89,7 @@
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
-			<!--  <version>2.53.1</version>-->
+			<!-- <version>2.53.1</version> -->
 			<version>3.5.3</version>
 		</dependency>
 		<dependency>
@@ -101,6 +101,11 @@
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 			<version>4.5.3</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>3.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.uncommons</groupId>
@@ -165,7 +170,7 @@
 					<groupId>log4j</groupId>
 				</exclusion>
 			</exclusions>
-		</dependency> 
+		</dependency>
 		<dependency>
 			<groupId>com.eif.framework</groupId>
 			<artifactId>eif-framework-job</artifactId>
@@ -182,17 +187,14 @@
 			<version>1.0.13</version>
 		</dependency>
 
-		<!-- <dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>1.7.21</version>
-		</dependency> -->
+		<!-- <dependency> <groupId>org.slf4j</groupId> <artifactId>slf4j-api</artifactId> 
+			<version>1.7.21</version> </dependency> -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 			<version>1.2.38</version>
 		</dependency>
-<!-- ====================LTS jobClient 依赖==================== -->
+		<!-- ====================LTS jobClient 依赖==================== -->
 
 	</dependencies>
 </project>

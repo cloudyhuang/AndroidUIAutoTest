@@ -2,37 +2,24 @@ package com.hjs.Interface;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
 import java.util.List;
 
-import javax.net.ssl.SSLContext;
-
+import org.apache.commons.httpclient.protocol.Protocol;
+import org.apache.commons.httpclient.protocol.ProtocolSocketFactory;
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpException;
-import org.apache.http.HttpHost;
-import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.client.LaxRedirectStrategy;
-import org.apache.http.impl.cookie.BasicClientCookie;
-import org.apache.http.ssl.SSLContextBuilder;
-import org.apache.http.ssl.TrustStrategy;
 import org.apache.http.util.EntityUtils;
 
 public class GetOrderPushStatus {
@@ -241,6 +228,10 @@ public class GetOrderPushStatus {
 		//CloseableHttpClient httpClient = null;
 		HttpGet httpGet = null;
 		String httpResults = null;
+		 //声明
+        ProtocolSocketFactory fcty = new MySecureProtocolSocketFactory();
+        //加入相关的https请求方式
+        Protocol.registerProtocol("https", new Protocol("https", fcty, 443));
 		try {
 			HttpClientBuilder builder = HttpClients.custom()
 					.setDefaultCookieStore(cookieStore).disableAutomaticRetries() // 关闭自动处理重定向
