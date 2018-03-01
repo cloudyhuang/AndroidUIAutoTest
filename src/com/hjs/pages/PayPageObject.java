@@ -28,6 +28,8 @@ import com.hjs.mybatis.inter.EifMarketOperation;
 import com.hjs.mybatis.inter.EifMemberOperation;
 import com.hjs.mybatis.inter.EifPayCoreOperation;
 import com.hjs.mybatis.inter.SmsVerifyCodeOperation;
+import com.hjs.publics.Util;
+import com.hjs.testDate.TransRecordInfo.TransInfo;
 
 public class PayPageObject extends CommonAppiumPage{
 	

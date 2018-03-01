@@ -40,6 +40,8 @@ public class MinePageObject extends CommonAppiumPage{
 	private AndroidElement myDepositeProductValue;		//定期理财数值
 	@AndroidFindBy(xpath="//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textview_top' and @text='基金']/ancestor::android.widget.LinearLayout[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/layout_top_bottom_text']//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textview_bottom']")
 	private AndroidElement fundValue;		//基金数值
+	@AndroidFindBy(xpath="//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/tv_item_title' and @text='交易记录']")
+	private AndroidElement transactionRecord;		//交易记录
 	
 	private By personImageLocator=By.id("imageView_person");	//个人头像Locator
 	private By adCloseBtnLocator=By.id("icv_advertisement_close");		//广告关闭按钮locator
@@ -56,6 +58,9 @@ public class MinePageObject extends CommonAppiumPage{
 		}
 	}
 	public void refresh(){
+		swipeToDown(1000,1);	//下滑刷新
+		waitEleUnVisible(refreshViewLocator, 30);
+		super.threadsleep(2000);
 		swipeToDown(1000,1);	//下滑刷新
 		waitEleUnVisible(refreshViewLocator, 30);
 	}
@@ -186,6 +191,10 @@ public class MinePageObject extends CommonAppiumPage{
 		else throw new Exception("总资产显示格式有误，非千分位小数或****");
 	}
 	
+	public TransRecordPageObject enterTransRecorder(){
+		clickEle(transactionRecord,"交易记录");
+		return new TransRecordPageObject(driver);
+	}
 	public PersonSettingPageObject enterPersonSetting(){
 		clickEle(personImage,"我的-个人头像");
 		return new PersonSettingPageObject(driver);

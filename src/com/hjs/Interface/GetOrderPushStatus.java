@@ -2,7 +2,14 @@ package com.hjs.Interface;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.List;
+
+import javax.net.ssl.SSLContext;
 
 import org.apache.commons.httpclient.protocol.Protocol;
 import org.apache.commons.httpclient.protocol.ProtocolSocketFactory;
@@ -13,6 +20,7 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicCookieStore;
@@ -20,6 +28,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.client.LaxRedirectStrategy;
+import org.apache.http.ssl.SSLContextBuilder;
+import org.apache.http.ssl.TrustStrategy;
 import org.apache.http.util.EntityUtils;
 
 public class GetOrderPushStatus {
@@ -32,10 +42,30 @@ public class GetOrderPushStatus {
 	}
 	public GetOrderPushStatus() {
 		cookieStore = new BasicCookieStore();
-		HttpClientBuilder builder = HttpClients.custom()
-				.setDefaultCookieStore(cookieStore).disableAutomaticRetries() // 关闭自动处理重定向
-				.setRedirectStrategy(new LaxRedirectStrategy());// 利用LaxRedirectStrategy处理POST重定向问题
-		httpclient = builder.build();
+		try {
+            SSLContext sslContext = new SSLContextBuilder()
+                    .loadTrustMaterial(null, new TrustStrategy() {
+                        //信任所有
+                        public boolean isTrusted(X509Certificate[] chain,
+                                                 String authType) throws CertificateException {
+                            return true;
+                        }
+                    }).build();
+            SSLConnectionSocketFactory sslSelf = new SSLConnectionSocketFactory(
+                    sslContext);
+            
+            HttpClientBuilder builder = HttpClients.custom()
+    				.setDefaultCookieStore(cookieStore).setSSLSocketFactory(sslSelf).disableAutomaticRetries() // 关闭自动处理重定向
+    				.setRedirectStrategy(new LaxRedirectStrategy());// 利用LaxRedirectStrategy处理POST重定向问题
+    		httpclient = builder.build();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        }
+		
     }
 	public String sendJsonPost(String url, String param) {
 		String httpResults = null;
@@ -228,17 +258,28 @@ public class GetOrderPushStatus {
 		//CloseableHttpClient httpClient = null;
 		HttpGet httpGet = null;
 		String httpResults = null;
-		 //声明
-        ProtocolSocketFactory fcty = new MySecureProtocolSocketFactory();
-        //加入相关的https请求方式
-        Protocol.registerProtocol("https", new Protocol("https", fcty, 443));
+//		 //声明
+//        ProtocolSocketFactory fcty = new MySecureProtocolSocketFactory();
+//        //加入相关的https请求方式
+//        Protocol.registerProtocol("https", new Protocol("https", fcty, 443));
 		try {
-			HttpClientBuilder builder = HttpClients.custom()
-					.setDefaultCookieStore(cookieStore).disableAutomaticRetries() // 关闭自动处理重定向
-					.setRedirectStrategy(new LaxRedirectStrategy());// 利用LaxRedirectStrategy处理POST重定向问题
+			
+			SSLContext sslContext = new SSLContextBuilder()
+                    .loadTrustMaterial(null, new TrustStrategy() {
+                        //信任所有
+                        public boolean isTrusted(X509Certificate[] chain,
+                                                 String authType) throws CertificateException {
+                            return true;
+                        }
+                    }).build();
+            SSLConnectionSocketFactory sslSelf = new SSLConnectionSocketFactory(
+                    sslContext);
+            
+            HttpClientBuilder builder = HttpClients.custom()
+    				.setDefaultCookieStore(cookieStore).setSSLSocketFactory(sslSelf).disableAutomaticRetries() // 关闭自动处理重定向
+    				.setRedirectStrategy(new LaxRedirectStrategy());// 利用LaxRedirectStrategy处理POST重定向问题
 
 			httpclient = builder.build();
-//			httpClient = HttpClients.createDefault();
 			RequestConfig requestConfig = RequestConfig.custom()
 					.setSocketTimeout(20000).setConnectTimeout(20000).build();
 			httpGet = new HttpGet(url);
@@ -251,6 +292,12 @@ public class GetOrderPushStatus {
 				// System.out.println("Response content: " + httpResults);
 				// System.out.println("--------------------------------------");
 			}
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (KeyManagementException e) {
+			e.printStackTrace();
+		} catch (KeyStoreException e) {
+			e.printStackTrace();
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

@@ -1,5 +1,6 @@
 package com.hjs.publics;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -149,7 +150,51 @@ public class Util {
 		Date date = format.parse(time);
 		return date.getTime();
 	}
-
+	/**
+	   * 根据用户传入的时间,和对应时间格式，转换为相应时间戳
+	   *
+	   * @param time 时间
+	   * @param sformat yyyyMMddhhmmss
+	   * @return
+	   */
+	public static long getDistanceTime(String str1,String str2) throws ParseException {
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
+        Date one;  
+        Date two;    
+        long sec = 0;  
+        try {  
+            one = df.parse(str1);  
+            two = df.parse(str2);  
+            long time1 = one.getTime();  
+            long time2 = two.getTime();  
+            long diff ;  
+            if(time1<time2) {  
+                diff = time2 - time1;  
+            } else {  
+                diff = time1 - time2;  
+            }    
+            sec = diff/1000;  
+        } catch (ParseException e) {  
+            e.printStackTrace();  
+        }
+		return sec;  
+	}
+	/**
+	   * 传入日期秒置零
+	   *
+	   * @param time 时间
+	   * @return 置零秒的时间
+	   */
+	public static String setSecondsToZero(String time) throws ParseException {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date date = format.parse(time);
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTime(date);
+		calendar.set(Calendar.SECOND, 0);
+		date=calendar.getTime();
+		time=format.format(date);
+		return time;
+	}
 	/*
 	 * System.out.println(dateToLong("2017-06-18 20:50:35"));
 	 * System.out.println(longToDate(1496904635362L));

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource="jdbc.properties"/>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC" />
+            <!-- 配置数据库连接信息 -->
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver" />
+                <property name="url" value="jdbc:mysql://172.16.57.131:43306/eif_balance" />
+                <property name="username" value="em" />
+                <property name="password" value="emadmin123" />
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+       
+        <mapper resource="com/hjs/db/EifBalanceMapping.xml"/>
+     </mappers>
+</configuration>

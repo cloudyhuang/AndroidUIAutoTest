@@ -8,12 +8,15 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.json.JSONObject;
 
 import com.hjs.Interface.Common;
 import com.hjs.Interface.GetOrderPushStatus;
+import com.hjs.mybatis.inter.EifBalanceOperation;
 import com.hjs.mybatis.inter.EifFisOperation;
 import com.hjs.mybatis.inter.EifMarketOperation;
 import com.hjs.mybatis.inter.EifMemberOperation;
+import com.hjs.mybatis.inter.EifOfcOperation;
 import com.hjs.mybatis.inter.EifPayCoreOperation;
 import com.hjs.mybatis.inter.SmsVerifyCodeOperation;
 
@@ -303,5 +306,87 @@ public class DBOperation {
         finally {
             session.close();
         }
+	}
+	 /**
+     * 通过手机号获取最近交易号
+     *
+     * @param phoneNum  手机号
+     * @return 最近交易号
+	 * @throws Exception 
+     */
+	public String getTransNoByPhoneNum(String phoneNum) throws Exception{
+		String member_no=this.getMemberNo(phoneNum);
+		String resource = "eifOfcConfig.xml";
+        Reader reader = Resources.getResourceAsReader(resource);  
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
+        reader.close();  
+        SqlSession session = sqlSessionFactory.openSession();
+        try {
+        	EifOfcOperation eifOfcOperation=session.getMapper(EifOfcOperation.class);
+        	OfcBusinessOrderItem ofcBusinessOrderItem=eifOfcOperation.getOfcBusinessOrderItem(member_no);
+        	if(ofcBusinessOrderItem==null){
+        		return null;
+        	}
+        	return ofcBusinessOrderItem.getBusiness_order_item_no();
+        }
+        finally {
+            session.close();
+        }
+	}
+	 /**
+     * 更新存款配置信息
+     *
+     * @param configValue  配置json
+	 * @throws IOException 
+     */
+	public void updateWithdrawBalanceConfig(String configValue) throws IOException{
+		String resource = "eifBalanceConfig.xml";
+	    Reader reader = Resources.getResourceAsReader(resource);  
+	    SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
+	    reader.close();  
+	    SqlSession session = sqlSessionFactory.openSession();
+	    BalanceConfig balanceConfig=new BalanceConfig();
+	    balanceConfig.setConfig_key("withdraw");
+	    balanceConfig.setConfig_value(configValue);
+	    try {
+	    	EifBalanceOperation eifBalanceOperation=session.getMapper(EifBalanceOperation.class);
+	    	eifBalanceOperation.updateBalanceConfig(balanceConfig);
+		    session.commit();
+	        
+	    } finally {
+	        session.close();
+	    }
+	}
+	 /**
+     * 得到存款balance配置信息
+     *
+     * @return 存款配置信息
+	 * @throws Exception 
+     */
+	public String getWithdrawBalanceConfigValue() throws Exception{
+		String resource = "eifBalanceConfig.xml";
+        Reader reader = Resources.getResourceAsReader(resource);  
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
+        reader.close();  
+        SqlSession session = sqlSessionFactory.openSession();
+        try {
+        	EifBalanceOperation eifBalanceOperation=session.getMapper(EifBalanceOperation.class);
+        	String configValue=eifBalanceOperation.getBalanceConfigValue("withdraw");
+        	return configValue;
+        }
+        finally {
+            session.close();
+        }
+	}
+	 /**
+     * 更新存款最低限额
+     * @param lowerLimitAmount 最低限额
+	 * @throws Exception 
+     */
+	public void updateWithdrawLowerLimitAmount(double lowerLimitAmount) throws Exception{
+		String configValue=this.getWithdrawBalanceConfigValue();
+		JSONObject configValueJson=new JSONObject(configValue);
+		configValueJson.getJSONObject("amount").put("lowerLimitAmount", lowerLimitAmount);
+		this.updateWithdrawBalanceConfig(configValueJson.toString());
 	}
 }

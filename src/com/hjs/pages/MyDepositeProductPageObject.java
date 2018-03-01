@@ -55,6 +55,7 @@ public class MyDepositeProductPageObject extends CommonAppiumPage{
 	}
 	public boolean assertRedeemProduct(String productName) throws Exception{
 		this.filterRedeemProduct();		//筛选已回款产品
+		waitEleUnVisible(refreshViewLocator, 60);
 		String productXpath="//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_product' and @text='"+productName+"']";
 		super.scrollTo(productXpath);
 		AndroidElement productNameEle=driver.findElement(By.xpath("//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_product' and @text='"+productName+"']"));
@@ -73,6 +74,20 @@ public class MyDepositeProductPageObject extends CommonAppiumPage{
 		Assert.assertEquals(appProductRedeemTo, "至账户余额");
 		
 		return true;
+	}
+	public MyRedeemProductDetailPageObject enterRedeemProductDetail(String productName) throws Exception{
+		this.filterRedeemProduct();		//筛选已回款产品
+		waitEleUnVisible(refreshViewLocator, 60);
+		String productXpath="//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_product' and @text='"+productName+"']";
+		super.scrollTo(productXpath);
+		try{
+			AndroidElement productNameEle=driver.findElement(By.xpath("//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textView_product' and @text='"+productName+"']"));
+			productNameEle.click();
+		}
+		catch(Exception e){
+			Assert.assertTrue(false,"未找到\""+productName+"\"理财产品");
+		}
+		return new MyRedeemProductDetailPageObject(driver);
 	}
 	public boolean assertMyDepositeProduct(String productName) throws IOException, ParseException{
 		DBOperation db=new DBOperation();
@@ -206,13 +221,13 @@ public class MyDepositeProductPageObject extends CommonAppiumPage{
 		threadsleep(1000);
 		//clickPoint(54,283);// 点击可转让
 		clickEle(transferFilter,"可转让筛选项");
-		waitEleUnVisible(refreshViewLocator, 30);
+		waitEleUnVisible(refreshViewLocator, 60);
 		swipeToDown(1000,1);	//下滑刷新
-		waitEleUnVisible(refreshViewLocator, 30);
+		waitEleUnVisible(refreshViewLocator, 60);
 	}
 	public void filterRedeemProduct(){
 		clickEle(redeemFilter,"已回款筛选按钮");
-		waitEleUnVisible(refreshViewLocator, 30);
+		waitEleUnVisible(refreshViewLocator, 60);
 	}
 	public String getTransProductStatus(String productName){
 		this.filterTransProduct();

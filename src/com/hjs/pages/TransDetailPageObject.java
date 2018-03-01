@@ -3,6 +3,7 @@ package com.hjs.pages;
 import org.openqa.selenium.By;
 
 import com.hjs.config.CommonAppiumPage;
+import com.hjs.testDate.TransProductInfo;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
@@ -20,12 +21,15 @@ public class TransDetailPageObject extends CommonAppiumPage{
 	private AndroidElement applyTransBtn;		//申请转让按钮
 	@AndroidFindBy(id="dlg_msg_3pbtn_type2_1")
 	private AndroidElement mgsConfirmBtn;		//对话框确认按钮
+	@AndroidFindBy(id="tv_productName")
+	private AndroidElement productName;		//产品名称
 	
 	private By rateEditLocator=By.id("edit_rate");
 	public TransDetailPageObject(AndroidDriver<AndroidElement> driver) {
 		super(driver);
 	}
 	public TransConfirmPageObject applyTrans(){
+		TransProductInfo.setProductName(super.getEleText(productName, "产品名称"));
 		clickEle(applyTransBtn,"申请转让按钮");
 		clickEle(mgsConfirmBtn,"对话框确认按钮");
 		return new TransConfirmPageObject(driver);

@@ -28,7 +28,12 @@ public class HomePageObject extends CommonAppiumPage{
 	private AndroidElement discoverEntrance;		//首页-发现入口
 	@AndroidFindBy(id="button_home")
 	private AndroidElement homeEntrance;		//首页-首页入口
-	
+	@AndroidFindBy(id="checkbox_yes")
+	private AndroidElement faxYesCheckBox;		//税收确认框
+	@AndroidFindBy(id="checkbox_no")
+	private AndroidElement faxNoCheckBox;		//税收否认框
+	@AndroidFindBy(id="btn_confirm")
+	private AndroidElement confirmBtn;		//税收确认按钮
 	
 	
 	
@@ -36,9 +41,11 @@ public class HomePageObject extends CommonAppiumPage{
 	private By noRemindUpdateLocator=By.id("btn_remind_next");		//下次更新locator
 	private By personEnraceLocator=By.id("button_person");		//首页-我的入口locator
 	private By adCloseBtnLocator=By.id("icv_advertisement_close");		//我的入口广告关闭按钮locator
+	private By faxInfoTipsLocator=By.xpath("//android.widget.TextView[@text='纳税信息']");
 	public HomePageObject(AndroidDriver<AndroidElement> driver) {
 		super(driver);
 		this.noRemindUpdate();
+		this.checkFaxInfo();
 		this.closeAD();
 	}
 	public LoginPageObject clickLoginEntrance(){
@@ -63,6 +70,12 @@ public class HomePageObject extends CommonAppiumPage{
 			driver.findElement(noRemindUpdateLocator).click();
 		}
 	}
+	public void checkFaxInfo(){
+		if(isElementExsit(3,faxInfoTipsLocator)){
+			clickEle(faxYesCheckBox,"税收确认框");
+			clickEle(confirmBtn,"税收确认按钮");
+		}
+	}
 	public void closeAD(){
 		if (isElementExsit(2,adCloseBtnLocator)){
 			driver.findElement(adCloseBtnLocator).click();
@@ -80,6 +93,7 @@ public class HomePageObject extends CommonAppiumPage{
 		return new FinancialPageObject(driver);
 	}
 	public boolean verifyIsInHomePage(){
+		this.checkFaxInfo();
 		this.closeAD();
 		return isElementExsit(5,personEnraceLocator);
 	}

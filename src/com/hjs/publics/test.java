@@ -9,7 +9,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,6 +25,8 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 
 import com.hjs.Interface.GetOrderPushStatus;
@@ -40,10 +41,13 @@ import com.hjs.mybatis.inter.EifPayCoreOperation;
 public class test {
 	public static GetOrderPushStatus orderpushstatus = new GetOrderPushStatus();
 	public static void main(String[] args) throws Exception {
-		String a="2018-02-02";
-		long b=Util.dateToLong(a, "yyyy-MM-dd");
-		long c=Util.addDateByWorkDay(b,3);
-		System.out.println(Util.longToDate(c, "yyyy-MM-dd"));
+			DBOperation db=new DBOperation();
+			String a=db.getWithdrawBalanceConfigValue();
+			JSONObject configValueJson=new JSONObject(a);
+			configValueJson.getJSONObject("amount").put("lowerLimitAmount", 10.00);
+			db.updateWithdrawBalanceConfig(configValueJson.toString());
+			System.out.println(configValueJson.toString());
+
 	}
 	public static String getDecimalNumInString(String string) {
 		Pattern p=Pattern.compile("[^0-9-]");

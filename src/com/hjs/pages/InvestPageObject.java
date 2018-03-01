@@ -7,10 +7,13 @@ import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 
 import com.hjs.config.CommonAppiumPage;
+import com.hjs.testDate.TransRecordInfo.TransInfo;
 
 public class InvestPageObject extends CommonAppiumPage{
 	@AndroidFindBy(id="input")
 	private AndroidElement amountInput;		//金额输入框
+	@AndroidFindBy(id="product_name")
+	private AndroidElement productName;		//产品名称
 	@AndroidFindBy(id="subscribe_submit")
 	private AndroidElement submitBtn;		//提交按钮
 	@AndroidFindBy(xpath="//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/agreement']/preceding-sibling::android.widget.FrameLayout[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/subscribe_protocol_checkbox']/android.widget.ImageView[1]")

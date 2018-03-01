@@ -102,7 +102,7 @@ public class FinancialPageObject extends CommonAppiumPage{
 		product.creatProduct();
 		this.clickWenJian();	//点击稳健标签
 		waitEleUnVisible(refreshViewLocator, 30);
-		super.threadsleep(5000);  //等待job刷新app前端产品
+		super.threadsleep(60000);  //等待job刷新app前端产品
 		swipeToDown(1000,1);	//下滑刷新
 		waitEleUnVisible(refreshViewLocator, 30);
 		swipeToDown(1000,1);	//下滑刷新
