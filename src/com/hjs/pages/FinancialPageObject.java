@@ -18,6 +18,9 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 public class FinancialPageObject extends CommonAppiumPage{
 	@AndroidFindBy(id="image")
 	private AndroidElement bannerImage;		//banner图
+	@AndroidFindBy(id="top_seperate_block")
+	private AndroidElement seperateBlock;		//空隙条
+	
 	
 	private By titleSwitchLocator=By.id("title_switch");
 	private By refreshViewLocator=By.id("refresh_animationView");
@@ -103,9 +106,9 @@ public class FinancialPageObject extends CommonAppiumPage{
 		this.clickWenJian();	//点击稳健标签
 		waitEleUnVisible(refreshViewLocator, 30);
 		super.threadsleep(60000);  //等待job刷新app前端产品
-		swipeToDown(1000,1);	//下滑刷新
+		swipeToDown(seperateBlock,1000,1);	//从空隙条开始下滑刷新
 		waitEleUnVisible(refreshViewLocator, 30);
-		swipeToDown(1000,1);	//下滑刷新
+		swipeToDown(seperateBlock,1000,1);	//从空隙条开始下滑刷新
 		waitEleUnVisible(refreshViewLocator, 30);
 		threadsleep(5000);
 		String productXpath="//android.widget.TextView[@text='"+productName+"']";
@@ -146,11 +149,10 @@ public class FinancialPageObject extends CommonAppiumPage{
 		this.clickWenJian();	//点击稳健标签
 		waitEleUnVisible(refreshViewLocator, 30);
 		super.threadsleep(5000);  //等待job刷新app前端产品
-		swipeToDown(1000,1);	//下滑刷新
+		swipeToDown(seperateBlock,1000,1);	//从空隙条开始下滑刷新
 		waitEleUnVisible(refreshViewLocator, 30);
-		swipeToDown(1000,1);	//下滑刷新
+		swipeToDown(seperateBlock,1000,1);	//从空隙条开始下滑刷新
 		waitEleUnVisible(refreshViewLocator, 30);
-		threadsleep(5000);
 		String productXpath="//android.widget.TextView[@text='"+productName+"']";
 		super.scrollTo(productXpath);
 		AndroidElement baseProfitEle=driver.findElement(By.xpath("//android.widget.TextView[@text='"+productName+"']/ancestor::android.widget.LinearLayout[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/item_financial_home_privilege']//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/base_profit']"));
@@ -189,9 +191,9 @@ public class FinancialPageObject extends CommonAppiumPage{
 		this.clickWenJian();	//点击稳健标签
 		waitEleUnVisible(refreshViewLocator, 30);
 		super.threadsleep(5000);  //等待job刷新app前端产品
-		swipeToDown(1000,1);	//下滑刷新
+		swipeToDown(seperateBlock,1000,1);	//从空隙条开始下滑刷新
 		waitEleUnVisible(refreshViewLocator, 30);
-		swipeToDown(1000,1);	//下滑刷新
+		swipeToDown(seperateBlock,1000,1);	//从空隙条开始下滑刷新
 		waitEleUnVisible(refreshViewLocator, 30);
 		threadsleep(5000);
 		String productXpath="//android.widget.TextView[@text='"+productName+"']";
@@ -218,10 +220,12 @@ public class FinancialPageObject extends CommonAppiumPage{
 	public void productPullOffAndFindProduct(String productName) throws Exception{
 		InitProduct product = new InitProduct.Builder("").build();
 		product.productPullOffShelves(productName);
-		super.threadsleep(5000);  //等待job刷新app前端产品
-		swipeToDown(1000,1);	//下滑刷新
+		this.clickWenJian();	//点击稳健标签
 		waitEleUnVisible(refreshViewLocator, 30);
-		swipeToDown(1000,1);	//下滑刷新
+		super.threadsleep(5000);  //等待job刷新app前端产品
+		swipeToDown(seperateBlock,1000,1);	//从空隙条开始下滑刷新
+		waitEleUnVisible(refreshViewLocator, 30);
+		swipeToDown(seperateBlock,1000,1);	//从空隙条开始下滑刷新
 		waitEleUnVisible(refreshViewLocator, 30);
 		threadsleep(5000);
 		String productXpath="//android.widget.TextView[@text='"+productName+"']";
