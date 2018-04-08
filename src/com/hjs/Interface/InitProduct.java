@@ -350,6 +350,27 @@ public class InitProduct {
 		Assert.assertTrue(httpResult.equals(""),"创建产品出错，错误响应返回："+httpResult);
 	}
     /**
+     * 更新产品白名单
+     * @param whiteListGroupId  
+     * @param planId 
+     */
+	public void updateProductWhiteList(String productID,String whiteListGroupId) throws ParseException{
+		String url = ("http://172.16.57.62:48080/eif-omc-web/auth/login");
+		String params = "account=huangxiao&password=123456";
+		httpResult = orderpushstatus.sendx_www_form_urlencodedPost(url, params);//响应结果
+		httpStatusCode=orderpushstatus.getStatusCode();  //响应码
+		System.out.println(httpResult+"status:"+httpStatusCode);
+		Assert.assertFalse(httpResult.contains("用户名"), "登录失败,出现用户名密码输入框");
+		url = ("http://172.16.57.62:48080/eif-omc-web/unfix-product/current-prod/update");
+		params = "{\"currentProdInfo\":{\"id\":10000038,\"whiteListType\":\"2\",\"whiteListGroupId\":419}}";
+		JSONObject postJsonobj = new JSONObject(params);
+		postJsonobj.getJSONObject("currentProdInfo").put("id", productID);
+		postJsonobj.getJSONObject("currentProdInfo").put("whiteListGroupId", whiteListGroupId);
+		httpResult = orderpushstatus.sendJsonPost(url, postJsonobj.toString());
+		httpStatusCode = orderpushstatus.getStatusCode(); // 响应码
+		Assert.assertTrue(httpResult.equals(""),"更新产品出错，错误响应返回："+httpResult);
+	}
+    /**
      * 产品上架
      * @param productId  产品id
      */
