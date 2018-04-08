@@ -3,6 +3,8 @@ package com.hjs.pages;
 import org.openqa.selenium.By;
 
 import com.hjs.config.CommonAppiumPage;
+import com.hjs.publics.Util;
+import com.hjs.testDate.GroupBuyInfo;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
@@ -18,6 +20,11 @@ public class InvestGroupBuyPageObject extends CommonAppiumPage{
 	private AndroidElement amountInput;		//金额输入框
 	@AndroidFindBy(id="subscribe_submit")
 	private AndroidElement submitBtn;		//提交按钮
+	@AndroidFindBy(id="group_reward")
+	private AndroidElement groupReward;		//当前奖励
+	@AndroidFindBy(id="group_rate")
+	private AndroidElement lvupReward;		//升级奖励
+	
 	@AndroidFindBy(xpath="//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/agreement']/preceding-sibling::android.widget.FrameLayout[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/subscribe_protocol_checkbox']/android.widget.ImageView[1]")
 	private AndroidElement agreementCheckBox;		//协议确认框
 	private By amountInputLocator=By.id("input");
@@ -25,6 +32,12 @@ public class InvestGroupBuyPageObject extends CommonAppiumPage{
 		super(driver);
 	}
 	public PayPageObject InvestGroupBuy(String amount) throws Exception{
+		String currentReward=super.getEleText(groupReward, "当前奖励");
+		currentReward=Util.get2DecimalPointsNumInString(currentReward);
+		String lvlupReward=super.getEleText(lvupReward, "升级奖励");
+		lvlupReward=Util.get2DecimalPointsNumInString(lvlupReward);
+		GroupBuyInfo.setCurrentReward(currentReward);
+    	GroupBuyInfo.setLvupReward(lvlupReward);
 		clickEle(amountInput,"金额输入框");
 		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
 		if(!safeKeyBoard.verifySafeKeyBoardLocated()){
