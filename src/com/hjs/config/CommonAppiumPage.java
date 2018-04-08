@@ -460,7 +460,21 @@ public class CommonAppiumPage{
     	}
         // wait for page loading
     }
-
+    /**
+     * This Method for swipe down
+     */
+    public void swipeToDown(AndroidElement startElement,int during,int times) {
+        int width = driver.manage().window().getSize().width;
+        int height = driver.manage().window().getSize().height;
+        Point startElementPoint=this.getNativeEleCenterPoint(startElement);
+    	for(int i=1;i<=times;i++)
+    	{
+    		new TouchAction(driver).press(startElementPoint.getX(),startElementPoint.getY()).waitAction(Duration.ofMillis(during)).moveTo(width / 2,height * 3 / 4).release().perform();
+        //driver.swipe(width / 2, height / 4, width / 2, height * 3 / 4, during);
+        threadsleep(1000);
+    	}
+        // wait for page loading
+    }
     /**
      * This Method for swipe Left
      */
