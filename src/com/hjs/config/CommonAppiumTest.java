@@ -13,6 +13,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -48,6 +50,9 @@ public class CommonAppiumTest {
     public void setUp(String udid,boolean isDebug) throws Exception {
     	if(isDebug){}
     	else {
+    		ChromeBrowser cb = new ChromeBrowser();  
+            Thread t = new Thread(cb);  
+            t.start();  	//新启浏览器，保证外网可用，认证域账号ssl
     		boolean jenkinsBuildResult=JenkinsJob.buildAndroidApp();	//触发构建安卓app，上个包为Debug，TEST环境版本，未超过一天，不触发
     		if(jenkinsBuildResult) downLoadFromUrl("http://172.16.59.251:8088/app-default_channel.apk", "app2.4.apk"); //拉取最新包
     	}
@@ -111,7 +116,7 @@ public class CommonAppiumTest {
         if (!result.isSuccess())
             catchExceptions(result);
     }
-
+    
     public void catchExceptions(ITestResult result) {
         System.out.println("result" + result);
         String methodName = result.getName();
