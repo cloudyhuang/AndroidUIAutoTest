@@ -308,6 +308,30 @@ public class DBOperation {
         }
 	}
 	 /**
+     * 通过产品名称获取活期产品ID
+     *
+     * @param productName  活期产品名称
+     * @return 活期产品ID
+     */
+	public String getCurrentProductId(String productName) throws IOException{
+		String resource = "eifFisConfig.xml";
+        Reader reader = Resources.getResourceAsReader(resource);  
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
+        reader.close();  
+        SqlSession session = sqlSessionFactory.openSession();
+        try {
+        	EifFisOperation eifFisOperation=session.getMapper(EifFisOperation.class);
+        	FisCurrentProdInfo fisCurrentProdInfo=eifFisOperation.getFisCurrentProdInfo(productName);
+        	if(fisCurrentProdInfo==null){
+        		return null;
+        	}
+        	return fisCurrentProdInfo.getId();
+        }
+        finally {
+            session.close();
+        }
+	}
+	 /**
      * 通过手机号获取最近交易号
      *
      * @param phoneNum  手机号
@@ -378,6 +402,27 @@ public class DBOperation {
             session.close();
         }
 	}
+	/**
+     * 得到优惠券规则
+     *
+     * @return 优惠券规则
+	 * @throws Exception 
+     */
+	public MarketCouponRule getCouponRule(String couponId) throws Exception{
+		String resource = "eifMarketConfig.xml";
+        Reader reader = Resources.getResourceAsReader(resource);  
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
+        reader.close();  
+        SqlSession session = sqlSessionFactory.openSession();
+        try {
+        	EifMarketOperation eifMarketOperation=session.getMapper(EifMarketOperation.class);
+        	MarketCouponRule couponRule=eifMarketOperation.getMarketCouponRule(couponId);
+        	return couponRule;
+        }
+        finally {
+            session.close();
+        }
+	}
 	 /**
      * 更新存款最低限额
      * @param lowerLimitAmount 最低限额
@@ -387,6 +432,6 @@ public class DBOperation {
 		String configValue=this.getWithdrawBalanceConfigValue();
 		JSONObject configValueJson=new JSONObject(configValue);
 		configValueJson.getJSONObject("amount").put("lowerLimitAmount", lowerLimitAmount);
-		this.updateWithdrawBalanceConfig(configValueJson.toString());
+		//this.updateWithdrawBalanceConfig(configValueJson.toString());
 	}
 }
