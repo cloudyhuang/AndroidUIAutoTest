@@ -1,4 +1,7 @@
 package com.hjs.testDate;
+
+import com.hjs.publics.Util;
+
 /**
 * @author huangxiao
 * @version 创建时间：2017年9月12日 上午11:32:22
@@ -11,6 +14,13 @@ public class GroupBuyInfo {
 	private static double groupBuyedAmountm=0;
 	private static String currentReward;
 	private static String lvupReward;
+	private static String investDate;
+	public static String getInvestDate() {
+		return investDate;
+	}
+	public static void setInvestDate() {
+		GroupBuyInfo.investDate = Util.getUserDate("yyyy-MM-dd");
+	}
 	public static String getGroupBuyName() {
 		return groupBuyName;
 	}
