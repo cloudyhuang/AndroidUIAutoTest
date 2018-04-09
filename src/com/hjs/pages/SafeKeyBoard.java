@@ -95,6 +95,13 @@ public class SafeKeyBoard extends CommonAppiumPage{
 	public void pressFinishBtn(){
 		clickEle(finishBtn,"安全键盘完成按钮");
 	}
+
+	public void pressBackSpace(int times) {
+		for (int i = 0; i < times; i++) {
+			clickNativeElePoint(backSpace, "退格键");
+		}
+
+	}
 	
 	public boolean verifySafeKeyBoardLocated(){
 		return isElementExsit(15,finishBtnLocator);
