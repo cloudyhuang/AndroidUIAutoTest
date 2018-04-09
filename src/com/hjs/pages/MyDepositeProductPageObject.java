@@ -221,9 +221,9 @@ public class MyDepositeProductPageObject extends CommonAppiumPage{
 		threadsleep(1000);
 		//clickPoint(54,283);// 点击可转让
 		clickEle(transferFilter,"可转让筛选项");
-		waitEleUnVisible(refreshViewLocator, 60);
+		waitEleUnVisible(refreshViewLocator, 120);
 		swipeToDown(1000,1);	//下滑刷新
-		waitEleUnVisible(refreshViewLocator, 60);
+		waitEleUnVisible(refreshViewLocator, 120);
 	}
 	public void filterRedeemProduct(){
 		clickEle(redeemFilter,"已回款筛选按钮");
@@ -302,7 +302,7 @@ public class MyDepositeProductPageObject extends CommonAppiumPage{
 	    }
 	}
 	public boolean verifyInthisPage(){
-		waitEleUnVisible(refreshViewLocator, 60);
+		waitEleUnVisible(refreshViewLocator, 120);
 		return isElementExsit(productNameLocator);
 	}
 }
