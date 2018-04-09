@@ -9,9 +9,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,14 +27,18 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 
+import com.github.ltsopensource.core.domain.Job;
+import com.github.ltsopensource.jobclient.JobClient;
+import com.github.ltsopensource.jobclient.RetryJobClient;
+import com.github.ltsopensource.jobclient.domain.Response;
 import com.hjs.Interface.GetOrderPushStatus;
+import com.hjs.config.ChromeBrowser;
 import com.hjs.db.BankProvider;
 import com.hjs.db.DBOperation;
 import com.hjs.db.FisProdInfo;
+import com.hjs.db.MarketCouponRule;
 import com.hjs.db.MarketGrouponTask;
 import com.hjs.mybatis.inter.EifFisOperation;
 import com.hjs.mybatis.inter.EifMarketOperation;
@@ -41,13 +47,69 @@ import com.hjs.mybatis.inter.EifPayCoreOperation;
 public class test {
 	public static GetOrderPushStatus orderpushstatus = new GetOrderPushStatus();
 	public static void main(String[] args) throws Exception {
-			DBOperation db=new DBOperation();
-			String a=db.getWithdrawBalanceConfigValue();
-			JSONObject configValueJson=new JSONObject(a);
-			configValueJson.getJSONObject("amount").put("lowerLimitAmount", 10.00);
-			db.updateWithdrawBalanceConfig(configValueJson.toString());
-			System.out.println(configValueJson.toString());
-
+		ChromeBrowser cb = new ChromeBrowser();  
+        Thread t = new Thread(cb);  
+        t.start();  	//新启浏览器，保证外网可用，认证域账号ssl
+	}
+	public static String analyzeCouponRule(String couponId,String payAmount) throws Exception{
+		double doublePayAmount=Util.stringToDouble(payAmount);
+		DBOperation db=new DBOperation();
+		MarketCouponRule couponRule=db.getCouponRule(couponId);
+		if(couponRule.getRule_type().equals("4")){
+			return payAmount;
+		}
+		else if(couponRule.getRule_type().equals("2")){
+			double satisfiedAmount=Util.stringToDouble(couponRule.getSatisfied_amount());
+			double discountAmount=Util.stringToDouble(couponRule.getDiscount_amount());
+			if(doublePayAmount>=satisfiedAmount){
+				return Util.doubleTransToString(doublePayAmount-discountAmount);
+			}
+			else {
+				return payAmount;
+			}
+		}
+		else return payAmount;
+		
+	}
+	public static void runInceptionDateJob(String jobDate){
+		JobClient jobClient = new RetryJobClient();
+		jobClient.setNodeGroup("AndroidAutoTest");
+		jobClient.setClusterName("hdfax_cluster");
+		jobClient.setRegistryAddress("zookeeper://172.16.57.14:42181");
+		jobClient.start();
+		String userDate=Util.getUserDate("yyyyMMddHHmmss");
+		// 提交任务
+		Job job = new Job();
+		job.setTaskId("AndroidAutoTest"+userDate);
+		job.setParam("jobDate", jobDate);
+		job.setParam("type", "PRODUCT_ESTABLISH");
+		job.setParam("prodType", "1");
+		job.setTaskTrackerNodeGroup("ftc_task_tracker");
+		// job.setCronExpression("0 0/1 * * * ?");  // 支持 cronExpression表达式
+		// job.setTriggerTime(new Date()); // 支持指定时间执行
+		Response response = jobClient.submitJob(job);
+		jobClient.stop();
+	}
+    /**
+     * 更新产品白名单
+     * @param whiteListGroupId  
+     * @param planId 
+     */
+	public static void updateProductWhiteList(String productID,String whiteListGroupId) throws ParseException{
+		String url = ("http://172.16.57.62:48080/eif-omc-web/auth/login");
+		String params = "account=huangxiao&password=123456";
+		String httpResult = orderpushstatus.sendx_www_form_urlencodedPost(url, params);//响应结果
+		int httpStatusCode=orderpushstatus.getStatusCode();  //响应码
+		System.out.println(httpResult+"status:"+httpStatusCode);
+		Assert.assertFalse(httpResult.contains("用户名"), "登录失败,出现用户名密码输入框");
+		url = ("http://172.16.57.62:48080/eif-omc-web/unfix-product/current-prod/update");
+		params = "{\"currentProdInfo\":{\"id\":10000038,\"whiteListType\":\"2\",\"whiteListGroupId\":419}}";
+		JSONObject postJsonobj = new JSONObject(params);
+		postJsonobj.getJSONObject("currentProdInfo").put("id", productID);
+		postJsonobj.getJSONObject("currentProdInfo").put("whiteListGroupId", whiteListGroupId);
+		httpResult = orderpushstatus.sendJsonPost(url, postJsonobj.toString());
+		httpStatusCode = orderpushstatus.getStatusCode(); // 响应码
+		Assert.assertTrue(httpResult.equals(""),"更新产品出错，错误响应返回："+httpResult);
 	}
 	public static String getDecimalNumInString(String string) {
 		Pattern p=Pattern.compile("[^0-9-]");

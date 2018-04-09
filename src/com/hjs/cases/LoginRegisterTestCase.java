@@ -48,6 +48,9 @@ import com.hjs.testDate.Account;
 */
 public class LoginRegisterTestCase extends CommonAppiumTest{
 	private static String FUND_PRODUCT_NAME="国寿安保增金宝货币";
+	private static String phoneNum1="18032223191";
+	private static String loginPwd1="Hd888888";
+	private static String bankCardPwd1="123456";
 	@Test(priority = 1,description="跳过欢迎页到主页")
 	public void testWelcomePage() throws InterruptedException{
 		WelcomePageObject welcomePageObject=new WelcomePageObject(driver); 
@@ -106,10 +109,9 @@ public class LoginRegisterTestCase extends CommonAppiumTest{
     	CommonAppiumPage page=homepage.enterPersonEntrace();
     	String pageName=page.getClass().getName();
     	Assert.assertTrue(pageName.contains("LoginPageObject"), "点击首页-我的入口未跳转到登录页");
-    	String phoneNum="17052411184";
     	String wrongPwd="888888";	//错误密码
     	LoginPageObject loginPage=(LoginPageObject)page;
-    	String verifyPhoneNumResultPageName=loginPage.verifyPhoneNum(phoneNum).getClass().getName(); //com.hjs.pages.LoginPageObject
+    	String verifyPhoneNumResultPageName=loginPage.verifyPhoneNum(phoneNum1).getClass().getName(); //com.hjs.pages.LoginPageObject
     	Assert.assertTrue(verifyPhoneNumResultPageName.contains("LoginPageObject"), "登录账户手机号验证后未进入输入密码页面！");
     	loginPage=loginPage.wrongPwdLoginAndSwitchAccount(wrongPwd);
     	Assert.assertTrue(loginPage.verifyInFirstLoginPage(),"连续密码输错后切换账号未跳转到登录页");
@@ -121,19 +123,18 @@ public class LoginRegisterTestCase extends CommonAppiumTest{
     	CommonAppiumPage page=homepage.enterPersonEntrace();
     	String pageName=page.getClass().getName();
     	Assert.assertTrue(pageName.contains("LoginPageObject"), "点击首页-我的入口未跳转到登录页");
-    	String phoneNum="17052411184";
     	String wrongPwd="888888";	//错误密码
-    	String truePwd="hxnearc228";
+    	//String truePwd="hxnearc228";
     	LoginPageObject loginPage=(LoginPageObject)page;
-    	String verifyPhoneNumResultPageName=loginPage.verifyPhoneNum(phoneNum).getClass().getName(); //com.hjs.pages.LoginPageObject
+    	String verifyPhoneNumResultPageName=loginPage.verifyPhoneNum(phoneNum1).getClass().getName(); //com.hjs.pages.LoginPageObject
     	Assert.assertTrue(verifyPhoneNumResultPageName.contains("LoginPageObject"), "登录账户手机号验证后未进入输入密码页面！");
     	FindPwdVerifyPhonePageObject findPwdVerifyPhonePage=loginPage.wrongPwdLoginAndFindPwd(wrongPwd);
     	Assert.assertTrue(findPwdVerifyPhonePage.verifyInthisPage(),"连续密码输错后找回密码未跳转到找回密码页");
-    	FindPwdVerifyRealNamePageObject findPwdVerifyRealNamePage=findPwdVerifyPhonePage.verifyPhone(phoneNum);
+    	FindPwdVerifyRealNamePageObject findPwdVerifyRealNamePage=findPwdVerifyPhonePage.verifyPhone(phoneNum1);
     	Assert.assertTrue(findPwdVerifyRealNamePage.verifyInthisPage(),"验证手机号后未跳转到验证实名信息页面");
     	FindPwdResetLoginPwdPageObject findPwdResetLoginPwdPage=findPwdVerifyRealNamePage.verifyRealName();
     	Assert.assertTrue(findPwdResetLoginPwdPage.verifyInthisPage(),"实名后未进入新密码设置页面");
-    	loginPage=findPwdResetLoginPwdPage.resetNewLoginPwd(truePwd);
+    	loginPage=findPwdResetLoginPwdPage.resetNewLoginPwd(loginPwd1);
     	
 	}
 	@Test(description = "登录",priority = 5)
@@ -145,12 +146,11 @@ public class LoginRegisterTestCase extends CommonAppiumTest{
     	Reporter.log("进入首页-我的入口");
     	Assert.assertTrue(pageName.contains("LoginPageObject"), "点击首页-我的入口未跳转到登录页");
     	Reporter.log("未登录-跳转到登录页");
-    	String phoneNum="17052411184";
-    	String password="hxnearc228";
+    	//String password="hxnearc228";
     	LoginPageObject loginPageObject=(LoginPageObject)page;
-    	String verifyPhoneNumResultPageName=loginPageObject.verifyPhoneNum(phoneNum).getClass().getName(); //com.hjs.pages.LoginPageObject
+    	String verifyPhoneNumResultPageName=loginPageObject.verifyPhoneNum(phoneNum1).getClass().getName(); //com.hjs.pages.LoginPageObject
     	Assert.assertTrue(verifyPhoneNumResultPageName.contains("LoginPageObject"), "登录账户手机号验证后未进入输入密码页面！");
-    	GesturePwd gesturePwd=loginPageObject.login(password);
+    	GesturePwd gesturePwd=loginPageObject.login(loginPwd1);
     	Assert.assertTrue(gesturePwd.verifyInthisPage(),"登录后未跳转到手势密码页");
     	String loginResult=gesturePwd.verifyGestureTips();
     	Assert.assertEquals("请绘制您的手势密码", loginResult);
@@ -180,11 +180,10 @@ public class LoginRegisterTestCase extends CommonAppiumTest{
     	Assert.assertTrue(gesturePwd.verifyInthisPage(), "当前未在手势密码页面");
     	loginPage=gesturePwd.switchUser();
     	Assert.assertTrue(loginPage.verifyInFirstLoginPage(), "手势密码点击其他账号登录未进入登录页面");
-    	String phoneNum="17052411184";
-    	String password="hxnearc228";
-    	String verifyPhoneNumResultPageName=loginPage.verifyPhoneNum(phoneNum).getClass().getName(); //com.hjs.pages.LoginPageObject
+    	//String password="hxnearc228";
+    	String verifyPhoneNumResultPageName=loginPage.verifyPhoneNum(phoneNum1).getClass().getName(); //com.hjs.pages.LoginPageObject
     	Assert.assertTrue(verifyPhoneNumResultPageName.contains("LoginPageObject"), "登录账户手机号验证后未进入输入密码页面！");
-    	loginPage.login(password);
+    	loginPage.login(loginPwd1);
     	Assert.assertTrue(homePage.verifyIsInHomePage(), "登录后未进入主页");
     }
     @Test(priority = 8,description="手势密码页忘记密码重设手密")
@@ -194,8 +193,8 @@ public class LoginRegisterTestCase extends CommonAppiumTest{
     	Assert.assertTrue(gesturePwd.verifyInthisPage(), "当前未在手势密码页面");
     	LoginPageObject loginPage=gesturePwd.forgotPwd();
     	Assert.assertTrue(loginPage.verifyInthisPage(), "手势密码点击忘记密码未进入登录页面");
-    	String password="hxnearc228";
-    	gesturePwd=loginPage.login(password);
+    	//String password="hxnearc228";
+    	gesturePwd=loginPage.login(loginPwd1);
     	Assert.assertTrue(gesturePwd.verifyInthisPage(),"登录后未跳转到手势密码页");
     	String loginResult=gesturePwd.verifyGestureTips();
     	Assert.assertEquals("请绘制您的手势密码", loginResult);
@@ -218,18 +217,17 @@ public class LoginRegisterTestCase extends CommonAppiumTest{
     	Assert.assertTrue(pwdSettingPage.verifyInthisPage(), "点击密码管理未进入密码设置页");
     	LoginPwdResetPageObject loginPwdResetPage=pwdSettingPage.gotoLoginPwdPage();
     	Assert.assertTrue(loginPwdResetPage.verifyInthisPage(), "点击重设登录密码未进入设置登录密码页");
-    	String phoneNum="17052411184";
     	String wrongLoginPwd="123456";
-    	String truePwd="hxnearc228";
+    	//String truePwd="hxnearc228";
     	FindPwdVerifyPhonePageObject findPwdVerifyPhonePage=loginPwdResetPage.resetLoginPwdByWrongLoginPwd(wrongLoginPwd);
     	Assert.assertTrue(findPwdVerifyPhonePage.verifyInthisPage(),"连续密码输错后找回密码未跳转到找回密码页");
-    	FindPwdVerifyRealNamePageObject findPwdVerifyRealNamePage=findPwdVerifyPhonePage.verifyPhone(phoneNum);
+    	FindPwdVerifyRealNamePageObject findPwdVerifyRealNamePage=findPwdVerifyPhonePage.verifyPhone(phoneNum1);
     	Assert.assertTrue(findPwdVerifyRealNamePage.verifyInthisPage(),"验证手机号后未跳转到验证实名信息页面");
     	FindPwdResetLoginPwdPageObject findPwdResetLoginPwdPage=findPwdVerifyRealNamePage.verifyRealName();
     	Assert.assertTrue(findPwdResetLoginPwdPage.verifyInthisPage(),"实名后未进入新密码设置页面");
-    	LoginPageObject loginPage=findPwdResetLoginPwdPage.resetNewLoginPwd(truePwd);
+    	LoginPageObject loginPage=findPwdResetLoginPwdPage.resetNewLoginPwd(loginPwd1);
     	Assert.assertTrue(loginPage.verifyInthisPage(),"重设新密码后未跳转到登录页面");
-    	loginPage.login(truePwd);
+    	loginPage.login(loginPwd1);
     	Assert.assertTrue(homepage.verifyIsInHomePage(),"登录后未跳转到首页");
     }
     @Test(priority = 10,description="关闭打开手密开关")
@@ -243,9 +241,9 @@ public class LoginRegisterTestCase extends CommonAppiumTest{
     	Assert.assertTrue(personSettingPage.verifyInthisPage(), "进入我的个人头像，未进入设置页");
     	PwdSettingPageObject pwdSettingPage=personSettingPage.gotoPwdResetPage();
     	Assert.assertTrue(pwdSettingPage.verifyInthisPage(), "点击密码管理未进入密码设置页");
-    	String loginPwd="hxnearc228";
-    	pwdSettingPage.closeGestureSwitch(loginPwd);
-    	GesturePwd gesturePwd=pwdSettingPage.openGestureSwitch(loginPwd);
+    	//String loginPwd="hxnearc228";
+    	pwdSettingPage.closeGestureSwitch(loginPwd1);
+    	GesturePwd gesturePwd=pwdSettingPage.openGestureSwitch(loginPwd1);
     	String result=gesturePwd.setFirstGesturePwd(1,4,7,8);
     	Assert.assertEquals("请再画一次手势密码", result);
     	gesturePwd.setNextGesturePwd(1,4,7,8);
@@ -258,8 +256,8 @@ public class LoginRegisterTestCase extends CommonAppiumTest{
     	Assert.assertTrue(gesturePwd.verifyInthisPage(), "当前未在手势密码页面");
     	LoginPageObject loginPage=gesturePwd.inputWrongGesturePwd(1,2,3,4);
     	Assert.assertTrue(loginPage.verifyInthisPage(), "多次手密输入错误点击重新登录未进入登录页面");
-    	String loginPwd="hxnearc228";
-    	gesturePwd=loginPage.login(loginPwd);
+    	//String loginPwd="hxnearc228";
+    	gesturePwd=loginPage.login(loginPwd1);
     	Assert.assertTrue(gesturePwd.verifyInthisPage(), "重新登录后未进入重设手密页面");
     	String result=gesturePwd.setFirstGesturePwd(1,4,7,8);
     	Assert.assertEquals("请再画一次手势密码", result);
@@ -273,8 +271,7 @@ public class LoginRegisterTestCase extends CommonAppiumTest{
     	Assert.assertTrue(gesturePwd.verifyInthisPage(), "当前未在手势密码页面");
     	LoginPageObject loginPage=gesturePwd.switchUser();
     	Assert.assertTrue(loginPage.verifyInFirstLoginPage(), "手势密码点击其他账号登录未进入登录页面");
-    	String phoneNum="17052411184";
-    	loginPage.verifyPhoneNumByWrongCaptcha(phoneNum); //验证toast需要uiautomator2支持
+    	loginPage.verifyPhoneNumByWrongCaptcha(phoneNum1); //验证toast需要uiautomator2支持
 	}
     @Test(description = "登录页忘记密码",priority = 13)
 	public void testLoginPageForgotPwd() throws Exception{
@@ -283,18 +280,17 @@ public class LoginRegisterTestCase extends CommonAppiumTest{
     	Assert.assertTrue(gesturePwd.verifyInthisPage(), "当前未在手势密码页面");
     	LoginPageObject loginPage=gesturePwd.switchUser();
     	Assert.assertTrue(loginPage.verifyInFirstLoginPage(), "手势密码页-点击其他账号登录未进入->登录页面");
-    	String phoneNum="17052411184";
-    	String truePwd="hxnearc228";
-    	CommonAppiumPage page=loginPage.verifyPhoneNum(phoneNum);
+    	//String truePwd="hxnearc228";
+    	CommonAppiumPage page=loginPage.verifyPhoneNum(phoneNum1);
     	String verifyPhoneNumResultPageName=page.getClass().getName(); 
     	Assert.assertTrue(verifyPhoneNumResultPageName.contains("LoginPageObject"), "登录页-验证手机号后未进入->输入密码页面！");
     	FindPwdVerifyPhonePageObject findPwdVerifyPhonePage=loginPage.forgotPwd();
     	Assert.assertTrue(findPwdVerifyPhonePage.verifyInthisPage(),"登录页-点击忘记密码未进入->重设登录密码页");
-    	FindPwdVerifyRealNamePageObject findPwdVerifyRealNamePage=findPwdVerifyPhonePage.verifyPhone(phoneNum);
+    	FindPwdVerifyRealNamePageObject findPwdVerifyRealNamePage=findPwdVerifyPhonePage.verifyPhone(phoneNum1);
     	Assert.assertTrue(findPwdVerifyRealNamePage.verifyInthisPage(),"重设密码-验证手机号后未跳转到->重设密码-验证实名信息页面");
     	FindPwdResetLoginPwdPageObject findPwdResetLoginPwdPage=findPwdVerifyRealNamePage.verifyRealName();
     	Assert.assertTrue(findPwdResetLoginPwdPage.verifyInthisPage(),"实名后未进入新密码设置页面");
-    	findPwdResetLoginPwdPage.resetNewLoginPwd(truePwd);
+    	findPwdResetLoginPwdPage.resetNewLoginPwd(loginPwd1);
     	Assert.assertTrue(gesturePwd.verifyInthisPage(),"重设新密码后未跳转到手势密码页");
     	gesturePwd.inputGesturePwd(1,4,7,8);
     	Assert.assertTrue(new HomePageObject(driver).verifyIsInHomePage(),"输入手密后未跳转到首页");
@@ -336,8 +332,8 @@ public class LoginRegisterTestCase extends CommonAppiumTest{
     	Assert.assertTrue(personSettingPage.verifyInthisPage(), "进入我的个人头像，未进入设置页");
     	PwdSettingPageObject pwdSettingPage=personSettingPage.gotoPwdResetPage();
     	Assert.assertTrue(pwdSettingPage.verifyInthisPage(), "点击密码管理未进入密码设置页");
-    	String loginPwd="hxnearc228";
-    	pwdSettingPage.closeGestureSwitch(loginPwd);
+    	//String loginPwd="hxnearc228";
+    	pwdSettingPage.closeGestureSwitch(loginPwd1);
     	DebugPageObject debugPage=pwdSettingPage.gotoDebugPage();
     	Assert.assertTrue(debugPage.verifyInthisPage(),"长按音量键并点击元素未进入debug页面");
     	DebugSettingPageObject debugSettingPage=debugPage.gotoDebugSettingPage();
@@ -349,7 +345,7 @@ public class LoginRegisterTestCase extends CommonAppiumTest{
     	Assert.assertTrue(homepage.verifyIsInHomePage(),timeOutSeconds+"秒后未回到主页");
     	LoginPageObject loginPage=homepage.clickLoginEntrance();
     	Assert.assertTrue(loginPage.verifyInthisPage(), "点击首页-登录入口未跳转到登录密码输入页");
-    	gesturePwd=loginPage.login(loginPwd);
+    	gesturePwd=loginPage.login(loginPwd1);
     	Assert.assertTrue(gesturePwd.verifyInthisPage(), "登录后未出现手密设置页");
     	String result=gesturePwd.setFirstGesturePwd(1,4,7,8);
     	Assert.assertEquals("请再画一次手势密码", result);
@@ -379,8 +375,8 @@ public class LoginRegisterTestCase extends CommonAppiumTest{
        	Assert.assertTrue(gesturePwd.verifyInthisPage(),"设置debug setting后未回到手势密码页");
        	LoginPageObject loginPage=gesturePwd.waitforGstExperied(duration, 1,4,7,8);
        	Assert.assertTrue(loginPage.verifyInthisPage(),"失效手密重登后未进入登录页面");
-       	String pwd="hxnearc228";
-       	gesturePwd=loginPage.login(pwd);
+       	//String pwd="hxnearc228";
+       	gesturePwd=loginPage.login(loginPwd1);
        	Assert.assertTrue(gesturePwd.verifyInthisPage(),"手密失效重新登录后未进入手势密码输入页面");
        	String result=gesturePwd.setFirstGesturePwd(1,4,7,8);
     	Assert.assertEquals("请再画一次手势密码", result);

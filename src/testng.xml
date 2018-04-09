@@ -19,8 +19,10 @@
 		<classes>
 			<class name="com.hjs.cases.TradeTestCase">
 				<methods>
-				<include name="testPayRegularProductsByBankCardWithoutCoupon" />  
-				<include name="testTransRecorder" />
+				    
+				<include name="testInvestPage" />   
+				
+				
 					
 				</methods>
 			</class>
