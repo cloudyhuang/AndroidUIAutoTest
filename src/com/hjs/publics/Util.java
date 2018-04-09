@@ -151,11 +151,10 @@ public class Util {
 		return date.getTime();
 	}
 	/**
-	   * 根据用户传入的时间,和对应时间格式，转换为相应时间戳
+	   * 计算两个日期之间间距
 	   *
-	   * @param time 时间
-	   * @param sformat yyyyMMddhhmmss
-	   * @return
+	   * @param str1，str2 2个日期
+	   * @return long 间距秒数
 	   */
 	public static long getDistanceTime(String str1,String str2) throws ParseException {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
@@ -263,10 +262,24 @@ public class Util {
 		}
 		return String.valueOf(num);
 	}
+	 /**
+	   * double转String
+	   *
+	   * @param double num
+	   * @return 字符串
+	   */
+	public static String doubleToString(double num) {
+		return String.valueOf(num);
+	}
 	public static double stringToDouble(String string) {
 		return Double.parseDouble(string);
 	}
-
+	 /**
+	   * 比较两个集合是否相等
+	   *
+	   * @param List a  List b
+	   * @return boolean
+	   */
 	public static <T extends Comparable<T>> boolean compare(List<T> a, List<T> b) {
 		if (a.size() != b.size())
 			return false;
