@@ -42,6 +42,10 @@ public class MinePageObject extends CommonAppiumPage{
 	private AndroidElement fundValue;		//基金数值
 	@AndroidFindBy(xpath="//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/tv_item_title' and @text='交易记录']")
 	private AndroidElement transactionRecord;		//交易记录
+	@AndroidFindBy(xpath="//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/tv_item_title' and @text='在线客服']")
+	private AndroidElement onlineCustomerService;		//在线客服
+	@AndroidFindBy(id="tv_group_purchase_title")
+	private AndroidElement myGroupBuy;		//我的团购
 	
 	private By personImageLocator=By.id("imageView_person");	//个人头像Locator
 	private By adCloseBtnLocator=By.id("icv_advertisement_close");		//广告关闭按钮locator
@@ -117,11 +121,11 @@ public class MinePageObject extends CommonAppiumPage{
 		}
 		double doubleMyDepositeProductValueStr=Util.stringToDouble(Util.get2DecimalPointsNumInString(myDepositeProductValueStr));
 		double doubleFundValueStr=0;
-		if(fundValueStr.equals("申购费率低 全场4折")){
+		if(fundValueStr.equals("申购费率低 全场4折")||fundValueStr.equals("申购费率低哦")){
 			doubleFundValueStr=0;
 		}
 		else{
-			doubleFundValueStr=Util.stringToDouble(Util.get2DecimalPointsNumInString(hengCunJinValueStr));
+			doubleFundValueStr=Util.stringToDouble(Util.get2DecimalPointsNumInString(fundValueStr));
 		}
 		double doubleTotalAssetsStr=Util.stringToDouble(Util.get2DecimalPointsNumInString(totalAssetsStr));
 		double expectTotalAssets=Arith.add(Arith.add(Arith.add(doubleAccountBanlanceValueStr, doubleHengCunJinValueStr),doubleMyDepositeProductValueStr),doubleFundValueStr);
@@ -149,6 +153,8 @@ public class MinePageObject extends CommonAppiumPage{
 			Assert.assertEquals(myDepositeProductValueStr, "****");
 			String fundValueStr=super.getEleText(fundValue, "基金数值");
 			if(fundValueStr.equals("申购费率低 全场4折")){
+			}
+			else if(fundValueStr.equals("申购费率低哦")){
 			}
 			else{
 				Assert.assertEquals(fundValueStr, "****");
@@ -184,6 +190,8 @@ public class MinePageObject extends CommonAppiumPage{
 			String fundValueStr=super.getEleText(fundValue, "基金数值");
 			if(fundValueStr.equals("申购费率低 全场4折")){
 			}
+			else if(fundValueStr.equals("申购费率低哦")){
+			}
 			else{
 				Assert.assertTrue(fundValueStr.matches(patt), "基金数值打开掩码后未显示为千分位小数");
 			}
@@ -207,6 +215,15 @@ public class MinePageObject extends CommonAppiumPage{
 		clickEle(accountBanlance,"账户余额入口");
 		return new AccountBanlancePageObject(driver);
 	}
+	public MyGroupBuyPageObject enterMyGroupBuyPage(){
+		clickEle(myGroupBuy,"我的团购入口");
+		return new MyGroupBuyPageObject(driver);
+	}
+	public OnlineCustomerPageObject enterOnlineCustomerService(){
+		clickEle(onlineCustomerService,"在线客服入口");
+		return new OnlineCustomerPageObject(driver);
+	}
+	
 	public boolean verifyInthisPage(){
 		return isElementExsit(personImageLocator);
 	}
