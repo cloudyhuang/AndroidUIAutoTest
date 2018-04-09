@@ -12,24 +12,22 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.AndroidElement;
-import io.appium.java_client.pagefactory.AndroidFindBy;
-
 import com.hjs.Interface.Common;
 import com.hjs.Interface.GetOrderPushStatus;
 import com.hjs.config.CommonAppiumPage;
 import com.hjs.db.ActivityCoupon;
-import com.hjs.db.BankProvider;
 import com.hjs.db.DBOperation;
+import com.hjs.db.MarketCouponRule;
 import com.hjs.db.Member;
 import com.hjs.db.SmsVerifyCode;
 import com.hjs.mybatis.inter.EifMarketOperation;
 import com.hjs.mybatis.inter.EifMemberOperation;
-import com.hjs.mybatis.inter.EifPayCoreOperation;
 import com.hjs.mybatis.inter.SmsVerifyCodeOperation;
 import com.hjs.publics.Util;
-import com.hjs.testDate.TransRecordInfo.TransInfo;
+
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.AndroidElement;
+import io.appium.java_client.pagefactory.AndroidFindBy;
 
 public class PayPageObject extends CommonAppiumPage{
 	
@@ -44,8 +42,13 @@ public class PayPageObject extends CommonAppiumPage{
 	private AndroidElement balancePayOptions;		//余额付款方式
 	@AndroidFindBy(id="dlg_sms_input_singlebtn")
 	private AndroidElement smsVerifyCodeCommitBtn;		//短信验证码确认按钮
+	
+	@AndroidFindBy(id="TextView_payMoney")
+	private AndroidElement investAmountEle;		//投资金额
 	@AndroidFindBy(id="coupon_name")
 	private AndroidElement chooseCouponBtn;		//优惠券选择入口按钮
+	@AndroidFindBy(id="amount_real_amount")
+	private AndroidElement realAmount;		//实付金额
 	@AndroidFindBy(id="message")
 	private AndroidElement waitMessage;		//等待信息
 	//@AndroidFindBy(id="dlg_msg_rightbtn")
@@ -68,6 +71,9 @@ public class PayPageObject extends CommonAppiumPage{
 		ChooseCouponPageObject chooseCouponPage=new ChooseCouponPageObject(driver);
 		chooseCouponPage.chooseCoupon("");
 		super.threadsleep(1000);
+		String investAmount=Util.get2DecimalPointsNumInString(super.getEleText(investAmountEle, "投资金额"));
+		String actualRealPayAmount=this.getRealPayAmount();
+		Assert.assertEquals(investAmount, actualRealPayAmount,"未使用券时投资金额与实付金额不等");
 		//clickEle(bankCardPayOptions,"银行卡付款方式");
 		this.chooseBankCardPayWays();
 		clickEle(confirmPayBtn,"确认支付按钮");
@@ -159,6 +165,10 @@ public class PayPageObject extends CommonAppiumPage{
 		}
 		chooseCouponPage.chooseCoupon(couponName);
 		super.threadsleep(1000);//跳转等待
+		String investAmount=Util.get2DecimalPointsNumInString(super.getEleText(investAmountEle, "投资金额"));
+		String realPayAmount=this.analyzeCouponRule(couponId, investAmount);
+		String actualRealPayAmount=this.getRealPayAmount();
+		Assert.assertEquals(actualRealPayAmount, realPayAmount,"实际与预期实付金额不等");
 		//clickEle(bankCardPayOptions,"银行卡付款方式");
 		this.chooseBankCardPayWays();
 		clickEle(confirmPayBtn,"确认支付按钮");
@@ -241,6 +251,10 @@ public class PayPageObject extends CommonAppiumPage{
 		chooseCouponPage.chooseCoupon(couponName);
 		super.threadsleep(1000);
 		//clickEle(balancePayOptions,"余额付款方式");
+		String investAmount=Util.get2DecimalPointsNumInString(super.getEleText(investAmountEle, "投资金额"));
+		String realPayAmount=this.analyzeCouponRule(couponId, investAmount);
+		String actualRealPayAmount=this.getRealPayAmount();
+		Assert.assertEquals(actualRealPayAmount, realPayAmount,"实际与预期实付金额不等");
 		this.chooseBanlancePayWays();
 		clickEle(confirmPayBtn,"确认支付按钮");
 		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
@@ -264,6 +278,29 @@ public class PayPageObject extends CommonAppiumPage{
 			Assert.assertTrue(false, "点击更换支付方式后未弹出余额支付方式");
 		}
 		clickEle(balancePayOptions,"余额付款方式");
+	}
+	public String analyzeCouponRule(String couponId,String payAmount) throws Exception{
+		double doublePayAmount=Util.stringToDouble(payAmount);
+		DBOperation db=new DBOperation();
+		MarketCouponRule couponRule=db.getCouponRule(couponId);
+		if(couponRule.getRule_type().equals("4")){
+			return payAmount;
+		}
+		else if(couponRule.getRule_type().equals("2")){
+			double satisfiedAmount=Util.stringToDouble(couponRule.getSatisfied_amount());
+			double discountAmount=Util.stringToDouble(couponRule.getDiscount_amount());
+			if(doublePayAmount>=satisfiedAmount){
+				return Util.get2DecimalPointsNumInString(Util.doubleToString(doublePayAmount-discountAmount));
+			}
+			else {
+				return payAmount;
+			}
+		}
+		else return payAmount;
+		
+	}
+	public String getRealPayAmount(){
+		return Util.get2DecimalPointsNumInString(super.getEleText(realAmount, "实付金额"));
 	}
 	public List<SmsVerifyCode> getMsgVerifyCode(String phoneNum) throws IOException{
         Reader reader = Resources.getResourceAsReader("eifGoutongMybatis.xml");  
