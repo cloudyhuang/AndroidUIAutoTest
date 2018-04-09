@@ -67,6 +67,21 @@ public class TransRecordPageObject extends CommonAppiumPage{
 		}
 		return true;
 	}
+	public void gotoTransRecordDetailPageAndAssert() throws Exception{
+		Set<String> set = TransRecordInfo.getRecordInfo().keySet(); // 取出所有的key值TranceNo
+		for (String TransNo : set) {
+			String transNoXpath = "//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/textVie_tradeNo' and @text='"
+					+ TransNo + "']";
+			super.scrollTo(transNoXpath);
+			AndroidElement transNoEle = driver.findElement(By.xpath(transNoXpath));
+			clickEle(transNoEle,"交易号");
+			TransRecordDetailPageObject transRecordDetailPage=new TransRecordDetailPageObject(driver);
+			Assert.assertTrue(transRecordDetailPage.verifyInthisPage(),"点击交易号后未跳转到交易记录详情页面");
+			transRecordDetailPage.assertRecordDetail(TransNo);
+			super.backKeyEvent();
+			Assert.assertTrue(this.verifyInthisPage(),"交易详情页面返回未回到交易记录页面");
+		}
+	}
 	public boolean verifyInthisPage(){
 		return isElementExsit(tradeRecordsMenuFilterLocator);
 	}
