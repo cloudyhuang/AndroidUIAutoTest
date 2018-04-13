@@ -63,9 +63,18 @@ public class MyBankCardPageObject extends CommonAppiumPage{
 		else if(bankCardName.size()>1){
 			clickEle(safeBankCard, "安全卡");
 			clickEle(unBindBankCardBtn, "解除绑定按钮");
-			SetSafeBankCardPageObject setSafeBankCard=new SetSafeBankCardPageObject(driver);
+			UnbundBankCardInstructionsPageObject unbundBankCardInstructionsPage=new UnbundBankCardInstructionsPageObject(driver);
+			SetSafeBankCardPageObject setSafeBankCard=unbundBankCardInstructionsPage.unbundSafeCardGotoNextPage();
 			Assert.assertTrue(setSafeBankCard.verifyInthisPage(),"当前卡数量大于1，解绑未跳转到设置安全卡界面");
-			setSafeBankCard.unbundSafeCardSetOtherSafeCard(pwd);
+			UnbundBankCardUploadIDCardPageObject unbundBankCardUploadIDCardPage=setSafeBankCard.unbundSafeCardSetOtherSafeCard(pwd);
+			Assert.assertTrue(unbundBankCardUploadIDCardPage.verifyInthisPage(),"设置安全卡后未跳转到上传身份证图片页面");
+			UnbundBankCardUploadHumanPhotoPageObject unbundBankCardUploadHumanPhotoPage=unbundBankCardUploadIDCardPage.uploadIDCard();
+			Assert.assertTrue(unbundBankCardUploadHumanPhotoPage.verifyInthisPage(),"上传身份证照片后未跳转到上传手持身份证照片页面");
+			UnbundBankCardUploadBankStatementsPageObject unbundBankCardUploadBankStatementsPage=unbundBankCardUploadHumanPhotoPage.uploadPhoto();
+			Assert.assertTrue(unbundBankCardUploadBankStatementsPage.verifyInthisPage(),"上传手持身份证照片后未跳转到银行流水页面");
+			UnbundBankCardUploadResultPageObject unbundBankCardUploadResultPage=unbundBankCardUploadBankStatementsPage.upload();
+			Assert.assertTrue(unbundBankCardUploadResultPage.verifyInthisPage(),"上传银行流水后未跳转到上传结果页面");
+			Assert.assertTrue(unbundBankCardUploadResultPage.getUploadResult().contains("成功"),"上传失败，提示信息："+unbundBankCardUploadResultPage.getUploadResult());
 			Account.setSafeBankCardID(Account.getNormalBankCardID());
 			Account.setSafeBankPhoneNum(Account.getNormalBankPhoneNum());
 			Account.setNormalBankCardID(null);
@@ -94,8 +103,18 @@ public class MyBankCardPageObject extends CommonAppiumPage{
 		AndroidElement toUnbundCard=driver.findElement(By.xpath("//android.widget.TextView[@resource-id='com.evergrande.eif.android.hengjiaosuo:id/tv_bank_name' and contains(@text,'"+last4BankCardId+"')]"));
 		clickEle(toUnbundCard,"待解绑卡"+last4BankCardId);
 		clickEle(unBindBankCardBtn,"解除绑定按钮");
-		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
-		safeKeyBoard.sendNum(pwd);
+//		SafeKeyBoard safeKeyBoard=new SafeKeyBoard(driver);
+//		safeKeyBoard.sendNum(pwd);
+		UnbundBankCardInstructionsPageObject unbundBankCardInstructionsPage=new UnbundBankCardInstructionsPageObject(driver);
+		UnbundBankCardUploadIDCardPageObject unbundBankCardUploadIDCardPage=unbundBankCardInstructionsPage.unbundNormalCardGotoNextPage();
+		Assert.assertTrue(unbundBankCardUploadIDCardPage.verifyInthisPage(),"解绑普通卡，操作指南下一步未跳转到上传身份证页面");
+		UnbundBankCardUploadHumanPhotoPageObject unbundBankCardUploadHumanPhotoPage=unbundBankCardUploadIDCardPage.uploadIDCard();
+		Assert.assertTrue(unbundBankCardUploadHumanPhotoPage.verifyInthisPage(),"上传身份证照片后未跳转到上传手持身份证照片页面");
+		UnbundBankCardUploadBankStatementsPageObject unbundBankCardUploadBankStatementsPage=unbundBankCardUploadHumanPhotoPage.uploadPhoto();
+		Assert.assertTrue(unbundBankCardUploadBankStatementsPage.verifyInthisPage(),"上传手持身份证照片后未跳转到银行流水页面");
+		UnbundBankCardUploadResultPageObject unbundBankCardUploadResultPage=unbundBankCardUploadBankStatementsPage.upload();
+		Assert.assertTrue(unbundBankCardUploadResultPage.verifyInthisPage(),"上传银行流水后未跳转到上传结果页面");
+		Assert.assertTrue(unbundBankCardUploadResultPage.getUploadResult().contains("成功"),"上传失败，提示信息："+unbundBankCardUploadResultPage.getUploadResult());
 		return new MyBankCardPageObject(driver);
 	}
 	public List<String> getMyBankCardNameList(){
