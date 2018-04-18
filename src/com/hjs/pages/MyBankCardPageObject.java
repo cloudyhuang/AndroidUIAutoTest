@@ -65,6 +65,8 @@ public class MyBankCardPageObject extends CommonAppiumPage{
 			clickEle(unBindBankCardBtn, "解除绑定按钮");
 			UnbundBankCardInstructionsPageObject unbundBankCardInstructionsPage=new UnbundBankCardInstructionsPageObject(driver);
 			SetSafeBankCardPageObject setSafeBankCard=unbundBankCardInstructionsPage.unbundSafeCardGotoNextPage();
+			SafeKeyBoard safeKeyBoard = new SafeKeyBoard(driver);
+			safeKeyBoard.sendNum(pwd);
 			Assert.assertTrue(setSafeBankCard.verifyInthisPage(),"当前卡数量大于1，解绑未跳转到设置安全卡界面");
 			UnbundBankCardUploadIDCardPageObject unbundBankCardUploadIDCardPage=setSafeBankCard.unbundSafeCardSetOtherSafeCard(pwd);
 			Assert.assertTrue(unbundBankCardUploadIDCardPage.verifyInthisPage(),"设置安全卡后未跳转到上传身份证图片页面");

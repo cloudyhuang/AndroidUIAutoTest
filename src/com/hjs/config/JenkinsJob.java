@@ -43,7 +43,14 @@ public class JenkinsJob {
 	public static boolean buildAndroidApp() throws ClientProtocolException, IOException {
 		String lastBuildCmd = "curl -X GET http://172.16.59.251:8080/job/eif-android-app/job/Compile/lastSuccessfulBuild/api/json --user "+username+":"+password;
 		String lastBuildResult = runCommand(lastBuildCmd);
-		JSONObject lastBuildJsonObj = new JSONObject(lastBuildResult);
+		JSONObject lastBuildJsonObj =null;
+		try{
+			lastBuildJsonObj = new JSONObject(lastBuildResult);
+		}
+		catch(JSONException e){
+			System.out.print("-----构建出现问题，提示信息："+lastBuildResult+"-----");
+			return false;
+		}
 		String lastJobDebugValue=null;
 		String lastJobEnvValue=null;
 		try{

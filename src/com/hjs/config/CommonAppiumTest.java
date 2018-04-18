@@ -18,6 +18,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
@@ -55,6 +56,9 @@ public class CommonAppiumTest {
             t.start();  	//新启浏览器，保证外网可用，认证域账号ssl
     		boolean jenkinsBuildResult=JenkinsJob.buildAndroidApp();	//触发构建安卓app，上个包为Debug，TEST环境版本，未超过一天，不触发
     		if(jenkinsBuildResult) downLoadFromUrl("http://172.16.59.251:8088/app-default_channel.apk", "app2.4.apk"); //拉取最新包
+    		else {
+    			Assert.fail("------构建失败！------");
+    		}
     	}
     	disConfConfig=new DisConfConfig();
     	beforeTestVerifyCodeConfigValue=disConfConfig.getConfigValue(disConfConfig.getVerifyCodeConfigId());
